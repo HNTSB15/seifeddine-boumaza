@@ -2630,6 +2630,99 @@ footer.cv-foot .mono{color:var(--neon)}
   }
   loadLiveSettings();
 
+  // Automatic Visitor Analytics Tracker (Table: website_visitors)
+  (function(){
+    try {
+      if (sessionStorage.getItem('cvx_tracked')) return;
+      sessionStorage.setItem('cvx_tracked', '1');
+
+      function getDeviceInfo() {
+        var ua = navigator.userAgent || '';
+        var device = 'Desktop PC';
+        var os = 'Unknown OS';
+        var browser = 'Browser';
+
+        if (/iPhone/i.test(ua)) {
+          device = 'Apple iPhone';
+          var iosM = ua.match(/OS ([\d_]+)/i);
+          os = iosM ? ('iOS ' + iosM[1].replace(/_/g, '.')) : 'iOS';
+        } else if (/iPad/i.test(ua)) {
+          device = 'Apple iPad';
+          os = 'iPadOS';
+        } else if (/Android/i.test(ua)) {
+          var andM = ua.match(/Android\s+([\d.]+);?\s*([^;)]+)?/i);
+          var andVer = andM ? andM[1] : '';
+          var rawModel = andM && andM[2] ? andM[2].trim() : '';
+          device = rawModel ? ('Android (' + rawModel + ')') : 'Android Phone';
+          os = 'Android ' + andVer;
+        } else if (/Windows NT 10.0/i.test(ua)) {
+          device = 'Windows PC';
+          os = 'Windows 10/11';
+        } else if (/Mac OS X/i.test(ua)) {
+          device = 'Apple Mac';
+          os = 'macOS';
+        } else if (/Linux/i.test(ua)) {
+          device = 'Linux PC';
+          os = 'Linux';
+        }
+
+        if (/Chrome/i.test(ua) && !/Edge|Edg|OPR/i.test(ua)) browser = 'Chrome';
+        else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) browser = 'Safari';
+        else if (/Edg/i.test(ua)) browser = 'Edge';
+        else if (/Firefox/i.test(ua)) browser = 'Firefox';
+        else if (/OPR/i.test(ua)) browser = 'Opera';
+
+        return {
+          device: device,
+          os: os,
+          browser: browser,
+          screen: window.screen ? (window.screen.width + 'x' + window.screen.height) : '',
+          lang: navigator.language || navigator.userLanguage || '',
+          ref: document.referrer || 'Direct Visit'
+        };
+      }
+
+      function logVisitor() {
+        if (!sdb) return;
+        var info = getDeviceInfo();
+        fetch('https://ipapi.co/json/')
+          .then(function(r){ return r.json(); })
+          .then(function(g){
+            sdb.from('website_visitors').insert([{
+              ip_address: g.ip || 'Unknown IP',
+              country: (g.country_name || '') + (g.country_code ? (' (' + g.country_code + ')') : ''),
+              city: g.city || g.region || 'Unknown City',
+              device_model: info.device,
+              operating_system: info.os,
+              browser: info.browser,
+              screen_size: info.screen,
+              language: info.lang,
+              source_referrer: info.ref
+            }]);
+          })
+          .catch(function(){
+            sdb.from('website_visitors').insert([{
+              ip_address: 'Anonymous IP',
+              country: 'Unknown',
+              city: 'Unknown',
+              device_model: info.device,
+              operating_system: info.os,
+              browser: info.browser,
+              screen_size: info.screen,
+              language: info.lang,
+              source_referrer: info.ref
+            }]);
+          });
+      }
+
+      if (document.readyState === 'complete') {
+        setTimeout(logVisitor, 1200);
+      } else {
+        window.addEventListener('load', function(){ setTimeout(logVisitor, 1200); });
+      }
+    } catch(err){}
+  })();
+
   // Contact form submission (Clear Table: client_messages)
   var cForm = document.getElementById('contactForm');
   if (cForm) {
