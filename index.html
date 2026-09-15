@@ -2482,151 +2482,155 @@ footer.cv-foot .mono{color:var(--neon)}
     } catch(err){}
   }
 
-  // Load Live Offers and Packages from Supabase
+  // Load Live Offers and Packages from Supabase (Clear Table: website_prices)
   function loadLiveOffers() {
     if (!sdb) return;
-    sdb.from('offers').select('*').eq('is_active', true).then(function(res) {
-      if (res && res.data && res.data.length) {
-        res.data.forEach(function(o) {
-          // Deals
-          if (o.id === 'flash_deal_1') {
-            var pEl = document.getElementById('flDeal1Price');
-            var bEl = document.getElementById('flDeal1Badge');
-            var aEl = document.getElementById('flDeal1Amount');
-            var btn = document.getElementById('flDeal1Btn');
-            if (pEl) pEl.innerHTML = o.price_usdt + ' <small>USDT</small>';
-            if (bEl && o.discount_badge) bEl.textContent = o.discount_badge;
-            if (aEl && o.amount) aEl.innerHTML = Number(o.amount).toLocaleString() + ' FLASH <span>USDT</span>';
-            if (btn) btn.setAttribute('onclick', "openFlashModal(" + (o.amount || 80000) + ", " + o.price_usdt + ", '24h')");
-          } else if (o.id === 'flash_deal_2') {
-            var pEl2 = document.getElementById('flDeal2Price');
-            var bEl2 = document.getElementById('flDeal2Badge');
-            var aEl2 = document.getElementById('flDeal2Amount');
-            var btn2 = document.getElementById('flDeal2Btn');
-            if (pEl2) pEl2.innerHTML = o.price_usdt + ' <small>USDT</small>';
-            if (bEl2 && o.discount_badge) bEl2.textContent = o.discount_badge;
-            if (aEl2 && o.amount) aEl2.innerHTML = Number(o.amount).toLocaleString() + ' FLASH <span>USDT</span>';
-            if (btn2) btn2.setAttribute('onclick', "openFlashModal(" + (o.amount || 8000) + ", " + o.price_usdt + ", '24h')");
-          }
-          // 24h Packages
-          else if (o.id === 'pack_24h_1k') {
-            var c = document.getElementById('pack_24h_1k_cost'), b = document.getElementById('pack_24h_1k_btn');
-            if (c) c.innerHTML = o.price_usdt + ' <small>USDT</small>';
-            if (b) b.setAttribute('onclick', "openFlashModal(" + (o.amount || 1000) + ", " + o.price_usdt + ", '24h')");
-          } else if (o.id === 'pack_24h_100k') {
-            var c = document.getElementById('pack_24h_100k_cost'), b = document.getElementById('pack_24h_100k_btn');
-            if (c) c.innerHTML = o.price_usdt + ' <small>USDT</small>';
-            if (b) b.setAttribute('onclick', "openFlashModal(" + (o.amount || 100000) + ", " + o.price_usdt + ", '24h')");
-          } else if (o.id === 'pack_24h_1m') {
-            var c = document.getElementById('pack_24h_1m_cost'), b = document.getElementById('pack_24h_1m_btn');
-            if (c) c.innerHTML = o.price_usdt + ' <small>USDT</small>';
-            if (b) b.setAttribute('onclick', "openFlashModal(" + (o.amount || 1000000) + ", " + o.price_usdt + ", '24h')");
-          }
-          // 3 Days Packages
-          else if (o.id === 'pack_3d_1k') {
-            var c = document.getElementById('pack_3d_1k_cost'), b = document.getElementById('pack_3d_1k_btn');
-            if (c) c.innerHTML = o.price_usdt + ' <small>USDT</small>';
-            if (b) b.setAttribute('onclick', "openFlashModal(" + (o.amount || 1000) + ", " + o.price_usdt + ", '3d')");
-          } else if (o.id === 'pack_3d_100k') {
-            var c = document.getElementById('pack_3d_100k_cost'), b = document.getElementById('pack_3d_100k_btn');
-            if (c) c.innerHTML = o.price_usdt + ' <small>USDT</small>';
-            if (b) b.setAttribute('onclick', "openFlashModal(" + (o.amount || 100000) + ", " + o.price_usdt + ", '3d')");
-          } else if (o.id === 'pack_3d_1m') {
-            var c = document.getElementById('pack_3d_1m_cost'), b = document.getElementById('pack_3d_1m_btn');
-            if (c) c.innerHTML = o.price_usdt + ' <small>USDT</small>';
-            if (b) b.setAttribute('onclick', "openFlashModal(" + (o.amount || 1000000) + ", " + o.price_usdt + ", '3d')");
-          }
-          // 1 Week Packages
-          else if (o.id === 'pack_1w_1k') {
-            var c = document.getElementById('pack_1w_1k_cost'), b = document.getElementById('pack_1w_1k_btn');
-            if (c) c.innerHTML = o.price_usdt + ' <small>USDT</small>';
-            if (b) b.setAttribute('onclick', "openFlashModal(" + (o.amount || 1000) + ", " + o.price_usdt + ", '1w')");
-          } else if (o.id === 'pack_1w_100k') {
-            var c = document.getElementById('pack_1w_100k_cost'), b = document.getElementById('pack_1w_100k_btn');
-            if (c) c.innerHTML = o.price_usdt + ' <small>USDT</small>';
-            if (b) b.setAttribute('onclick', "openFlashModal(" + (o.amount || 100000) + ", " + o.price_usdt + ", '1w')");
-          } else if (o.id === 'pack_1w_1m') {
-            var c = document.getElementById('pack_1w_1m_cost'), b = document.getElementById('pack_1w_1m_btn');
-            if (c) c.innerHTML = o.price_usdt + ' <small>USDT</small>';
-            if (b) b.setAttribute('onclick', "openFlashModal(" + (o.amount || 1000000) + ", " + o.price_usdt + ", '1w')");
-          }
-          // NewsX Plans
-          else if (o.id === 'newsx_standard') {
-            var sp = document.getElementById('nxPlanStdPrice'), sb = document.getElementById('nxPlanStdBtn');
-            if (sp) sp.innerHTML = '$' + o.price_usdt + '<span>/month</span>';
-            if (sb) sb.setAttribute('onclick', "openPlanModal('NewsX AI Standard', " + o.price_usdt + ")");
-          } else if (o.id === 'newsx_pro') {
-            var pp = document.getElementById('nxPlanProPrice'), pb = document.getElementById('nxPlanProBtn');
-            if (pp) pp.innerHTML = '$' + o.price_usdt + '<span>/month</span>';
-            if (pb) pb.setAttribute('onclick', "openPlanModal('NewsX AI Pro', " + o.price_usdt + ")");
-          } else if (o.id === 'newsx_ultimate') {
-            var up = document.getElementById('nxPlanUltPrice'), ub = document.getElementById('nxPlanUltBtn');
-            if (up) up.innerHTML = '$' + o.price_usdt + '<span>/month</span>';
-            if (ub) ub.setAttribute('onclick', "openPlanModal('NewsX AI Ultimate', " + o.price_usdt + ")");
-          }
-        });
-      }
+    var tbl = sdb.from('website_prices');
+    tbl.select('*').eq('is_active', true).then(function(res) {
+      var list = (res && res.data && res.data.length) ? res.data : [];
+      if (!list.length) return;
+      list.forEach(function(o) {
+        var price = o.current_price !== undefined ? o.current_price : o.price_usdt;
+        var tag = o.discount_tag || o.discount_badge || '';
+        var amt = o.flash_usdt_amount !== undefined ? o.flash_usdt_amount : o.amount;
+        var key = o.item_key || o.id;
+
+        // Deals
+        if (key === 'flash_deal_1') {
+          var pEl = document.getElementById('flDeal1Price'), bEl = document.getElementById('flDeal1Badge'), aEl = document.getElementById('flDeal1Amount'), btn = document.getElementById('flDeal1Btn');
+          if (pEl) pEl.innerHTML = price + ' <small>USDT</small>';
+          if (bEl && tag) bEl.textContent = tag;
+          if (aEl && amt) aEl.innerHTML = Number(amt).toLocaleString() + ' FLASH <span>USDT</span>';
+          if (btn) btn.setAttribute('onclick', "openFlashModal(" + (amt || 80000) + ", " + price + ", '24h')");
+        } else if (key === 'flash_deal_2') {
+          var pEl2 = document.getElementById('flDeal2Price'), bEl2 = document.getElementById('flDeal2Badge'), aEl2 = document.getElementById('flDeal2Amount'), btn2 = document.getElementById('flDeal2Btn');
+          if (pEl2) pEl2.innerHTML = price + ' <small>USDT</small>';
+          if (bEl2 && tag) bEl2.textContent = tag;
+          if (aEl2 && amt) aEl2.innerHTML = Number(amt).toLocaleString() + ' FLASH <span>USDT</span>';
+          if (btn2) btn2.setAttribute('onclick', "openFlashModal(" + (amt || 8000) + ", " + price + ", '24h')");
+        }
+        // 24 Hours Packages
+        else if (key === 'package_24h_1k' || key === 'pack_24h_1k') {
+          var c = document.getElementById('pack_24h_1k_cost'), b = document.getElementById('pack_24h_1k_btn');
+          if (c) c.innerHTML = price + ' <small>USDT</small>';
+          if (b) b.setAttribute('onclick', "openFlashModal(" + (amt || 1000) + ", " + price + ", '24h')");
+        } else if (key === 'package_24h_100k' || key === 'pack_24h_100k') {
+          var c = document.getElementById('pack_24h_100k_cost'), b = document.getElementById('pack_24h_100k_btn');
+          if (c) c.innerHTML = price + ' <small>USDT</small>';
+          if (b) b.setAttribute('onclick', "openFlashModal(" + (amt || 100000) + ", " + price + ", '24h')");
+        } else if (key === 'package_24h_1m' || key === 'pack_24h_1m') {
+          var c = document.getElementById('pack_24h_1m_cost'), b = document.getElementById('pack_24h_1m_btn');
+          if (c) c.innerHTML = price + ' <small>USDT</small>';
+          if (b) b.setAttribute('onclick', "openFlashModal(" + (amt || 1000000) + ", " + price + ", '24h')");
+        }
+        // 3 Days Packages
+        else if (key === 'package_3days_1k' || key === 'pack_3d_1k') {
+          var c = document.getElementById('pack_3d_1k_cost'), b = document.getElementById('pack_3d_1k_btn');
+          if (c) c.innerHTML = price + ' <small>USDT</small>';
+          if (b) b.setAttribute('onclick', "openFlashModal(" + (amt || 1000) + ", " + price + ", '3d')");
+        } else if (key === 'package_3days_100k' || key === 'pack_3d_100k') {
+          var c = document.getElementById('pack_3d_100k_cost'), b = document.getElementById('pack_3d_100k_btn');
+          if (c) c.innerHTML = price + ' <small>USDT</small>';
+          if (b) b.setAttribute('onclick', "openFlashModal(" + (amt || 100000) + ", " + price + ", '3d')");
+        } else if (key === 'package_3days_1m' || key === 'pack_3d_1m') {
+          var c = document.getElementById('pack_3d_1m_cost'), b = document.getElementById('pack_3d_1m_btn');
+          if (c) c.innerHTML = price + ' <small>USDT</small>';
+          if (b) b.setAttribute('onclick', "openFlashModal(" + (amt || 1000000) + ", " + price + ", '3d')");
+        }
+        // 1 Week Packages
+        else if (key === 'package_1week_1k' || key === 'pack_1w_1k') {
+          var c = document.getElementById('pack_1w_1k_cost'), b = document.getElementById('pack_1w_1k_btn');
+          if (c) c.innerHTML = price + ' <small>USDT</small>';
+          if (b) b.setAttribute('onclick', "openFlashModal(" + (amt || 1000) + ", " + price + ", '1w')");
+        } else if (key === 'package_1week_100k' || key === 'pack_1w_100k') {
+          var c = document.getElementById('pack_1w_100k_cost'), b = document.getElementById('pack_1w_100k_btn');
+          if (c) c.innerHTML = price + ' <small>USDT</small>';
+          if (b) b.setAttribute('onclick', "openFlashModal(" + (amt || 100000) + ", " + price + ", '1w')");
+        } else if (key === 'package_1week_1m' || key === 'pack_1w_1m') {
+          var c = document.getElementById('pack_1w_1m_cost'), b = document.getElementById('pack_1w_1m_btn');
+          if (c) c.innerHTML = price + ' <small>USDT</small>';
+          if (b) b.setAttribute('onclick', "openFlashModal(" + (amt || 1000000) + ", " + price + ", '1w')");
+        }
+        // NewsX Plans
+        else if (key === 'newsx_standard') {
+          var sp = document.getElementById('nxPlanStdPrice'), sb = document.getElementById('nxPlanStdBtn');
+          if (sp) sp.innerHTML = '$' + price + '<span>/month</span>';
+          if (sb) sb.setAttribute('onclick', "openPlanModal('NewsX AI Standard', " + price + ")");
+        } else if (key === 'newsx_pro') {
+          var pp = document.getElementById('nxPlanProPrice'), pb = document.getElementById('nxPlanProBtn');
+          if (pp) pp.innerHTML = '$' + price + '<span>/month</span>';
+          if (pb) pb.setAttribute('onclick', "openPlanModal('NewsX AI Pro', " + price + ")");
+        } else if (key === 'newsx_ultimate') {
+          var up = document.getElementById('nxPlanUltPrice'), ub = document.getElementById('nxPlanUltBtn');
+          if (up) up.innerHTML = '$' + price + '<span>/month</span>';
+          if (ub) ub.setAttribute('onclick', "openPlanModal('NewsX AI Ultimate', " + price + ")");
+        }
+      });
     }).catch(function(){});
   }
   loadLiveOffers();
 
-  // Load Live Settings (Wallets, Rates, Telegram, Email)
+  // Load Live Settings (Clear Table: website_settings)
   function loadLiveSettings() {
     if (!sdb) return;
-    sdb.from('settings').select('*').then(function(res) {
-      if (res && res.data && res.data.length) {
-        res.data.forEach(function(s) {
-          if (s.key === 'wallet_bep20' && s.value && window.cvxWallets) {
-            window.cvxWallets['BEP20'] = s.value;
-            var wInp = document.getElementById('flDepositWallet');
-            var netEl = document.getElementById('flModalNet');
-            if (wInp && netEl && netEl.textContent === 'BEP20') wInp.value = s.value;
-          }
-          if (s.key === 'wallet_trc20' && s.value && window.cvxWallets) {
-            window.cvxWallets['TRC20'] = s.value;
-            var wInp = document.getElementById('flDepositWallet');
-            var netEl = document.getElementById('flModalNet');
-            if (wInp && netEl && netEl.textContent === 'TRC20') wInp.value = s.value;
-          }
-          if (s.key === 'calc_rate_24h' && s.value && window.cvxRates) {
-            var val = parseFloat(s.value);
-            window.cvxRates['24h'] = { rate: val / 1000, label: 'Rate: 1K = ' + val + ' USDT' };
-            var opt = document.getElementById('flCalcOpt24h');
-            if (opt) opt.textContent = '24 Hours (1,000 Flash = ' + val + ' USDT)';
-            if (window.updateFlashCalc) window.updateFlashCalc();
-          }
-          if (s.key === 'calc_rate_3d' && s.value && window.cvxRates) {
-            var val = parseFloat(s.value);
-            window.cvxRates['3d'] = { rate: val / 1000, label: 'Rate: 1K = ' + val + ' USDT' };
-            var opt = document.getElementById('flCalcOpt3d');
-            if (opt) opt.textContent = '3 Days (1,000 Flash = ' + val + ' USDT)';
-            if (window.updateFlashCalc) window.updateFlashCalc();
-          }
-          if (s.key === 'calc_rate_1w' && s.value && window.cvxRates) {
-            var val = parseFloat(s.value);
-            window.cvxRates['1w'] = { rate: val / 1000, label: 'Rate: 1K = ' + val + ' USDT' };
-            var opt = document.getElementById('flCalcOpt1w');
-            if (opt) opt.textContent = '1 Week (1,000 Flash = ' + val + ' USDT)';
-            if (window.updateFlashCalc) window.updateFlashCalc();
-          }
-          if (s.key === 'telegram_handle' && s.value) {
-            var tg = s.value.replace(/^@/, '');
-            document.querySelectorAll('a[href*="t.me/"]').forEach(function(a){
-              if (a.href.indexOf('?text=') > -1) {
-                var textParam = a.href.split('?text=')[1] || '';
-                a.href = 'https://t.me/' + tg + (textParam ? ('?text=' + textParam) : '');
-              } else {
-                a.href = 'https://t.me/' + tg;
-              }
-            });
-          }
-        });
-      }
+    sdb.from('website_settings').select('*').then(function(res) {
+      var list = (res && res.data && res.data.length) ? res.data : [];
+      if (!list.length) return;
+      list.forEach(function(s) {
+        var k = s.setting_name || s.key;
+        var val = s.current_value || s.value;
+        if (!k || !val) return;
+
+        if (k === 'bep20_deposit_wallet' || k === 'wallet_bep20') {
+          if (window.cvxWallets) window.cvxWallets['BEP20'] = val;
+          var wInp = document.getElementById('flDepositWallet');
+          var netEl = document.getElementById('flModalNet');
+          if (wInp && netEl && netEl.textContent === 'BEP20') wInp.value = val;
+        }
+        if (k === 'trc20_deposit_wallet' || k === 'wallet_trc20') {
+          if (window.cvxWallets) window.cvxWallets['TRC20'] = val;
+          var wInp = document.getElementById('flDepositWallet');
+          var netEl = document.getElementById('flModalNet');
+          if (wInp && netEl && netEl.textContent === 'TRC20') wInp.value = val;
+        }
+        if (k === 'calculator_price_24h_per_1k' || k === 'calc_rate_24h') {
+          var num = parseFloat(val);
+          if (window.cvxRates) window.cvxRates['24h'] = { rate: num / 1000, label: 'Rate: 1K = ' + num + ' USDT' };
+          var opt = document.getElementById('flCalcOpt24h');
+          if (opt) opt.textContent = '24 Hours (1,000 Flash = ' + num + ' USDT)';
+          if (window.updateFlashCalc) window.updateFlashCalc();
+        }
+        if (k === 'calculator_price_3days_per_1k' || k === 'calc_rate_3d') {
+          var num = parseFloat(val);
+          if (window.cvxRates) window.cvxRates['3d'] = { rate: num / 1000, label: 'Rate: 1K = ' + num + ' USDT' };
+          var opt = document.getElementById('flCalcOpt3d');
+          if (opt) opt.textContent = '3 Days (1,000 Flash = ' + num + ' USDT)';
+          if (window.updateFlashCalc) window.updateFlashCalc();
+        }
+        if (k === 'calculator_price_1week_per_1k' || k === 'calc_rate_1w') {
+          var num = parseFloat(val);
+          if (window.cvxRates) window.cvxRates['1w'] = { rate: num / 1000, label: 'Rate: 1K = ' + num + ' USDT' };
+          var opt = document.getElementById('flCalcOpt1w');
+          if (opt) opt.textContent = '1 Week (1,000 Flash = ' + num + ' USDT)';
+          if (window.updateFlashCalc) window.updateFlashCalc();
+        }
+        if (k === 'telegram_username' || k === 'telegram_handle') {
+          var tg = val.replace(/^@/, '');
+          document.querySelectorAll('a[href*="t.me/"]').forEach(function(a){
+            if (a.href.indexOf('?text=') > -1) {
+              var textParam = a.href.split('?text=')[1] || '';
+              a.href = 'https://t.me/' + tg + (textParam ? ('?text=' + textParam) : '');
+            } else {
+              a.href = 'https://t.me/' + tg;
+            }
+          });
+        }
+      });
     }).catch(function(){});
   }
   loadLiveSettings();
 
-  // Contact form submission
+  // Contact form submission (Clear Table: client_messages)
   var cForm = document.getElementById('contactForm');
   if (cForm) {
     cForm.addEventListener('submit', function(e) {
@@ -2642,7 +2646,7 @@ footer.cv-foot .mono{color:var(--neon)}
       var tasks = [];
       if (sdb) {
         try {
-          tasks.push(sdb.from('messages').insert([{ name: name, email: email, message: message }]));
+          tasks.push(sdb.from('client_messages').insert([{ client_name: name, client_email: email, client_message: message }]));
         } catch(err){}
       }
       if (window.emailjs && typeof window.emailjs.send === 'function') {
