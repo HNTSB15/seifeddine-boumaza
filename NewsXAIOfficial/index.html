@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewsX AI — AI-Powered News & Market Analysis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #060a10;
+            --panel: #0d1520;
+            --panel-2: #101a26;
+            --line: #1c2a38;
+            --line-soft: #14202c;
+            --text: #eaf2f8;
+            --text-dim: #8ea3b5;
+            --text-faint: #506176;
+            --blue: #6fcbff;
+            --blue-dim: #2c5a78;
+            --blue-glow: rgba(111, 203, 255, 0.16);
+            --bull: #3fd68f;
+            --bear: #ff6b6b;
+            --gold: #f2c14e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .wrap {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ---------- nav ---------- */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            backdrop-filter: blur(14px);
+            background: rgba(6, 10, 16, 0.72);
+            border-bottom: 1px solid var(--line-soft);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-name {
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .brand-name span {
+            color: var(--blue);
+        }
+
+        .nav-cta {
+            background: var(--blue);
+            color: #04101c;
+            font-weight: 700;
+            font-size: 13px;
+            padding: 9px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        /* ---------- hero ---------- */
+
+        .hero {
+            padding: 64px 0 40px;
+            position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .kicker {
+            font-size: 13px;
+            color: var(--blue);
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+        h1 {
+            font-size: 44px;
+            line-height: 1.15;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 18px;
+        }
+
+        h1 em {
+            font-style: normal;
+            color: var(--blue);
+        }
+
+        .hero-sub {
+            font-size: 16px;
+            color: var(--text-dim);
+            line-height: 1.65;
+            max-width: 480px;
+            margin-bottom: 28px;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--blue);
+            color: #04101c;
+            font-weight: 700;
+            font-size: 14.5px;
+            padding: 14px 26px;
+            border-radius: 10px;
+            text-decoration: none;
+        }
+
+        .btn-ghost {
+            border: 1px solid var(--line);
+            color: var(--text);
+            font-weight: 600;
+            font-size: 14.5px;
+            padding: 14px 26px;
+            border-radius: 10px;
+            text-decoration: none;
+        }
+
+        .chart-card {
+            border: 1px solid var(--line);
+            background: var(--panel);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .chart-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .chart-pair {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dim);
+        }
+
+        .chart-price {
+            font-size: 22px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .chart-price.up {
+            color: var(--bull);
+        }
+
+        .chart-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 14px 0 10px;
+        }
+
+        .chart-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--line);
+            color: var(--text-dim);
+        }
+
+        .tag.buy {
+            color: var(--bull);
+            border-color: rgba(63, 214, 143, 0.3);
+        }
+
+        /* ---------- section shell ---------- */
+
+        section {
+            padding: 56px 0;
+            border-top: 1px solid var(--line-soft);
+        }
+
+        .section-kicker {
+            font-size: 12.5px;
+            color: var(--blue);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            letter-spacing: -0.01em;
+        }
+
+        .section-sub {
+            font-size: 15px;
+            color: var(--text-dim);
+            max-width: 560px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        /* ---------- features ---------- */
+
+        .feat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .feat {
+            border: 1px solid var(--line);
+            background: var(--panel);
+            border-radius: 14px;
+            padding: 22px;
+        }
+
+        .feat-icon {
+            font-size: 24px;
+            margin-bottom: 14px;
+        }
+
+        .feat h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .feat p {
+            font-size: 13.5px;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        /* ---------- how it works ---------- */
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .step-row {
+            display: grid;
+            grid-template-columns: 56px 1fr;
+            gap: 18px;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--line-soft);
+        }
+
+        .step-row:last-child {
+            border-bottom: none;
+        }
+
+        .step-mark {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--blue-dim);
+            background: var(--panel);
+            color: var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .step-body h4 {
+            font-size: 15.5px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .step-body p {
+            font-size: 13.5px;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        /* ---------- pricing ---------- */
+
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .price-card {
+            border: 1px solid var(--line);
+            background: var(--panel);
+            border-radius: 16px;
+            padding: 26px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-card.highlight {
+            border-color: var(--gold);
+            background: linear-gradient(180deg, rgba(242, 193, 78, 0.06), var(--panel));
+            position: relative;
+        }
+
+        .highlight-badge {
+            position: absolute;
+            top: -11px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gold);
+            color: #241a00;
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .price-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+        }
+
+        .price-amount {
+            font-size: 34px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 20px;
+        }
+
+        .price-amount span {
+            font-size: 14px;
+            color: var(--text-faint);
+            font-weight: 500;
+        }
+
+        .price-feats {
+            list-style: none;
+            margin-bottom: 24px;
+            flex: 1;
+        }
+
+        .price-feats li {
+            font-size: 13.5px;
+            color: var(--text-dim);
+            padding: 7px 0;
+            padding-left: 22px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .price-feats li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--bull);
+            font-weight: 700;
+        }
+
+        .price-card.highlight .price-feats li::before {
+            color: var(--gold);
+        }
+
+        .price-btn {
+            text-align: center;
+            background: var(--blue-dim);
+            color: var(--blue);
+            font-weight: 700;
+            font-size: 14px;
+            padding: 13px;
+            border-radius: 10px;
+            text-decoration: none;
+        }
+
+        .price-card.highlight .price-btn {
+            background: var(--gold);
+            color: #241a00;
+        }
+
+        /* ---------- support ---------- */
+
+        .support-card {
+            border: 1px solid var(--line);
+            background: var(--panel);
+            border-radius: 16px;
+            padding: 36px;
+            text-align: center;
+        }
+
+        .support-card h2 {
+            margin-bottom: 10px;
+        }
+
+        .support-links {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+
+        .support-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid var(--line);
+            background: var(--panel-2);
+            padding: 13px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .support-link .ic {
+            font-size: 17px;
+        }
+
+        .support-link.telegram {
+            color: var(--blue);
+        }
+
+        footer {
+            border-top: 1px solid var(--line-soft);
+            padding: 32px 0;
+            text-align: center;
+        }
+
+        .foot-brand {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+        }
+
+        .foot-brand span {
+            color: var(--blue);
+        }
+
+        .foot-disclaimer {
+            font-size: 11px;
+            color: var(--text-faint);
+            max-width: 520px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 860px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 32px;
+            }
+            .feat-grid,
+            .price-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-inner .brand-name {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-inner">
+            <div class="brand">
+                <svg width="30" height="30" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="32" height="32" rx="9" fill="#0d1520" stroke="#1c2a38"/>
+        <path d="M7 21L12.5 14.5L17 18L27 7" stroke="#6fcbff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M21 7H27V13" stroke="#6fcbff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="7" cy="21" r="1.8" fill="#3fd68f"/>
+      </svg>
+                <div class="brand-name">NewsX <span>AI</span></div>
+            </div>
+            <a href="https://newsxai.netlify.app/" class="nav-cta">Sign Up</a>
+        </div>
+    </nav>
+
+    <div class="wrap">
+        <section class="hero" style="border-top:none;">
+            <div class="hero-grid">
+                <div>
+                    <div class="kicker">AI-POWERED NEWS &amp; MARKET ANALYSIS</div>
+                    <h1>Know market direction <em>before</em> the big news hits.</h1>
+                    <p class="hero-sub">NewsX AI tracks every high-impact USD news release automatically — NFP, CPI, FOMC, PPI, GDP, ISM PMI — and sends AI Bias plus XAUUSD Signal straight to your phone, even when the app is closed.</p>
+                    <div class="hero-ctas">
+                        <a href="https://newsxai.netlify.app/" class="btn-primary">Sign Up Now</a>
+                        <a href="#pricing" class="btn-ghost">View Pricing</a>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-head">
+                        <div class="chart-pair">XAUUSD.m · GOLD vs US Dollar</div>
+                    </div>
+                    <div class="chart-price up">4,398.94</div>
+                    <svg class="chart-svg" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="130" x2="400" y2="130" stroke="#1c2a38" stroke-width="1"/>
+          <line x1="0" y1="90" x2="400" y2="90" stroke="#1c2a38" stroke-width="1"/>
+          <line x1="0" y1="50" x2="400" y2="50" stroke="#1c2a38" stroke-width="1"/>
+          <g stroke="#3fd68f" stroke-width="2">
+            <line x1="20" y1="60" x2="20" y2="80"/><line x1="40" y1="55" x2="40" y2="72"/>
+            <line x1="60" y1="50" x2="60" y2="68"/><line x1="80" y1="48" x2="80" y2="62"/>
+          </g>
+          <g stroke="#ff6b6b" stroke-width="3">
+            <line x1="140" y1="40" x2="140" y2="125"/>
+          </g>
+          <g stroke="#3fd68f" stroke-width="2">
+            <line x1="170" y1="95" x2="170" y2="118"/>
+          </g>
+          <g stroke="#ff6b6b" stroke-width="2">
+            <line x1="200" y1="100" x2="200" y2="112"/><line x1="230" y1="98" x2="230" y2="108"/>
+          </g>
+          <g stroke="#3fd68f" stroke-width="2">
+            <line x1="260" y1="90" x2="260" y2="104"/><line x1="290" y1="86" x2="290" y2="98"/>
+            <line x1="320" y1="82" x2="320" y2="94"/><line x1="350" y1="80" x2="350" y2="90"/>
+            <line x1="380" y1="76" x2="380" y2="88"/>
+          </g>
+          <line x1="0" y1="98" x2="400" y2="98" stroke="#6fcbff" stroke-width="1" stroke-dasharray="4 4"/>
+        </svg>
+                    <div class="chart-tags">
+                        <span class="tag">NFP · Non-Farm Payrolls</span>
+                        <span class="tag buy">XAUUSD Sell</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-kicker">WHY NEWSX AI</div>
+            <h2>Built for traders who trade the news.</h2>
+            <p class="section-sub">No need to keep TradingView open every 5 minutes, no need to wait on a forum to know today's bias. Everything runs automatically, straight to your phone.</p>
+            <div class="feat-grid">
+                <div class="feat">
+                    <div class="feat-icon">📅</div>
+                    <h3>Automatic Calendar</h3>
+                    <p>NFP, CPI, FOMC, PPI, GDP and ISM PMI are tracked automatically — dates always up to date, no manual checking needed.</p>
+                </div>
+                <div class="feat">
+                    <div class="feat-icon">🔔</div>
+                    <h3>Push Notification</h3>
+                    <p>Get AI Bias &amp; XAUUSD Signal straight to your phone before the news drops — even when the app is closed.</p>
+                </div>
+                <div class="feat">
+                    <div class="feat-icon">📬</div>
+                    <h3>Mailbox &amp; Updates</h3>
+                    <p>Info, contests, and important announcements land right in your dashboard — you'll never miss a thing.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-kicker">HOW IT WORKS</div>
+            <h2>3 steps, and you're set.</h2>
+            <div class="steps">
+                <div class="step-row">
+                    <div class="step-mark">1</div>
+                    <div class="step-body">
+                        <h4>Create an account</h4>
+                        <p>Open the dashboard, sign up with your email &amp; password. Takes less than a minute.</p>
+                    </div>
+                </div>
+                <div class="step-row">
+                    <div class="step-mark">2</div>
+                    <div class="step-body">
+                        <h4>Choose a plan &amp; pay</h4>
+                        <p>Pick Standard, Pro, or Ultimate based on your needs — pay instantly via card or Apple Pay.</p>
+                    </div>
+                </div>
+                <div class="step-row">
+                    <div class="step-mark">3</div>
+                    <div class="step-body">
+                        <h4>Install &amp; Allow Notifications</h4>
+                        <p>Add to your Home Screen and allow notifications so signals reach you instantly. Full guide available in our tutorial channel.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing">
+            <div class="section-kicker">PRICING</div>
+            <h2>Choose the plan that fits your trading.</h2>
+            <div class="price-grid">
+                <div class="price-card">
+                    <div class="price-name">Standard</div>
+                    <div class="price-amount">$15<span>/month</span></div>
+                    <ul class="price-feats">
+                        <li>NFP, CPI &amp; FOMC calendar</li>
+                        <li>AI Bias + XAUUSD Signal (3 major news)</li>
+                        <li>Push notification</li>
+                    </ul>
+                    <a href="https://newsxai.netlify.app/" class="price-btn">Choose Standard</a>
+                </div>
+                <div class="price-card highlight">
+                    <div class="highlight-badge">Popular</div>
+                    <div class="price-name">Pro</div>
+                    <div class="price-amount">$25<span>/month</span></div>
+                    <ul class="price-feats">
+                        <li>All high-impact USD news</li>
+                        <li>NFP, CPI, FOMC, PPI, GDP, ISM PMI</li>
+                        <li>AI Bias + XAUUSD Signal (all news)</li>
+                        <li>Push notification</li>
+                    </ul>
+                    <a href="https://newsxai.netlify.app/" class="price-btn">Choose Pro</a>
+                </div>
+                <div class="price-card">
+                    <div class="price-name">Ultimate</div>
+                    <div class="price-amount">$50<span>/month</span></div>
+                    <ul class="price-feats">
+                        <li>Everything in Pro</li>
+                        <li>Priority: XAUUSD Direction Today</li>
+                        <li>Priority: Signal Swing (entry/TP/SL)</li>
+                        <li>All alerts &amp; upcoming features</li>
+                    </ul>
+                    <a href="https://newsxai.netlify.app/" class="price-btn">Choose Ultimate</a>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="support-card">
+                <h2>Questions before signing up?</h2>
+                <p class="section-sub" style="margin:0 auto;">Our support team is ready to help — from signing up to installing the app on your phone.</p>
+                <div class="support-links">
+                    <a href="https://t.me/AgentNewsXAI" class="support-link telegram"><span class="ic">💬</span> @AgentNewsXAI</a>
+                    <a href="https://t.me/newsxaiofficial/15" class="support-link telegram"><span class="ic">📖</span> Install Guide</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="foot-brand">NewsX <span>AI</span></div>
+        <div class="foot-disclaimer">AI bias &amp; signal outputs are not financial advice. Trading forex and commodities carries risk — make decisions based on your own judgment.</div>
+    </footer>
+
+</body>
+
+</html>
