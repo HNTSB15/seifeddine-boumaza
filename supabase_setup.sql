@@ -4,8 +4,31 @@
 -- ==============================================================================
 
 -- ------------------------------------------------------------------------------
--- 📬 TABLE 1: client_messages
--- (Every message sent by a visitor on your website will appear here)
+-- 🧹 STEP 1: CONSOLIDATE & REMOVE OLD DUPLICATE TABLES
+-- (Combines messages into client_messages, settings into website_settings, and removes old duplicates)
+-- ------------------------------------------------------------------------------
+DO $$
+BEGIN
+    -- If old 'messages' table exists, migrate any messages into client_messages first:
+    IF EXISTS (SELECT FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'messages') THEN
+        IF EXISTS (SELECT FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'client_messages') THEN
+            INSERT INTO public.client_messages (client_name, client_email, client_message, date_sent)
+            SELECT name, email, message, COALESCE(created_at, now())
+            FROM public.messages
+            ON CONFLICT DO NOTHING;
+        END IF;
+    END IF;
+END $$;
+
+-- Drop old duplicate tables so your dashboard has ONLY clean unified tables:
+DROP TABLE IF EXISTS public.messages CASCADE;
+DROP TABLE IF EXISTS public.settings CASCADE;
+DROP TABLE IF EXISTS public.offers CASCADE;
+
+
+-- ------------------------------------------------------------------------------
+-- 📬 TABLE 1: client_messages (ONE SINGLE TABLE FOR ALL MESSAGES)
+-- (Every message sent by a visitor on your website appears here)
 -- ------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.client_messages (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
