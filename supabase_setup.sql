@@ -137,3 +137,34 @@ ON CONFLICT (setting_name) DO UPDATE SET
     current_value = EXCLUDED.current_value,
     what_it_does = EXCLUDED.what_it_does,
     updated_at = timezone('utc'::text, now());
+
+
+-- ------------------------------------------------------------------------------
+-- 🌍 TABLE 4: website_visitors
+-- (Tracks every visitor: IP address, Location, Phone Name, OS, Browser, Time)
+-- ------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.website_visitors (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    visit_time TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL,
+    ip_address TEXT,
+    country TEXT,
+    city TEXT,
+    device_model TEXT,
+    operating_system TEXT,
+    browser TEXT,
+    screen_size TEXT,
+    language TEXT,
+    source_referrer TEXT
+);
+
+ALTER TABLE public.website_visitors ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Allow public insert to website_visitors" ON public.website_visitors;
+CREATE POLICY "Allow public insert to website_visitors"
+ON public.website_visitors FOR INSERT TO anon, authenticated
+WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Allow authenticated read website_visitors" ON public.website_visitors;
+CREATE POLICY "Allow authenticated read website_visitors"
+ON public.website_visitors FOR SELECT TO authenticated
+USING (true);
