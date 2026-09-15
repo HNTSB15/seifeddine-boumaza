@@ -1825,19 +1825,19 @@ footer.cv-foot .mono{color:var(--neon)}
   <div class="nx-price-grid">
     <div class="nx-price-card">
       <div class="nx-pname">Standard</div>
-      <div class="nx-pamount">$15<span>/month</span></div>
+      <div class="nx-pamount" id="nxPlanStdPrice">$15<span>/month</span></div>
       <ul class="nx-pfeats">
         <li>NFP, CPI &amp; FOMC economic calendar</li>
         <li>AI Bias + XAUUSD Signal (3 major news)</li>
         <li>Instant background push notifications</li>
         <li>Mobile Home Screen PWA support</li>
       </ul>
-      <button type="button" class="nx-pbtn" style="width:100%;cursor:pointer" onclick="openPlanModal('NewsX AI Standard', 15)">Get Standard Plan ⚡</button>
+      <button type="button" class="nx-pbtn" id="nxPlanStdBtn" style="width:100%;cursor:pointer" onclick="openPlanModal('NewsX AI Standard', 15)">Get Standard Plan ⚡</button>
     </div>
     <div class="nx-price-card popular">
       <div class="nx-badge">Popular</div>
       <div class="nx-pname" style="color:var(--gold)">Pro</div>
-      <div class="nx-pamount">$25<span>/month</span></div>
+      <div class="nx-pamount" id="nxPlanProPrice">$25<span>/month</span></div>
       <ul class="nx-pfeats">
         <li>All high-impact USD economic events</li>
         <li>NFP, CPI, FOMC, PPI, GDP, and ISM PMI</li>
@@ -1845,18 +1845,18 @@ footer.cv-foot .mono{color:var(--neon)}
         <li>Priority instant push notifications</li>
         <li>Full dashboard mailbox &amp; trade history</li>
       </ul>
-      <button type="button" class="nx-pbtn" style="width:100%;cursor:pointer" onclick="openPlanModal('NewsX AI Pro', 25)">Get Pro Plan ⚡</button>
+      <button type="button" class="nx-pbtn" id="nxPlanProBtn" style="width:100%;cursor:pointer" onclick="openPlanModal('NewsX AI Pro', 25)">Get Pro Plan ⚡</button>
     </div>
     <div class="nx-price-card">
       <div class="nx-pname">Ultimate</div>
-      <div class="nx-pamount">$50<span>/month</span></div>
+      <div class="nx-pamount" id="nxPlanUltPrice">$50<span>/month</span></div>
       <ul class="nx-pfeats">
         <li>Everything included in Pro</li>
         <li>Priority: XAUUSD Daily Directional Bias</li>
         <li>Priority: Swing Signals with exact Entry / TP / SL</li>
         <li>Direct 1-on-1 support &amp; upcoming VIP features</li>
       </ul>
-      <button type="button" class="nx-pbtn" style="width:100%;cursor:pointer" onclick="openPlanModal('NewsX AI Ultimate', 50)">Get Ultimate Plan ⚡</button>
+      <button type="button" class="nx-pbtn" id="nxPlanUltBtn" style="width:100%;cursor:pointer" onclick="openPlanModal('NewsX AI Ultimate', 50)">Get Ultimate Plan ⚡</button>
     </div>
   </div>
 </div>
@@ -1876,34 +1876,34 @@ footer.cv-foot .mono{color:var(--neon)}
 <div class="fl-deals-grid">
   <div class="fl-deal-card">
     <div class="fl-deal-badges">
-      <span class="fl-badge-discount">80% OFF</span>
+      <span class="fl-badge-discount" id="flDeal1Badge">80% OFF</span>
       <span class="fl-badge-validity">24H VALIDITY</span>
     </div>
-    <div class="fl-deal-amount">80,000 FLASH <span>USDT</span></div>
+    <div class="fl-deal-amount" id="flDeal1Amount">80,000 FLASH <span>USDT</span></div>
     <div class="fl-timer-box">
       <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"/></svg>
       <span id="flCountdown1" class="mono">71:12:44</span>
     </div>
     <div class="fl-deal-foot">
-      <div class="fl-deal-price">100 <small>USDT</small></div>
-      <button class="fl-deal-btn" onclick="openFlashModal(80000, 100, '24h')">
+      <div class="fl-deal-price" id="flDeal1Price">100 <small>USDT</small></div>
+      <button class="fl-deal-btn" id="flDeal1Btn" onclick="openFlashModal(80000, 100, '24h')">
         <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg> Buy Deal ⚡
       </button>
     </div>
   </div>
   <div class="fl-deal-card ruby">
     <div class="fl-deal-badges">
-      <span class="fl-badge-discount">30% OFF</span>
+      <span class="fl-badge-discount" id="flDeal2Badge">30% OFF</span>
       <span class="fl-badge-validity">24H VALIDITY</span>
     </div>
-    <div class="fl-deal-amount">8,000 FLASH <span>USDT</span></div>
+    <div class="fl-deal-amount" id="flDeal2Amount">8,000 FLASH <span>USDT</span></div>
     <div class="fl-timer-box">
       <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"/></svg>
       <span id="flCountdown2" class="mono">71:12:44</span>
     </div>
     <div class="fl-deal-foot">
-      <div class="fl-deal-price">30 <small>USDT</small></div>
-      <button class="fl-deal-btn" onclick="openFlashModal(8000, 30, '24h')">
+      <div class="fl-deal-price" id="flDeal2Price">30 <small>USDT</small></div>
+      <button class="fl-deal-btn" id="flDeal2Btn" onclick="openFlashModal(8000, 30, '24h')">
         <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg> Buy Deal ⚡
       </button>
     </div>
@@ -2472,6 +2472,62 @@ footer.cv-foot .mono{color:var(--neon)}
   var d1=document.getElementById('cvxDl'), d2=document.getElementById('cvxDl2');
   if(d1)d1.addEventListener('click',dl); if(d2)d2.addEventListener('click',dl);
 
+  // Supabase Configuration
+  var SUPABASE_URL = 'https://kbioxkoifvyivhkzbxke.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_TXezItY2oN4gFgCxDLqZPw_B_ormkoG';
+  var sdb = null;
+  if (window.supabase && typeof window.supabase.createClient === 'function') {
+    try {
+      sdb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    } catch(err){}
+  }
+
+  // Load Live Offers from Supabase
+  function loadLiveOffers() {
+    if (!sdb) return;
+    sdb.from('offers').select('*').eq('is_active', true).then(function(res) {
+      if (res && res.data && res.data.length) {
+        res.data.forEach(function(o) {
+          if (o.id === 'flash_deal_1') {
+            var pEl = document.getElementById('flDeal1Price');
+            var bEl = document.getElementById('flDeal1Badge');
+            var aEl = document.getElementById('flDeal1Amount');
+            var btn = document.getElementById('flDeal1Btn');
+            if (pEl) pEl.innerHTML = o.price_usdt + ' <small>USDT</small>';
+            if (bEl && o.discount_badge) bEl.textContent = o.discount_badge;
+            if (aEl && o.amount) aEl.innerHTML = Number(o.amount).toLocaleString() + ' FLASH <span>USDT</span>';
+            if (btn) btn.setAttribute('onclick', "openFlashModal(" + (o.amount || 80000) + ", " + o.price_usdt + ", '24h')");
+          } else if (o.id === 'flash_deal_2') {
+            var pEl2 = document.getElementById('flDeal2Price');
+            var bEl2 = document.getElementById('flDeal2Badge');
+            var aEl2 = document.getElementById('flDeal2Amount');
+            var btn2 = document.getElementById('flDeal2Btn');
+            if (pEl2) pEl2.innerHTML = o.price_usdt + ' <small>USDT</small>';
+            if (bEl2 && o.discount_badge) bEl2.textContent = o.discount_badge;
+            if (aEl2 && o.amount) aEl2.innerHTML = Number(o.amount).toLocaleString() + ' FLASH <span>USDT</span>';
+            if (btn2) btn2.setAttribute('onclick', "openFlashModal(" + (o.amount || 8000) + ", " + o.price_usdt + ", '24h')");
+          } else if (o.id === 'newsx_standard') {
+            var sp = document.getElementById('nxPlanStdPrice');
+            var sb = document.getElementById('nxPlanStdBtn');
+            if (sp) sp.innerHTML = '$' + o.price_usdt + '<span>/month</span>';
+            if (sb) sb.setAttribute('onclick', "openPlanModal('NewsX AI Standard', " + o.price_usdt + ")");
+          } else if (o.id === 'newsx_pro') {
+            var pp = document.getElementById('nxPlanProPrice');
+            var pb = document.getElementById('nxPlanProBtn');
+            if (pp) pp.innerHTML = '$' + o.price_usdt + '<span>/month</span>';
+            if (pb) pb.setAttribute('onclick', "openPlanModal('NewsX AI Pro', " + o.price_usdt + ")");
+          } else if (o.id === 'newsx_ultimate') {
+            var up = document.getElementById('nxPlanUltPrice');
+            var ub = document.getElementById('nxPlanUltBtn');
+            if (up) up.innerHTML = '$' + o.price_usdt + '<span>/month</span>';
+            if (ub) ub.setAttribute('onclick', "openPlanModal('NewsX AI Ultimate', " + o.price_usdt + ")");
+          }
+        });
+      }
+    }).catch(function(){});
+  }
+  loadLiveOffers();
+
   // Contact form submission
   var cForm = document.getElementById('contactForm');
   if (cForm) {
@@ -2486,10 +2542,9 @@ footer.cv-foot .mono{color:var(--neon)}
       if (btn) { btn.disabled = true; btn.innerHTML = 'Sending message...'; }
 
       var tasks = [];
-      if (window.supabase && typeof window.supabase.createClient === 'function') {
+      if (sdb) {
         try {
-          var sdb = window.supabase.createClient('https://cumutgiboprzqolvcbnm.supabase.co', 'sb_publishable_EJXxq-IIhdlY5A9yqVasVg_QonDOf_Q');
-          tasks.push(sdb.from('contacts').insert({ name: name, email: email, message: message }));
+          tasks.push(sdb.from('messages').insert([{ name: name, email: email, message: message }]));
         } catch(err){}
       }
       if (window.emailjs && typeof window.emailjs.send === 'function') {
