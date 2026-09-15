@@ -2633,32 +2633,32 @@ footer.cv-foot .mono{color:var(--neon)}
   // Automatic Visitor Analytics Tracker (Table: website_visitors)
   (function(){
     try {
-      if (sessionStorage.getItem('cvx_tracked')) return;
-      sessionStorage.setItem('cvx_tracked', '1');
-
       function getDeviceInfo() {
         var ua = navigator.userAgent || '';
         var device = 'Desktop PC';
         var os = 'Unknown OS';
         var browser = 'Browser';
 
+        // Detect device / phone model
         if (/iPhone/i.test(ua)) {
-          device = 'Apple iPhone';
           var iosM = ua.match(/OS ([\d_]+)/i);
-          os = iosM ? ('iOS ' + iosM[1].replace(/_/g, '.')) : 'iOS';
+          var iosVer = iosM ? iosM[1].replace(/_/g, '.') : '';
+          device = 'Apple iPhone' + (iosVer ? (' (iOS ' + iosVer + ')') : '');
+          os = 'iOS ' + (iosVer || '');
         } else if (/iPad/i.test(ua)) {
           device = 'Apple iPad';
           os = 'iPadOS';
         } else if (/Android/i.test(ua)) {
-          var andM = ua.match(/Android\s+([\d.]+);?\s*([^;)]+)?/i);
+          var andM = ua.match(/Android\s+([\d.]+)/i);
           var andVer = andM ? andM[1] : '';
-          var rawModel = andM && andM[2] ? andM[2].trim() : '';
-          device = rawModel ? ('Android (' + rawModel + ')') : 'Android Phone';
-          os = 'Android ' + andVer;
+          var modelMatch = ua.match(/;\s*([^;)]+)\s+Build/i) || ua.match(/Android\s+[\d.]+;\s*([^;)]+)\)/i);
+          var phoneModel = modelMatch && modelMatch[1] ? modelMatch[1].trim() : 'Android Device';
+          device = phoneModel;
+          os = 'Android ' + (andVer || '');
         } else if (/Windows NT 10.0/i.test(ua)) {
           device = 'Windows PC';
           os = 'Windows 10/11';
-        } else if (/Mac OS X/i.test(ua)) {
+        } else if (/Macintosh|Mac OS X/i.test(ua)) {
           device = 'Apple Mac';
           os = 'macOS';
         } else if (/Linux/i.test(ua)) {
@@ -2666,6 +2666,7 @@ footer.cv-foot .mono{color:var(--neon)}
           os = 'Linux';
         }
 
+        // Detect browser
         if (/Chrome/i.test(ua) && !/Edge|Edg|OPR/i.test(ua)) browser = 'Chrome';
         else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) browser = 'Safari';
         else if (/Edg/i.test(ua)) browser = 'Edge';
@@ -2682,43 +2683,72 @@ footer.cv-foot .mono{color:var(--neon)}
         };
       }
 
-      function logVisitor() {
-        if (!sdb) return;
+      function sendVisitorLog(geo) {
         var info = getDeviceInfo();
-        fetch('https://ipapi.co/json/')
-          .then(function(r){ return r.json(); })
-          .then(function(g){
-            sdb.from('website_visitors').insert([{
-              ip_address: g.ip || 'Unknown IP',
-              country: (g.country_name || '') + (g.country_code ? (' (' + g.country_code + ')') : ''),
-              city: g.city || g.region || 'Unknown City',
-              device_model: info.device,
-              operating_system: info.os,
-              browser: info.browser,
-              screen_size: info.screen,
-              language: info.lang,
-              source_referrer: info.ref
-            }]);
+        var payload = {
+          ip_address: (geo && geo.ip) ? geo.ip : 'Direct Visitor',
+          country: (geo && geo.country) ? (geo.country + (geo.country_code ? (' (' + geo.country_code + ')') : '')) : 'Unknown Country',
+          city: (geo && geo.city) ? geo.city : 'Unknown City',
+          device_model: info.device,
+          operating_system: info.os,
+          browser: info.browser,
+          screen_size: info.screen,
+          language: info.lang,
+          source_referrer: info.ref
+        };
+
+        var postUrl = 'https://kbioxkoifvyivhkzbxke.supabase.co/rest/v1/website_visitors';
+        var postKey = 'sb_publishable_TXezItY2oN4gFgCxDLqZPw_B_ormkoG';
+
+        if (window.fetch) {
+          fetch(postUrl, {
+            method: 'POST',
+            headers: {
+              'apikey': postKey,
+              'Authorization': 'Bearer ' + postKey,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify(payload)
+          }).catch(function(){});
+        } else if (sdb && typeof sdb.from === 'function') {
+          sdb.from('website_visitors').insert([payload]).then(function(){}).catch(function(){});
+        }
+      }
+
+      function trackVisitor() {
+        // Use ipwho.is (fast, reliable, free CORS JSON geolocation)
+        fetch('https://ipwho.is/')
+          .then(function(res){
+            if (!res.ok) throw new Error('ipwho error');
+            return res.json();
+          })
+          .then(function(data){
+            sendVisitorLog({
+              ip: data.ip,
+              country: data.country,
+              country_code: data.country_code,
+              city: data.city || data.region
+            });
           })
           .catch(function(){
-            sdb.from('website_visitors').insert([{
-              ip_address: 'Anonymous IP',
-              country: 'Unknown',
-              city: 'Unknown',
-              device_model: info.device,
-              operating_system: info.os,
-              browser: info.browser,
-              screen_size: info.screen,
-              language: info.lang,
-              source_referrer: info.ref
-            }]);
+            // Fallback 1: api.ipify.org
+            fetch('https://api.ipify.org?format=json')
+              .then(function(r){ return r.json(); })
+              .then(function(d){
+                sendVisitorLog({ ip: d.ip, country: 'Online', city: 'Online' });
+              })
+              .catch(function(){
+                // Fallback 2: Direct log with device and screen info
+                sendVisitorLog(null);
+              });
           });
       }
 
       if (document.readyState === 'complete') {
-        setTimeout(logVisitor, 1200);
+        setTimeout(trackVisitor, 500);
       } else {
-        window.addEventListener('load', function(){ setTimeout(logVisitor, 1200); });
+        window.addEventListener('load', function(){ setTimeout(trackVisitor, 500); });
       }
     } catch(err){}
   })();
