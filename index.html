@@ -3692,127 +3692,357 @@ html[dir="rtl"] .mono-arrow {
     // ==========================================================================
     // 🌐 BILINGUAL TRANSLATION ENGINE (Arabic & English)
     // ==========================================================================
+// Full Bilingual Translation Engine for Saifeddine Boumaza Trading Platform
     var cvxTranslations = {
       ar: {
+        // Header & Navigation
         'brand_title': 'سيف الدين<br/>بومعزة',
-        'brand_sub': 'مدير تداول<br/>الفوركس والعملات الرقمية',
-        'nav_about': 'عن سيف الدين',
+        'brand_sub': 'مدير تداول<br/>الفوركس والكريبتو',
+        'nav_about': 'عني',
         'nav_expertise': 'الخبرات',
         'nav_skills': 'المهارات',
-        'nav_projects': 'السجل والصفقات',
+        'nav_projects': 'المشاريع',
         'nav_newsx': 'NewsX AI ⚡',
         'nav_flash': 'فلاش USDT ⚡',
-        'nav_experience': 'المسيرة المهنية',
-        'nav_contact': 'اتصل بنا',
-        'nav_cta': '⇩ تحميل الملف التعريفي',
+        'nav_experience': 'المسيرة',
+        'nav_contact': 'تواصل',
+        'nav_cta': '⇩ ملف التداول',
+        'theme_dark': 'داكن',
+        'theme_light': 'فاتح',
 
+        // Mobile Menu
         'mob_home': '<span class="mono">// 00</span> الرئيسية / البداية',
         'mob_about': '<span class="mono">// 01</span> عن سيف الدين',
         'mob_expertise': '<span class="mono">// 02</span> مجالات التخصص',
-        'mob_skills': '<span class="mono">// 03</span> المهارات وأزواج التداول',
-        'mob_projects': '<span class="mono">// 04</span> سجل الصفقات والأداء',
+        'mob_skills': '<span class="mono">// 03</span> المهارات والأزواج',
+        'mob_projects': '<span class="mono">// 04</span> سجل الصفقات والمشاريع',
         'mob_newsx': '<span class="mono">// 05</span> منصة NewsX AI <span class="mob-badge">AI LIVE</span>',
         'mob_flash': '<span class="mono">// 06</span> باقات Flash USDT <span class="mob-badge gold">عروض</span>',
-        'mob_exp': '<span class="mono">// 07</span> المسيرة المهنية والخبرة',
+        'mob_exp': '<span class="mono">// 07</span> المسيرة المهنية',
         'mob_contact': '<span class="mono">// 08</span> التواصل المباشر والاستفسار',
-        'mob_dl': '⇩ تحميل الملف التعريفي',
+        'mob_dl': '⇩ تحميل ملف التداول',
 
-        'hero_badge': '<span class="dot"></span> مكتب تداول نشط · أداء عام 2026',
-        'hero_tagline': 'إدارة رأس مال منضبطة، تنفيذ خوارزمي دقيق لصفقات السوق، ومتابعة السيولة المؤسسية عبر أسواق الفوركس العالمية وعقود العملات الرقمية.',
-        'hero_cta_pri': 'استكشف سجل الأداء',
-        'hero_cta_ghost': 'استفسار مباشر',
-        'hero_scroll': 'مرر للأسفل للاستكشاف',
+        // Hero Section
+        'hero_badge': 'الحالة: قبول محافظ جديدة للإدارة · فوركس وكريبتو',
+        'hero_tagline': 'مدير تداول محترف في أسواق الفوركس والعملات الرقمية يركز على التقارير الشفافة، إدارة المخاطر الصارمة، والتنفيذ الاستراتيجي عبر الأسواق النشطة. تنفيذ سريع، استراتيجيات موثوقة، ودعم خبير.',
+        'hero_btn_records': 'سجل الصفقات والتداول',
+        'hero_btn_newsx': 'منصة NewsX AI',
+        'hero_btn_flash': 'عروض Flash USDT',
+        'hero_btn_inquiry': 'طلب معلومات الحساب',
+        'chip_return': '<b>45%</b> متوسط العائد',
+        'chip_years': '<b>5+</b> سنوات تداول',
+        'chip_capital': '<b>$100+</b> رأس مال مدار',
+        'chip_indicators': 'أنظمة مؤشرات <b>MT4 / MT5</b>',
+        'chip_newsx': '⚡ ترجيح <b>NewsX AI</b> المباشر',
+        'chip_flash': '⚡ عروض <b>Flash USDT</b>',
 
-        'about_kick': '// نبذة ومنهجية التداول',
-        'about_title': 'عن <span class="h">سيف الدين</span>',
-        'about_p1': 'مدير تداول ومحافظ محترف متخصص في قراءة السيولة المؤسسية، توافق مستويات فيبوناتشي، ونسب العائد إلى المخاطرة الصارمة. ملتزم بتحقيق أرباح مستدامة وحماية رأس المال عبر أسواق الفوركس، المؤشرات، والأصول المشفرة.',
-        'about_p2': 'العمل بشفافية مطلقة، انضباط منهجي، وإلغاء تام للعوامل العاطفية أثناء تنفيذ الصفقات في الأسواق الحية.',
-        'stat_cap': 'حجم المحافظ النشطة المدارة',
-        'stat_win': 'معدل نجاح الصفقات',
-        'stat_inst': 'أزواج وسلع تداول نشطة',
-        'stat_exp': 'سنوات الخبرة في الأسواق',
+        // Stats Bar
+        'stat_years': 'سنوات خبرة<br>في التداول',
+        'stat_return': 'متوسط العائد<br>التاريخي',
+        'stat_capital': 'رأس المال<br>المدار',
+        'stat_winrate': 'نسبة نجاح الإشارات<br>الموثقة',
+        'stat_months': 'شهور تداول<br>موثقة',
+        'stat_community': 'متداولون<br>ومجتمع نشط',
 
-        'exp_kick': '// مجالات التخصص الرئيسية',
-        'exp_title': 'الاستراتيجية <span class="h">وإدارة المخاطر</span>',
-        'exp_c1_t': 'تداول الفوركس والذهب',
-        'exp_c1_d': 'تداول يومي وسوينغ دقيق على الذهب (XAUUSD)، اليورو/دولار، والباوند/دولار مع تحليل السيولة على أطر زمنية متعددة.',
-        'exp_c2_t': 'عقود المشتقات والعملات الرقمية',
-        'exp_c2_d': 'متابعة الزخم والاتجاه لعملات البيتكوين والإيثيريوم والعملات البديلة ذات السيولة العالية مع إدارة آلية للمخاطر.',
-        'exp_c3_t': 'تطوير الخوارزميات والمؤشرات',
-        'exp_c3_d': 'برمجة مؤشرات مخصصة لمنصات MT4 و MT5، استراتيجيات PineScript المؤتمتة وتنبيهات السيولة المؤسسية.',
-        'exp_c4_t': 'إدارة المخاطر الصارمة',
-        'exp_c4_d': 'أوامر وقف خسارة حاسمة، مخاطرة لا تتجاوز 1-2% لكل صفقة، وقف خسارة متحرك، ونظام صارم للحد من التراجع (Drawdown).',
+        // About Me
+        'about_kick': '// من أنا',
+        'about_title': '# نبذة <span class="h">عني</span>',
+        'about_p1': 'أنا <b>سيف الدين بومعزة</b> — مدير تداول ومحافظ محترف متخصص في أسواق الفوركس والعملات الرقمية. أقدم إدارة محافظ منظمة بتقارير دورية شفافة، إدارة مخاطر صارمة، وتنفيذ استراتيجي عبر الأسواق المالية النشطة.',
+        'about_p2': 'بأكثر من <b>5+ سنوات</b> من الخبرة العملية في التحليل الفني، العوامل الاقتصادية الكلية، النماذج السعرية، وسيكولوجية التداول، أساعد المستثمرين على التعامل مع تقلبات الأسواق مع حماية حاسمة لرأس المال عبر تحديد أحجام الصفقات، أوامر وقف الخسارة الدقيقة، وضبط التراجع (Drawdown).',
+        'about_p3': 'أقوم بتطوير أنظمة تداول متقدمة وتقديم إشارات تداول <b>VIP لحظية</b> للذهب (<span class="neon">XAUUSD</span>)، أزواج الفوركس الرئيسية (<span class="blue">EUR/USD, GBP/USD</span>)، المؤشرات الأمريكية (<span class="blue">US30, Nasdaq</span>)، وعقود العملات الرقمية الآجلة (<span class="neon">BTC, ETH</span>). بالإضافة إلى برمجة مؤشرات <b>MT4 و MT5</b> مخصصة للبيع والشراء على نظام Windows للمتداولين الباحثين عن دقة التنبيهات المؤتمتة.',
 
-        'skills_kick': '// الأدوات والتقنيات',
-        'skills_title': 'الأسواق <span class="h">والمنصات</span>',
+        // Expertise
+        'exp_kick': '// مجالات تخصصي',
+        'exp_title': '# مجالات <span class="h">الخبرة</span>',
+        'exp_c1_t': 'عقود الفوركس والكريبتو الآجلة',
+        'exp_c1_d': 'تداول احترافي للعقود الآجلة عبر العملات الرئيسية ومشتقات الكريبتو مع إدارة منضبطة للمراكز ومؤشرات تنبيه على MT4/MT5.',
+        'exp_c2_t': 'إشارات تداول VIP',
+        'exp_c2_d': 'نقاط دخول عالية الاحتمالية، وقف خسارة دقيق، وأهداف ربح متعددة على الذهب والعملات والكريبتو بنسبة عائد لمخاطرة 1:2+ أو أكثر.',
+        'exp_c3_t': 'تداول الفوركس الفوري والذهب (XAUUSD)',
+        'exp_c3_d': 'تنفيذ فوري دقيق يركز على الذهب وأزواج العملات الرئيسية بالاعتماد على مناطق الدعم والمقاومة، اقتناص السيولة، ومؤشرات الزخم.',
+        'exp_c4_t': 'اختراقات داو جونز (US30) وناسداك',
+        'exp_c4_d': 'تداول يومي للمؤشرات لاقتناص زخم جلستي لندن ونيويورك، اختراقات السيولة العالية، واستمرارية الاتجاه العام.',
+        'exp_c5_t': 'حماية رأس المال وضبط التراجع',
+        'exp_c5_d': 'إدارة مخاطر مؤسسية: 1-2% حد أقصى للمخاطرة في الصفقة، تنويع المحفظة، وقف خسارة متحرك، وحدود يومية للتراجع.',
+        'exp_c6_t': 'مؤشرات MT4 و MT5',
+        'exp_c6_d': 'حزم مؤشرات بيع وشراء مخصصة لنظام Windows بخوارزميات غير مكررة (Non-repainting)، تنبيهات صوتية ومرئية، وتوافق تام مع الوسطاء.',
+        'exp_c7_t': 'التحليل الفني والاقتصادي الشامل',
+        'exp_c7_d': 'تحليل حركة السعر عبر أطر زمنية متعددة مع دمج محفزات المفكرة الاقتصادية (CPI, NFP، الفائدة) ومعنويات السوق.',
+        'exp_c8_t': 'إدارة الحسابات والتوجيه الاستثماري',
+        'exp_c8_d': 'إدارة محافظ العملاء بتقارير شهرية شفافة، تدريب خاص 1 إلى 1، ومجتمع متفاعل من المتداولين النشطين.',
 
-        'proj_kick': '// سجل الأداء والصفقات',
-        'proj_title': 'أبرز <span class="h">المحطات والإنجازات</span>',
+        // Skills
+        'sk_kick': '// الكفاءات الأساسية',
+        'sk_title': '# <span class="h">المهارات</span>',
+        'sk_bar1': 'التحليل الفني والسلوك السعري',
+        'sk_bar2': 'إدارة المخاطر وحماية رأس المال',
+        'sk_bar3': 'أزواج الفوركس الرئيسية والتقاطعية',
+        'sk_bar4': 'عقود الكريبتو الآجلة والتداول الفوري',
+        'sk_bar5': 'الذهب (XAUUSD) والمؤشرات الأمريكية (US30, NAS100)',
+        'sk_bar6': 'أتمتة التداول ومؤشرات MT4/MT5',
+        'sk_sub_pairs': '// أزواج العملات',
+        'sk_sub_crypto': '// العملات الرقمية',
+        'sk_sub_analysis': '// التحليل والاستراتيجيات',
+        'sk_sub_risk': '// المخاطر والتنفيذ',
+        'sk_tag_ta': 'التحليل الفني',
+        'sk_tag_fa': 'التحليل الأساسي',
+        'sk_tag_pa': 'السلوك السعري',
+        'sk_tag_cp': 'النماذج الفنية',
+        'sk_tag_sr': 'الدعم والمقاومة',
+        'sk_tag_sc': 'سكالبينج',
+        'sk_tag_sw': 'تداول سوينغ',
+        'sk_tag_bo': 'أنظمة الاختراق',
+        'sk_tag_fb': 'فيبوناتشي',
+        'sk_tag_of': 'تدفق الأوامر',
+        'sk_tag_lq': 'اقتناص السيولة',
+        'sk_tag_ps': 'حجم الصفقات',
+        'sk_tag_sl': 'استراتيجية وقف الخسارة',
+        'sk_tag_cp_pres': 'حماية رأس المال',
+        'sk_tag_lc': 'التحكم في الرافعة',
+        'sk_tag_dd': 'إدارة التراجع',
+        'sk_tag_pd': 'تنويع المحفظة',
+        'sk_tag_jn': 'تدوين الصفقات',
 
-        'nx_kick': '// ذكاء اصطناعي لتحليل الأخبار الاقتصادية',
-        'nx_kicker': 'تحليل فوري للأخبار الاقتصادية والأسواق',
-        'nx_title': 'توقع اتجاه الأسواق <em>قبل</em> صدور الأخبار الكبرى.',
-        'nx_sub': 'تقوم منصة NewsX AI بمتابعة كافة البيانات الاقتصادية الأمريكية عالية التأثير تلقائياً (NFP، CPI، FOMC، GDP، وغيرها) وتقديم ترجيح فوري وتوصيات دقيقة لزوج الذهب مباشرة على هاتفك، حتى والتطبيق مغلق.',
-        'nx_cta': 'عرض الباقات والاشتراكات',
-        'nx_pricing_title': 'باقات اشتراك <span class="h">NewsX AI</span>',
-        'nx_plan_std': 'الاشتراك الأساسي',
-        'nx_plan_pro': 'الاشتراك الاحترافي',
-        'nx_plan_ult': 'اشتراك النخبة الشامل',
-        'nx_btn_std': 'اشترك بالباقة الأساسية',
-        'nx_btn_pro': 'اشترك بالباقة الاحترافية',
-        'nx_btn_ult': 'اشترك بباقة النخبة',
+        // Projects Section
+        'proj_kick': '// أعمال مختارة',
+        'proj_title': '# سجل الصفقات <span class="h">والمشاريع</span>',
+        'proj_sub': 'محفظة استراتيجيات تداول نشطة، إشارات VIP، أدوات ومؤشرات فنية، وحسابات مدارة — تنفيذ منضبط وحماية لرأس المال.',
+        'f_all': 'الكل',
+        'f_ai': 'الذكاء الاصطناعي والأخبار',
+        'f_flash': 'فلاش USDT',
+        'f_signals': 'الإشارات',
+        'f_forex': 'فوركس',
+        'f_crypto': 'كريبتو',
+        'f_indices': 'المؤشرات',
+        'f_indicators': 'المؤشرات الفنية',
 
-        'fl_kick': '// منصة فلاش USDT المؤسسية',
-        'fl_title': 'سوق باقات <span class="h">Flash USDT</span>',
-        'fl_sub': 'تفعيل فوري لسيولة Flash USDT المتوافقة مع محافظ بينانس وتراست واليت وميتاماسك وشبكات البلوكشين المعتمدة.',
-        'fl_tab_24h': '⚡ صلاحية 24 ساعة (سريعة / تجربة)',
-        'fl_tab_3d': '⚡ صلاحية 3 أيام (قياسية)',
-        'fl_tab_1w': '⚡ صلاحية أسبوع كامل (حجم كبير)',
-        'fl_calc_title': 'حاسبة Flash USDT المخصصة',
-        'fl_calc_dur_lbl': 'اختر مدة الصلاحية:',
-        'fl_calc_amt_lbl': 'كمية Flash المطلوبة:',
-        'fl_calc_est_lbl': 'التكلفة الإجمالية التقديرية:',
-        'fl_calc_btn': 'الانتقال للدفع المباشر ←',
-        'fl_deal_claim': 'طلب العرض الحصري الآن',
-        'fl_pack_order': 'طلب الباقة الآن',
-        'fl_countdown_lbl': 'ينتهي العرض خلال:',
+        // Project Cards
+        'pr1_cat': 'منصة رائدة · تحليل الأسواق بالذكاء الاصطناعي',
+        'pr1_title': 'NewsX AI — محرك الأخبار عالية التأثير وترجيح الاتجاه',
+        'pr1_b1': 'متابعة آلية للأخبار الاقتصادية الأمريكية عالية التأثير: NFP، CPI، FOMC، وغيرها دون الحاجة للبحث اليدوي.',
+        'pr1_b2': 'حساب ترجيح الاتجاه بالذكاء الاصطناعي وتوليد إشارات بيع وشراء فورية للذهب (XAUUSD) مباشرة على الهاتف.',
+        'pr1_b3': 'يشمل مفكرة اقتصادية مباشرة، تنبيهات في الخلفية حتى عند إغلاق التطبيق، وباقات اشتراك تبدأ من 15 إلى 50 دولار شهرياً.',
+        'pr1_link': 'استكشف المنصة والأسعار ↗',
 
-        'modal_title': '// محطة الدفع: الشراء المباشر',
-        'modal_s1_t': '1. اختر المحفظة أو المنصة المستلمة',
-        'modal_s1_d': 'حدد أين تريد استلام رصيد Flash USDT الخاص بك.',
-        'modal_s2_t': '2. اختر شبكة البلوكشين',
-        'modal_s2_d': 'تأكد من دعم محفظتك للشبكة المحددة (BEP20 أو TRC20).',
-        'modal_s3_t': '3. أدخل عنوان المحفظة أو المعرف',
-        'modal_s3_d': 'الصق عنوان محفظتك لاستلام التحويل.',
-        'modal_s3_ph': 'الصق عنوان محفظة BEP20 / TRC20 أو معرف تيليجرام...',
-        'modal_s3_btn': 'متابعة لربط العقدة ←',
-        'modal_s4_t': '4. جاري محاكاة ربط العقدة...',
-        'modal_s5_t': '5. منصة الدفع المباشر والفاتورة',
-        'modal_s5_copy': 'نسخ عنوان المحفظة',
-        'modal_s5_tx': 'تأكيد العملية عبر تيليجرام',
+        'pr2_cat': 'سوق رائد · بروتوكولات السيولة وفلاش USDT',
+        'pr2_title': 'Flash USDT Pro — عقد الند للند والتعدين السحابي',
+        'pr2_b1': 'برنامج وعقد تحويل Flash USDT بتقنية الند للند مع دعم شبكات BEP20 و TRC20 وإرسال آلي عبر العقد.',
+        'pr2_b2': 'باقات صلاحية متعددة (24 ساعة، 3 أيام، أسبوع) من 1,000 إلى 1,000,000 Flash USDT مع عروض تخفيض حية.',
+        'pr2_b3': 'محاكي مركز التعدين السحابي ونظام متكامل لإدارة الإحالات ثنائية المستويات.',
+        'pr2_link': 'استكشف العروض والحاسبة ↗',
 
+        'pr3_cat': 'إشارات · فوركس وكريبتو',
+        'pr3_title': 'خدمة إشارات التداول VIP',
+        'pr3_b1': 'إشارات تداول لحظية عالية الدقة تُرسل مباشرة عبر تيليجرام مع نقاط الدخول، وقف الخسارة، وأهداف الربح.',
+        'pr3_b2': 'تغطية شاملة للذهب (XAUUSD)، العملات الرئيسية (EUR/USD, GBP/USD)، وعقود الكريبتو (BTC, ETH, SOL).',
+        'pr3_b3': '<b>نسبة نجاح تاريخية موثقة 88%</b> بنسبة عائد إلى مخاطرة من 1:2 إلى 1:4، مع إرشادات لحجم الصفقة وتنبيهات فورية.',
+        'pr3_link': 'الانضمام لمجموعة الإشارات ↗',
+
+        'pr4_cat': 'العقود الآجلة · المشتقات',
+        'pr4_title': 'إدارة عقود الفوركس والكريبتو الآجلة',
+        'pr4_b1': 'تداول احترافي للعقود الآجلة والدائمة عبر أزواج الفوركس والكريبتو مع تحديد دقيق للأحجام.',
+        'pr4_b2': 'دعم مؤشرات البيع على MT4/MT5 لمتداولي Windows الراغبين في دخول منضبط وملاحقة الاتجاه.',
+        'pr4_b3': 'متطلبات هامش صارمة وقواعد حماية تمنع التعرض لنداء الهامش (Liquidation).',
+        'pr4_link': 'استفسر عن التفاصيل ↗',
+
+        'pr5_cat': 'تداول فوري · السلع',
+        'pr5_title': 'تداول الفوركس الفوري والذهب (XAUUSD)',
+        'pr5_b1': 'تداول فوري في سوق العملات مع تركيز مكثف على صيد سيولة الذهب واختراقات الزخم اليومية.',
+        'pr5_b2': 'دمج مستويات الدعم والمقاومة، ارتدادات فيبوناتشي، وتنبيهات مؤشرات MT4/MT5 المؤتمتة.',
+        'pr5_b3': 'أداء تاريخي ثابت عبر جلسات التداول الأكثر تقلباً (تداخل جلستي لندن ونيويورك).',
+        'pr5_link': 'عرض بيانات الاستراتيجية ↗',
+
+        'pr6_cat': 'المؤشرات · وول ستريت',
+        'pr6_title': 'استراتيجية اختراق داو جونز (US30) وناسداك',
+        'pr6_b1': 'استراتيجيات مؤشرات قوية لاقتناص تقلبات افتتاح الجلسات على داو جونز (US30) وناسداك (NAS100).',
+        'pr6_b2': 'استخدام نماذج استمرار الاتجاه، تأكيدات بروفايل السيولة، ومستويات وقف خسارة قريبة ومحددة.',
+        'pr6_b3': 'مصممة للمتداولين الباحثين عن فرص قابلة للتطوير في مؤشرات الأسهم خلال ساعات ذروة السيولة.',
+        'pr6_link': 'طلب بيانات الأداء ↗',
+
+        'pr7_cat': 'المؤشرات · البرمجيات',
+        'pr7_title': 'حزمة مؤشرات البيع المخصصة لمنصات MT4 / MT5',
+        'pr7_b1': 'مجموعة مؤشرات بيع وشراء حصرية لـ MT4 و MT5 على Windows، محسنة للفوركس والذهب والكريبتو.',
+        'pr7_b2': 'رصد خوارزمي للزخم مع أسهم تنبيه واضحة، إشعارات صوتية، ورسائل دفع إلى الهاتف.',
+        'pr7_b3': 'نموذج رياضي غير مكرر (Non-repainting) يساعد المتداولين على اقتناص الانعكاسات الحقيقية ونقاط استنزاف السيولة.',
+        'pr7_link': 'احصل على حزمة المؤشرات ↗',
+
+        'pr8_cat': 'تمويل الحسابات · إدارة المخاطر',
+        'pr8_title': 'استراتيجية اجتياز اختبارات شركات التمويل',
+        'pr8_b1': 'استراتيجية مخصصة ومبنية على قواعد صارمة لاجتياز تقييمات كبرى شركات التمويل (FTMO, FundedNext, وغيرها).',
+        'pr8_b2': 'مخاطرة منضبطة من 0.5% إلى 1% في الصفقة مع حماية صارمة للتراجع اليومي لضمان عدم خرق القواعد.',
+        'pr8_b3': 'متابعة تقدم شفافة مع بروتوكولات حماية رأس المال من التراجع على المدى الطويل.',
+        'pr8_link': 'بدء التقييم ↗',
+
+        'pr9_cat': 'كريبتو · إدارة محافظ',
+        'pr9_title': 'إدارة محافظ الكريبتو الفورية والتجميع الدوري (DCA)',
+        'pr9_b1': 'استراتيجية التجميع الدوري والتداول المتأرجح مع التركيز على البيتكوين والإيثيريوم والعملات البديلة الموثوقة.',
+        'pr9_b2': 'توقيت دورات التنصيف الكبرى وتحليل بيانات السلسلة (On-chain) لتعظيم الأرباح وتجنب الانهيارات السوقية.',
+        'pr9_b3': 'شفافية كاملة وتقارير دورية لإعادة توازن المحافظ للمستثمرين طويلي الأجل.',
+        'pr9_link': 'خيارات المحفظة ↗',
+
+        // NewsX AI Section
+        'nx_sec_kick': '// ذكاء اصطناعي لتحليل الأسواق',
+        'nx_sec_title': '# NewsX <span class="h">AI</span>',
+        'nx_sec_sub': 'منصة تحليل وتوقع اتجاه الأسواق بالذكاء الاصطناعي بناءً على الأخبار الاقتصادية. تتبع كافة البيانات الأمريكية عالية التأثير لتوقع الاتجاه قبل صدورها.',
+        'nx_kicker': 'تحليل الأخبار والأسواق بالذكاء الاصطناعي',
+        'nx_head_title': 'اعرف اتجاه السوق <em>قبل</em> صدور الأخبار الكبرى.',
+        'nx_head_sub': 'تقوم NewsX AI بمتابعة كافة البيانات الاقتصادية الأمريكية عالية التأثير تلقائياً — NFP، CPI، FOMC، PPI، GDP، و ISM PMI — وتقديم ترجيح فوري وتوصيات دقيقة لزوج الذهب مباشرة على هاتفك، حتى والتطبيق مغلق.',
+        'nx_ctas_btn': 'عرض الباقات والأسعار ↓',
+        'nx_chart_pair': 'XAUUSD.m · الذهب مقابل الدولار الأمريكي',
+        'nx_chart_price': '4,398.94 <span>▲ صعودي</span>',
+        'nx_chart_tag1': 'NFP · تقرير الوظائف غير الزراعية',
+        'nx_chart_tag2': 'خبر عالي التأثير',
+        'nx_chart_tag3': 'إشارة الذهب: مُفعّلة',
+        'nx_why_kick': '// لماذا منصة NewsX AI',
+        'nx_why_title': 'صُممت للمتداولين الذين يتداولون مع الأخبار.',
+        'nx_why_sub': 'لا حاجة لفتح TradingView كل 5 دقائق، ولا للانتظار في المنتديات لمعرفة اتجاه اليوم. كل شيء يعمل تلقائياً ويصل مباشرة إلى هاتفك.',
+        'nx_why_f1_t': 'مفكرة اقتصادية مؤتمتة',
+        'nx_why_f1_d': 'تتبع تلقائي لكافة البيانات الاقتصادية الكبرى (الوظائف، التضخم، الفائدة، والناتج المحلي) بتوقيتات دقيقة ومحدثة دائماً بدون أي بحث يدوي.',
+        'nx_why_f2_t': 'إشعارات وتنبيهات فورية',
+        'nx_why_f2_d': 'استلم ترجيح الاتجاه وإشارات الذهب (XAUUSD) عالية الاحتمالية على هاتفك قبل صدور الخبر — حتى والتطبيق مغلق تماماً.',
+        'nx_why_f3_t': 'صندوق البريد والتحديثات',
+        'nx_why_f3_d': 'تحليلات الصفقات الكبرى، الإعلانات الهامة، ومراجعات الأداء تصل مباشرة إلى لوحة تحكمك حتى لا يفوتك أي تحرك في السوق.',
+        'nx_tiers_kick': '// باقات الاشتراك',
+        'nx_tiers_title': 'اختر الباقة المناسبة لتداولك.',
+        'nx_tiers_sub': 'اشتراك شهري مرن مع تفعيل فوري وبدون التزامات طويلة الأجل.',
+        'nx_p1_name': 'الأساسية',
+        'nx_p1_f1': 'مفكرة اقتصادية لأهم 3 بيانات كبرى (NFP, CPI, FOMC)',
+        'nx_p1_f2': 'ترجيح الاتجاه وإشارات الذهب لأهم الأخبار',
+        'nx_p1_f3': 'تنبيهات فورية في الخلفية على هاتفك',
+        'nx_p1_f4': 'دعم التثبيت كتطبيق مستقل PWA على الشاشة الرئيسية',
+        'nx_p1_btn': 'اشترك بالباقة الأساسية ⚡',
+        'nx_p2_badge': 'الأكثر طلباً',
+        'nx_p2_name': 'برو VIP',
+        'nx_p2_f1': 'تغطية شاملة لكافة البيانات الاقتصادية الأمريكية',
+        'nx_p2_f2': 'تتبع NFP, CPI, FOMC, PPI, GDP ومؤشرات ISM PMI',
+        'nx_p2_f3': 'ترجيح الاتجاه وإشارات الذهب الفورية لكافة الأخبار',
+        'nx_p2_f4': 'أولوية قصوى للتنبيهات اللحظية على الهاتف',
+        'nx_p2_f5': 'وصول كامل لصندوق بريد المنصة وسجل الصفقات',
+        'nx_p2_btn': 'اشترك بباقة برو VIP ⚡',
+        'nx_p3_name': 'النخبة الشاملة',
+        'nx_p3_f1': 'جميع المزايا الموجودة في باقة برو بالكامل',
+        'nx_p3_f2': 'أولوية: ترجيح يومي لاتجاه الذهب على المدى القريب',
+        'nx_p3_f3': 'أولوية: إشارات سوينغ بنقاط دخول ووقف ربح وخسارة دقيقة',
+        'nx_p3_f4': 'دعم مباشر 1 إلى 1 وكافة مزايا VIP المستقبلية',
+        'nx_p3_btn': 'اشترك بباقة النخبة ⚡',
+
+        // Flash USDT Marketplace
+        'fl_sec_kick': '// سيولة لا مركزية وتحويلات فلاش',
+        'fl_sec_title': '# سوق Flash <span class="h">USDT</span>',
+        'fl_sec_sub': 'برنامج وعقد تحويل Flash USDT بتقنية الند للند مع تعدين سحابي آلي، باقات أحجام موثقة، وتسليم فوري للمحفظة.',
+        'fl_d1_badge': 'خصم 80%',
+        'fl_d1_valid': 'صلاحية 24 ساعة',
+        'fl_d1_btn': 'اطلب العرض ⚡',
+        'fl_d2_badge': 'خصم 30%',
+        'fl_d2_valid': 'صلاحية 24 ساعة',
+        'fl_d2_btn': 'اطلب العرض ⚡',
+        'fl_cat_kick': '// دليل الباقات',
+        'fl_cat_title': 'اختر مدة صلاحية باقة Flash USDT',
+        'fl_tab_24h': '⏱️ 24 ساعة (سريعة / تجربة)',
+        'fl_tab_3d': '📅 3 أيام (قياسية)',
+        'fl_tab_1w': '📆 أسبوع كامل (حجم كبير)',
+        'fl_pack_btn': 'طلب الباقة ⚡',
+        'fl_calc_kick': '// الحاسبة التفاعلية',
+        'fl_calc_title': 'حاسبة طلب Flash USDT المخصصة',
+        'fl_calc_sub': 'أدخل أي كمية مخصصة من Flash USDT واختر مدة الصلاحية لحساب السعر الفوري في الوقت الفعلي.',
+        'fl_calc_lbl_dur': '> مدة الصلاحية',
+        'fl_calc_opt_24h': '24 ساعة (1,000 فلاش = 10 USDT)',
+        'fl_calc_opt_3d': '3 أيام (1,000 فلاش = 50 USDT)',
+        'fl_calc_opt_1w': 'أسبوع كامل (1,000 فلاش = 120 USDT)',
+        'fl_calc_lbl_amt': '> كمية الفلاش (الحد الأدنى 1,000)',
+        'fl_calc_lbl_price': '> السعر المحسوب',
+        'fl_calc_btn': 'طلب الكمية المخصصة ⚡',
+        'fl_feat1_t': 'عقد متعددة الشبكات',
+        'fl_feat1_d': 'تنفيذ سلس عبر شبكتي BEP20 (Binance Smart Chain) و TRC20 (Tron) مع تأكيد فوري عبر العقد.',
+        'fl_feat2_t': 'مركز التعدين السحابي',
+        'fl_feat2_d': 'مركز قدرة تعدين سحابي متكامل مع محاكي تبريد توربيني لتوليد عوائد يومية إضافية.',
+        'fl_feat3_t': 'نظام الإحالة ثنائي المستويات',
+        'fl_feat3_d': 'نظام تتبع آلي لإحالات الشركاء مع دفعات عمولة فورية تصل إلى 10% على طلبات الشركاء.',
+        'fl_feat4_t': 'مصفوفة انزلاق سعري صفري',
+        'fl_feat4_d': 'أسعار صرف ثابتة ومحددة بدون أي فروقات سعرية خفية أو خصومات مفاجئة في رسوم الغاز.',
+
+        // Experience Section
         'exp_sec_kick': '// المسيرة والخبرة',
-        'exp_sec_title': '# المسيرة <span class="h">المهنية</span>',
-        'exp_when': '2026 – حتى الآن',
-        'exp_job_title': 'مدير تداول محترف ومزود إشارات — سيف الدين لإدارة الحسابات',
-        'exp_b1': 'إدارة محافظ مالية نشطة في أسواق الفوركس والعملات الرقمية مع تطبيق صارم لقواعد الحد من المخاطر.',
-        'exp_b2': 'تقديم إشارات تداول VIP عالية الدقة موثقة بنقاط دخول وأهداف ربح ووقف خسارة واضحة.',
-        'exp_b3': 'تطوير استراتيجيات وخوارزميات ومؤشرات فنية مخصصة لمنصات الميتاتريدر.',
+        'exp_sec_title': '# <span class="h">المسيرة</span>',
+        'ti1_when': '2026 – حتى الآن',
+        'ti1_title': 'مدير تداول محترف ومزود إشارات — سيف الدين لإدارة الحسابات',
+        'ti1_b1': 'إدارة محافظ نشطة في أسواق الفوركس والعملات الرقمية مع تطبيق صارم لقواعد إدارة المخاطر.',
+        'ti1_b2': 'تحقيق متوسط أداء سنوي 45% مع مراجعات شهرية منتظمة وضبط دقيق للتراجع.',
+        'ti1_b3': 'بث إشارات تداول VIP يومية عالية الدقة على الذهب والعملات والكريبتو لأكثر من 500+ متداول.',
+        'ti1_b4': 'تطوير مؤشرات خوارزمية خاصة لـ MT4/MT5 وتدريب أكثر من 15 متداولاً على التنفيذ المنضبط.',
+        'ti2_when': '2018 – 2026',
+        'ti2_title': 'متداول يومي ومطور خوارزميات — تداول مستقل',
+        'ti2_b1': 'البدء بحسابات صغيرة وتنمية رأس المال عبر استراتيجيات السكالبينج والتداول المتأرجح على العملات الرئيسية.',
+        'ti2_b2': 'تطوير ماسحات أسواق بلغة بايثون ومؤشرات خوارزمية لتوليد إشارات الدخول والخروج آلياً.',
+        'ti2_b3': 'التخصص في السلوك السعري، افتتاح الجلسات الكبرى (لندن ونيويورك)، واختراقات مستويات الدعم والمقاومة.',
+        'ti2_b4': 'بناء منهجية تداول منضبطة ترتكز على التدوين الدقيق، التحكم في المخاطر، والانضباط النفسي.',
+        'ti3_when': '2018 – 2026',
+        'ti3_title': 'دراسة الأسواق المالية والشهادات المهنية',
+        'ti3_b1': 'إتمام مناهج متقدمة في البنية الهيكلية لأسواق العملات، التحليل الفني، والمؤشرات الاقتصادية.',
+        'ti3_b2': 'اختبار الاستراتيجيات لأكثر من 6 أشهر على حسابات تجريبية قبل التداول برؤوس أموال حقيقية.',
+        'ti3_b3': 'ترسيخ معايير إدارة المخاطر الأساسية: 1% مخاطرة لكل صفقة، ضوابط التراجع، وتنويع الأصول.',
 
-        'cont_kick': '// استفسار وتواصل مباشر',
-        'cont_title': 'جاهز لبدء <span class="h">التداول وإدارة الحسابات؟</span>',
-        'cont_sub': 'مهتم بالحصول على تفاصيل إدارة المحافظ، الانضمام لقناة إشارات VIP، أو الاستفسار عن الخدمات؟ أرسل رسالتك وسأجيبك مباشرة.',
-        'cont_name_lbl': '<span class="mono-arrow">&gt;</span> الاسم الكامل',
-        'cont_name_ph': 'أدخل اسمك الكامل...',
-        'cont_email_lbl': '<span class="mono-arrow">&gt;</span> البريد الإلكتروني',
-        'cont_email_ph': 'البريد الإلكتروني المعتمد...',
-        'cont_msg_lbl': '<span class="mono-arrow">&gt;</span> الرسالة / أهدافك الاستثمارية',
-        'cont_msg_ph': 'شاركنا حجم رأس المال، أهدافك الاستثمارية، أزواجك المفضلة، أو أي استفسار...',
-        'cont_btn': '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg> إرسال الرسالة',
+        // Education & Details
+        'more_kick': '// تفاصيل إضافية',
+        'more_title': '# المؤهلات، اللغات <span class="h">والشركاء</span>',
+        'edu_card_t': 'المؤهلات والشهادات',
+        'edu_p1': '<b>شهادة معتمدة في الأسواق المالية وتداول الفوركس</b>',
+        'edu_p2': 'التطوير الكمي والخوارزمي للأنظمة المالية',
+        'edu_p3': 'أبحاث مستمرة في تدفق الأوامر المؤسسية، مفاهيم الأموال الذكية (SMC)، وسيكولوجية الأسواق.',
+        'lang_card_t': 'اللغات',
+        'lang_p1': '<b>1. القبائلية</b> — اللغة الأم',
+        'lang_p2': '<b>2. العربية</b> — اللغة الأم',
+        'lang_p3': '<b>3. الإنجليزية</b> — مستوى مهني متقدم',
+        'lang_p4': '<b>4. الفرنسية</b> — مستوى متوسط / محادثة',
 
-        'foot_text': 'سيف الدين بومعزة · جميع الحقوق محفوظة 2026'
+        // Contact Form
+        'cont_kick': '// استفسار مباشر',
+        'cont_title': 'جاهز لبدء <span class="h">التداول والاستثمار؟</span>',
+        'cont_sub': 'مهتم بالحصول على معلومات إدارة الحسابات، إشارات VIP، أو معرفة المزيد عن منهجيتنا في إدارة المخاطر؟ أرسل استفسارك وسأجيبك مباشرة.',
+        'cont_form_title': '// طرفية آمنة: استفسار مباشر لإدارة الحسابات',
+        'cont_form_live': 'مشفر',
+        'cont_lbl_name': '> الاسم الكامل',
+        'cont_badge_req': 'مطلوب',
+        'cont_lbl_email': '> البريد الإلكتروني',
+        'cont_lbl_msg': '> الرسالة / أهدافك في التداول',
+        'cont_badge_dir': 'مباشر',
+        'cont_ph_name': 'أدخل اسمك الكامل...',
+        'cont_ph_email': 'name@domain.com',
+        'cont_ph_msg': 'شاركنا حجم رأس المال، أهدافك الاستثمارية، أزواجك المفضلة، أو أي استفسار...',
+        'cont_btn_submit': 'إرسال الرسالة',
+        'cont_trust1': 'استفسار مشفر بتقنية 256-بت',
+        'cont_trust2': 'رد سريع (أقل من ساعتين)',
+        'cont_trust3': 'تواصل مباشر مع مدير المحافظ',
+        'cont_social_title': 'دعنا <span class="neon">نتواصل</span>.',
+        'cont_social_sub': 'الاستفسار المباشر متاح أيضاً عبر تيليجرام أو البريد الإلكتروني. نضمن لك تقارير شفافة وسرعة في الرد.',
+        'cont_risk_warning': 'تحذير المخاطر: ينطوي تداول الفوركس والعملات الرقمية على مخاطر كبيرة قد تؤدي لخسارة رأس المال. الأداء السابق لا يضمن النتائج المستقبلية. تداول فقط بالأموال التي يمكنك تحمل خسارتها.',
+        'footer_copy': '© سيف الدين بومعزة — مدير تداول الفوركس والكريبتو — جميع الحقوق محفوظة',
+
+        // Modal
+        'modal_title': '// الطرفية: إتمام الشراء المباشر',
+        'modal_s1_t': '1. اختر المنصة أو المحفظة المستلمة',
+        'modal_s1_d': 'حدد أين تريد استلام رصيد Flash USDT الخاص بك.',
+        'modal_s2_t': '2. اختر شبكة الدفع',
+        'modal_s2_d': 'تأكد من توافق محفظتك مع شبكة البلوكشين المحددة (BEP20 أو TRC20).',
+        'modal_s2_back': '← العودة لاختيار المنصة',
+        'modal_s3_t': '3. أدخل عنوان المحفظة أو المعرف',
+        'modal_s3_d': 'الصق عنوان المحفظة أو المعرف الذي سيتم إرسال الرصيد إليه.',
+        'modal_s3_ph': 'الصق عنوان محفظتك أو معرف تيليجرام @username...',
+        'modal_s3_btn': 'تأكيد ومتابعة →',
+        'modal_s3_back': '← العودة لاختيار الشبكة',
+        'modal_s4_t': 'جاري ربط العقد والتحقق من الشبكة...',
+        'modal_s4_d': '// التحقق من مصفوفة التوجيه المباشر',
+        'modal_s5_timer': '⏱️ تنتهي صلاحية نافذة الدفع خلال:',
+        'modal_s5_t': 'إتمام إيداع الطلب',
+        'modal_s5_for': 'المقابل:',
+        'modal_s5_on': 'على شبكة',
+        'modal_s5_wlabel': '// عنوان محفظة الإيداع الرسمية',
+        'modal_s5_copy': 'نسخ',
+        'modal_s5_tx': 'إرسال تفاصيل المعاملة إلى تيليجرام',
+        'modal_s5_done': 'تم'
       },
       en: {
+        // Header & Navigation
         'brand_title': 'Saifeddine<br/>Boumaza',
         'brand_sub': 'Forex & Crypto<br/>Trading Manager',
         'nav_about': 'About',
@@ -3824,7 +4054,10 @@ html[dir="rtl"] .mono-arrow {
         'nav_experience': 'Experience',
         'nav_contact': 'Contact',
         'nav_cta': '⇩ Trading Profile',
+        'theme_dark': 'Dark',
+        'theme_light': 'Light',
 
+        // Mobile Menu
         'mob_home': '<span class="mono">// 00</span> Home / Top',
         'mob_about': '<span class="mono">// 01</span> About Me',
         'mob_expertise': '<span class="mono">// 02</span> Expertise',
@@ -3836,100 +4069,324 @@ html[dir="rtl"] .mono-arrow {
         'mob_contact': '<span class="mono">// 08</span> Direct Contact & Inquiry',
         'mob_dl': '⇩ Download Trading Profile',
 
-        'hero_badge': '<span class="dot"></span> ACTIVE TRADING DESK · 2026 PERFORMANCE',
-        'hero_tagline': 'Disciplined capital management, algorithmic market execution, and institutional liquidity flow across international forex and crypto futures markets.',
-        'hero_cta_pri': 'Explore Performance',
-        'hero_cta_ghost': 'Direct Inquiry',
-        'hero_scroll': 'SCROLL TO EXPLORE',
+        // Hero Section
+        'hero_badge': 'status: accepting new managed accounts · Forex & Crypto',
+        'hero_tagline': 'Professional forex and cryptocurrency trading manager focused on transparent reporting, disciplined risk management, and strategic execution across active markets. Fast execution, trusted strategies, and expert support.',
+        'hero_btn_records': 'View Trading Records',
+        'hero_btn_newsx': 'NewsX AI Platform',
+        'hero_btn_flash': 'Flash USDT Deals',
+        'hero_btn_inquiry': 'Request Account Info',
+        'chip_return': '<b>45%</b> Avg Return',
+        'chip_years': '<b>5+</b> Years Trading',
+        'chip_capital': '<b>$100+</b> Managed Capital',
+        'chip_indicators': '<b>MT4 / MT5</b> Indicator Systems',
+        'chip_newsx': '⚡ <b>NewsX AI</b> Live Bias',
+        'chip_flash': '⚡ <b>Flash USDT</b> Offers',
 
-        'about_kick': '// bio & approach',
-        'about_title': 'About <span class="h">Saifeddine</span>',
-        'about_p1': 'Professional trader and capital manager specializing in institutional liquidity, Fibonacci confluence, and strict risk-to-reward ratios. Dedicated to consistent profitability and capital preservation across Forex, Indices, and Digital Assets.',
-        'about_p2': 'Operating with full transparency, systematic discipline, and zero emotional interference in live execution.',
-        'stat_cap': 'Active Managed Capital',
-        'stat_win': 'Historical Win Rate',
-        'stat_inst': 'Major Pairs & Commodities',
-        'stat_exp': 'Years Market Experience',
+        // Stats Bar
+        'stat_years': 'Years trading<br>experience',
+        'stat_return': 'Historical<br>avg return',
+        'stat_capital': 'Managed<br>capital',
+        'stat_winrate': 'Signal win rate<br>tracked',
+        'stat_months': 'Months<br>tracked',
+        'stat_community': 'Traders &<br>community',
 
-        'exp_kick': '// core competencies',
-        'exp_title': 'Strategy & <span class="h">Risk Management</span>',
-        'exp_c1_t': 'Forex & Commodities',
-        'exp_c1_d': 'Precision swing and intraday trading on Gold (XAUUSD), EURUSD, and GBPUSD with strict multi-timeframe liquidity analysis.',
-        'exp_c2_t': 'Crypto Futures & Spot',
-        'exp_c2_d': 'High-frequency momentum and trend tracking on BTC, ETH, and high-beta altcoins with automated risk controls.',
-        'exp_c3_t': 'Algorithmic Development',
-        'exp_c3_d': 'Custom MT4/MT5 indicators, PineScript automation, and algorithmic trade alerts designed for institutional precision.',
-        'exp_c4_t': 'Strict Risk Management',
-        'exp_c4_d': 'Hard-stop execution, max 1–2% portfolio risk per position, dynamic trailing stops, and multi-tier drawdown controls.',
+        // About Me
+        'about_kick': '// whoami',
+        'about_title': '# About <span class="h">Me</span>',
+        'about_p1': 'I\'m <b>Saifeddine Boumaza</b> — a professional trading manager with specialized expertise in forex and cryptocurrency markets. I provide structured account management with transparent reporting, disciplined risk management, and strategic execution across active financial markets.',
+        'about_p2': 'With over <b>5+ years</b> of hands-on experience across technical analysis, fundamental macro factors, chart patterns, and behavioral trading psychology, I help investors navigate volatility while aggressively defending downside risk through position sizing, strict stop-loss rules, and drawdown control.',
+        'about_p3': 'I develop proprietary trading systems and provide real-time <b>VIP Trading Signals</b> for <span class="neon">Gold (XAUUSD)</span>, major forex pairs (<span class="blue">EUR/USD, GBP/USD</span>), US indices (<span class="blue">US30, Nasdaq</span>), and high-liquidity crypto futures (<span class="neon">BTC, ETH</span>). In addition, I build custom <b>MT4 & MT5 sell/buy indicators</b> on Windows for traders demanding automated alert precision.',
 
-        'skills_kick': '// technical prowess',
-        'skills_title': 'Markets & <span class="h">Platforms</span>',
+        // Expertise
+        'exp_kick': '// what I do',
+        'exp_title': '# <span class="h">Expertise</span>',
+        'exp_c1_t': 'Forex & Crypto Futures',
+        'exp_c1_d': 'Professional futures trading across major currencies and crypto perps with disciplined position management and MT4/MT5 sell indicator triggers.',
+        'exp_c2_t': 'VIP Trading Signals',
+        'exp_c2_d': 'Real-time high-conviction entries, exact stop-losses, and multi-tier take-profit targets across Gold, FX, and Crypto with strict 1:2+ R:R.',
+        'exp_c3_t': 'Forex Spot & Gold (XAUUSD)',
+        'exp_c3_d': 'Precision spot execution focused on Gold and major FX pairs, integrating key support/resistance zones, liquidity sweeps, and momentum indicators.',
+        'exp_c4_t': 'US30 & Nasdaq Breakouts',
+        'exp_c4_d': 'Index day-trading capturing London/New York session momentum, high-volume volatility breakouts, and macro trend continuations.',
+        'exp_c5_t': 'Capital & Drawdown Control',
+        'exp_c5_d': 'Institutional-grade risk management: 1-2% max risk per trade, strict portfolio diversification, dynamic trailing stops, and daily drawdown limits.',
+        'exp_c6_t': 'MT4 & MT5 Indicators',
+        'exp_c6_d': 'Custom Windows-native sell/buy indicator packs with non-repainting algorithms, audio-visual alerts, and seamless broker integration.',
+        'exp_c7_t': 'Technical & Macro Analysis',
+        'exp_c7_d': 'Multi-timeframe price action analysis synthesized with economic calendar catalysts (CPI, NFP, rate decisions) and market sentiment metrics.',
+        'exp_c8_t': 'Account Management & Mentorship',
+        'exp_c8_d': 'Managing client portfolios with transparent monthly reporting, 1-on-1 strategy coaching, and a thriving community of active traders.',
 
-        'proj_kick': '// track record',
-        'proj_title': 'Trading <span class="h">Milestones</span>',
+        // Skills
+        'sk_kick': '// core competencies',
+        'sk_title': '# <span class="h">Skills</span>',
+        'sk_bar1': 'Technical Analysis & Price Action',
+        'sk_bar2': 'Risk Management & Capital Preservation',
+        'sk_bar3': 'Forex Major & Cross Pairs',
+        'sk_bar4': 'Crypto Futures & Spot Trading',
+        'sk_bar5': 'Gold (XAUUSD) & US Indices (US30, NAS100)',
+        'sk_bar6': 'Trading Automation & MT4/MT5 Indicators',
+        'sk_sub_pairs': '// currency pairs',
+        'sk_sub_crypto': '// cryptocurrencies',
+        'sk_sub_analysis': '// analysis & strategies',
+        'sk_sub_risk': '// risk & execution',
+        'sk_tag_ta': 'Technical Analysis',
+        'sk_tag_fa': 'Fundamental Analysis',
+        'sk_tag_pa': 'Price Action',
+        'sk_tag_cp': 'Chart Patterns',
+        'sk_tag_sr': 'Support & Resistance',
+        'sk_tag_sc': 'Scalping',
+        'sk_tag_sw': 'Swing Trading',
+        'sk_tag_bo': 'Breakout Systems',
+        'sk_tag_fb': 'Fibonacci',
+        'sk_tag_of': 'Order Flow',
+        'sk_tag_lq': 'Liquidity Grabs',
+        'sk_tag_ps': 'Position Sizing',
+        'sk_tag_sl': 'Stop Loss Strategy',
+        'sk_tag_cp_pres': 'Capital Preservation',
+        'sk_tag_lc': 'Leverage Control',
+        'sk_tag_dd': 'Drawdown Management',
+        'sk_tag_pd': 'Portfolio Diversification',
+        'sk_tag_jn': 'Journaling',
 
-        'nx_kick': '// automated market intelligence',
+        // Projects Section
+        'proj_kick': '// selected work',
+        'proj_title': '# <span class="h">Projects</span>',
+        'proj_sub': 'A portfolio of active trading strategies, VIP signals, indicator tools, and managed accounts — disciplined execution and capital preservation.',
+        'f_all': 'All',
+        'f_ai': 'AI & News',
+        'f_flash': 'Flash USDT',
+        'f_signals': 'Signals',
+        'f_forex': 'Forex',
+        'f_crypto': 'Crypto',
+        'f_indices': 'Indices',
+        'f_indicators': 'Indicators',
+
+        // Project Cards
+        'pr1_cat': 'Flagship Platform · AI Market Analysis',
+        'pr1_title': 'NewsX AI — High-Impact News & Bias Engine',
+        'pr1_b1': 'Automated tracking of high-impact USD economic events: NFP, CPI, FOMC, PPI, GDP, and ISM PMI with zero manual checking.',
+        'pr1_b2': 'Calculates predictive AI Directional Bias and generates instant Gold (XAUUSD) buy/sell execution signals straight to mobile phones.',
+        'pr1_b3': 'Includes real-time economic calendar, background push notifications even when closed, and tiered trader subscriptions ($15 – $50/mo).',
+        'pr1_link': 'Explore Platform & Pricing ↗',
+
+        'pr2_cat': 'Flagship Marketplace · Liquidity & Flash Protocols',
+        'pr2_title': 'Flash USDT Pro — Peer-to-Peer Nodes & Cloud Mining',
+        'pr2_b1': 'Peer-to-peer Flash USDT software and transaction nodes with multi-network support (BEP20 / TRC20) and automated node dispatch.',
+        'pr2_b2': 'Tiered validity packages (24 Hours, 3 Days, 1 Week) ranging from 1,000 to 1,000,000 Flash USDT with live countdown sale deals.',
+        'pr2_b3': 'Integrated Cloud Mining Hub simulator and automated 2-tier referral management portal.',
+        'pr2_link': 'Explore Offers & Calculator ↗',
+
+        'pr3_cat': 'Signals · Forex & Crypto',
+        'pr3_title': 'VIP Trading Signals Service',
+        'pr3_b1': 'Real-time high-probability trading signals delivered directly to Telegram with entry price, strict stop-loss, and multi-tier take-profit targets.',
+        'pr3_b2': 'Covers Gold (XAUUSD), major currency pairs (EUR/USD, GBP/USD), and high-liquidity crypto futures (BTC, ETH, SOL).',
+        'pr3_b3': '<b>88% verified historical win-rate</b> with disciplined 1:2 to 1:4 risk-to-reward ratios, position size guidance, and instant market alerts.',
+        'pr3_link': 'Join Signals Group ↗',
+
+        'pr4_cat': 'Futures · Derivatives',
+        'pr4_title': 'Forex & Crypto Futures Management',
+        'pr4_b1': 'Professional futures and perpetuals trading across Forex majors and crypto pairs with systematic position sizing.',
+        'pr4_b2': 'Built-in sell indicator support on MT4/MT5 for Windows traders demanding disciplined entries and automated trend trailing.',
+        'pr4_b3': 'Strict margin requirements and capital preservation rules preventing account liquidations.',
+        'pr4_link': 'Inquire for Details ↗',
+
+        'pr5_cat': 'Spot · Commodities',
+        'pr5_title': 'Forex Spot & Gold (XAUUSD)',
+        'pr5_b1': 'Spot trading on Forex with intensive focus on Gold (XAUUSD) liquidity sweeps and intraday momentum breakouts.',
+        'pr5_b2': 'Combines dynamic support/resistance zones, Fibonacci retracements, and automated MT4/MT5 indicator alerts.',
+        'pr5_b3': 'Consistent historical performance across volatile market sessions (London & New York overlaps).',
+        'pr5_link': 'View Strategy Data ↗',
+
+        'pr6_cat': 'Indices · Wall Street',
+        'pr6_title': 'US30 & Nasdaq Breakout Strategy',
+        'pr6_b1': 'High-conviction index strategies capturing opening session volatility on Dow Jones (US30) and Nasdaq (NAS100).',
+        'pr6_b2': 'Utilizes macro trend continuation patterns, volume profile confirmation, and tight invalidation levels.',
+        'pr6_b3': 'Optimized for active traders seeking scalable equity index setups during peak market liquidity hours.',
+        'pr6_link': 'Request Performance ↗',
+
+        'pr7_cat': 'Indicators · Software',
+        'pr7_title': 'MT4 / MT5 Custom Sell Indicator Pack',
+        'pr7_b1': 'Proprietary sell/buy indicator suite built for MetaTrader 4 and 5 on Windows, optimized for FX, Gold, and Crypto futures.',
+        'pr7_b2': 'Algorithmic momentum detection with clear arrow alerts, sound notifications, and mobile push triggers.',
+        'pr7_b3': 'Non-repainting mathematical model helping traders identify clean trend reversals and high-volume exhaustion points.',
+        'pr7_link': 'Get Indicator Pack ↗',
+
+        'pr8_cat': 'Funding · Risk Management',
+        'pr8_title': 'Prop Firm Challenge Strategy',
+        'pr8_b1': 'Tailor-made rule-based strategy specifically calibrated for passing Tier-1 Prop Firm evaluation challenges (FTMO, FundedNext, etc.).',
+        'pr8_b2': 'Strict 0.5% – 1% risk per trade with hard daily stop-loss safeguards to guarantee zero rule violations.',
+        'pr8_b3': 'Transparent progress tracking with multi-month drawdown protection protocols.',
+        'pr8_link': 'Start Evaluation ↗',
+
+        'pr9_cat': 'Crypto · Portfolio',
+        'pr9_title': 'Crypto Spot & DCA Portfolio Management',
+        'pr9_b1': 'Strategic dollar-cost-averaging (DCA) and swing portfolio allocation focusing on Bitcoin (BTC), Ethereum (ETH), and vetted altcoins.',
+        'pr9_b2': 'Macro halving-cycle timing and on-chain metrics analysis to maximize upside while mitigating severe market drawdowns.',
+        'pr9_b3': 'Full transparency and periodic rebalancing reports for long-term crypto account holders.',
+        'pr9_link': 'Portfolio Options ↗',
+
+        // NewsX AI Section
+        'nx_sec_kick': '// automated market intelligence',
+        'nx_sec_title': '# NewsX <span class="h">AI</span>',
+        'nx_sec_sub': 'AI-powered economic news & predictive market analysis platform. Tracks every high-impact USD release to forecast market direction before the data hits.',
         'nx_kicker': 'AI-POWERED NEWS & MARKET ANALYSIS',
-        'nx_title': 'Know market direction <em>before</em> the big news hits.',
-        'nx_sub': 'NewsX AI tracks every high-impact USD news release automatically - NFP, CPI, FOMC, PPI, GDP, and ISM PMI - and delivers AI Bias plus actionable XAUUSD signals straight to your mobile device, even when the app is closed.',
-        'nx_cta': 'View Pricing & Plans',
-        'nx_pricing_title': 'NewsX AI <span class="h">Pricing Plans</span>',
-        'nx_plan_std': 'NewsX AI Standard',
-        'nx_plan_pro': 'NewsX AI Pro VIP',
-        'nx_plan_ult': 'NewsX AI Ultimate Master',
-        'nx_btn_std': 'Get Standard Access',
-        'nx_btn_pro': 'Get Pro VIP Access',
-        'nx_btn_ult': 'Get Ultimate Access',
+        'nx_head_title': 'Know market direction <em>before</em> the big news hits.',
+        'nx_head_sub': 'NewsX AI tracks every high-impact USD news release automatically — NFP, CPI, FOMC, PPI, GDP, and ISM PMI — and delivers AI Bias plus actionable XAUUSD signals straight to your mobile device, even when the app is closed.',
+        'nx_ctas_btn': 'View Pricing & Plans ↓',
+        'nx_chart_pair': 'XAUUSD.m · GOLD vs US Dollar',
+        'nx_chart_price': '4,398.94 <span>▲ Bullish</span>',
+        'nx_chart_tag1': 'NFP · Non-Farm Payrolls',
+        'nx_chart_tag2': 'High-Impact Event',
+        'nx_chart_tag3': 'XAUUSD Signal: Triggered',
+        'nx_why_kick': '// why newsx ai',
+        'nx_why_title': 'Built for traders who trade the news.',
+        'nx_why_sub': 'No need to keep TradingView open every 5 minutes, and no need to wait on a forum to know today\'s bias. Everything runs automatically, straight to your phone.',
+        'nx_why_f1_t': 'Automatic Calendar',
+        'nx_why_f1_d': 'NFP, CPI, FOMC, PPI, GDP, and ISM PMI are tracked automatically — dates and release times are always up to date with zero manual checking required.',
+        'nx_why_f2_t': 'Push Notifications',
+        'nx_why_f2_d': 'Receive high-probability AI Directional Bias & Gold (XAUUSD) Signals straight to your mobile device before the news drops — even when the app is closed.',
+        'nx_why_f3_t': 'Mailbox & Updates',
+        'nx_why_f3_d': 'Macro trade breakdowns, special announcements, and performance recaps land directly in your private dashboard so you never miss a market move.',
+        'nx_tiers_kick': '// subscription tiers',
+        'nx_tiers_title': 'Choose the plan that fits your trading.',
+        'nx_tiers_sub': 'Flexible monthly access with instant activation and no long-term contracts.',
+        'nx_p1_name': 'Standard',
+        'nx_p1_f1': 'NFP, CPI & FOMC economic calendar',
+        'nx_p1_f2': 'AI Bias + XAUUSD Signal (3 major news)',
+        'nx_p1_f3': 'Instant background push notifications',
+        'nx_p1_f4': 'Mobile Home Screen PWA support',
+        'nx_p1_btn': 'Get Standard Plan ⚡',
+        'nx_p2_badge': 'Popular',
+        'nx_p2_name': 'Pro',
+        'nx_p2_f1': 'All high-impact USD economic events',
+        'nx_p2_f2': 'NFP, CPI, FOMC, PPI, GDP, and ISM PMI',
+        'nx_p2_f3': 'AI Bias + XAUUSD Signal (all releases)',
+        'nx_p2_f4': 'Priority instant push notifications',
+        'nx_p2_f5': 'Full dashboard mailbox & trade history',
+        'nx_p2_btn': 'Get Pro Plan ⚡',
+        'nx_p3_name': 'Ultimate',
+        'nx_p3_f1': 'Everything included in Pro',
+        'nx_p3_f2': 'Priority: XAUUSD Daily Directional Bias',
+        'nx_p3_f3': 'Priority: Swing Signals with exact Entry / TP / SL',
+        'nx_p3_f4': 'Direct 1-on-1 support & upcoming VIP features',
+        'nx_p3_btn': 'Get Ultimate Plan ⚡',
 
-        'fl_kick': '// flash liquidity desk',
-        'fl_title': 'Flash USDT <span class="h">Marketplace</span>',
-        'fl_sub': 'Fast, testnet & arbitrage-grade Flash USDT pool activations directly to Binance, Trust Wallet, MetaMask, and private nodes.',
-        'fl_tab_24h': '⚡ 24 Hours (Fast / Testing)',
-        'fl_tab_3d': '⚡ 3 Days (Standard)',
-        'fl_tab_1w': '⚡ 1 Week (High Volume)',
-        'fl_calc_title': 'Custom Flash USDT Calculator',
-        'fl_calc_dur_lbl': 'Select Duration:',
-        'fl_calc_amt_lbl': 'Flash USDT Amount:',
-        'fl_calc_est_lbl': 'Estimated Total Cost:',
-        'fl_calc_btn': 'Proceed to Direct Checkout →',
-        'fl_deal_claim': 'Claim Limited Deal',
-        'fl_pack_order': 'Order Flash Pool',
-        'fl_countdown_lbl': 'OFFER EXPIRES IN:',
+        // Flash USDT Marketplace
+        'fl_sec_kick': '// decentralized liquidity & flash transfers',
+        'fl_sec_title': '# Flash USDT <span class="h">Marketplace</span>',
+        'fl_sec_sub': 'Fast peer-to-peer Flash USDT software and multi-network transaction nodes with automated cloud mining, verified high-volume packages, and instant wallet delivery.',
+        'fl_d1_badge': '80% OFF',
+        'fl_d1_valid': '24H VALIDITY',
+        'fl_d1_btn': 'Buy Deal ⚡',
+        'fl_d2_badge': '30% OFF',
+        'fl_d2_valid': '24H VALIDITY',
+        'fl_d2_btn': 'Buy Deal ⚡',
+        'fl_cat_kick': '// package catalog',
+        'fl_cat_title': 'Select Flash USDT Duration Tier',
+        'fl_tab_24h': '⏱️ 24 Hours (Fast / Testing)',
+        'fl_tab_3d': '📅 3 Days (Standard)',
+        'fl_tab_1w': '📆 1 Week (High Volume)',
+        'fl_pack_btn': 'Order Package ⚡',
+        'fl_calc_kick': '// dynamic calculator',
+        'fl_calc_title': 'Custom Flash USDT Order Calculator',
+        'fl_calc_sub': 'Input any custom Flash USDT volume and choose your desired validity duration for instantaneous real-time pricing.',
+        'fl_calc_lbl_dur': '> VALIDITY DURATION',
+        'fl_calc_opt_24h': '24 Hours (1,000 Flash = 10 USDT)',
+        'fl_calc_opt_3d': '3 Days (1,000 Flash = 50 USDT)',
+        'fl_calc_opt_1w': '1 Week (1,000 Flash = 120 USDT)',
+        'fl_calc_lbl_amt': '> FLASH AMOUNT (MIN 1,000)',
+        'fl_calc_lbl_price': '> CALCULATED PRICE',
+        'fl_calc_btn': 'Order Custom ⚡',
+        'fl_feat1_t': 'Multi-Network Nodes',
+        'fl_feat1_d': 'Seamless execution across BEP20 (Binance Smart Chain) and TRC20 (Tron Network) with automated node confirmation.',
+        'fl_feat2_t': 'Cloud Mining Hub',
+        'fl_feat2_d': 'Integrated cloud hashrate center with turbo cooling simulator generating daily passive USDT yield.',
+        'fl_feat3_t': '2-Tier Referral System',
+        'fl_feat3_d': 'Automated partner referral tracking with instant commission payouts up to 10% on peer orders.',
+        'fl_feat4_t': 'Zero Slippage Matrix',
+        'fl_feat4_d': 'Fixed rate schedule with no hidden spread deductions or surprise exchange gas cuts.',
 
+        // Experience Section
+        'exp_sec_kick': '// timeline',
+        'exp_sec_title': '# <span class="h">Experience</span>',
+        'ti1_when': '2026 – Present',
+        'ti1_title': 'Professional Trading Manager & Signal Provider — Saifeddine Trading',
+        'ti1_b1': 'Manage $100+ in active client capital across forex and cryptocurrency markets with strict risk management.',
+        'ti1_b2': 'Tracked 45% historical annual performance with consistent monthly trade reviews and drawdown discipline.',
+        'ti1_b3': 'Broadcast daily high-probability VIP trading signals on Gold, Forex, and Crypto to 500+ active traders.',
+        'ti1_b4': 'Built proprietary algorithmic indicator setups for MT4/MT5 and trained 15+ traders on risk-first execution.',
+        'ti2_when': '2018 – 2026',
+        'ti2_title': 'Day Trader & Algorithm Developer — Self-Employed',
+        'ti2_b1': 'Started with micro accounts and scaled capital through systematic scalping and swing trading on major currency pairs.',
+        'ti2_b2': 'Developed Python-based market screeners and algorithmic indicator scripts for automated entry/exit signals.',
+        'ti2_b3': 'Specialized in price action, session opens (London/NY), and support/resistance breakout mechanics.',
+        'ti2_b4': 'Formulated a disciplined trading methodology centered around strict journaling, risk controls, and emotional mastery.',
+        'ti3_when': '2018 – 2026',
+        'ti3_title': 'Financial Markets Education & Certification',
+        'ti3_b1': 'Completed advanced curriculum in forex market microstructure, technical analysis, and macroeconomic indicators.',
+        'ti3_b2': 'Tested strategies over 6+ months of rigorous demo account trading before deploying live capital.',
+        'ti3_b3': 'Established foundational risk parameters: 1% risk per trade, max drawdown limits, and portfolio diversification.',
+
+        // Education & Details
+        'more_kick': '// details',
+        'more_title': '# Education, Languages <span class="h">& Partners</span>',
+        'edu_card_t': 'Education & Credentials',
+        'edu_p1': '<b>Financial Markets & Forex Trading Certification</b>',
+        'edu_p2': 'Quantitative & Algorithmic Development',
+        'edu_p3': 'Continuous research in institutional order flow, smart money concepts (SMC), and market psychology.',
+        'lang_card_t': 'Languages',
+        'lang_p1': '<b>1. Kabyle</b> — Native',
+        'lang_p2': '<b>2. Arabic</b> — Native',
+        'lang_p3': '<b>3. English</b> — Professional working proficiency',
+        'lang_p4': '<b>4. French</b> — Conversational / Intermediate',
+
+        // Contact Form
+        'cont_kick': '// direct inquiry',
+        'cont_title': 'Ready to <span class="h">Discuss Trading?</span>',
+        'cont_sub': 'Interested in managed account information, VIP trading signals, or learning more about my risk-managed trading process? Send a direct inquiry below.',
+        'cont_form_title': '// SECURE TERMINAL: DIRECT TRADING INQUIRY',
+        'cont_form_live': 'ENCRYPTED',
+        'cont_lbl_name': '> Full Name',
+        'cont_badge_req': 'REQUIRED',
+        'cont_lbl_email': '> Email Address',
+        'cont_lbl_msg': '> Message / Trading Goals',
+        'cont_badge_dir': 'DIRECT',
+        'cont_ph_name': 'Enter your full name...',
+        'cont_ph_email': 'name@domain.com',
+        'cont_ph_msg': 'Share your investment capital, trading goals, preferred pairs, or any questions...',
+        'cont_btn_submit': 'Send Message',
+        'cont_trust1': '256-Bit Encrypted Inquiry',
+        'cont_trust2': 'Fast Response (< 2h)',
+        'cont_trust3': 'Direct Portfolio Manager Access',
+        'cont_social_title': 'Let\'s <span class="neon">connect</span>.',
+        'cont_social_sub': 'Direct inquiry is also available via Telegram, Email, or social channels. Transparent reporting and fast response guaranteed.',
+        'cont_risk_warning': 'Risk Warning: Forex and cryptocurrency trading involve significant risk to your capital. Past performance is not a guarantee of future returns. Only risk capital you can afford to lose.',
+        'footer_copy': '© Saifeddine Boumaza — Forex & Crypto Trading Manager — All rights reserved',
+
+        // Modal
         'modal_title': '// TERMINAL: DIRECT CHECKOUT',
         'modal_s1_t': '1. Select Destination Platform',
         'modal_s1_d': 'Choose where you will receive your Flash USDT.',
         'modal_s2_t': '2. Select Payment Network',
         'modal_s2_d': 'Ensure your wallet supports the selected blockchain network.',
+        'modal_s2_back': '← Back to Platform',
         'modal_s3_t': '3. Enter Receiving Identifier',
         'modal_s3_d': 'Paste the address or username where your activation will be sent.',
-        'modal_s3_ph': 'Paste BSC / Tron wallet address or Telegram ID...',
-        'modal_s3_btn': 'Continue to Node Binding →',
-        'modal_s4_t': '4. Verifying Node Cluster Connection',
-        'modal_s5_t': '5. Direct Blockchain Invoice Desk',
-        'modal_s5_copy': 'Copy Wallet Address',
-        'modal_s5_tx': 'Verify Payment on Telegram',
-
-        'exp_sec_kick': '// timeline',
-        'exp_sec_title': '# <span class="h">Experience</span>',
-        'exp_when': '2026 – Present',
-        'exp_job_title': 'Professional Trading Manager & Signal Provider — Saifeddine Trading',
-        'exp_b1': 'Manage $100+ in active client capital across forex and cryptocurrency markets with strict risk management.',
-        'exp_b2': 'Provide high-precision VIP trading signals with documented entry, take-profit, and stop-loss levels.',
-        'exp_b3': 'Develop algorithmic trading strategies and proprietary technical indicators for MetaTrader platforms.',
-
-        'cont_kick': '// direct inquiry',
-        'cont_title': 'Ready to <span class="h">Discuss Trading?</span>',
-        'cont_sub': 'Interested in managed account information, VIP trading signals, or learning more about my risk-managed trading process? Send a direct inquiry below.',
-        'cont_name_lbl': '<span class="mono-arrow">&gt;</span> Full Name',
-        'cont_name_ph': 'Enter your full name...',
-        'cont_email_lbl': '<span class="mono-arrow">&gt;</span> Email Address',
-        'cont_email_ph': 'name@domain.com',
-        'cont_msg_lbl': '<span class="mono-arrow">&gt;</span> Message / Trading Goals',
-        'cont_msg_ph': 'Share your investment capital, trading goals, preferred pairs, or any questions...',
-        'cont_btn': '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg> Send Message',
-
-        'foot_text': 'Saifeddine Boumaza · All Rights Reserved 2026'
+        'modal_s3_ph': 'Paste your wallet address or Telegram @username...',
+        'modal_s3_btn': 'Confirm & Proceed →',
+        'modal_s3_back': '← Back to Network',
+        'modal_s4_t': 'Connecting to Blockchain Nodes...',
+        'modal_s4_d': '// Verifying peer routing matrix',
+        'modal_s5_timer': '⏱️ PAYMENT WINDOW EXPIRES IN:',
+        'modal_s5_t': 'Complete Order Deposit',
+        'modal_s5_for': 'For:',
+        'modal_s5_on': 'on',
+        'modal_s5_wlabel': '// OFFICIAL DEPOSIT WALLET',
+        'modal_s5_copy': 'COPY',
+        'modal_s5_tx': 'Send TX to Telegram',
+        'modal_s5_done': 'Done'
       }
     };
 
@@ -3946,15 +4403,32 @@ html[dir="rtl"] .mono-arrow {
         document.body.classList.remove('lang-ar');
       }
 
+      // Update typewriter language bank in real-time
+      if (window.cvxRolesEn && window.cvxRolesAr) {
+        window.cvxCurrentRoles = isAr ? window.cvxRolesAr : window.cvxRolesEn;
+      }
+
+      // Update language toggle buttons
       var lBtns = document.querySelectorAll('.cvx-lang-toggle');
       lBtns.forEach(function(b) {
         var lbl = b.querySelector('.lang-label');
         if (lbl) lbl.textContent = isAr ? 'English' : 'العربية';
       });
 
+      // Update theme toggle labels if needed
+      var tBtns = document.querySelectorAll('.cvx-theme-toggle');
+      var isLight = document.body.classList.contains('theme-light');
+      tBtns.forEach(function(b) {
+        var lbl = b.querySelector('.theme-label');
+        if (lbl) {
+          lbl.textContent = isLight ? (isAr ? t['theme_light'] : 'Light') : (isAr ? t['theme_dark'] : 'Dark');
+        }
+      });
+
+      // 1. Header & Brand
       var bTitle = document.querySelector('.cvx-brand span b');
-      var bSub = document.querySelector('.cvx-brand span small');
       if (bTitle && t['brand_title']) bTitle.innerHTML = t['brand_title'];
+      var bSub = document.querySelector('.cvx-brand span small');
       if (bSub && t['brand_sub']) bSub.innerHTML = t['brand_sub'];
 
       var nMap = [
@@ -3977,191 +4451,426 @@ html[dir="rtl"] .mono-arrow {
       if (dlBtn && t['nav_cta']) dlBtn.textContent = t['nav_cta'];
 
       var mobLinks = document.querySelectorAll('.cvx-mob-links a');
-      if (mobLinks.length >= 9) {
-        var mKeys = ['mob_home', 'mob_about', 'mob_expertise', 'mob_skills', 'mob_projects', 'mob_newsx', 'mob_flash', 'mob_exp', 'mob_contact'];
-        mKeys.forEach(function(k, idx) {
-          if (mobLinks[idx] && t[k]) mobLinks[idx].innerHTML = t[k];
-        });
-      }
+      var mKeys = ['mob_home', 'mob_about', 'mob_expertise', 'mob_skills', 'mob_projects', 'mob_newsx', 'mob_flash', 'mob_exp', 'mob_contact'];
+      mobLinks.forEach(function(link, idx) {
+        if (mKeys[idx] && t[mKeys[idx]]) link.innerHTML = t[mKeys[idx]];
+      });
       var mobDl = document.querySelector('.cvx-mob-actions .cvx-navcta');
       if (mobDl && t['mob_dl']) mobDl.textContent = t['mob_dl'];
 
-      var hBadge = document.querySelector('.hero .badge');
-      if (hBadge && t['hero_badge']) hBadge.innerHTML = t['hero_badge'];
-      var hTag = document.querySelector('.hero .tagline');
-      if (hTag && t['hero_tagline']) hTag.textContent = t['hero_tagline'];
-      var hCtaPri = document.querySelector('.hero .btn-primary');
-      if (hCtaPri && t['hero_cta_pri']) hCtaPri.textContent = t['hero_cta_pri'];
-      var hCtaGhost = document.querySelector('.hero .btn-ghost');
-      if (hCtaGhost && t['hero_cta_ghost']) hCtaGhost.textContent = t['hero_cta_ghost'];
-      var hScroll = document.querySelector('.hero .scroll-hint');
-      if (hScroll && t['hero_scroll']) hScroll.textContent = t['hero_scroll'];
+      // 2. Hero Section
+      var hBadge = document.querySelector('.cvx-badge .mono');
+      if (hBadge && t['hero_badge']) hBadge.textContent = t['hero_badge'];
+      var hTag = document.querySelector('.cvx-hero .cvx-tag');
+      if (hTag && t['hero_tagline']) hTag.innerHTML = t['hero_tagline'];
+      var hCtas = document.querySelectorAll('.cvx-cta a');
+      if (hCtas[0] && t['hero_btn_records']) hCtas[0].innerHTML = '<svg viewBox="0 0 24 24"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"></path></svg> ' + t['hero_btn_records'];
+      if (hCtas[1] && t['hero_btn_newsx']) hCtas[1].innerHTML = '<svg viewBox="0 0 24 24" style="fill:currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg> ' + t['hero_btn_newsx'];
+      if (hCtas[2] && t['hero_btn_flash']) hCtas[2].innerHTML = '<svg viewBox="0 0 24 24" style="fill:currentColor"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg> ' + t['hero_btn_flash'];
+      if (hCtas[3] && t['hero_btn_inquiry']) hCtas[3].innerHTML = '<svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path></svg> ' + t['hero_btn_inquiry'];
 
+      var hChips = document.querySelectorAll('.cvx-chips .cvx-chip');
+      var cKeys = ['chip_return', 'chip_years', 'chip_capital', 'chip_indicators', 'chip_newsx', 'chip_flash'];
+      hChips.forEach(function(chip, i) {
+        if (cKeys[i] && t[cKeys[i]]) chip.innerHTML = t[cKeys[i]];
+      });
+
+      // 3. Stats Bar
+      var statLbls = document.querySelectorAll('.cvx-stats .cvx-stat .l');
+      var stKeys = ['stat_years', 'stat_return', 'stat_capital', 'stat_winrate', 'stat_months', 'stat_community'];
+      statLbls.forEach(function(lbl, i) {
+        if (stKeys[i] && t[stKeys[i]]) lbl.innerHTML = t[stKeys[i]];
+      });
+
+      // 4. About Section
       var abKick = document.querySelector('#about .kick');
       if (abKick && t['about_kick']) abKick.textContent = t['about_kick'];
       var abTitle = document.querySelector('#about h2');
       if (abTitle && t['about_title']) abTitle.innerHTML = t['about_title'];
-      var abPs = document.querySelectorAll('#about .about-card p');
-      if (abPs.length >= 2) {
-        if (t['about_p1']) abPs[0].textContent = t['about_p1'];
-        if (t['about_p2']) abPs[1].textContent = t['about_p2'];
-      }
-      var statLbls = document.querySelectorAll('#about .stat .lbl');
-      if (statLbls.length >= 4) {
-        var sKeys = ['stat_cap', 'stat_win', 'stat_inst', 'stat_exp'];
-        sKeys.forEach(function(k, i){ if (statLbls[i] && t[k]) statLbls[i].textContent = t[k]; });
-      }
+      var abPs = document.querySelectorAll('#about .cvx-about p');
+      if (abPs[0] && t['about_p1']) abPs[0].innerHTML = t['about_p1'];
+      if (abPs[1] && t['about_p2']) abPs[1].innerHTML = t['about_p2'];
+      if (abPs[2] && t['about_p3']) abPs[2].innerHTML = t['about_p3'];
 
+      // 5. Expertise Section
       var expKick = document.querySelector('#expertise .kick');
       if (expKick && t['exp_kick']) expKick.textContent = t['exp_kick'];
       var expTitle = document.querySelector('#expertise h2');
       if (expTitle && t['exp_title']) expTitle.innerHTML = t['exp_title'];
-      var expCards = document.querySelectorAll('#expertise .card');
-      if (expCards.length >= 4) {
-        var eKeys = [
-          ['exp_c1_t', 'exp_c1_d'],
-          ['exp_c2_t', 'exp_c2_d'],
-          ['exp_c3_t', 'exp_c3_d'],
-          ['exp_c4_t', 'exp_c4_d']
-        ];
-        eKeys.forEach(function(p, i){
-          var h3 = expCards[i].querySelector('h3');
-          var pEl = expCards[i].querySelector('p');
-          if (h3 && t[p[0]]) h3.textContent = t[p[0]];
-          if (pEl && t[p[1]]) pEl.textContent = t[p[1]];
+      var expCards = document.querySelectorAll('#expertise .cvx-card');
+      for (var ei = 1; ei <= 8; ei++) {
+        if (expCards[ei - 1]) {
+          var eh3 = expCards[ei - 1].querySelector('h3');
+          var ep = expCards[ei - 1].querySelector('p');
+          if (eh3 && t['exp_c' + ei + '_t']) eh3.textContent = t['exp_c' + ei + '_t'];
+          if (ep && t['exp_c' + ei + '_d']) ep.textContent = t['exp_c' + ei + '_d'];
+        }
+      }
+
+      // 6. Skills Section
+      var skKick = document.querySelector('#skills .kick');
+      if (skKick && t['sk_kick']) skKick.textContent = t['sk_kick'];
+      var skTitle = document.querySelector('#skills h2');
+      if (skTitle && t['sk_title']) skTitle.innerHTML = t['sk_title'];
+      var skBars = document.querySelectorAll('#skills .cvx-skill .top b');
+      var skBKeys = ['sk_bar1', 'sk_bar2', 'sk_bar3', 'sk_bar4', 'sk_bar5', 'sk_bar6'];
+      skBars.forEach(function(bar, i) {
+        if (skBKeys[i] && t[skBKeys[i]]) bar.textContent = t[skBKeys[i]];
+      });
+      var skSubs = document.querySelectorAll('#skills .cvx-tagsub');
+      var skSKeys = ['sk_sub_pairs', 'sk_sub_crypto', 'sk_sub_analysis', 'sk_sub_risk'];
+      skSubs.forEach(function(sub, i) {
+        if (skSKeys[i] && t[skSKeys[i]]) sub.textContent = t[skSKeys[i]];
+      });
+
+      var tagsWraps = document.querySelectorAll('#skills .cvx-tags');
+      if (tagsWraps[2]) {
+        var aTags = tagsWraps[2].querySelectorAll('span');
+        var aKeys = ['sk_tag_ta', 'sk_tag_fa', 'sk_tag_pa', 'sk_tag_cp', 'sk_tag_sr', 'sk_tag_sc', 'sk_tag_sw', 'sk_tag_bo', 'sk_tag_fb', 'sk_tag_of', 'sk_tag_lq'];
+        aTags.forEach(function(sp, i) {
+          if (aKeys[i] && t[aKeys[i]]) sp.textContent = t[aKeys[i]];
+        });
+      }
+      if (tagsWraps[3]) {
+        var rTags = tagsWraps[3].querySelectorAll('span');
+        var rKeys = ['sk_tag_ps', 'sk_tag_sl', 'sk_tag_cp_pres', 'sk_tag_lc', 'sk_tag_dd', 'sk_tag_pd', null, null, null, null, null, 'sk_tag_jn'];
+        rTags.forEach(function(sp, i) {
+          if (rKeys[i] && t[rKeys[i]]) sp.textContent = t[rKeys[i]];
         });
       }
 
-      var skKick = document.querySelector('#skills .kick');
-      if (skKick && t['skills_kick']) skKick.textContent = t['skills_kick'];
-      var skTitle = document.querySelector('#skills h2');
-      if (skTitle && t['skills_title']) skTitle.innerHTML = t['skills_title'];
-
+      // 7. Projects Section
       var prKick = document.querySelector('#projects .kick');
       if (prKick && t['proj_kick']) prKick.textContent = t['proj_kick'];
       var prTitle = document.querySelector('#projects h2');
       if (prTitle && t['proj_title']) prTitle.innerHTML = t['proj_title'];
+      var prSub = document.querySelector('#projects .cvx-head p');
+      if (prSub && t['proj_sub']) prSub.textContent = t['proj_sub'];
 
+      var filters = document.querySelectorAll('#cvxFilters .cvx-filter');
+      var fKeys = ['f_all', 'f_ai', 'f_flash', 'f_signals', 'f_forex', 'f_crypto', 'f_indices', 'f_indicators'];
+      filters.forEach(function(flt, i) {
+        if (fKeys[i] && t[fKeys[i]]) flt.textContent = t[fKeys[i]];
+      });
+
+      var projs = document.querySelectorAll('#cvxProjs .cvx-proj');
+      for (var pi = 1; pi <= 9; pi++) {
+        if (projs[pi - 1]) {
+          var pCard = projs[pi - 1];
+          var catEl = pCard.querySelector('.pcat');
+          var h3El = pCard.querySelector('h3');
+          var lis = pCard.querySelectorAll('ul li');
+          var linkEl = pCard.querySelector('.plink');
+          if (catEl && t['pr' + pi + '_cat']) catEl.textContent = t['pr' + pi + '_cat'];
+          if (h3El && t['pr' + pi + '_title']) h3El.textContent = t['pr' + pi + '_title'];
+          if (lis[0] && t['pr' + pi + '_b1']) lis[0].innerHTML = t['pr' + pi + '_b1'];
+          if (lis[1] && t['pr' + pi + '_b2']) lis[1].innerHTML = t['pr' + pi + '_b2'];
+          if (lis[2] && t['pr' + pi + '_b3']) lis[2].innerHTML = t['pr' + pi + '_b3'];
+          if (linkEl && t['pr' + pi + '_link']) linkEl.textContent = t['pr' + pi + '_link'];
+        }
+      }
+
+      // 8. NewsX AI Section
       var nxKick = document.querySelector('#newsx .kick');
-      if (nxKick && t['nx_kick']) nxKick.textContent = t['nx_kick'];
+      if (nxKick && t['nx_sec_kick']) nxKick.textContent = t['nx_sec_kick'];
+      var nxTitle = document.querySelector('#newsx h2');
+      if (nxTitle && t['nx_sec_title']) nxTitle.innerHTML = t['nx_sec_title'];
+      var nxSub = document.querySelector('#newsx .cvx-head p');
+      if (nxSub && t['nx_sec_sub']) nxSub.textContent = t['nx_sec_sub'];
+
       var nxKicker = document.querySelector('.nx-kicker');
       if (nxKicker && t['nx_kicker']) nxKicker.textContent = t['nx_kicker'];
-      var nxHeadTitle = document.querySelector('.nx-head-title');
-      if (nxHeadTitle && t['nx_title']) nxHeadTitle.innerHTML = t['nx_title'];
-      var nxSub = document.querySelector('.nx-sub');
-      if (nxSub && t['nx_sub']) nxSub.textContent = t['nx_sub'];
-      var nxCta = document.querySelector('.nx-ctas a');
-      if (nxCta && t['nx_cta']) nxCta.textContent = t['nx_cta'];
-      var nxPriceTitle = document.querySelector('#newsx-pricing h2');
-      if (nxPriceTitle && t['nx_pricing_title']) nxPriceTitle.innerHTML = t['nx_pricing_title'];
+      var nxHeadT = document.querySelector('.nx-head-title');
+      if (nxHeadT && t['nx_head_title']) nxHeadT.innerHTML = t['nx_head_title'];
+      var nxHeadSub = document.querySelector('.nx-sub');
+      if (nxHeadSub && t['nx_head_sub']) nxHeadSub.textContent = t['nx_head_sub'];
+      var nxCtasBtn = document.querySelector('.nx-ctas a');
+      if (nxCtasBtn && t['nx_ctas_btn']) nxCtasBtn.textContent = t['nx_ctas_btn'];
 
-      var nxBtnStd = document.getElementById('nxPlanStdBtn');
-      if (nxBtnStd && t['nx_btn_std']) nxBtnStd.textContent = t['nx_btn_std'];
-      var nxBtnPro = document.getElementById('nxPlanProBtn');
-      if (nxBtnPro && t['nx_btn_pro']) nxBtnPro.textContent = t['nx_btn_pro'];
-      var nxBtnUlt = document.getElementById('nxPlanUltBtn');
-      if (nxBtnUlt && t['nx_btn_ult']) nxBtnUlt.textContent = t['nx_btn_ult'];
+      var nxPair = document.querySelector('.nx-chart-pair');
+      if (nxPair && t['nx_chart_pair']) nxPair.textContent = t['nx_chart_pair'];
+      var nxPrice = document.querySelector('.nx-chart-price');
+      if (nxPrice && t['nx_chart_price']) nxPrice.innerHTML = t['nx_chart_price'];
+      var nxTags = document.querySelectorAll('.nx-chart-tags .nx-tag');
+      if (nxTags[0] && t['nx_chart_tag1']) nxTags[0].textContent = t['nx_chart_tag1'];
+      if (nxTags[1] && t['nx_chart_tag2']) nxTags[1].textContent = t['nx_chart_tag2'];
+      if (nxTags[2] && t['nx_chart_tag3']) nxTags[2].textContent = t['nx_chart_tag3'];
 
+      var nxBlocks = document.querySelectorAll('#newsx .nx-block');
+      if (nxBlocks[0]) {
+        var bK1 = nxBlocks[0].querySelector('.nx-block-kicker');
+        var bT1 = nxBlocks[0].querySelector('.nx-block-title');
+        var bS1 = nxBlocks[0].querySelector('.nx-block-sub');
+        if (bK1 && t['nx_why_kick']) bK1.textContent = t['nx_why_kick'];
+        if (bT1 && t['nx_why_title']) bT1.textContent = t['nx_why_title'];
+        if (bS1 && t['nx_why_sub']) bS1.textContent = t['nx_why_sub'];
+
+        var feats = nxBlocks[0].querySelectorAll('.nx-feat');
+        for (var fi = 1; fi <= 3; fi++) {
+          if (feats[fi - 1]) {
+            var fh4 = feats[fi - 1].querySelector('h4');
+            var fp = feats[fi - 1].querySelector('p');
+            if (fh4 && t['nx_why_f' + fi + '_t']) fh4.textContent = t['nx_why_f' + fi + '_t'];
+            if (fp && t['nx_why_f' + fi + '_d']) fp.textContent = t['nx_why_f' + fi + '_d'];
+          }
+        }
+      }
+
+      if (nxBlocks[1]) {
+        var bK2 = nxBlocks[1].querySelector('.nx-block-kicker');
+        var bT2 = nxBlocks[1].querySelector('.nx-block-title');
+        var bS2 = nxBlocks[1].querySelector('.nx-block-sub');
+        if (bK2 && t['nx_tiers_kick']) bK2.textContent = t['nx_tiers_kick'];
+        if (bT2 && t['nx_tiers_title']) bT2.textContent = t['nx_tiers_title'];
+        if (bS2 && t['nx_tiers_sub']) bS2.textContent = t['nx_tiers_sub'];
+
+        var pc1 = document.querySelector('.nx-price-card:nth-child(1)');
+        if (pc1) {
+          var pnm = pc1.querySelector('.nx-pname');
+          if (pnm && t['nx_p1_name']) pnm.textContent = t['nx_p1_name'];
+          var lis1 = pc1.querySelectorAll('.nx-pfeats li');
+          if (lis1[0] && t['nx_p1_f1']) lis1[0].textContent = t['nx_p1_f1'];
+          if (lis1[1] && t['nx_p1_f2']) lis1[1].textContent = t['nx_p1_f2'];
+          if (lis1[2] && t['nx_p1_f3']) lis1[2].textContent = t['nx_p1_f3'];
+          if (lis1[3] && t['nx_p1_f4']) lis1[3].textContent = t['nx_p1_f4'];
+          var btn1 = document.getElementById('nxPlanStdBtn');
+          if (btn1 && t['nx_p1_btn']) btn1.textContent = t['nx_p1_btn'];
+        }
+
+        var pc2 = document.querySelector('.nx-price-card:nth-child(2)');
+        if (pc2) {
+          var bbg = pc2.querySelector('.nx-badge');
+          if (bbg && t['nx_p2_badge']) bbg.textContent = t['nx_p2_badge'];
+          var pnm2 = pc2.querySelector('.nx-pname');
+          if (pnm2 && t['nx_p2_name']) pnm2.textContent = t['nx_p2_name'];
+          var lis2 = pc2.querySelectorAll('.nx-pfeats li');
+          if (lis2[0] && t['nx_p2_f1']) lis2[0].textContent = t['nx_p2_f1'];
+          if (lis2[1] && t['nx_p2_f2']) lis2[1].textContent = t['nx_p2_f2'];
+          if (lis2[2] && t['nx_p2_f3']) lis2[2].textContent = t['nx_p2_f3'];
+          if (lis2[3] && t['nx_p2_f4']) lis2[3].textContent = t['nx_p2_f4'];
+          if (lis2[4] && t['nx_p2_f5']) lis2[4].textContent = t['nx_p2_f5'];
+          var btn2 = document.getElementById('nxPlanProBtn');
+          if (btn2 && t['nx_p2_btn']) btn2.textContent = t['nx_p2_btn'];
+        }
+
+        var pc3 = document.querySelector('.nx-price-card:nth-child(3)');
+        if (pc3) {
+          var pnm3 = pc3.querySelector('.nx-pname');
+          if (pnm3 && t['nx_p3_name']) pnm3.textContent = t['nx_p3_name'];
+          var lis3 = pc3.querySelectorAll('.nx-pfeats li');
+          if (lis3[0] && t['nx_p3_f1']) lis3[0].textContent = t['nx_p3_f1'];
+          if (lis3[1] && t['nx_p3_f2']) lis3[1].textContent = t['nx_p3_f2'];
+          if (lis3[2] && t['nx_p3_f3']) lis3[2].textContent = t['nx_p3_f3'];
+          if (lis3[3] && t['nx_p3_f4']) lis3[3].textContent = t['nx_p3_f4'];
+          var btn3 = document.getElementById('nxPlanUltBtn');
+          if (btn3 && t['nx_p3_btn']) btn3.textContent = t['nx_p3_btn'];
+        }
+      }
+
+      // 9. Flash USDT Section
       var flKick = document.querySelector('#flash .kick');
-      if (flKick && t['fl_kick']) flKick.textContent = t['fl_kick'];
+      if (flKick && t['fl_sec_kick']) flKick.textContent = t['fl_sec_kick'];
       var flTitle = document.querySelector('#flash h2');
-      if (flTitle && t['fl_title']) flTitle.innerHTML = t['fl_title'];
+      if (flTitle && t['fl_sec_title']) flTitle.innerHTML = t['fl_sec_title'];
       var flSub = document.querySelector('#flash .cvx-head p');
-      if (flSub && t['fl_sub']) flSub.textContent = t['fl_sub'];
+      if (flSub && t['fl_sec_sub']) flSub.textContent = t['fl_sec_sub'];
 
-      var flTab24 = document.querySelector('.fl-tab[data-dur="24h"]');
-      if (flTab24 && t['fl_tab_24h']) flTab24.textContent = t['fl_tab_24h'];
-      var flTab3d = document.querySelector('.fl-tab[data-dur="3d"]');
-      if (flTab3d && t['fl_tab_3d']) flTab3d.textContent = t['fl_tab_3d'];
-      var flTab1w = document.querySelector('.fl-tab[data-dur="1w"]');
-      if (flTab1w && t['fl_tab_1w']) flTab1w.textContent = t['fl_tab_1w'];
+      var d1Badge = document.getElementById('flDeal1Badge');
+      if (d1Badge && t['fl_d1_badge']) d1Badge.textContent = t['fl_d1_badge'];
+      var d1Val = document.querySelector('.fl-deal-card:not(.ruby) .fl-badge-validity');
+      if (d1Val && t['fl_d1_valid']) d1Val.textContent = t['fl_d1_valid'];
+      var d1Btn = document.getElementById('flDeal1Btn');
+      if (d1Btn && t['fl_d1_btn']) d1Btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg> ' + t['fl_d1_btn'];
 
-      var flCalcTitle = document.querySelector('.fl-calc-card h3');
-      if (flCalcTitle && t['fl_calc_title']) flCalcTitle.textContent = t['fl_calc_title'];
-      var flCalcDurLbl = document.querySelector('label[for="flCalcDur"]');
-      if (flCalcDurLbl && t['fl_calc_dur_lbl']) flCalcDurLbl.textContent = t['fl_calc_dur_lbl'];
-      var flCalcAmtLbl = document.querySelector('label[for="flCalcAmt"]');
-      if (flCalcAmtLbl && t['fl_calc_amt_lbl']) flCalcAmtLbl.textContent = t['fl_calc_amt_lbl'];
-      var flCalcEstLbl = document.querySelector('.fl-calc-res small');
-      if (flCalcEstLbl && t['fl_calc_est_lbl']) flCalcEstLbl.textContent = t['fl_calc_est_lbl'];
-      var flCalcBtn = document.querySelector('.fl-calc-submit');
-      if (flCalcBtn && t['fl_calc_btn']) flCalcBtn.textContent = t['fl_calc_btn'];
+      var d2Badge = document.getElementById('flDeal2Badge');
+      if (d2Badge && t['fl_d2_badge']) d2Badge.textContent = t['fl_d2_badge'];
+      var d2Val = document.querySelector('.fl-deal-card.ruby .fl-badge-validity');
+      if (d2Val && t['fl_d2_valid']) d2Val.textContent = t['fl_d2_valid'];
+      var d2Btn = document.getElementById('flDeal2Btn');
+      if (d2Btn && t['fl_d2_btn']) d2Btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg> ' + t['fl_d2_btn'];
 
-      document.querySelectorAll('.fl-deal-btn').forEach(function(b){
-        if (t['fl_deal_claim']) b.textContent = t['fl_deal_claim'];
+      var catKick = document.querySelector('#flash .mono[style*="package catalog"]');
+      if (catKick && t['fl_cat_kick']) catKick.textContent = t['fl_cat_kick'];
+      var catTitle = document.querySelector('#flash h3[style*="Duration Tier"]');
+      if (catTitle && t['fl_cat_title']) catTitle.textContent = t['fl_cat_title'];
+
+      var tab24 = document.querySelector('.fl-tab[data-dur="24h"]');
+      if (tab24 && t['fl_tab_24h']) tab24.textContent = t['fl_tab_24h'];
+      var tab3d = document.querySelector('.fl-tab[data-dur="3d"]');
+      if (tab3d && t['fl_tab_3d']) tab3d.textContent = t['fl_tab_3d'];
+      var tab1w = document.querySelector('.fl-tab[data-dur="1w"]');
+      if (tab1w && t['fl_tab_1w']) tab1w.textContent = t['fl_tab_1w'];
+
+      document.querySelectorAll('.fl-pack-btn').forEach(function(b) {
+        if (t['fl_pack_btn']) b.textContent = t['fl_pack_btn'];
       });
-      document.querySelectorAll('.fl-pack-btn').forEach(function(b){
-        if (t['fl_pack_order']) b.textContent = t['fl_pack_order'];
-      });
-      document.querySelectorAll('.fl-countdown-label').forEach(function(l){
-        if (t['fl_countdown_lbl']) l.textContent = t['fl_countdown_lbl'];
-      });
 
+      var calcKick = document.querySelector('.fl-calc-card .mono');
+      if (calcKick && t['fl_calc_kick']) calcKick.textContent = t['fl_calc_kick'];
+      var calcT = document.querySelector('.fl-calc-card h3');
+      if (calcT && t['fl_calc_title']) calcT.textContent = t['fl_calc_title'];
+      var calcSub = document.querySelector('.fl-calc-card p');
+      if (calcSub && t['fl_calc_sub']) calcSub.textContent = t['fl_calc_sub'];
+
+      var opt24 = document.getElementById('flCalcOpt24h');
+      if (opt24 && t['fl_calc_opt_24h']) opt24.textContent = t['fl_calc_opt_24h'];
+      var opt3d = document.getElementById('flCalcOpt3d');
+      if (opt3d && t['fl_calc_opt_3d']) opt3d.textContent = t['fl_calc_opt_3d'];
+      var opt1w = document.getElementById('flCalcOpt1w');
+      if (opt1w && t['fl_calc_opt_1w']) opt1w.textContent = t['fl_calc_opt_1w'];
+
+      var lblDur = document.querySelector('label[for="flCalcDur"]');
+      if (lblDur && t['fl_calc_lbl_dur']) lblDur.textContent = t['fl_calc_lbl_dur'];
+      var lblAmt = document.querySelector('label[for="flCalcAmt"]');
+      if (lblAmt && t['fl_calc_lbl_amt']) lblAmt.textContent = t['fl_calc_lbl_amt'];
+      var lblPrice = document.querySelector('.fl-calc-field:nth-child(3) label');
+      if (lblPrice && t['fl_calc_lbl_price']) lblPrice.textContent = t['fl_calc_lbl_price'];
+      var calcBtn = document.querySelector('.fl-calc-btn');
+      if (calcBtn && t['fl_calc_btn']) calcBtn.innerHTML = '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg> ' + t['fl_calc_btn'];
+
+      var featBoxes = document.querySelectorAll('.fl-feats-grid .fl-feat-box');
+      for (var fbi = 1; fbi <= 4; fbi++) {
+        if (featBoxes[fbi - 1]) {
+          var fbh = featBoxes[fbi - 1].querySelector('h4');
+          var fbp = featBoxes[fbi - 1].querySelector('p');
+          if (fbh && t['fl_feat' + fbi + '_t']) fbh.textContent = t['fl_feat' + fbi + '_t'];
+          if (fbp && t['fl_feat' + fbi + '_d']) fbp.textContent = t['fl_feat' + fbi + '_d'];
+        }
+      }
+
+      // 10. Experience Section
+      var expSecKick = document.querySelector('#experience .kick');
+      if (expSecKick && t['exp_sec_kick']) expSecKick.textContent = t['exp_sec_kick'];
+      var expSecTitle = document.querySelector('#experience h2');
+      if (expSecTitle && t['exp_sec_title']) expSecTitle.innerHTML = t['exp_sec_title'];
+
+      var tiItems = document.querySelectorAll('#experience .cvx-ti');
+      for (var ti = 1; ti <= 3; ti++) {
+        if (tiItems[ti - 1]) {
+          var wEl = tiItems[ti - 1].querySelector('.when');
+          var hEl = tiItems[ti - 1].querySelector('h3');
+          var bLis = tiItems[ti - 1].querySelectorAll('ul li');
+          if (wEl && t['ti' + ti + '_when']) wEl.textContent = t['ti' + ti + '_when'];
+          if (hEl && t['ti' + ti + '_title']) hEl.textContent = t['ti' + ti + '_title'];
+          bLis.forEach(function(li, bi) {
+            if (t['ti' + ti + '_b' + (bi + 1)]) li.textContent = t['ti' + ti + '_b' + (bi + 1)];
+          });
+        }
+      }
+
+      // 11. Education & Details
+      var moreKick = document.querySelector('#more .kick');
+      if (moreKick && t['more_kick']) moreKick.textContent = t['more_kick'];
+      var moreTitle = document.querySelector('#more h2');
+      if (moreTitle && t['more_title']) moreTitle.innerHTML = t['more_title'];
+
+      var minis = document.querySelectorAll('#more .cvx-mini');
+      if (minis[0]) {
+        var eh = minis[0].querySelector('h3');
+        if (eh && t['edu_card_t']) eh.textContent = t['edu_card_t'];
+        var eps = minis[0].querySelectorAll('p');
+        if (eps[0] && t['edu_p1']) eps[0].innerHTML = t['edu_p1'];
+        if (eps[1] && t['edu_p2']) eps[1].textContent = t['edu_p2'];
+        if (eps[2] && t['edu_p3']) eps[2].textContent = t['edu_p3'];
+      }
+      if (minis[1]) {
+        var lh = minis[1].querySelector('h3');
+        if (lh && t['lang_card_t']) lh.textContent = t['lang_card_t'];
+        var lps = minis[1].querySelectorAll('p');
+        if (lps[0] && t['lang_p1']) lps[0].innerHTML = t['lang_p1'];
+        if (lps[1] && t['lang_p2']) lps[1].innerHTML = t['lang_p2'];
+        if (lps[2] && t['lang_p3']) lps[2].innerHTML = t['lang_p3'];
+        if (lps[3] && t['lang_p4']) lps[3].innerHTML = t['lang_p4'];
+      }
+
+      // 12. Contact Form
+      var contKick = document.querySelector('#contact .kick');
+      if (contKick && t['cont_kick']) contKick.textContent = t['cont_kick'];
+      var contTitle = document.querySelector('#contact h2');
+      if (contTitle && t['cont_title']) contTitle.innerHTML = t['cont_title'];
+      var contSub = document.querySelector('#contact .cvx-head p');
+      if (contSub && t['cont_sub']) contSub.textContent = t['cont_sub'];
+
+      var fTitle = document.querySelector('.cvx-form-title');
+      if (fTitle && t['cont_form_title']) fTitle.textContent = t['cont_form_title'];
+      var fLive = document.querySelector('.cvx-form-live');
+      if (fLive && t['cont_form_live']) fLive.innerHTML = '<span class="cvx-live-dot"></span> ' + t['cont_form_live'];
+
+      var lName = document.querySelector('label[for="c-name"]');
+      if (lName && t['cont_lbl_name']) lName.innerHTML = '<span class="mono-arrow">&gt;</span> ' + t['cont_lbl_name'].replace('>', '').trim();
+      var lEmail = document.querySelector('label[for="c-email"]');
+      if (lEmail && t['cont_lbl_email']) lEmail.innerHTML = '<span class="mono-arrow">&gt;</span> ' + t['cont_lbl_email'].replace('>', '').trim();
+      var lMsg = document.querySelector('label[for="c-message"]');
+      if (lMsg && t['cont_lbl_msg']) lMsg.innerHTML = '<span class="mono-arrow">&gt;</span> ' + t['cont_lbl_msg'].replace('>', '').trim();
+
+      var fBadges = document.querySelectorAll('.cvx-field-badge');
+      if (fBadges[0] && t['cont_badge_req']) fBadges[0].textContent = t['cont_badge_req'];
+      if (fBadges[1] && t['cont_badge_req']) fBadges[1].textContent = t['cont_badge_req'];
+      if (fBadges[2] && t['cont_badge_dir']) fBadges[2].textContent = t['cont_badge_dir'];
+
+      var inpName = document.getElementById('c-name');
+      if (inpName && t['cont_ph_name']) inpName.placeholder = t['cont_ph_name'];
+      var inpEmail = document.getElementById('c-email');
+      if (inpEmail && t['cont_ph_email']) inpEmail.placeholder = t['cont_ph_email'];
+      var inpMsg = document.getElementById('c-message');
+      if (inpMsg && t['cont_ph_msg']) inpMsg.placeholder = t['cont_ph_msg'];
+
+      var cSubBtn = document.getElementById('contactSubmit');
+      if (cSubBtn && t['cont_btn_submit']) cSubBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg> ' + t['cont_btn_submit'];
+
+      var trusts = document.querySelectorAll('.cvx-trust-item');
+      if (trusts[0] && t['cont_trust1']) trusts[0].innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg> ' + t['cont_trust1'];
+      if (trusts[1] && t['cont_trust2']) trusts[1].innerHTML = '<svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm3.3 14.71L11 12.41V7h2v4.59l3.71 3.71-1.42 1.41z"/></svg> ' + t['cont_trust2'];
+      if (trusts[2] && t['cont_trust3']) trusts[2].innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> ' + t['cont_trust3'];
+
+      var socH2 = document.querySelector('.cvx-contact h2');
+      if (socH2 && t['cont_social_title']) socH2.innerHTML = t['cont_social_title'];
+      var socP = document.querySelector('.cvx-contact p');
+      if (socP && t['cont_social_sub']) socP.textContent = t['cont_social_sub'];
+      var riskP = document.querySelector('.cvx-contact p:last-child');
+      if (riskP && t['cont_risk_warning']) riskP.textContent = t['cont_risk_warning'];
+
+      // Footer
+      var footCopy = document.querySelector('footer.cvx-foot .cvx-wrap');
+      if (footCopy && t['footer_copy']) footCopy.innerHTML = '<span class="mono">' + t['footer_copy'] + '</span>';
+
+      // 13. Checkout Modal
       var mTitle = document.getElementById('flModalTitle');
       if (mTitle && t['modal_title']) mTitle.textContent = t['modal_title'];
       var mS1T = document.getElementById('flStep1Title');
       if (mS1T && t['modal_s1_t']) mS1T.textContent = t['modal_s1_t'];
       var mS1D = document.getElementById('flStep1Desc');
       if (mS1D && t['modal_s1_d']) mS1D.textContent = t['modal_s1_d'];
+
+      var mS2T = document.querySelector('#flStep2 h4');
+      if (mS2T && t['modal_s2_t']) mS2T.textContent = t['modal_s2_t'];
+      var mS2D = document.querySelector('#flStep2 p');
+      if (mS2D && t['modal_s2_d']) mS2D.textContent = t['modal_s2_d'];
+      var mS2Back = document.querySelector('#flStep2 button:last-child');
+      if (mS2Back && t['modal_s2_back']) mS2Back.textContent = t['modal_s2_back'];
+
       var mS3T = document.getElementById('flStep3Title');
       if (mS3T && t['modal_s3_t']) mS3T.textContent = t['modal_s3_t'];
       var mS3D = document.getElementById('flStep3Desc');
       if (mS3D && t['modal_s3_d']) mS3D.textContent = t['modal_s3_d'];
-      var mS3Inp = document.getElementById('flUserWalletInput');
-      if (mS3Inp && t['modal_s3_ph']) mS3Inp.placeholder = t['modal_s3_ph'];
-      var mS3Btn = document.getElementById('flStep3Btn');
+      var mDest = document.getElementById('flDestWallet');
+      if (mDest && t['modal_s3_ph']) mDest.placeholder = t['modal_s3_ph'];
+      var mS3Btn = document.querySelector('#flStep3 .fl-calc-btn');
       if (mS3Btn && t['modal_s3_btn']) mS3Btn.textContent = t['modal_s3_btn'];
-      var mS4T = document.getElementById('flStep4Title');
+      var mS3Back = document.querySelector('#flStep3 button:last-child');
+      if (mS3Back && t['modal_s3_back']) mS3Back.textContent = t['modal_s3_back'];
+
+      var mS4T = document.querySelector('#flStep4 h4');
       if (mS4T && t['modal_s4_t']) mS4T.textContent = t['modal_s4_t'];
-      var mS5T = document.getElementById('flStep5Title');
+      var mS4D = document.querySelector('#flStep4 p');
+      if (mS4D && t['modal_s4_d']) mS4D.textContent = t['modal_s4_d'];
+
+      var mS5T = document.querySelector('#flStep5 h4');
       if (mS5T && t['modal_s5_t']) mS5T.textContent = t['modal_s5_t'];
-      var mCopyBtn = document.getElementById('flCopyWalletBtn');
-      if (mCopyBtn && t['modal_s5_copy']) mCopyBtn.textContent = t['modal_s5_copy'];
-      var mTxBtn = document.getElementById('flTelegramTxBtn');
-      if (mTxBtn && t['modal_s5_tx']) mTxBtn.textContent = t['modal_s5_tx'];
-
-      var exKick = document.querySelector('#experience .kick');
-      if (exKick && t['exp_sec_kick']) exKick.textContent = t['exp_sec_kick'];
-      var exTitle = document.querySelector('#experience h2');
-      if (exTitle && t['exp_sec_title']) exTitle.innerHTML = t['exp_sec_title'];
-      var exWhen = document.querySelector('#experience .when');
-      if (exWhen && t['exp_when']) exWhen.textContent = t['exp_when'];
-      var exJob = document.querySelector('#experience .cvx-ti h3');
-      if (exJob && t['exp_job_title']) exJob.textContent = t['exp_job_title'];
-      var exLis = document.querySelectorAll('#experience .cvx-ti ul li');
-      if (exLis.length >= 3) {
-        if (t['exp_b1']) exLis[0].textContent = t['exp_b1'];
-        if (t['exp_b2']) exLis[1].textContent = t['exp_b2'];
-        if (t['exp_b3']) exLis[2].textContent = t['exp_b3'];
-      }
-
-      var cKick = document.querySelector('#contact .kick');
-      if (cKick && t['cont_kick']) cKick.textContent = t['cont_kick'];
-      var cTitle = document.querySelector('#contact h2');
-      if (cTitle && t['cont_title']) cTitle.innerHTML = t['cont_title'];
-      var cSub = document.querySelector('#contact .cvx-head p');
-      if (cSub && t['cont_sub']) cSub.textContent = t['cont_sub'];
-
-      var cNLbl = document.querySelector('label[for="c-name"]');
-      if (cNLbl && t['cont_name_lbl']) cNLbl.innerHTML = t['cont_name_lbl'];
-      var cNInp = document.getElementById('c-name');
-      if (cNInp && t['cont_name_ph']) cNInp.placeholder = t['cont_name_ph'];
-
-      var cELbl = document.querySelector('label[for="c-email"]');
-      if (cELbl && t['cont_email_lbl']) cELbl.innerHTML = t['cont_email_lbl'];
-      var cEInp = document.getElementById('c-email');
-      if (cEInp && t['cont_email_ph']) cEInp.placeholder = t['cont_email_ph'];
-
-      var cMLbl = document.querySelector('label[for="c-message"]');
-      if (cMLbl && t['cont_msg_lbl']) cMLbl.innerHTML = t['cont_msg_lbl'];
-      var cMInp = document.getElementById('c-message');
-      if (cMInp && t['cont_msg_ph']) cMInp.placeholder = t['cont_msg_ph'];
-
-      var cBtn = document.getElementById('contactSubmit');
-      if (cBtn && t['cont_btn']) cBtn.innerHTML = t['cont_btn'];
-
-      var fTxt = document.querySelector('footer.cv-foot');
-      if (fTxt && t['foot_text']) fTxt.innerHTML = t['foot_text'] + ' · <span class="mono">saifeddineboumaza.com</span>';
+      var mS5Copy = document.querySelector('.fl-copy-btn');
+      if (mS5Copy && t['modal_s5_copy']) mS5Copy.textContent = t['modal_s5_copy'];
+      var mS5Tx = document.getElementById('flTelegramTxBtn');
+      if (mS5Tx && t['modal_s5_tx']) mS5Tx.innerHTML = '<svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M21.9 4.3 18.7 19c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.7 13 1.9 11.5c-1-.3-1-1 .2-1.5l18.4-7.1c.9-.3 1.6.2 1.4 1.4Z"/></svg> ' + t['modal_s5_tx'];
 
       try {
         localStorage.setItem('cvx_lang', lang);
@@ -4183,6 +4892,7 @@ html[dir="rtl"] .mono-arrow {
     } else {
       window.setSiteLanguage('en');
     }
+
   })();
 })();
 //]]>
