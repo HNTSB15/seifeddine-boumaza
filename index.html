@@ -1836,6 +1836,157 @@ body.theme-light .v7xpp .pp-card p {
     font-size: 11.5px;
   }
 }
+
+/* ==========================================================================
+   🌐 ARABIC & ENGLISH BILINGUAL SYSTEM (RTL / LTR)
+   ========================================================================== */
+.cvx-lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(13, 20, 32, 0.7);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-family: 'Space Grotesk', 'Tajawal', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s ease;
+  user-select: none;
+  line-height: 1;
+}
+.cvx-lang-toggle:hover {
+  border-color: var(--neon-2);
+  box-shadow: 0 0 14px rgba(18, 214, 255, 0.25);
+  transform: translateY(-1px);
+}
+.cvx-lang-toggle .lang-flag {
+  font-size: 14px;
+}
+body.theme-light .cvx-lang-toggle {
+  background: #ffffff;
+  border-color: var(--line);
+  color: var(--text);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+body.theme-light .cvx-lang-toggle:hover {
+  border-color: var(--neon-2);
+  box-shadow: 0 0 12px rgba(2, 132, 199, 0.2);
+}
+
+/* RTL Typography & Direction overrides */
+html[dir="rtl"] body,
+body.lang-ar {
+  font-family: 'Tajawal', 'Space Grotesk', system-ui, sans-serif;
+  direction: rtl;
+  text-align: right;
+}
+
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] h4,
+html[dir="rtl"] b,
+html[dir="rtl"] strong {
+  font-family: 'Tajawal', 'Space Grotesk', sans-serif;
+  letter-spacing: 0 !important;
+}
+
+html[dir="rtl"] .mono,
+html[dir="rtl"] .cvx .mono,
+html[dir="rtl"] .fl-node-console,
+html[dir="rtl"] .fl-wallet-box,
+html[dir="rtl"] .crypto-addr,
+html[dir="rtl"] .mono-code {
+  font-family: 'JetBrains Mono', 'Tajawal', monospace;
+}
+
+/* Force tech and crypto code blocks to remain LTR */
+html[dir="rtl"] .fl-node-console,
+html[dir="rtl"] .fl-wallet-box,
+html[dir="rtl"] #flModalTitle,
+html[dir="rtl"] .cvx-form-live {
+  direction: ltr !important;
+  text-align: left !important;
+}
+
+/* Nav & header alignment in RTL */
+html[dir="rtl"] .cvx-links {
+  margin-right: auto;
+  margin-left: 0;
+}
+html[dir="rtl"] .cvx-brand b {
+  text-align: right;
+}
+html[dir="rtl"] .cvx-navcta {
+  margin-right: 8px;
+  margin-left: 0;
+}
+html[dir="rtl"] .cvx-burger {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+/* Form fields in RTL */
+html[dir="rtl"] .cvx-field-box {
+  text-align: right;
+}
+html[dir="rtl"] .cvx-input-ico {
+  left: auto;
+  right: 14px;
+}
+html[dir="rtl"] .cvx-input-wrap input,
+html[dir="rtl"] .cvx-input-wrap textarea {
+  padding: 14px 44px 14px 16px;
+  text-align: right;
+}
+html[dir="rtl"] .cvx-field-head label {
+  flex-direction: row;
+}
+
+/* Timeline alignment in RTL */
+html[dir="rtl"] .timeline {
+  border-left: none;
+  border-right: 2px solid transparent;
+  border-image: var(--rgb) 1;
+  padding-left: 0;
+  padding-right: 26px;
+  margin-left: 0;
+  margin-right: 8px;
+}
+html[dir="rtl"] .tl-item::before {
+  left: auto;
+  right: -34px;
+}
+html[dir="rtl"] .cvx-tl {
+  border-left: none;
+  border-right: 2px solid rgba(27,41,66,0.9);
+  padding-left: 0;
+  padding-right: 24px;
+}
+html[dir="rtl"] .cvx-ti::before {
+  left: auto;
+  right: -31px;
+}
+html[dir="rtl"] .proj ul,
+html[dir="rtl"] .tl-item ul {
+  margin: 8px 18px 0 0;
+}
+
+/* Arrow flipping in RTL */
+html[dir="rtl"] .mono-arrow {
+  display: inline-block;
+  transform: rotate(180deg);
+}
+
+@media(max-width: 820px) {
+  .cvx-lang-toggle {
+    padding: 7px 10px;
+    font-size: 11.5px;
+  }
+}
 </style>
 <div class="cvx" id="cvtop">
 <nav class="cvx-nav">
@@ -1883,6 +2034,10 @@ body.theme-light .v7xpp .pp-card p {
 <a href="#experience">Experience</a>
 <a href="#contact">Contact</a>
 </div>
+<button class="cvx-lang-toggle" id="langToggleBtn" type="button" aria-label="Toggle language" onclick="toggleSiteLanguage()">
+  <span class="lang-flag">🌐</span>
+  <span class="lang-label mono">العربية</span>
+</button>
 <button class="cvx-theme-toggle" id="themeToggleBtn" type="button" aria-label="Toggle dark or light mode" onclick="toggleSiteTheme()">
   <span class="theme-icon moon-icon"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12.3 2a10 10 0 0 0-.19 20 10 10 0 0 0 8.08-4.14 1 1 0 0 0-.89-1.57A8 8 0 1 1 11.71 3.5a1 1 0 0 0 .59-1.5z"/></svg></span>
   <span class="theme-icon sun-icon"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" fill="none"/></svg></span>
@@ -1900,12 +2055,18 @@ body.theme-light .v7xpp .pp-card p {
 <div class="cvx-mobile-menu" id="cvxMobileMenu">
   <div class="cvx-mobile-menu-inner">
     <div class="cvx-mob-theme-row">
-      <span class="mono" style="font-size:12px;color:var(--muted)">Appearance:</span>
-      <button class="cvx-theme-toggle" type="button" aria-label="Toggle dark or light mode" onclick="toggleSiteTheme()">
-        <span class="theme-icon moon-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12.3 2a10 10 0 0 0-.19 20 10 10 0 0 0 8.08-4.14 1 1 0 0 0-.89-1.57A8 8 0 1 1 11.71 3.5a1 1 0 0 0 .59-1.5z"/></svg></span>
-        <span class="theme-icon sun-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" fill="none"/></svg></span>
-        <span class="theme-label mono">Dark</span>
-      </button>
+      <span class="mono" style="font-size:12px;color:var(--muted)">Appearance &amp; Lang:</span>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="cvx-lang-toggle" type="button" aria-label="Toggle language" onclick="toggleSiteLanguage()">
+          <span class="lang-flag">🌐</span>
+          <span class="lang-label mono">العربية</span>
+        </button>
+        <button class="cvx-theme-toggle" type="button" aria-label="Toggle dark or light mode" onclick="toggleSiteTheme()">
+          <span class="theme-icon moon-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12.3 2a10 10 0 0 0-.19 20 10 10 0 0 0 8.08-4.14 1 1 0 0 0-.89-1.57A8 8 0 1 1 11.71 3.5a1 1 0 0 0 .59-1.5z"/></svg></span>
+          <span class="theme-icon sun-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" fill="none"/></svg></span>
+          <span class="theme-label mono">Dark</span>
+        </button>
+      </div>
     </div>
     <div class="cvx-mob-links">
       <a href="#cvtop" onclick="closeMobileMenu()"><span class="mono">// 00</span> Home / Top</a>
@@ -3515,6 +3676,501 @@ body.theme-light .v7xpp .pp-card p {
     document.body.classList.remove('theme-light');
     document.documentElement.removeAttribute('data-theme');
     window.updateThemeToggleUI(false);
+
+    // ==========================================================================
+    // 🌐 BILINGUAL TRANSLATION ENGINE (Arabic & English)
+    // ==========================================================================
+    var cvxTranslations = {
+      ar: {
+        'brand_title': 'سيف الدين<br/>بومعزة',
+        'brand_sub': 'مدير تداول<br/>الفوركس والعملات الرقمية',
+        'nav_about': 'عن سيف الدين',
+        'nav_expertise': 'الخبرات',
+        'nav_skills': 'المهارات',
+        'nav_projects': 'السجل والصفقات',
+        'nav_newsx': 'NewsX AI ⚡',
+        'nav_flash': 'فلاش USDT ⚡',
+        'nav_experience': 'المسيرة المهنية',
+        'nav_contact': 'اتصل بنا',
+        'nav_cta': '⇩ تحميل الملف التعريفي',
+
+        'mob_home': '<span class="mono">// 00</span> الرئيسية / البداية',
+        'mob_about': '<span class="mono">// 01</span> عن سيف الدين',
+        'mob_expertise': '<span class="mono">// 02</span> مجالات التخصص',
+        'mob_skills': '<span class="mono">// 03</span> المهارات وأزواج التداول',
+        'mob_projects': '<span class="mono">// 04</span> سجل الصفقات والأداء',
+        'mob_newsx': '<span class="mono">// 05</span> منصة NewsX AI <span class="mob-badge">AI LIVE</span>',
+        'mob_flash': '<span class="mono">// 06</span> باقات Flash USDT <span class="mob-badge gold">عروض</span>',
+        'mob_exp': '<span class="mono">// 07</span> المسيرة المهنية والخبرة',
+        'mob_contact': '<span class="mono">// 08</span> التواصل المباشر والاستفسار',
+        'mob_dl': '⇩ تحميل الملف التعريفي',
+
+        'hero_badge': '<span class="dot"></span> مكتب تداول نشط · أداء عام 2026',
+        'hero_tagline': 'إدارة رأس مال منضبطة، تنفيذ خوارزمي دقيق لصفقات السوق، ومتابعة السيولة المؤسسية عبر أسواق الفوركس العالمية وعقود العملات الرقمية.',
+        'hero_cta_pri': 'استكشف سجل الأداء',
+        'hero_cta_ghost': 'استفسار مباشر',
+        'hero_scroll': 'مرر للأسفل للاستكشاف',
+
+        'about_kick': '// نبذة ومنهجية التداول',
+        'about_title': 'عن <span class="h">سيف الدين</span>',
+        'about_p1': 'مدير تداول ومحافظ محترف متخصص في قراءة السيولة المؤسسية، توافق مستويات فيبوناتشي، ونسب العائد إلى المخاطرة الصارمة. ملتزم بتحقيق أرباح مستدامة وحماية رأس المال عبر أسواق الفوركس، المؤشرات، والأصول المشفرة.',
+        'about_p2': 'العمل بشفافية مطلقة، انضباط منهجي، وإلغاء تام للعوامل العاطفية أثناء تنفيذ الصفقات في الأسواق الحية.',
+        'stat_cap': 'حجم المحافظ النشطة المدارة',
+        'stat_win': 'معدل نجاح الصفقات',
+        'stat_inst': 'أزواج وسلع تداول نشطة',
+        'stat_exp': 'سنوات الخبرة في الأسواق',
+
+        'exp_kick': '// مجالات التخصص الرئيسية',
+        'exp_title': 'الاستراتيجية <span class="h">وإدارة المخاطر</span>',
+        'exp_c1_t': 'تداول الفوركس والذهب',
+        'exp_c1_d': 'تداول يومي وسوينغ دقيق على الذهب (XAUUSD)، اليورو/دولار، والباوند/دولار مع تحليل السيولة على أطر زمنية متعددة.',
+        'exp_c2_t': 'عقود المشتقات والعملات الرقمية',
+        'exp_c2_d': 'متابعة الزخم والاتجاه لعملات البيتكوين والإيثيريوم والعملات البديلة ذات السيولة العالية مع إدارة آلية للمخاطر.',
+        'exp_c3_t': 'تطوير الخوارزميات والمؤشرات',
+        'exp_c3_d': 'برمجة مؤشرات مخصصة لمنصات MT4 و MT5، استراتيجيات PineScript المؤتمتة وتنبيهات السيولة المؤسسية.',
+        'exp_c4_t': 'إدارة المخاطر الصارمة',
+        'exp_c4_d': 'أوامر وقف خسارة حاسمة، مخاطرة لا تتجاوز 1-2% لكل صفقة، وقف خسارة متحرك، ونظام صارم للحد من التراجع (Drawdown).',
+
+        'skills_kick': '// الأدوات والتقنيات',
+        'skills_title': 'الأسواق <span class="h">والمنصات</span>',
+
+        'proj_kick': '// سجل الأداء والصفقات',
+        'proj_title': 'أبرز <span class="h">المحطات والإنجازات</span>',
+
+        'nx_kick': '// ذكاء اصطناعي لتحليل الأخبار الاقتصادية',
+        'nx_kicker': 'تحليل فوري للأخبار الاقتصادية والأسواق',
+        'nx_title': 'توقع اتجاه الأسواق <em>قبل</em> صدور الأخبار الكبرى.',
+        'nx_sub': 'تقوم منصة NewsX AI بمتابعة كافة البيانات الاقتصادية الأمريكية عالية التأثير تلقائياً (NFP، CPI، FOMC، GDP، وغيرها) وتقديم ترجيح فوري وتوصيات دقيقة لزوج الذهب مباشرة على هاتفك، حتى والتطبيق مغلق.',
+        'nx_cta': 'عرض الباقات والاشتراكات',
+        'nx_pricing_title': 'باقات اشتراك <span class="h">NewsX AI</span>',
+        'nx_plan_std': 'الاشتراك الأساسي',
+        'nx_plan_pro': 'الاشتراك الاحترافي',
+        'nx_plan_ult': 'اشتراك النخبة الشامل',
+        'nx_btn_std': 'اشترك بالباقة الأساسية',
+        'nx_btn_pro': 'اشترك بالباقة الاحترافية',
+        'nx_btn_ult': 'اشترك بباقة النخبة',
+
+        'fl_kick': '// منصة فلاش USDT المؤسسية',
+        'fl_title': 'سوق باقات <span class="h">Flash USDT</span>',
+        'fl_sub': 'تفعيل فوري لسيولة Flash USDT المتوافقة مع محافظ بينانس وتراست واليت وميتاماسك وشبكات البلوكشين المعتمدة.',
+        'fl_tab_24h': '⚡ صلاحية 24 ساعة (سريعة / تجربة)',
+        'fl_tab_3d': '⚡ صلاحية 3 أيام (قياسية)',
+        'fl_tab_1w': '⚡ صلاحية أسبوع كامل (حجم كبير)',
+        'fl_calc_title': 'حاسبة Flash USDT المخصصة',
+        'fl_calc_dur_lbl': 'اختر مدة الصلاحية:',
+        'fl_calc_amt_lbl': 'كمية Flash المطلوبة:',
+        'fl_calc_est_lbl': 'التكلفة الإجمالية التقديرية:',
+        'fl_calc_btn': 'الانتقال للدفع المباشر ←',
+        'fl_deal_claim': 'طلب العرض الحصري الآن',
+        'fl_pack_order': 'طلب الباقة الآن',
+        'fl_countdown_lbl': 'ينتهي العرض خلال:',
+
+        'modal_title': '// محطة الدفع: الشراء المباشر',
+        'modal_s1_t': '1. اختر المحفظة أو المنصة المستلمة',
+        'modal_s1_d': 'حدد أين تريد استلام رصيد Flash USDT الخاص بك.',
+        'modal_s2_t': '2. اختر شبكة البلوكشين',
+        'modal_s2_d': 'تأكد من دعم محفظتك للشبكة المحددة (BEP20 أو TRC20).',
+        'modal_s3_t': '3. أدخل عنوان المحفظة أو المعرف',
+        'modal_s3_d': 'الصق عنوان محفظتك لاستلام التحويل.',
+        'modal_s3_ph': 'الصق عنوان محفظة BEP20 / TRC20 أو معرف تيليجرام...',
+        'modal_s3_btn': 'متابعة لربط العقدة ←',
+        'modal_s4_t': '4. جاري محاكاة ربط العقدة...',
+        'modal_s5_t': '5. منصة الدفع المباشر والفاتورة',
+        'modal_s5_copy': 'نسخ عنوان المحفظة',
+        'modal_s5_tx': 'تأكيد العملية عبر تيليجرام',
+
+        'exp_sec_kick': '// المسيرة والخبرة',
+        'exp_sec_title': '# المسيرة <span class="h">المهنية</span>',
+        'exp_when': '2026 – حتى الآن',
+        'exp_job_title': 'مدير تداول محترف ومزود إشارات — سيف الدين لإدارة الحسابات',
+        'exp_b1': 'إدارة محافظ مالية نشطة في أسواق الفوركس والعملات الرقمية مع تطبيق صارم لقواعد الحد من المخاطر.',
+        'exp_b2': 'تقديم إشارات تداول VIP عالية الدقة موثقة بنقاط دخول وأهداف ربح ووقف خسارة واضحة.',
+        'exp_b3': 'تطوير استراتيجيات وخوارزميات ومؤشرات فنية مخصصة لمنصات الميتاتريدر.',
+
+        'cont_kick': '// استفسار وتواصل مباشر',
+        'cont_title': 'جاهز لبدء <span class="h">التداول وإدارة الحسابات؟</span>',
+        'cont_sub': 'مهتم بالحصول على تفاصيل إدارة المحافظ، الانضمام لقناة إشارات VIP، أو الاستفسار عن الخدمات؟ أرسل رسالتك وسأجيبك مباشرة.',
+        'cont_name_lbl': '<span class="mono-arrow">&gt;</span> الاسم الكامل',
+        'cont_name_ph': 'أدخل اسمك الكامل...',
+        'cont_email_lbl': '<span class="mono-arrow">&gt;</span> البريد الإلكتروني',
+        'cont_email_ph': 'البريد الإلكتروني المعتمد...',
+        'cont_msg_lbl': '<span class="mono-arrow">&gt;</span> الرسالة / أهدافك الاستثمارية',
+        'cont_msg_ph': 'شاركنا حجم رأس المال، أهدافك الاستثمارية، أزواجك المفضلة، أو أي استفسار...',
+        'cont_btn': '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg> إرسال الرسالة',
+
+        'foot_text': 'سيف الدين بومعزة · جميع الحقوق محفوظة 2026'
+      },
+      en: {
+        'brand_title': 'Saifeddine<br/>Boumaza',
+        'brand_sub': 'Forex & Crypto<br/>Trading Manager',
+        'nav_about': 'About',
+        'nav_expertise': 'Expertise',
+        'nav_skills': 'Skills',
+        'nav_projects': 'Projects',
+        'nav_newsx': 'NewsX AI ⚡',
+        'nav_flash': 'Flash USDT ⚡',
+        'nav_experience': 'Experience',
+        'nav_contact': 'Contact',
+        'nav_cta': '⇩ Trading Profile',
+
+        'mob_home': '<span class="mono">// 00</span> Home / Top',
+        'mob_about': '<span class="mono">// 01</span> About Me',
+        'mob_expertise': '<span class="mono">// 02</span> Expertise',
+        'mob_skills': '<span class="mono">// 03</span> Skills & Pairs',
+        'mob_projects': '<span class="mono">// 04</span> Trading Records',
+        'mob_newsx': '<span class="mono">// 05</span> NewsX AI Platform <span class="mob-badge">AI LIVE</span>',
+        'mob_flash': '<span class="mono">// 06</span> Flash USDT Offers <span class="mob-badge gold">OFFERS</span>',
+        'mob_exp': '<span class="mono">// 07</span> Experience Timeline',
+        'mob_contact': '<span class="mono">// 08</span> Direct Contact & Inquiry',
+        'mob_dl': '⇩ Download Trading Profile',
+
+        'hero_badge': '<span class="dot"></span> ACTIVE TRADING DESK · 2026 PERFORMANCE',
+        'hero_tagline': 'Disciplined capital management, algorithmic market execution, and institutional liquidity flow across international forex and crypto futures markets.',
+        'hero_cta_pri': 'Explore Performance',
+        'hero_cta_ghost': 'Direct Inquiry',
+        'hero_scroll': 'SCROLL TO EXPLORE',
+
+        'about_kick': '// bio & approach',
+        'about_title': 'About <span class="h">Saifeddine</span>',
+        'about_p1': 'Professional trader and capital manager specializing in institutional liquidity, Fibonacci confluence, and strict risk-to-reward ratios. Dedicated to consistent profitability and capital preservation across Forex, Indices, and Digital Assets.',
+        'about_p2': 'Operating with full transparency, systematic discipline, and zero emotional interference in live execution.',
+        'stat_cap': 'Active Managed Capital',
+        'stat_win': 'Historical Win Rate',
+        'stat_inst': 'Major Pairs & Commodities',
+        'stat_exp': 'Years Market Experience',
+
+        'exp_kick': '// core competencies',
+        'exp_title': 'Strategy & <span class="h">Risk Management</span>',
+        'exp_c1_t': 'Forex & Commodities',
+        'exp_c1_d': 'Precision swing and intraday trading on Gold (XAUUSD), EURUSD, and GBPUSD with strict multi-timeframe liquidity analysis.',
+        'exp_c2_t': 'Crypto Futures & Spot',
+        'exp_c2_d': 'High-frequency momentum and trend tracking on BTC, ETH, and high-beta altcoins with automated risk controls.',
+        'exp_c3_t': 'Algorithmic Development',
+        'exp_c3_d': 'Custom MT4/MT5 indicators, PineScript automation, and algorithmic trade alerts designed for institutional precision.',
+        'exp_c4_t': 'Strict Risk Management',
+        'exp_c4_d': 'Hard-stop execution, max 1–2% portfolio risk per position, dynamic trailing stops, and multi-tier drawdown controls.',
+
+        'skills_kick': '// technical prowess',
+        'skills_title': 'Markets & <span class="h">Platforms</span>',
+
+        'proj_kick': '// track record',
+        'proj_title': 'Trading <span class="h">Milestones</span>',
+
+        'nx_kick': '// automated market intelligence',
+        'nx_kicker': 'AI-POWERED NEWS & MARKET ANALYSIS',
+        'nx_title': 'Know market direction <em>before</em> the big news hits.',
+        'nx_sub': 'NewsX AI tracks every high-impact USD news release automatically - NFP, CPI, FOMC, PPI, GDP, and ISM PMI - and delivers AI Bias plus actionable XAUUSD signals straight to your mobile device, even when the app is closed.',
+        'nx_cta': 'View Pricing & Plans',
+        'nx_pricing_title': 'NewsX AI <span class="h">Pricing Plans</span>',
+        'nx_plan_std': 'NewsX AI Standard',
+        'nx_plan_pro': 'NewsX AI Pro VIP',
+        'nx_plan_ult': 'NewsX AI Ultimate Master',
+        'nx_btn_std': 'Get Standard Access',
+        'nx_btn_pro': 'Get Pro VIP Access',
+        'nx_btn_ult': 'Get Ultimate Access',
+
+        'fl_kick': '// flash liquidity desk',
+        'fl_title': 'Flash USDT <span class="h">Marketplace</span>',
+        'fl_sub': 'Fast, testnet & arbitrage-grade Flash USDT pool activations directly to Binance, Trust Wallet, MetaMask, and private nodes.',
+        'fl_tab_24h': '⚡ 24 Hours (Fast / Testing)',
+        'fl_tab_3d': '⚡ 3 Days (Standard)',
+        'fl_tab_1w': '⚡ 1 Week (High Volume)',
+        'fl_calc_title': 'Custom Flash USDT Calculator',
+        'fl_calc_dur_lbl': 'Select Duration:',
+        'fl_calc_amt_lbl': 'Flash USDT Amount:',
+        'fl_calc_est_lbl': 'Estimated Total Cost:',
+        'fl_calc_btn': 'Proceed to Direct Checkout →',
+        'fl_deal_claim': 'Claim Limited Deal',
+        'fl_pack_order': 'Order Flash Pool',
+        'fl_countdown_lbl': 'OFFER EXPIRES IN:',
+
+        'modal_title': '// TERMINAL: DIRECT CHECKOUT',
+        'modal_s1_t': '1. Select Destination Platform',
+        'modal_s1_d': 'Choose where you will receive your Flash USDT.',
+        'modal_s2_t': '2. Select Payment Network',
+        'modal_s2_d': 'Ensure your wallet supports the selected blockchain network.',
+        'modal_s3_t': '3. Enter Receiving Identifier',
+        'modal_s3_d': 'Paste the address or username where your activation will be sent.',
+        'modal_s3_ph': 'Paste BSC / Tron wallet address or Telegram ID...',
+        'modal_s3_btn': 'Continue to Node Binding →',
+        'modal_s4_t': '4. Verifying Node Cluster Connection',
+        'modal_s5_t': '5. Direct Blockchain Invoice Desk',
+        'modal_s5_copy': 'Copy Wallet Address',
+        'modal_s5_tx': 'Verify Payment on Telegram',
+
+        'exp_sec_kick': '// timeline',
+        'exp_sec_title': '# <span class="h">Experience</span>',
+        'exp_when': '2026 – Present',
+        'exp_job_title': 'Professional Trading Manager & Signal Provider — Saifeddine Trading',
+        'exp_b1': 'Manage $100+ in active client capital across forex and cryptocurrency markets with strict risk management.',
+        'exp_b2': 'Provide high-precision VIP trading signals with documented entry, take-profit, and stop-loss levels.',
+        'exp_b3': 'Develop algorithmic trading strategies and proprietary technical indicators for MetaTrader platforms.',
+
+        'cont_kick': '// direct inquiry',
+        'cont_title': 'Ready to <span class="h">Discuss Trading?</span>',
+        'cont_sub': 'Interested in managed account information, VIP trading signals, or learning more about my risk-managed trading process? Send a direct inquiry below.',
+        'cont_name_lbl': '<span class="mono-arrow">&gt;</span> Full Name',
+        'cont_name_ph': 'Enter your full name...',
+        'cont_email_lbl': '<span class="mono-arrow">&gt;</span> Email Address',
+        'cont_email_ph': 'name@domain.com',
+        'cont_msg_lbl': '<span class="mono-arrow">&gt;</span> Message / Trading Goals',
+        'cont_msg_ph': 'Share your investment capital, trading goals, preferred pairs, or any questions...',
+        'cont_btn': '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg> Send Message',
+
+        'foot_text': 'Saifeddine Boumaza · All Rights Reserved 2026'
+      }
+    };
+
+    window.setSiteLanguage = function(lang) {
+      if (!cvxTranslations[lang]) lang = 'en';
+      var t = cvxTranslations[lang];
+      var isAr = (lang === 'ar');
+
+      document.documentElement.setAttribute('lang', lang);
+      document.documentElement.setAttribute('dir', isAr ? 'rtl' : 'ltr');
+      if (isAr) {
+        document.body.classList.add('lang-ar');
+      } else {
+        document.body.classList.remove('lang-ar');
+      }
+
+      var lBtns = document.querySelectorAll('.cvx-lang-toggle');
+      lBtns.forEach(function(b) {
+        var lbl = b.querySelector('.lang-label');
+        if (lbl) lbl.textContent = isAr ? 'English' : 'العربية';
+      });
+
+      var bTitle = document.querySelector('.cvx-brand span b');
+      var bSub = document.querySelector('.cvx-brand span small');
+      if (bTitle && t['brand_title']) bTitle.innerHTML = t['brand_title'];
+      if (bSub && t['brand_sub']) bSub.innerHTML = t['brand_sub'];
+
+      var nMap = [
+        ['a[href="#about"]', 'nav_about'],
+        ['a[href="#expertise"]', 'nav_expertise'],
+        ['a[href="#skills"]', 'nav_skills'],
+        ['a[href="#projects"]', 'nav_projects'],
+        ['a[href="#newsx"]', 'nav_newsx'],
+        ['a[href="#flash"]', 'nav_flash'],
+        ['a[href="#experience"]', 'nav_experience'],
+        ['a[href="#contact"]', 'nav_contact']
+      ];
+      nMap.forEach(function(pair) {
+        document.querySelectorAll('.cvx-links ' + pair[0]).forEach(function(el){
+          if (t[pair[1]]) el.innerHTML = t[pair[1]];
+        });
+      });
+
+      var dlBtn = document.getElementById('cvxDl');
+      if (dlBtn && t['nav_cta']) dlBtn.textContent = t['nav_cta'];
+
+      var mobLinks = document.querySelectorAll('.cvx-mob-links a');
+      if (mobLinks.length >= 9) {
+        var mKeys = ['mob_home', 'mob_about', 'mob_expertise', 'mob_skills', 'mob_projects', 'mob_newsx', 'mob_flash', 'mob_exp', 'mob_contact'];
+        mKeys.forEach(function(k, idx) {
+          if (mobLinks[idx] && t[k]) mobLinks[idx].innerHTML = t[k];
+        });
+      }
+      var mobDl = document.querySelector('.cvx-mob-actions .cvx-navcta');
+      if (mobDl && t['mob_dl']) mobDl.textContent = t['mob_dl'];
+
+      var hBadge = document.querySelector('.hero .badge');
+      if (hBadge && t['hero_badge']) hBadge.innerHTML = t['hero_badge'];
+      var hTag = document.querySelector('.hero .tagline');
+      if (hTag && t['hero_tagline']) hTag.textContent = t['hero_tagline'];
+      var hCtaPri = document.querySelector('.hero .btn-primary');
+      if (hCtaPri && t['hero_cta_pri']) hCtaPri.textContent = t['hero_cta_pri'];
+      var hCtaGhost = document.querySelector('.hero .btn-ghost');
+      if (hCtaGhost && t['hero_cta_ghost']) hCtaGhost.textContent = t['hero_cta_ghost'];
+      var hScroll = document.querySelector('.hero .scroll-hint');
+      if (hScroll && t['hero_scroll']) hScroll.textContent = t['hero_scroll'];
+
+      var abKick = document.querySelector('#about .kick');
+      if (abKick && t['about_kick']) abKick.textContent = t['about_kick'];
+      var abTitle = document.querySelector('#about h2');
+      if (abTitle && t['about_title']) abTitle.innerHTML = t['about_title'];
+      var abPs = document.querySelectorAll('#about .about-card p');
+      if (abPs.length >= 2) {
+        if (t['about_p1']) abPs[0].textContent = t['about_p1'];
+        if (t['about_p2']) abPs[1].textContent = t['about_p2'];
+      }
+      var statLbls = document.querySelectorAll('#about .stat .lbl');
+      if (statLbls.length >= 4) {
+        var sKeys = ['stat_cap', 'stat_win', 'stat_inst', 'stat_exp'];
+        sKeys.forEach(function(k, i){ if (statLbls[i] && t[k]) statLbls[i].textContent = t[k]; });
+      }
+
+      var expKick = document.querySelector('#expertise .kick');
+      if (expKick && t['exp_kick']) expKick.textContent = t['exp_kick'];
+      var expTitle = document.querySelector('#expertise h2');
+      if (expTitle && t['exp_title']) expTitle.innerHTML = t['exp_title'];
+      var expCards = document.querySelectorAll('#expertise .card');
+      if (expCards.length >= 4) {
+        var eKeys = [
+          ['exp_c1_t', 'exp_c1_d'],
+          ['exp_c2_t', 'exp_c2_d'],
+          ['exp_c3_t', 'exp_c3_d'],
+          ['exp_c4_t', 'exp_c4_d']
+        ];
+        eKeys.forEach(function(p, i){
+          var h3 = expCards[i].querySelector('h3');
+          var pEl = expCards[i].querySelector('p');
+          if (h3 && t[p[0]]) h3.textContent = t[p[0]];
+          if (pEl && t[p[1]]) pEl.textContent = t[p[1]];
+        });
+      }
+
+      var skKick = document.querySelector('#skills .kick');
+      if (skKick && t['skills_kick']) skKick.textContent = t['skills_kick'];
+      var skTitle = document.querySelector('#skills h2');
+      if (skTitle && t['skills_title']) skTitle.innerHTML = t['skills_title'];
+
+      var prKick = document.querySelector('#projects .kick');
+      if (prKick && t['proj_kick']) prKick.textContent = t['proj_kick'];
+      var prTitle = document.querySelector('#projects h2');
+      if (prTitle && t['proj_title']) prTitle.innerHTML = t['proj_title'];
+
+      var nxKick = document.querySelector('#newsx .kick');
+      if (nxKick && t['nx_kick']) nxKick.textContent = t['nx_kick'];
+      var nxKicker = document.querySelector('.nx-kicker');
+      if (nxKicker && t['nx_kicker']) nxKicker.textContent = t['nx_kicker'];
+      var nxHeadTitle = document.querySelector('.nx-head-title');
+      if (nxHeadTitle && t['nx_title']) nxHeadTitle.innerHTML = t['nx_title'];
+      var nxSub = document.querySelector('.nx-sub');
+      if (nxSub && t['nx_sub']) nxSub.textContent = t['nx_sub'];
+      var nxCta = document.querySelector('.nx-ctas a');
+      if (nxCta && t['nx_cta']) nxCta.textContent = t['nx_cta'];
+      var nxPriceTitle = document.querySelector('#newsx-pricing h2');
+      if (nxPriceTitle && t['nx_pricing_title']) nxPriceTitle.innerHTML = t['nx_pricing_title'];
+
+      var nxBtnStd = document.getElementById('nxPlanStdBtn');
+      if (nxBtnStd && t['nx_btn_std']) nxBtnStd.textContent = t['nx_btn_std'];
+      var nxBtnPro = document.getElementById('nxPlanProBtn');
+      if (nxBtnPro && t['nx_btn_pro']) nxBtnPro.textContent = t['nx_btn_pro'];
+      var nxBtnUlt = document.getElementById('nxPlanUltBtn');
+      if (nxBtnUlt && t['nx_btn_ult']) nxBtnUlt.textContent = t['nx_btn_ult'];
+
+      var flKick = document.querySelector('#flash .kick');
+      if (flKick && t['fl_kick']) flKick.textContent = t['fl_kick'];
+      var flTitle = document.querySelector('#flash h2');
+      if (flTitle && t['fl_title']) flTitle.innerHTML = t['fl_title'];
+      var flSub = document.querySelector('#flash .cvx-head p');
+      if (flSub && t['fl_sub']) flSub.textContent = t['fl_sub'];
+
+      var flTab24 = document.querySelector('.fl-tab[data-dur="24h"]');
+      if (flTab24 && t['fl_tab_24h']) flTab24.textContent = t['fl_tab_24h'];
+      var flTab3d = document.querySelector('.fl-tab[data-dur="3d"]');
+      if (flTab3d && t['fl_tab_3d']) flTab3d.textContent = t['fl_tab_3d'];
+      var flTab1w = document.querySelector('.fl-tab[data-dur="1w"]');
+      if (flTab1w && t['fl_tab_1w']) flTab1w.textContent = t['fl_tab_1w'];
+
+      var flCalcTitle = document.querySelector('.fl-calc-card h3');
+      if (flCalcTitle && t['fl_calc_title']) flCalcTitle.textContent = t['fl_calc_title'];
+      var flCalcDurLbl = document.querySelector('label[for="flCalcDur"]');
+      if (flCalcDurLbl && t['fl_calc_dur_lbl']) flCalcDurLbl.textContent = t['fl_calc_dur_lbl'];
+      var flCalcAmtLbl = document.querySelector('label[for="flCalcAmt"]');
+      if (flCalcAmtLbl && t['fl_calc_amt_lbl']) flCalcAmtLbl.textContent = t['fl_calc_amt_lbl'];
+      var flCalcEstLbl = document.querySelector('.fl-calc-res small');
+      if (flCalcEstLbl && t['fl_calc_est_lbl']) flCalcEstLbl.textContent = t['fl_calc_est_lbl'];
+      var flCalcBtn = document.querySelector('.fl-calc-submit');
+      if (flCalcBtn && t['fl_calc_btn']) flCalcBtn.textContent = t['fl_calc_btn'];
+
+      document.querySelectorAll('.fl-deal-btn').forEach(function(b){
+        if (t['fl_deal_claim']) b.textContent = t['fl_deal_claim'];
+      });
+      document.querySelectorAll('.fl-pack-btn').forEach(function(b){
+        if (t['fl_pack_order']) b.textContent = t['fl_pack_order'];
+      });
+      document.querySelectorAll('.fl-countdown-label').forEach(function(l){
+        if (t['fl_countdown_lbl']) l.textContent = t['fl_countdown_lbl'];
+      });
+
+      var mTitle = document.getElementById('flModalTitle');
+      if (mTitle && t['modal_title']) mTitle.textContent = t['modal_title'];
+      var mS1T = document.getElementById('flStep1Title');
+      if (mS1T && t['modal_s1_t']) mS1T.textContent = t['modal_s1_t'];
+      var mS1D = document.getElementById('flStep1Desc');
+      if (mS1D && t['modal_s1_d']) mS1D.textContent = t['modal_s1_d'];
+      var mS3T = document.getElementById('flStep3Title');
+      if (mS3T && t['modal_s3_t']) mS3T.textContent = t['modal_s3_t'];
+      var mS3D = document.getElementById('flStep3Desc');
+      if (mS3D && t['modal_s3_d']) mS3D.textContent = t['modal_s3_d'];
+      var mS3Inp = document.getElementById('flUserWalletInput');
+      if (mS3Inp && t['modal_s3_ph']) mS3Inp.placeholder = t['modal_s3_ph'];
+      var mS3Btn = document.getElementById('flStep3Btn');
+      if (mS3Btn && t['modal_s3_btn']) mS3Btn.textContent = t['modal_s3_btn'];
+      var mS4T = document.getElementById('flStep4Title');
+      if (mS4T && t['modal_s4_t']) mS4T.textContent = t['modal_s4_t'];
+      var mS5T = document.getElementById('flStep5Title');
+      if (mS5T && t['modal_s5_t']) mS5T.textContent = t['modal_s5_t'];
+      var mCopyBtn = document.getElementById('flCopyWalletBtn');
+      if (mCopyBtn && t['modal_s5_copy']) mCopyBtn.textContent = t['modal_s5_copy'];
+      var mTxBtn = document.getElementById('flTelegramTxBtn');
+      if (mTxBtn && t['modal_s5_tx']) mTxBtn.textContent = t['modal_s5_tx'];
+
+      var exKick = document.querySelector('#experience .kick');
+      if (exKick && t['exp_sec_kick']) exKick.textContent = t['exp_sec_kick'];
+      var exTitle = document.querySelector('#experience h2');
+      if (exTitle && t['exp_sec_title']) exTitle.innerHTML = t['exp_sec_title'];
+      var exWhen = document.querySelector('#experience .when');
+      if (exWhen && t['exp_when']) exWhen.textContent = t['exp_when'];
+      var exJob = document.querySelector('#experience .cvx-ti h3');
+      if (exJob && t['exp_job_title']) exJob.textContent = t['exp_job_title'];
+      var exLis = document.querySelectorAll('#experience .cvx-ti ul li');
+      if (exLis.length >= 3) {
+        if (t['exp_b1']) exLis[0].textContent = t['exp_b1'];
+        if (t['exp_b2']) exLis[1].textContent = t['exp_b2'];
+        if (t['exp_b3']) exLis[2].textContent = t['exp_b3'];
+      }
+
+      var cKick = document.querySelector('#contact .kick');
+      if (cKick && t['cont_kick']) cKick.textContent = t['cont_kick'];
+      var cTitle = document.querySelector('#contact h2');
+      if (cTitle && t['cont_title']) cTitle.innerHTML = t['cont_title'];
+      var cSub = document.querySelector('#contact .cvx-head p');
+      if (cSub && t['cont_sub']) cSub.textContent = t['cont_sub'];
+
+      var cNLbl = document.querySelector('label[for="c-name"]');
+      if (cNLbl && t['cont_name_lbl']) cNLbl.innerHTML = t['cont_name_lbl'];
+      var cNInp = document.getElementById('c-name');
+      if (cNInp && t['cont_name_ph']) cNInp.placeholder = t['cont_name_ph'];
+
+      var cELbl = document.querySelector('label[for="c-email"]');
+      if (cELbl && t['cont_email_lbl']) cELbl.innerHTML = t['cont_email_lbl'];
+      var cEInp = document.getElementById('c-email');
+      if (cEInp && t['cont_email_ph']) cEInp.placeholder = t['cont_email_ph'];
+
+      var cMLbl = document.querySelector('label[for="c-message"]');
+      if (cMLbl && t['cont_msg_lbl']) cMLbl.innerHTML = t['cont_msg_lbl'];
+      var cMInp = document.getElementById('c-message');
+      if (cMInp && t['cont_msg_ph']) cMInp.placeholder = t['cont_msg_ph'];
+
+      var cBtn = document.getElementById('contactSubmit');
+      if (cBtn && t['cont_btn']) cBtn.innerHTML = t['cont_btn'];
+
+      var fTxt = document.querySelector('footer.cv-foot');
+      if (fTxt && t['foot_text']) fTxt.innerHTML = t['foot_text'] + ' · <span class="mono">saifeddineboumaza.com</span>';
+
+      try {
+        localStorage.setItem('cvx_lang', lang);
+      } catch(e){}
+    };
+
+    window.toggleSiteLanguage = function() {
+      var cur = document.documentElement.getAttribute('lang') || 'en';
+      var next = (cur === 'ar') ? 'en' : 'ar';
+      window.setSiteLanguage(next);
+    };
+
+    var savedLang = 'en';
+    try {
+      savedLang = localStorage.getItem('cvx_lang') || 'en';
+    } catch(e){}
+    if (savedLang === 'ar') {
+      window.setSiteLanguage('ar');
+    } else {
+      window.setSiteLanguage('en');
+    }
   })();
 })();
 //]]>
@@ -3563,16 +4219,20 @@ body.theme-light .v7xpp .pp-card p {
     t.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
   })();
 
-  // Hero role: looping typewriter
+  // Hero role: looping typewriter (Bilingual Arabic & English)
   (function(){
-    var roles=['Forex Trading Expert','Crypto Futures Manager','Trading Signals Provider','Risk Management Specialist','MT4 & MT5 Indicator Developer'];
+    window.cvxRolesEn = ['Forex Trading Expert','Crypto Futures Manager','Trading Signals Provider','Risk Management Specialist','MT4 & MT5 Indicator Developer'];
+    window.cvxRolesAr = ['خبير تداول الفوركس والذهب','مدير محافظ وعقود فيوتشرز','مزود إشارات تداول VIP','أخصائي إدارة المخاطر المالية','مطور مؤشرات وخوارزميات MT4 / MT5'];
     var el=document.querySelector('.role'); if(!el) return;
     var cursor='<span class="cursor">&#160;</span>';
     var r=0,c=0,del=false;
     function tick(){
-      var word=roles[r];
+      var isAr = document.documentElement.getAttribute('lang') === 'ar';
+      var roles = isAr ? window.cvxRolesAr : window.cvxRolesEn;
+      if (r >= roles.length) r = 0;
+      var word = roles[r];
       c += del ? -1 : 1;
-      el.innerHTML='&gt; '+word.substring(0,c)+cursor;
+      el.innerHTML = (isAr ? '&lt; ' : '&gt; ') + word.substring(0,c) + cursor;
       if(!del && c===word.length){del=true; setTimeout(tick,1400); return;}
       if(del && c===0){del=false; r=(r+1)%roles.length;}
       setTimeout(tick, del?40:80);
