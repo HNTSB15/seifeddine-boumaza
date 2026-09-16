@@ -1466,6 +1466,376 @@ footer.cv-foot .mono{color:var(--neon)}
   .fl-deal-card{padding:20px 18px}
   .fl-calc-card{padding:20px 16px}
 }
+
+/* ==========================================================================
+   🌙 DARK MODE & ☀️ LIGHT MODE ENGINE
+   (Default: ALWAYS starts in Dark Mode on open)
+   ========================================================================== */
+.cvx-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: rgba(13, 20, 32, 0.7);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s ease;
+  user-select: none;
+  line-height: 1;
+}
+.cvx-theme-toggle:hover {
+  border-color: var(--neon);
+  box-shadow: 0 0 14px rgba(0, 255, 156, 0.25);
+  transform: translateY(-1px);
+}
+.cvx-theme-toggle .theme-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.cvx-theme-toggle .moon-icon {
+  color: var(--neon-2);
+}
+.cvx-theme-toggle .sun-icon {
+  display: none;
+  color: #f59e0b;
+}
+
+body.theme-light .cvx-theme-toggle {
+  background: #ffffff;
+  border-color: var(--line);
+  color: var(--text);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+body.theme-light .cvx-theme-toggle:hover {
+  border-color: var(--neon);
+  box-shadow: 0 0 12px rgba(0, 153, 92, 0.2);
+}
+body.theme-light .cvx-theme-toggle .moon-icon {
+  display: none;
+}
+body.theme-light .cvx-theme-toggle .sun-icon {
+  display: inline-flex;
+}
+
+.cvx-mob-theme-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px 14px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* Light Theme Variables & Overrides */
+html[data-theme="light"],
+body.theme-light,
+body.theme-light .cvx {
+  --bg: #f4f7fb;
+  --bg-2: #ffffff;
+  --bg2: #ffffff;
+  --panel: #ffffff;
+  --panel-2: #eaf1f9;
+  --panel2: #eaf1f9;
+  --line: #d2deed;
+  --text: #0b1424;
+  --muted: #53647d;
+  --neon: #00995c;
+  --neon-2: #0284c7;
+  --neon2: #0284c7;
+  --gold: #c97a00;
+  --glow: 0 0 20px rgba(0,153,92,0.18);
+}
+
+body.theme-light {
+  background: 
+    radial-gradient(1000px 600px at 80% -10%, rgba(2,132,199,0.08), transparent 60%),
+    radial-gradient(900px 600px at -10% 20%, rgba(0,153,92,0.06), transparent 55%),
+    var(--bg);
+  color: var(--text);
+}
+body.theme-light::before {
+  background-image: 
+    linear-gradient(rgba(180, 200, 225, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180, 200, 225, 0.4) 1px, transparent 1px);
+  opacity: 0.55;
+}
+body.theme-light #matrix,
+body.theme-light .scanbars {
+  opacity: 0.02;
+}
+body.theme-light .cyber-glow i {
+  opacity: 0.06;
+}
+
+body.theme-light .cvx-nav,
+body.theme-light .nav {
+  background: rgba(244, 247, 251, 0.88);
+  border-bottom-color: var(--line);
+}
+body.theme-light .cvx-brand b,
+body.theme-light .brand b {
+  color: #0b1424;
+}
+body.theme-light .cvx-brand small,
+body.theme-light .brand small {
+  color: var(--neon-2);
+}
+body.theme-light .cvx-links a,
+body.theme-light .nav-links a {
+  color: var(--muted);
+}
+body.theme-light .cvx-links a:hover,
+body.theme-light .nav-links a:hover {
+  color: #0b1424;
+  background: rgba(0, 0, 0, 0.05);
+}
+body.theme-light .cvx-burger {
+  background: #ffffff;
+  border-color: var(--line);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+body.theme-light .cvx-burger .b-line {
+  background: #0b1424;
+}
+body.theme-light .cvx-burger.open .b-line {
+  background: var(--neon);
+}
+body.theme-light .cvx-mobile-menu {
+  background: rgba(255, 255, 255, 0.98);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.12);
+}
+body.theme-light .cvx-mob-head {
+  border-bottom-color: var(--line);
+}
+body.theme-light .cvx-mob-links a {
+  color: var(--text);
+}
+body.theme-light .cvx-mob-links a:hover,
+body.theme-light .cvx-mob-links a:active {
+  background: rgba(2, 132, 199, 0.08);
+  border-color: rgba(2, 132, 199, 0.25);
+  color: var(--neon-2);
+}
+
+body.theme-light .proj,
+body.theme-light .stat,
+body.theme-light .skill,
+body.theme-light .card,
+body.theme-light .mini-card,
+body.theme-light .about-card,
+body.theme-light .cvx-card,
+body.theme-light .cvx-ti,
+body.theme-light .cvx-form-card,
+body.theme-light .fl-deal-card,
+body.theme-light .fl-calc-card,
+body.theme-light .fl-pack-box,
+body.theme-light .fl-feat-box,
+body.theme-light .nx-plan-card,
+body.theme-light .nx-feat-box,
+body.theme-light .nx-badge-card,
+body.theme-light .nx-chart-card,
+body.theme-light .nx-hero-grid,
+body.theme-light .page-article,
+body.theme-light .v7xpp .pp-card {
+  background: #ffffff;
+  border-color: var(--line);
+  box-shadow: 0 8px 28px rgba(11, 20, 36, 0.05);
+}
+body.theme-light .proj:hover,
+body.theme-light .stat:hover,
+body.theme-light .card:hover,
+body.theme-light .cvx-ti:hover,
+body.theme-light .fl-deal-card:hover,
+body.theme-light .fl-calc-card:hover,
+body.theme-light .nx-plan-card:hover {
+  box-shadow: 0 16px 36px rgba(11, 20, 36, 0.1);
+}
+body.theme-light .proj-ico {
+  background: #f0f5fb;
+  border-color: var(--line);
+}
+body.theme-light .proj-ptags span,
+body.theme-light .tag {
+  background: rgba(2, 132, 199, 0.06);
+  border-color: var(--line);
+}
+body.theme-light .badge {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: var(--line);
+  color: var(--muted);
+}
+body.theme-light .btn-ghost {
+  background: #ffffff;
+  border-color: var(--line);
+  color: var(--text);
+}
+body.theme-light .btn-ghost:hover {
+  border-color: var(--neon);
+  box-shadow: var(--glow);
+}
+body.theme-light .filter {
+  background: #ffffff;
+  border-color: var(--line);
+  color: var(--muted);
+}
+body.theme-light .filter:hover {
+  color: var(--text);
+  border-color: var(--neon-2);
+}
+body.theme-light .filter.active {
+  color: #04140c;
+}
+body.theme-light .cvx-partners span {
+  background: #ffffff;
+  border-color: var(--line);
+  color: var(--muted);
+}
+
+body.theme-light .cvx-form-top,
+body.theme-light .fl-modal-top {
+  background: #f0f5fb;
+  border-bottom-color: var(--line);
+}
+body.theme-light .cvx-field-head label {
+  color: #0b1424;
+}
+body.theme-light .cvx-field-badge {
+  background: #edf3fa;
+  border-color: var(--line);
+  color: var(--muted);
+}
+body.theme-light .cvx-input-wrap {
+  background: #f8fafc;
+  border-color: #cbd8e8;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.04);
+}
+body.theme-light .cvx-input-wrap:hover {
+  border-color: var(--neon-2);
+  background: #ffffff;
+}
+body.theme-light .cvx-input-wrap:focus-within {
+  background: #ffffff;
+  border-color: var(--neon-2);
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+body.theme-light .cvx-input-wrap input,
+body.theme-light .cvx-input-wrap textarea {
+  color: #0b1424;
+}
+body.theme-light .cvx-input-wrap input::placeholder,
+body.theme-light .cvx-input-wrap textarea::placeholder {
+  color: #7b8ea6;
+}
+body.theme-light .cvx-input-ico {
+  color: #53647d;
+}
+body.theme-light .cvx-form-trust {
+  border-top-color: var(--line);
+}
+
+body.theme-light .fl-tab-btn {
+  background: #ffffff;
+  border-color: var(--line);
+  color: var(--muted);
+}
+body.theme-light .fl-tab-btn.active {
+  color: #04140c;
+}
+body.theme-light .fl-calc-box select,
+body.theme-light .fl-calc-box input {
+  background: #f8fafc;
+  border-color: #cbd8e8;
+  color: #0b1424;
+}
+body.theme-light .fl-calc-res {
+  background: #f0f5fb;
+  border-color: var(--line);
+}
+body.theme-light .fl-calc-num {
+  color: var(--neon);
+}
+body.theme-light .fl-modal {
+  background: rgba(11, 20, 36, 0.6);
+}
+body.theme-light .fl-modal-content {
+  background: #ffffff;
+  border-color: var(--line);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+  color: #0b1424;
+}
+body.theme-light .fl-plat-btn {
+  background: #f8fafc;
+  border-color: #cbd8e8;
+  color: #0b1424;
+}
+body.theme-light .fl-plat-btn:hover {
+  background: #ffffff;
+  border-color: var(--neon-2);
+}
+body.theme-light .fl-wallet-box {
+  background: #f8fafc;
+  border-color: #cbd8e8;
+}
+body.theme-light .fl-wallet-box input {
+  color: #0b1424;
+}
+body.theme-light .nx-plan-top {
+  border-bottom-color: var(--line);
+}
+body.theme-light .nx-plan-price {
+  color: #0b1424;
+}
+body.theme-light .nx-plan-price span {
+  color: var(--muted);
+}
+body.theme-light .nx-chart-pair {
+  color: #0b1424;
+}
+body.theme-light .soc {
+  background: #ffffff;
+  border-color: var(--line);
+  color: var(--text);
+}
+body.theme-light .soc:hover {
+  border-color: var(--neon);
+  color: var(--neon);
+}
+body.theme-light .fab-top {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: var(--line);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+body.theme-light .fab-top svg {
+  fill: var(--neon);
+}
+body.theme-light h1,
+body.theme-light h2,
+body.theme-light h3,
+body.theme-light h4,
+body.theme-light b,
+body.theme-light strong {
+  color: #0b1424;
+}
+body.theme-light .page-body,
+body.theme-light .about-card,
+body.theme-light .v7xpp .pp-card p {
+  color: #2b394f;
+}
+
+@media(max-width: 820px) {
+  .cvx-theme-toggle {
+    margin-inline-start: auto;
+    padding: 7px 11px;
+    font-size: 11.5px;
+  }
+}
 </style>
 <div class="cvx" id="cvtop">
 <nav class="cvx-nav">
@@ -1513,6 +1883,11 @@ footer.cv-foot .mono{color:var(--neon)}
 <a href="#experience">Experience</a>
 <a href="#contact">Contact</a>
 </div>
+<button class="cvx-theme-toggle" id="themeToggleBtn" type="button" aria-label="Toggle dark or light mode" onclick="toggleSiteTheme()">
+  <span class="theme-icon moon-icon"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12.3 2a10 10 0 0 0-.19 20 10 10 0 0 0 8.08-4.14 1 1 0 0 0-.89-1.57A8 8 0 1 1 11.71 3.5a1 1 0 0 0 .59-1.5z"/></svg></span>
+  <span class="theme-icon sun-icon"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" fill="none"/></svg></span>
+  <span class="theme-label mono">Dark</span>
+</button>
 <button class="cvx-navcta" id="cvxDl" type="button">⇩ Trading Profile</button>
 <button class="cvx-burger" id="cvxBurger" aria-label="Toggle navigation menu" type="button" onclick="toggleMobileMenu()">
   <span class="b-line b-top"></span>
@@ -1524,6 +1899,14 @@ footer.cv-foot .mono{color:var(--neon)}
 <!-- Mobile Full Dropdown Menu Drawer -->
 <div class="cvx-mobile-menu" id="cvxMobileMenu">
   <div class="cvx-mobile-menu-inner">
+    <div class="cvx-mob-theme-row">
+      <span class="mono" style="font-size:12px;color:var(--muted)">Appearance:</span>
+      <button class="cvx-theme-toggle" type="button" aria-label="Toggle dark or light mode" onclick="toggleSiteTheme()">
+        <span class="theme-icon moon-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12.3 2a10 10 0 0 0-.19 20 10 10 0 0 0 8.08-4.14 1 1 0 0 0-.89-1.57A8 8 0 1 1 11.71 3.5a1 1 0 0 0 .59-1.5z"/></svg></span>
+        <span class="theme-icon sun-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" fill="none"/></svg></span>
+        <span class="theme-label mono">Dark</span>
+      </button>
+    </div>
     <div class="cvx-mob-links">
       <a href="#cvtop" onclick="closeMobileMenu()"><span class="mono">// 00</span> Home / Top</a>
       <a href="#about" onclick="closeMobileMenu()"><span class="mono">// 01</span> About Me</a>
@@ -3099,6 +3482,39 @@ footer.cv-foot .mono{color:var(--neon)}
         }
       }
     });
+
+    // 6. Dark / Light Mode Theme Engine (Always starts in Dark Mode on open)
+    window.toggleSiteTheme = function() {
+      var isLight = document.body.classList.contains('theme-light');
+      if (isLight) {
+        document.body.classList.remove('theme-light');
+        document.documentElement.removeAttribute('data-theme');
+        window.updateThemeToggleUI(false);
+      } else {
+        document.body.classList.add('theme-light');
+        document.documentElement.setAttribute('data-theme', 'light');
+        window.updateThemeToggleUI(true);
+      }
+    };
+
+    window.updateThemeToggleUI = function(isLight) {
+      var btns = document.querySelectorAll('.cvx-theme-toggle');
+      btns.forEach(function(btn) {
+        var lbl = btn.querySelector('.theme-label');
+        if (isLight) {
+          btn.classList.add('is-light');
+          if (lbl) lbl.textContent = 'Light';
+        } else {
+          btn.classList.remove('is-light');
+          if (lbl) lbl.textContent = 'Dark';
+        }
+      });
+    };
+
+    // Guarantee default is ALWAYS Dark Mode on website load
+    document.body.classList.remove('theme-light');
+    document.documentElement.removeAttribute('data-theme');
+    window.updateThemeToggleUI(false);
   })();
 })();
 //]]>
