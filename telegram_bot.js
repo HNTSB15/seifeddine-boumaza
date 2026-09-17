@@ -5,30 +5,54 @@
  * ==============================================================================
  */
 
-const BOT_TOKEN = '8685200299:AAG2nR9wmeskmHH3ZHS7NWSTYANZcRUskQo';
-const TELEGRAM_API = 'https://api.telegram.org/bot' + BOT_TOKEN;
-const TELEGRAM_FILE_API = 'https://api.telegram.org/file/bot' + BOT_TOKEN;
+const https = require('https');
 
+const BOT_TOKEN = '8685200299:AAG2nR9wmeskmHH3ZHS7NWSTYANZcRUskQo';
 const SUPABASE_URL = 'https://kbioxkoifvyivhkzbxke.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_TXezItY2oN4gFgCxDLqZPw_B_ormkoG';
 
 // In-memory conversation state tracking per user
 const userStates = {};
-let authorizedAdminId = null; // Set to the first user who runs /start or can be pinned
 
-// Helper: Call Telegram API
-async function tg(method, body = {}) {
-  try {
-    const res = await fetch(`${TELEGRAM_API}/${method}`, {
+// Helper: Rock-solid Telegram API caller using https with IPv4 (family: 4)
+function tg(method, body = {}) {
+  return new Promise((resolve) => {
+    const data = JSON.stringify(body);
+    const req = https.request({
+      hostname: 'api.telegram.org',
+      path: `/bot${BOT_TOKEN}/${method}`,
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
+      family: 4,
+      timeout: 15000,
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(data)
+      }
+    }, (res) => {
+      let raw = '';
+      res.on('data', chunk => raw += chunk);
+      res.on('end', () => {
+        try {
+          resolve(JSON.parse(raw));
+        } catch {
+          resolve({ ok: false });
+        }
+      });
     });
-    return await res.json();
-  } catch (err) {
-    console.error(`TG API error [${method}]:`, err.message);
-    return { ok: false };
-  }
+
+    req.on('error', (err) => {
+      console.error(`TG API error [${method}]:`, err.message);
+      resolve({ ok: false });
+    });
+
+    req.on('timeout', () => {
+      req.destroy();
+      resolve({ ok: false });
+    });
+
+    req.write(data);
+    req.end();
+  });
 }
 
 // Helper: Upload a photo/video buffer to permanent Catbox CDN
@@ -59,7 +83,7 @@ async function processTelegramFile(fileId) {
     if (!fileInfo.ok || !fileInfo.result.file_path) return null;
 
     const filePath = fileInfo.result.file_path;
-    const downloadUrl = `${TELEGRAM_FILE_API}/${filePath}`;
+    const downloadUrl = `https://api.telegram.org/file/bot${BOT_TOKEN}/${filePath}`;
 
     const res = await fetch(downloadUrl);
     const buffer = Buffer.from(await res.arrayBuffer());
@@ -159,14 +183,10 @@ async function handleMessage(msg) {
   const chatId = msg.chat.id;
   const text = (msg.text || '').trim();
 
-  if (!authorizedAdminId) {
-    authorizedAdminId = chatId;
-  }
-
   if (!userStates[chatId]) resetState(chatId);
   const state = userStates[chatId];
 
-  // Global cancel / restart
+  // Global cancel / restart / start
   if (text === '/start' || text === '/menu' || text === 'إلغاء ❌') {
     resetState(chatId);
     return tg('sendMessage', {
@@ -392,12 +412,22 @@ async function handleMessage(msg) {
         } else {
           return tg('sendMessage', {
             chat_id: chatId,
-            text: `⚠️ حدث خطأ في الصلاحيات أثناء النشر في Supabase.\nتأكد من تطبيق كود الصلاحيات في SQL Editor لمرة واحدة.`,
+            text: `⚠️ حدث خطأ أثناء النشر في Supabase.\nتأكد من تطبيق كود الصلاحيات في SQL Editor لمرة واحدة.`,
             reply_markup: getMainMenuKeyboard()
           });
         }
       }
       break;
+    }
+
+    default: {
+      // If user typed random text while IDLE, guide them nicely
+      return tg('sendMessage', {
+        chat_id: chatId,
+        text: `💡 أهلاً بك! لنشر صفقة جديدة اضغط على **[ ➕ نشر صفقة جديدة 🚀 ]**، أو أرسل صورة الصفقة مباشرة من ألبوم هاتفك!`,
+        parse_mode: 'Markdown',
+        reply_markup: getMainMenuKeyboard()
+      });
     }
   }
 }
@@ -473,11 +503,16 @@ async function handleCallbackQuery(cq) {
 
 // Long Polling Loop
 let lastUpdateId = 0;
+let isPolling = false;
+
 async function pollUpdates() {
+  if (isPolling) return;
+  isPolling = true;
+
   try {
     const res = await tg('getUpdates', {
       offset: lastUpdateId + 1,
-      timeout: 30
+      timeout: 20
     });
 
     if (res.ok && Array.isArray(res.result)) {
@@ -497,10 +532,20 @@ async function pollUpdates() {
     }
   } catch (err) {
     console.error('Polling error:', err.message);
+  } finally {
+    isPolling = false;
+    setTimeout(pollUpdates, 500);
   }
-
-  setTimeout(pollUpdates, 1000);
 }
+
+// Catch uncaught exceptions to ensure the bot NEVER crashes
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err.message);
+});
+
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled Rejection:', reason);
+});
 
 console.log('🤖 Telegram Bot is running...');
 pollUpdates();
