@@ -613,37 +613,89 @@ footer.cv-foot .mono{color:var(--neon)}
   .cvx-x-bottom-bar{flex-direction:column;align-items:stretch;text-align:center}
 }
 
-/* real tweets cards */
-.cvx-tweet-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:28px}
-.cvx-tweet-card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;display:flex;flex-direction:column}
-.cvx-tweet-card:hover{transform:translateY(-4px);border-color:var(--neon2);box-shadow:0 12px 36px rgba(0,0,0,.35)}
-.cvx-tc-top{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 12px;border-bottom:1px solid rgba(255,255,255,.04)}
-.cvx-tc-author{display:flex;align-items:center;gap:10px}
-.cvx-tc-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;border:1.5px solid var(--neon)}
-.cvx-tc-author-info b{font-size:14px;color:var(--text);display:block;line-height:1.2}
-.cvx-tc-author-info small{font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace}
-.cvx-tc-xlogo{width:18px;height:18px;fill:var(--muted);transition:fill .2s}
-.cvx-tweet-card:hover .cvx-tc-xlogo{fill:var(--text)}
-.cvx-tc-body{padding:16px 18px;flex:1}
-.cvx-tc-badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 9px;border-radius:999px;margin-bottom:12px}
-.cvx-tc-badge.gold{background:rgba(242,193,78,.12);color:var(--gold);border:1px solid rgba(242,193,78,.35)}
-.cvx-tc-badge.neon{background:rgba(0,255,156,.12);color:var(--neon);border:1px solid rgba(0,255,156,.35)}
-.cvx-tc-profit-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.06)}
-.cvx-tc-profit-row .dep{font-size:13px;color:var(--muted);font-family:'JetBrains Mono',monospace}
-.cvx-tc-profit-row .pft{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:800;color:var(--neon);text-shadow:0 0 16px rgba(0,255,156,.35)}
-.cvx-tc-desc{font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:14px}
-.cvx-tc-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
-.cvx-tc-tags span{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--neon2);background:rgba(18,214,255,.06);border:1px solid rgba(18,214,255,.2);padding:2px 7px;border-radius:4px}
-.cvx-tc-img-box{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#000;margin-bottom:14px;max-height:260px;position:relative}
-.cvx-tc-img-box img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
-.cvx-tc-img-box:hover img{transform:scale(1.02)}
-.cvx-tc-foot{padding:12px 18px;border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,.15)}
-.cvx-tc-split{font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace}
-.cvx-tc-link{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--neon);text-decoration:none;display:inline-flex;align-items:center;gap:5px;font-weight:600;transition:color .18s}
-.cvx-tc-link:hover{color:#fff;text-decoration:underline}
+/* verified twitter results slider & feed inside box */
+.cvx-timeline-track-wrap{padding:16px 22px 14px;background:rgba(0,0,0,.25);border-bottom:1px solid var(--line)}
+.cvx-tl-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.cvx-tl-title{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace}
+.cvx-tl-icon{font-size:14px}
+.cvx-tl-nav-controls{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border:1px solid var(--line);padding:3px 6px;border-radius:999px}
+.cvx-tl-btn{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--text);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;transition:all .2s;line-height:1}
+.cvx-tl-btn:hover{background:var(--neon);color:#000;border-color:var(--neon);box-shadow:0 0 10px rgba(0,255,156,.5)}
+.cvx-tl-counter{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--neon);padding:0 6px;min-width:44px;text-align:center}
+.cvx-tl-slider-bar{position:relative;padding:4px 0 2px}
+.cvx-tl-range{-webkit-appearance:none;appearance:none;width:100%;height:6px;background:linear-gradient(90deg,var(--neon),var(--neon2),var(--gold));border-radius:999px;outline:none;cursor:pointer;margin-bottom:10px}
+.cvx-tl-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--neon);box-shadow:0 0 14px var(--neon);cursor:grab;transition:transform .15s,box-shadow .15s}
+.cvx-tl-range::-webkit-slider-thumb:active{cursor:grabbing;transform:scale(1.2);box-shadow:0 0 20px var(--neon)}
+.cvx-tl-range::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--neon);box-shadow:0 0 14px var(--neon);cursor:grab}
+.cvx-tl-markers{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cvx-tl-marker{background:none;border:none;padding:4px 2px;text-align:center;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--muted);font-size:11px;font-family:'JetBrains Mono',monospace;transition:color .2s}
+.cvx-tl-marker .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);border:1px solid var(--line);transition:all .2s}
+.cvx-tl-marker.active .dot{background:var(--neon);border-color:var(--neon);box-shadow:0 0 10px var(--neon);transform:scale(1.3)}
+.cvx-tl-marker.active{color:var(--neon);font-weight:700}
+.cvx-tl-marker:hover{color:var(--text)}
+
+/* Horizontal post stream */
+.cvx-x-stream{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding:22px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--neon) rgba(255,255,255,.05)}
+.cvx-x-stream::-webkit-scrollbar{height:6px}
+.cvx-x-stream::-webkit-scrollbar-track{background:rgba(255,255,255,.04);border-radius:3px}
+.cvx-x-stream::-webkit-scrollbar-thumb{background:var(--neon);border-radius:3px}
+
+/* Individual post slide */
+.cvx-x-slide{flex:0 0 min(540px,86vw);max-width:580px;scroll-snap-align:center;background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .25s ease,box-shadow .25s ease,transform .25s ease}
+.cvx-x-slide:hover,.cvx-x-slide.active-slide{border-color:var(--neon2);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.cvx-slide-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.05);background:rgba(255,255,255,.015)}
+.cvx-slide-author{display:flex;align-items:center;gap:10px}
+.cvx-slide-avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;border:1.5px solid var(--neon)}
+.cvx-slide-author-info b{font-size:14px;color:var(--text);display:block;line-height:1.2}
+.cvx-slide-author-info small{font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.cvx-slide-head-right{display:flex;align-items:center;gap:8px}
+.cvx-slide-badge{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:999px;letter-spacing:.4px}
+.cvx-slide-badge.neon{background:rgba(0,255,156,.12);color:var(--neon);border:1px solid rgba(0,255,156,.35)}
+.cvx-slide-badge.gold{background:rgba(242,193,78,.12);color:var(--gold);border:1px solid rgba(242,193,78,.35)}
+.cvx-slide-xlogo{width:17px;height:17px;fill:var(--muted);transition:fill .2s;display:block}
+.cvx-slide-head-right a:hover .cvx-slide-xlogo{fill:var(--text)}
+
+.cvx-slide-body{padding:16px 18px 14px;flex:1;display:flex;flex-direction:column}
+.cvx-slide-profit-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.05)}
+.cvx-slide-profit-row .dep{font-size:13px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.cvx-slide-profit-row .pft{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:800;color:var(--neon);text-shadow:0 0 14px rgba(0,255,156,.35)}
+.cvx-slide-desc{font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:12px}
+.cvx-slide-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.cvx-slide-tags span{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--neon2);background:rgba(18,214,255,.06);border:1px solid rgba(18,214,255,.2);padding:2px 6px;border-radius:4px}
+
+/* Multi-photo gallery grid */
+.cvx-gallery-grid{display:grid;gap:6px;margin-bottom:12px;border-radius:12px;overflow:hidden;background:#000;border:1px solid var(--line)}
+.cvx-gallery-grid.grid-4{grid-template-columns:repeat(2,1fr)}
+.cvx-gallery-grid.grid-2{grid-template-columns:repeat(2,1fr)}
+.cvx-gallery-item{position:relative;overflow:hidden;cursor:zoom-in;background:#050810;height:125px}
+.cvx-gallery-grid.grid-2 .cvx-gallery-item{height:180px}
+.cvx-gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease,filter .3s ease}
+.cvx-gallery-item:hover img{transform:scale(1.04);filter:brightness(1.08)}
+.cvx-gallery-item .cvx-zoom-hint{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);color:#fff;font-size:10px;font-family:'JetBrains Mono',monospace;padding:2px 6px;border-radius:4px;border:1px solid rgba(255,255,255,.2);opacity:0;transform:translateY(4px);transition:all .2s ease;pointer-events:none}
+html[dir="rtl"] .cvx-gallery-item .cvx-zoom-hint{right:auto;left:6px}
+.cvx-gallery-item:hover .cvx-zoom-hint{opacity:1;transform:translateY(0)}
+
+.cvx-slide-foot{padding:10px 18px;border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,.15);font-size:12px}
+.cvx-slide-split{color:var(--muted);font-family:'JetBrains Mono',monospace}
+.cvx-slide-link{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--neon);text-decoration:none;display:inline-flex;align-items:center;gap:4px;font-weight:600;transition:color .18s}
+.cvx-slide-link:hover{color:#fff;text-decoration:underline}
+
+/* Lightbox Modal */
+.cvx-lightbox{position:fixed;inset:0;z-index:999999;background:rgba(4,7,14,.94);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:20px;flex-direction:column}
+.cvx-lightbox.active{display:flex}
+.cvx-lb-wrap{position:relative;max-width:92vw;max-height:86vh;display:flex;flex-direction:column;align-items:center}
+.cvx-lb-img{max-width:92vw;max-height:78vh;object-fit:contain;border-radius:12px;border:1px solid var(--neon);box-shadow:0 0 40px rgba(0,255,156,.25);background:#000}
+.cvx-lb-bar{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:12px;color:#fff;font-family:'JetBrains Mono',monospace;font-size:12.5px;gap:12px}
+.cvx-lb-caption{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cvx-lb-close{position:absolute;top:-42px;right:0;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
+.cvx-lb-close:hover{background:#ff4757;border-color:#ff4757;transform:rotate(90deg)}
 
 @media(max-width:768px){
-  .cvx-tweet-cards{grid-template-columns:1fr}
+  .cvx-tl-markers{grid-template-columns:repeat(2,1fr)}
+  .cvx-x-slide{flex:0 0 88vw}
+  .cvx-gallery-item{height:100px}
+  .cvx-gallery-grid.grid-2 .cvx-gallery-item{height:140px}
 }
 
 /* timeline */
@@ -2400,147 +2452,7 @@ html[dir="rtl"] .mono-arrow {
   </div>
 </div>
 
-<!-- Live Verified Tweet Proofs -->
-<div class="cvx-tweet-cards">
-
-  <!-- Tweet 1 -->
-  <div class="cvx-tweet-card">
-    <div class="cvx-tc-top">
-      <div class="cvx-tc-author">
-        <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-tc-avatar">
-        <div class="cvx-tc-author-info">
-          <b>Saifeddine Boumaza</b>
-          <small>@seifeddin06</small>
-        </div>
-      </div>
-      <a href="https://x.com/seifeddin06/status/2100553514652983364" target="_blank" rel="noopener" title="View on X">
-        <svg class="cvx-tc-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-      </a>
-    </div>
-    <div class="cvx-tc-body">
-      <span class="cvx-tc-badge neon">RECORD PROFIT HIT ⚡</span>
-      <div class="cvx-tc-profit-row">
-        <span class="dep">Deposit: <b>$430</b></span>
-        <span class="pft">+$16,000</span>
-      </div>
-      <p class="cvx-tc-desc">MANAGING A NEW ACCOUNT — Live verified trading execution with disciplined drawdown control on Gold &amp; Forex.</p>
-      <div class="cvx-tc-tags">
-        <span>#Gold</span><span>#XAUUSD</span><span>#Forex</span><span>#ManagedAccount</span>
-      </div>
-      <a href="https://x.com/seifeddin06/status/2100553514652983364" target="_blank" rel="noopener" class="cvx-tc-img-box">
-        <img src="https://pbs.twimg.com/media/HSaqRvdXsAE_gBX?format=jpg&amp;name=medium" alt="Managed Account Profit $16,000 Proof" loading="lazy">
-      </a>
-    </div>
-    <div class="cvx-tc-foot">
-      <span class="cvx-tc-split">Profit Split: 50/50</span>
-      <a href="https://x.com/seifeddin06/status/2100553514652983364" target="_blank" rel="noopener" class="cvx-tc-link">View on X ↗</a>
-    </div>
-  </div>
-
-  <!-- Tweet 2 -->
-  <div class="cvx-tweet-card">
-    <div class="cvx-tc-top">
-      <div class="cvx-tc-author">
-        <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-tc-avatar">
-        <div class="cvx-tc-author-info">
-          <b>Saifeddine Boumaza</b>
-          <small>@seifeddin06</small>
-        </div>
-      </div>
-      <a href="https://x.com/seifeddin06/status/2100186065541685374" target="_blank" rel="noopener" title="View on X">
-        <svg class="cvx-tc-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-      </a>
-    </div>
-    <div class="cvx-tc-body">
-      <span class="cvx-tc-badge gold">11X RETURN ACHIEVED 🎯</span>
-      <div class="cvx-tc-profit-row">
-        <span class="dep">Deposit: <b>$500</b></span>
-        <span class="pft">+$5,700</span>
-      </div>
-      <p class="cvx-tc-desc">MANAGING A NEW ACCOUNT — Account growth from $500 to $5,700 net profit through strict risk management and momentum trading.</p>
-      <div class="cvx-tc-tags">
-        <span>#Forex</span><span>#XAUUSD</span><span>#Trading</span><span>#Profits</span>
-      </div>
-      <a href="https://x.com/seifeddin06/status/2100186065541685374" target="_blank" rel="noopener" class="cvx-tc-img-box">
-        <img src="https://pbs.twimg.com/media/HSVcFq1W0AAWx0G?format=jpg&amp;name=medium" alt="Managed Account Profit $5,700 Proof" loading="lazy">
-      </a>
-    </div>
-    <div class="cvx-tc-foot">
-      <span class="cvx-tc-split">Profit Split: 50/50</span>
-      <a href="https://x.com/seifeddin06/status/2100186065541685374" target="_blank" rel="noopener" class="cvx-tc-link">View on X ↗</a>
-    </div>
-  </div>
-
-  <!-- Tweet 3 -->
-  <div class="cvx-tweet-card">
-    <div class="cvx-tc-top">
-      <div class="cvx-tc-author">
-        <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-tc-avatar">
-        <div class="cvx-tc-author-info">
-          <b>Saifeddine Boumaza</b>
-          <small>@seifeddin06</small>
-        </div>
-      </div>
-      <a href="https://x.com/seifeddin06/status/2099978339200962981" target="_blank" rel="noopener" title="View on X">
-        <svg class="cvx-tc-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-      </a>
-    </div>
-    <div class="cvx-tc-body">
-      <span class="cvx-tc-badge neon">15X RETURN 🚀</span>
-      <div class="cvx-tc-profit-row">
-        <span class="dep">Deposit: <b>$100</b></span>
-        <span class="pft">+$1,500</span>
-      </div>
-      <p class="cvx-tc-desc">Small account scalability proof: $100 starting deposit grown to $1,500 profit with strict stop-loss rules on Gold (XAUUSD).</p>
-      <div class="cvx-tc-tags">
-        <span>#Gold</span><span>#XAUUSD</span><span>#ForexSignals</span><span>#Growth</span>
-      </div>
-      <a href="https://x.com/seifeddin06/status/2099978339200962981" target="_blank" rel="noopener" class="cvx-tc-img-box">
-        <img src="https://pbs.twimg.com/media/HSSe1-HWkAAavQ2?format=jpg&amp;name=medium" alt="Managed Account $100 to $1500 Proof" loading="lazy">
-      </a>
-    </div>
-    <div class="cvx-tc-foot">
-      <span class="cvx-tc-split">Profit Split: 50/50</span>
-      <a href="https://x.com/seifeddin06/status/2099978339200962981" target="_blank" rel="noopener" class="cvx-tc-link">View on X ↗</a>
-    </div>
-  </div>
-
-  <!-- Tweet 4 -->
-  <div class="cvx-tweet-card">
-    <div class="cvx-tc-top">
-      <div class="cvx-tc-author">
-        <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-tc-avatar">
-        <div class="cvx-tc-author-info">
-          <b>Saifeddine Boumaza</b>
-          <small>@seifeddin06</small>
-        </div>
-      </div>
-      <a href="https://x.com/seifeddin06/status/2099508672397275183" target="_blank" rel="noopener" title="View on X">
-        <svg class="cvx-tc-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-      </a>
-    </div>
-    <div class="cvx-tc-body">
-      <span class="cvx-tc-badge gold">ACCOUNT TIERS OPEN 💼</span>
-      <div class="cvx-tc-profit-row">
-        <span class="dep">Starting: <b>$100+</b></span>
-        <span class="pft">$500+ Max</span>
-      </div>
-      <p class="cvx-tc-desc">TRADING ACCOUNT MANAGEMENT TIERS: Available for $100+, $200+, $300+, $400+, $500+. Dedicated risk management on Gold (XAUUSD).</p>
-      <div class="cvx-tc-tags">
-        <span>#Forex</span><span>#Trading</span><span>#Gold</span><span>#AccountManagement</span>
-      </div>
-      <a href="https://x.com/seifeddin06/status/2099508672397275183" target="_blank" rel="noopener" class="cvx-tc-img-box">
-        <img src="https://pbs.twimg.com/media/HSLx32aa8AEPunw?format=jpg&amp;name=medium" alt="Trading Account Management Tiers" loading="lazy">
-      </a>
-    </div>
-    <div class="cvx-tc-foot">
-      <span class="cvx-tc-split">Telegram: @HNTSB15</span>
-      <a href="https://x.com/seifeddin06/status/2099508672397275183" target="_blank" rel="noopener" class="cvx-tc-link">View on X ↗</a>
-    </div>
-  </div>
-
-</div>
-
+<!-- Live Results Main Cyber Box (All tweets & timeline slider inside) -->
 <div class="cvx-x-feed-box">
   <div class="cvx-x-feed-bar">
     <div class="cvx-x-profile">
@@ -2554,7 +2466,7 @@ html[dir="rtl"] .mono-arrow {
           <svg class="cvx-x-check" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
           <span class="cvx-x-badge">OFFICIAL</span>
         </div>
-        <div class="cvx-x-sub">@seifeddin06 · Live Trade Recaps &amp; Analysis</div>
+        <div class="cvx-x-sub">@seifeddin06 · Live Trade Recaps &amp; Statement Proofs</div>
       </div>
     </div>
     <a href="https://x.com/seifeddin06" target="_blank" rel="noopener" class="cvx-x-follow-btn" id="resFollowBtn">
@@ -2563,15 +2475,241 @@ html[dir="rtl"] .mono-arrow {
     </a>
   </div>
 
-  <div class="cvx-x-embed-frame">
-    <a class="twitter-timeline" 
-       data-theme="dark" 
-       data-height="520" 
-       data-chrome="noheader nofooter transparent noborders" 
-       data-dnt="true"
-       href="https://x.com/seifeddin06?ref_src=twsrc%5Etfw">
-       Loading Live Tweets &amp; Performance by @seifeddin06...
-    </a>
+  <!-- Draggable Timeline Track Line ("خط تسحبو تشوف الأقدم") -->
+  <div class="cvx-timeline-track-wrap">
+    <div class="cvx-tl-top">
+      <div class="cvx-tl-title">
+        <span class="cvx-tl-icon">⚡</span>
+        <span id="resTlTitle">الخط الزمني للصفقات الموثقة (اسحب الخط للتنقل بين الأحدث والأقدم)</span>
+      </div>
+      <div class="cvx-tl-nav-controls">
+        <button type="button" class="cvx-tl-btn" id="cvxTlPrev" title="Previous Post" aria-label="Previous Post">‹</button>
+        <span class="cvx-tl-counter" id="cvxTlCounter">1 / 4</span>
+        <button type="button" class="cvx-tl-btn" id="cvxTlNext" title="Next Post" aria-label="Next Post">›</button>
+      </div>
+    </div>
+    <div class="cvx-tl-slider-bar">
+      <input type="range" class="cvx-tl-range" id="cvxTlRange" min="0" max="3" value="0" step="1" aria-label="Timeline Slider">
+      <div class="cvx-tl-markers">
+        <button type="button" class="cvx-tl-marker active" data-idx="0">
+          <span class="dot"></span>
+          <span class="label" id="resTlM0">الأحدث: +$16,000 (4 صور)</span>
+        </button>
+        <button type="button" class="cvx-tl-marker" data-idx="1">
+          <span class="dot"></span>
+          <span class="label" id="resTlM1">+$5,700 أرباح (صورتان)</span>
+        </button>
+        <button type="button" class="cvx-tl-marker" data-idx="2">
+          <span class="dot"></span>
+          <span class="label" id="resTlM2">+$1,500 أرباح (4 صور)</span>
+        </button>
+        <button type="button" class="cvx-tl-marker" data-idx="3">
+          <span class="dot"></span>
+          <span class="label" id="resTlM3">الأقدم: باقات الإدارة (صورتان)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Horizontal Stream of Tweet Slides with Multi-Photo Galleries -->
+  <div class="cvx-x-stream" id="cvxXStream">
+
+    <!-- Slide 1: Tweet 2100553514652983364 (4 Images) -->
+    <article class="cvx-x-slide active-slide" data-slide="0">
+      <div class="cvx-slide-head">
+        <div class="cvx-slide-author">
+          <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-slide-avatar">
+          <div class="cvx-slide-author-info">
+            <b>Saifeddine Boumaza</b>
+            <small>@seifeddin06 · Sep 16, 2026</small>
+          </div>
+        </div>
+        <div class="cvx-slide-head-right">
+          <span class="cvx-slide-badge neon">RECORD PROFIT ⚡</span>
+          <a href="https://x.com/seifeddin06/status/2100553514652983364" target="_blank" rel="noopener" title="View on X">
+            <svg class="cvx-slide-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="cvx-slide-body">
+        <div class="cvx-slide-profit-row">
+          <span class="dep">Deposit: <b>$430</b></span>
+          <span class="pft">+$16,000</span>
+        </div>
+        <p class="cvx-slide-desc">MANAGING A NEW ACCOUNT — Live verified trading execution with disciplined drawdown control on Gold &amp; Forex. Deposit: $430 ➡️ Net Profit: +$16,000.</p>
+        <div class="cvx-slide-tags">
+          <span>#Gold</span><span>#XAUUSD</span><span>#Forex</span><span>#ManagedAccount</span>
+        </div>
+        
+        <!-- 4-Photo Gallery -->
+        <div class="cvx-gallery-grid grid-4">
+          <div class="cvx-gallery-item" onclick="cvxOpenLightbox('https://pbs.twimg.com/media/HSaqRvdXsAE_gBX?format=jpg&amp;name=large', 'Trade Execution &amp; Profit Statement #1')">
+            <img src="https://pbs.twimg.com/media/HSaqRvdXsAE_gBX?format=jpg&amp;name=medium" alt="Trade Execution Proof 1" loading="lazy">
+            <span class="cvx-zoom-hint">🔍 Zoom</span>
+          </div>
+          <div class="cvx-gallery-item" onclick="cvxOpenLightbox('https://pbs.twimg.com/media/HSaqRvrXsAACCxJ?format=jpg&amp;name=large', 'Trade Execution &amp; Profit Statement #2')">
+            <img src="https://pbs.twimg.com/media/HSaqRvrXsAACCxJ?format=jpg&amp;name=medium" alt="Trade Execution Proof 2" loading="lazy">
+            <span class="cvx-zoom-hint">🔍 Zoom</span>
+          </div>
+          <div class="cvx-gallery-item" onclick="cvxOpenLightbox('https://pbs.twimg.com/media/HSaqRveXAAAOcYp?format=jpg&amp;name=large', 'Trade Execution &amp; Profit Statement #3')">
+            <img src="https://pbs.twimg.com/media/HSaqRveXAAAOcYp?format=jpg&amp;name=medium" alt="Trade Execution Proof 3" loading="lazy">
+            <span class="cvx-zoom-hint">🔍 Zoom</span>
+          </div>
+          <div class="cvx-gallery-item" onclick="cvxOpenLightbox('https://pbs.twimg.com/media/HSaqRvcWYAEduzN?format=jpg&amp;name=large', 'Trade Execution &amp; Profit Statement #4')">
+            <img src="https://pbs.twimg.com/media/HSaqRvcWYAEduzN?format=jpg&amp;name=medium" alt="Trade Execution Proof 4" loading="lazy">
+            <span class="cvx-zoom-hint">🔍 Zoom</span>
+          </div>
+        </div>
+      </div>
+      <div class="cvx-slide-foot">
+        <span class="cvx-slide-split">Profit Split: 50/50</span>
+        <a href="https://x.com/seifeddin06/status/2100553514652983364" target="_blank" rel="noopener" class="cvx-slide-link">View Tweet on X ↗</a>
+      </div>
+    </article>
+
+    <!-- Slide 2: Tweet 2100186065541685374 (2 Images) -->
+    <article class="cvx-x-slide" data-slide="1">
+      <div class="cvx-slide-head">
+        <div class="cvx-slide-author">
+          <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-slide-avatar">
+          <div class="cvx-slide-author-info">
+            <b>Saifeddine Boumaza</b>
+            <small>@seifeddin06 · Sep 15, 2026</small>
+          </div>
+        </div>
+        <div class="cvx-slide-head-right">
+          <span class="cvx-slide-badge gold">11X RETURN 🎯</span>
+          <a href="https://x.com/seifeddin06/status/2100186065541685374" target="_blank" rel="noopener" title="View on X">
+            <svg class="cvx-slide-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="cvx-slide-body">
+        <div class="cvx-slide-profit-row">
+          <span class="dep">Deposit: <b>$500</b></span>
+          <span class="pft">+$5,700</span>
+        </div>
+        <p class="cvx-slide-desc">MANAGING A NEW ACCOUNT — Account growth from $500 to $5,700 net profit through strict risk management and momentum trading on Gold (XAUUSD).</p>
+        <div class="cvx-slide-tags">
+          <span>#Forex</span><span>#XAUUSD</span><span>#Trading</span><span>#Profits</span>
+        </div>
+        
+        <!-- 2-Photo Gallery -->
+        <div class="cvx-gallery-grid grid-2">
+          <div class="cvx-gallery-item" onclick="cvxOpenLightbox('https://pbs.twimg.com/media/HSVcFq1W0AAWx0G?format=jpg&amp;name=large', 'Managed Account Growth $5,700 Statement #1')">
+            <img src="https://pbs.twimg.com/media/HSVcFq1W0AAWx0G?format=jpg&amp;name=medium" alt="Account Growth Proof 1" loading="lazy">
+            <span class="cvx-zoom-hint">🔍 Zoom</span>
+          </div>
+          <div class="cvx-gallery-item" onclick="cvxOpenLightbox('https://pbs.twimg.com/media/HSVcFqzWAAAxI20?format=jpg&amp;name=large', 'Managed Account Growth $5,700 Statement #2')">
+            <img src="https://pbs.twimg.com/media/HSVcFqzWAAAxI20?format=jpg&amp;name=medium" alt="Account Growth Proof 2" loading="lazy">
+            <span class="cvx-zoom-hint">🔍 Zoom</span>
+          </div>
+        </div>
+      </div>
+      <div class="cvx-slide-foot">
+        <span class="cvx-slide-split">Profit Split: 50/50</span>
+        <a href="https://x.com/seifeddin06/status/2100186065541685374" target="_blank" rel="noopener" class="cvx-slide-link">View Tweet on X ↗</a>
+      </div>
+    </article>
+
+    <!-- Slide 3: Tweet 2099978339200962981 (4 Images) -->
+    <article class="cvx-x-slide" data-slide="2">
+      <div class="cvx-slide-head">
+        <div class="cvx-slide-author">
+          <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-slide-avatar">
+          <div class="cvx-slide-author-info">
+            <b>Saifeddine Boumaza</b>
+            <small>@seifeddin06 · Sep 14, 2026</small>
+          </div>
+        </div>
+        <div class="cvx-slide-head-right">
+          <span class="cvx-slide-badge neon">15X RETURN 🚀</span>
+          <a href="https://x.com/seifeddin06/status/2099978339200962981" target="_blank" rel="noopener" title="View on X">
+            <svg class="cvx-slide-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="cvx-slide-body">
+        <div class="cvx-slide-profit-row">
+          <span class="dep">Deposit: <b>$100</b></span>
+          <span class="pft">+$1,500</span>
+        </div>
+        <p class="cvx-slide-desc">Small account scalability proof: $100 starting deposit grown to $1,500 net profit with strict stop-loss rules on Gold (XAUUSD).</p>
+        <div class="cvx-slide-tags">
+          <span>#Gold</span><span>#XAUUSD</span><span>#ForexSignals</span><span>#Growth</span>
+        </div>
+        
+        <!-- 4-Photo Gallery -->
+        <div class="cvx-gallery-grid grid-4">
+          <div class="cvx-gallery-item" onclick="cvxOpenLightbox('https://pbs.twimg.com/media/HSSe1-HWkAAavQ2?format=jpg&amp;name=large', 'Deposit $100 to $1,500 Execution Statement #1')">
+            <img src="https://pbs.twimg.com/media/HSSe1-HWkAAavQ2?format=jpg&amp;name=medium" alt="Deposit $100 Proof 1" loading="lazy">
+            <span class="cvx-zoom-hint">🔍 Zoom</span>
+          </div>
+          <div class="cvx-gallery-item" onclick="cvxOpenLightbox('https://pbs.twimg.com/media/HSSe1-tXwAEBFsL?format=jpg&amp;name=large', 'Deposit $100 to $1,500 Execution Statement #2')">
+            <img src="https://pbs.twimg.com/media/HSSe1-tXwAEBFsL?format=jpg&amp;name=medium" alt="Deposit $100 Proof 2" loading="lazy">
+            <span class="cvx-zoom-hint">🔍 Zoom</span>
+          </div>
+          <div class="cvx-gallery-item" onclick="cvxOpenLightbox('https://pbs.twimg.com/media/HSSe17SWQAA1R6u?format=jpg&amp;name=large', 'Deposit $100 to $1,500 Execution Statement #3')">
+            <img src="https://pbs.twimg.com/media/HSSe17SWQAA1R6u?format=jpg&amp;name=medium" alt="Deposit $100 Proof 3" loading="lazy">
+            <span class="cvx-zoom-hint">🔍 Zoom</span>
+          </div>
+          <div class="cvx-gallery-item" onclick="cvxOpenLightbox('https://pbs.twimg.com/media/HSSe17ZW8AAqO1h?format=jpg&amp;name=large', 'Deposit $100 to $1,500 Execution Statement #4')">
+            <img src="https://pbs.twimg.com/media/HSSe17ZW8AAqO1h?format=jpg&amp;name=medium" alt="Deposit $100 Proof 4" loading="lazy">
+            <span class="cvx-zoom-hint">🔍 Zoom</span>
+          </div>
+        </div>
+      </div>
+      <div class="cvx-slide-foot">
+        <span class="cvx-slide-split">Profit Split: 50/50</span>
+        <a href="https://x.com/seifeddin06/status/2099978339200962981" target="_blank" rel="noopener" class="cvx-slide-link">View Tweet on X ↗</a>
+      </div>
+    </article>
+
+    <!-- Slide 4: Tweet 2099508672397275183 (2 Images) -->
+    <article class="cvx-x-slide" data-slide="3">
+      <div class="cvx-slide-head">
+        <div class="cvx-slide-author">
+          <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-slide-avatar">
+          <div class="cvx-slide-author-info">
+            <b>Saifeddine Boumaza</b>
+            <small>@seifeddin06 · Sep 13, 2026</small>
+          </div>
+        </div>
+        <div class="cvx-slide-head-right">
+          <span class="cvx-slide-badge gold">TIERS OPEN 💼</span>
+          <a href="https://x.com/seifeddin06/status/2099508672397275183" target="_blank" rel="noopener" title="View on X">
+            <svg class="cvx-slide-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="cvx-slide-body">
+        <div class="cvx-slide-profit-row">
+          <span class="dep">Starting: <b>$100+</b></span>
+          <span class="pft">$500+ Max</span>
+        </div>
+        <p class="cvx-slide-desc">TRADING ACCOUNT MANAGEMENT TIERS: Available for $100+, $200+, $300+, $400+, $500+. Dedicated risk management on Gold (XAUUSD).</p>
+        <div class="cvx-slide-tags">
+          <span>#Forex</span><span>#Trading</span><span>#Gold</span><span>#AccountManagement</span>
+        </div>
+        
+        <!-- 2-Photo Gallery -->
+        <div class="cvx-gallery-grid grid-2">
+          <div class="cvx-gallery-item" onclick="cvxOpenLightbox('https://pbs.twimg.com/media/HSLx32aa8AEPunw?format=jpg&amp;name=large', 'Account Management Tiers &amp; Terms #1')">
+            <img src="https://pbs.twimg.com/media/HSLx32aa8AEPunw?format=jpg&amp;name=medium" alt="Management Tiers 1" loading="lazy">
+            <span class="cvx-zoom-hint">🔍 Zoom</span>
+          </div>
+          <div class="cvx-gallery-item" onclick="cvxOpenLightbox('https://pbs.twimg.com/media/HSLx32HXcAELU5b?format=jpg&amp;name=large', 'Account Management Tiers &amp; Terms #2')">
+            <img src="https://pbs.twimg.com/media/HSLx32HXcAELU5b?format=jpg&amp;name=medium" alt="Management Tiers 2" loading="lazy">
+            <span class="cvx-zoom-hint">🔍 Zoom</span>
+          </div>
+        </div>
+      </div>
+      <div class="cvx-slide-foot">
+        <span class="cvx-slide-split">Telegram: @HNTSB15</span>
+        <a href="https://x.com/seifeddin06/status/2099508672397275183" target="_blank" rel="noopener" class="cvx-slide-link">View Tweet on X ↗</a>
+      </div>
+    </article>
+
   </div>
 
   <div class="cvx-x-bottom-bar">
@@ -2581,6 +2719,18 @@ html[dir="rtl"] .mono-arrow {
     <a href="https://x.com/seifeddin06" target="_blank" rel="noopener" class="cvx-btn pri cvx-x-view-all" id="resViewAllBtn">
       View All Trades on X ↗
     </a>
+  </div>
+</div>
+
+<!-- Full-screen Lightbox Modal for Trade Proof Inspection -->
+<div id="cvxLightbox" class="cvx-lightbox" onclick="cvxCloseLightbox(event)">
+  <div class="cvx-lb-wrap">
+    <button type="button" class="cvx-lb-close" onclick="cvxCloseLightbox()" title="Close (Esc)">✕</button>
+    <img id="cvxLbImg" class="cvx-lb-img" src="" alt="Enlarged Trade Proof">
+    <div id="cvxLbBar" class="cvx-lb-bar">
+      <span id="cvxLbCaption" class="cvx-lb-caption"></span>
+      <span style="color:var(--neon);font-size:11px">OFFICIAL PROOF ✓</span>
+    </div>
   </div>
 </div>
 
@@ -4218,6 +4368,11 @@ html[dir="rtl"] .mono-arrow {
         'res_m3': 'توثيق بالوقت والتاريخ',
         'res_m4': 'الأصول الأساسية للتداول',
         'res_follow_btn': 'متابعة الحساب على X (تويتر) ↗',
+        'res_tl_title': 'الخط الزمني للصفقات الموثقة (اسحب الخط للتنقل بين الأحدث والأقدم)',
+        'res_tl_m0': 'الأحدث: +$16,000 (4 صور)',
+        'res_tl_m1': '+$5,700 أرباح (صورتان)',
+        'res_tl_m2': '+$1,500 أرباح (4 صور)',
+        'res_tl_m3': 'الأقدم: باقات الإدارة (صورتان)',
         'res_status_note': '<span class="status-pulse"></span> صفقات حية، إثباتات سحب وأرباح، وتقارير دورية تُنشر فورياً على الحساب.',
         'res_view_all_btn': 'عرض جميع الصفقات والتحليلات على X ↗',
 
@@ -4582,6 +4737,11 @@ html[dir="rtl"] .mono-arrow {
         'res_m3': '100% Timestamped Proof',
         'res_m4': 'Primary Market Focus',
         'res_follow_btn': 'Follow on X (Twitter) ↗',
+        'res_tl_title': 'Verified Trades Timeline (Drag slider to browse newest to oldest)',
+        'res_tl_m0': 'Latest: +$16,000 (4 Photos)',
+        'res_tl_m1': '+$5,700 Profit (2 Photos)',
+        'res_tl_m2': '+$1,500 Profit (4 Photos)',
+        'res_tl_m3': 'Oldest: Account Tiers (2 Photos)',
         'res_status_note': '<span class="status-pulse"></span> Live trade setups, withdrawal proofs, and performance recaps published in real time.',
         'res_view_all_btn': 'View All Trades on X ↗',
 
@@ -4951,6 +5111,16 @@ html[dir="rtl"] .mono-arrow {
       if (resFollow && t['res_follow_btn']) {
         resFollow.innerHTML = '<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> <span>' + t['res_follow_btn'] + '</span>';
       }
+      var resTlTitle = document.getElementById('resTlTitle');
+      if (resTlTitle && t['res_tl_title']) resTlTitle.textContent = t['res_tl_title'];
+      var resTlM0 = document.getElementById('resTlM0');
+      if (resTlM0 && t['res_tl_m0']) resTlM0.textContent = t['res_tl_m0'];
+      var resTlM1 = document.getElementById('resTlM1');
+      if (resTlM1 && t['res_tl_m1']) resTlM1.textContent = t['res_tl_m1'];
+      var resTlM2 = document.getElementById('resTlM2');
+      if (resTlM2 && t['res_tl_m2']) resTlM2.textContent = t['res_tl_m2'];
+      var resTlM3 = document.getElementById('resTlM3');
+      if (resTlM3 && t['res_tl_m3']) resTlM3.textContent = t['res_tl_m3'];
       var resNote = document.getElementById('resStatusNote');
       if (resNote && t['res_status_note']) resNote.innerHTML = t['res_status_note'];
       var resViewAll = document.getElementById('resViewAllBtn');
@@ -5435,6 +5605,142 @@ html[dir="rtl"] .mono-arrow {
     },{threshold:.4});
     nums.forEach(function(n){ io.observe(n); });
   })();
+
+  // Interactive Results Timeline Slider & Lightbox Controller
+  (function(){
+    var slider = document.getElementById('cvxTlRange');
+    var stream = document.getElementById('cvxXStream');
+    var counter = document.getElementById('cvxTlCounter');
+    var prevBtn = document.getElementById('cvxTlPrev');
+    var nextBtn = document.getElementById('cvxTlNext');
+    var markers = document.querySelectorAll('.cvx-tl-marker');
+    var slides = document.querySelectorAll('.cvx-x-slide');
+    if(!slider || !stream || !slides.length) return;
+
+    var total = slides.length;
+    var currentIndex = 0;
+    var isManualScrolling = false;
+    var scrollTimeout = null;
+
+    function updateActiveState(idx) {
+      if(idx < 0) idx = 0;
+      if(idx >= total) idx = total - 1;
+      currentIndex = idx;
+      slider.value = idx;
+      if(counter) counter.textContent = (idx + 1) + ' / ' + total;
+      
+      markers.forEach(function(m, i){
+        if(i === idx) m.classList.add('active');
+        else m.classList.remove('active');
+      });
+
+      slides.forEach(function(s, i){
+        if(i === idx) s.classList.add('active-slide');
+        else s.classList.remove('active-slide');
+      });
+    }
+
+    function scrollToSlide(idx) {
+      if(idx < 0) idx = 0;
+      if(idx >= total) idx = total - 1;
+      isManualScrolling = true;
+      updateActiveState(idx);
+
+      slides[idx].scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center'
+      });
+
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(function(){
+        isManualScrolling = false;
+      }, 600);
+    }
+
+    // Slider input event (dragging the line)
+    slider.addEventListener('input', function(){
+      scrollToSlide(parseInt(slider.value, 10));
+    });
+
+    // Prev / Next buttons
+    if(prevBtn) {
+      prevBtn.addEventListener('click', function(){
+        scrollToSlide(currentIndex - 1);
+      });
+    }
+    if(nextBtn) {
+      nextBtn.addEventListener('click', function(){
+        scrollToSlide(currentIndex + 1);
+      });
+    }
+
+    // Click on timeline step markers
+    markers.forEach(function(m){
+      m.addEventListener('click', function(){
+        var idx = parseInt(m.getAttribute('data-idx'), 10);
+        if(!isNaN(idx)) scrollToSlide(idx);
+      });
+    });
+
+    // Track scroll events on stream (when user swipes on mobile / trackpad)
+    stream.addEventListener('scroll', function(){
+      if(isManualScrolling) return;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(function(){
+        var streamRect = stream.getBoundingClientRect();
+        var streamCenter = streamRect.left + streamRect.width / 2;
+        var closestIdx = 0;
+        var minDistance = Infinity;
+
+        slides.forEach(function(slide, i){
+          var slideRect = slide.getBoundingClientRect();
+          var slideCenter = slideRect.left + slideRect.width / 2;
+          var dist = Math.abs(streamCenter - slideCenter);
+          if(dist < minDistance) {
+            minDistance = dist;
+            closestIdx = i;
+          }
+        });
+
+        updateActiveState(closestIdx);
+      }, 100);
+    }, { passive: true });
+
+    // Initialize first slide as active
+    updateActiveState(0);
+  })();
+
+  // Full-size Lightbox for Trade Proofs
+  window.cvxOpenLightbox = function(src, caption) {
+    var lb = document.getElementById('cvxLightbox');
+    var img = document.getElementById('cvxLbImg');
+    var cap = document.getElementById('cvxLbCaption');
+    if(!lb || !img) return;
+    img.src = src;
+    if(cap) cap.textContent = caption || '';
+    lb.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.cvxCloseLightbox = function(e) {
+    if(e && e.target && (e.target.id === 'cvxLbImg' || e.target.closest && e.target.closest('#cvxLbBar'))) {
+      return;
+    }
+    var lb = document.getElementById('cvxLightbox');
+    if(lb) {
+      lb.classList.remove('active');
+      document.body.style.overflow = '';
+      var img = document.getElementById('cvxLbImg');
+      if(img) img.src = '';
+    }
+  };
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') {
+      window.cvxCloseLightbox();
+    }
+  });
 //]]>
 </script>
 <script type="text/javascript">
