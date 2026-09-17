@@ -5838,6 +5838,18 @@ html[dir="rtl"] .mono-arrow {
     .then(function(trades){
       if (!Array.isArray(trades) || !trades.length) return;
 
+      // Automatic deduplication safeguard
+      var seen = {};
+      var uniqueTrades = [];
+      trades.forEach(function(t) {
+        var sig = (t.tweet_url && t.tweet_url.length > 15) ? t.tweet_url : (t.published_date + '_' + t.profit_amount + '_' + t.deposit_amount);
+        if (!seen[sig]) {
+          seen[sig] = true;
+          uniqueTrades.push(t);
+        }
+      });
+      trades = uniqueTrades;
+
       var newGalleries = [];
       var html = '';
 
