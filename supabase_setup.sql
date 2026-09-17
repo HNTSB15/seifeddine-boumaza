@@ -222,9 +222,11 @@ ON public.managed_trades FOR SELECT TO anon, authenticated
 USING (true);
 
 DROP POLICY IF EXISTS "Allow authenticated manage managed_trades" ON public.managed_trades;
-CREATE POLICY "Allow authenticated manage managed_trades"
-ON public.managed_trades FOR ALL TO authenticated
-USING (true);
+DROP POLICY IF EXISTS "Allow all manage managed_trades" ON public.managed_trades;
+CREATE POLICY "Allow all manage managed_trades"
+ON public.managed_trades FOR ALL TO anon, authenticated
+USING (true)
+WITH CHECK (true);
 
 -- Insert current 4 Twitter trade records:
 INSERT INTO public.managed_trades (sort_order, published_date, badge_text, badge_type, deposit_amount, profit_amount, description, tags, tweet_url, profit_split, images, is_active)
