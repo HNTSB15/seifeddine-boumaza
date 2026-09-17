@@ -191,3 +191,113 @@ DROP POLICY IF EXISTS "Allow authenticated read website_visitors" ON public.webs
 CREATE POLICY "Allow authenticated read website_visitors"
 ON public.website_visitors FOR SELECT TO authenticated
 USING (true);
+
+
+-- ------------------------------------------------------------------------------
+-- 📊 TABLE 5: managed_trades
+-- (Live Managed Account Results & Twitter Proofs. Insert a new row from your phone/dashboard and it appears at the front of your website!)
+-- ------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.managed_trades (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL,
+    published_date TEXT NOT NULL DEFAULT 'Today',
+    badge_text TEXT NOT NULL DEFAULT 'RECORD PROFIT ⚡',
+    badge_type TEXT NOT NULL DEFAULT 'neon', -- 'neon' or 'gold'
+    deposit_amount TEXT NOT NULL DEFAULT '$100+',
+    profit_amount TEXT NOT NULL DEFAULT '+$1,000',
+    description TEXT NOT NULL,
+    tags TEXT[] DEFAULT ARRAY['#Forex', '#Gold', '#Trading']::TEXT[],
+    tweet_url TEXT DEFAULT 'https://x.com/seifeddin06',
+    profit_split TEXT DEFAULT 'Profit Split: 50/50',
+    images TEXT[] NOT NULL DEFAULT '{}'::TEXT[],
+    is_active BOOLEAN DEFAULT true,
+    sort_order INTEGER DEFAULT 0
+);
+
+ALTER TABLE public.managed_trades ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Allow public read managed_trades" ON public.managed_trades;
+CREATE POLICY "Allow public read managed_trades"
+ON public.managed_trades FOR SELECT TO anon, authenticated
+USING (true);
+
+DROP POLICY IF EXISTS "Allow authenticated manage managed_trades" ON public.managed_trades;
+CREATE POLICY "Allow authenticated manage managed_trades"
+ON public.managed_trades FOR ALL TO authenticated
+USING (true);
+
+-- Insert current 4 Twitter trade records:
+INSERT INTO public.managed_trades (sort_order, published_date, badge_text, badge_type, deposit_amount, profit_amount, description, tags, tweet_url, profit_split, images, is_active)
+VALUES
+(
+    1,
+    'Sep 16, 2026',
+    'RECORD PROFIT ⚡',
+    'neon',
+    'Deposit: $430',
+    '+$16,000',
+    'MANAGING A NEW ACCOUNT — Live verified trading execution with disciplined drawdown control on Gold & Forex. Deposit: $430 ➡️ Net Profit: +$16,000.',
+    ARRAY['#Gold', '#XAUUSD', '#Forex', '#ManagedAccount'],
+    'https://x.com/seifeddin06/status/2100553514652983364',
+    'Profit Split: 50/50',
+    ARRAY[
+        'https://pbs.twimg.com/media/HSaqRvdXsAE_gBX?format=jpg&name=large',
+        'https://pbs.twimg.com/media/HSaqRvrXsAACCxJ?format=jpg&name=large',
+        'https://pbs.twimg.com/media/HSaqRveXAAAOcYp?format=jpg&name=large',
+        'https://pbs.twimg.com/media/HSaqRvcWYAEduzN?format=jpg&name=large'
+    ],
+    true
+),
+(
+    2,
+    'Sep 15, 2026',
+    '11X RETURN 🎯',
+    'gold',
+    'Deposit: $500',
+    '+$5,700',
+    'MANAGING A NEW ACCOUNT — Account growth from $500 to $5,700 net profit through strict risk management and momentum trading on Gold (XAUUSD).',
+    ARRAY['#Forex', '#XAUUSD', '#Trading', '#Profits'],
+    'https://x.com/seifeddin06/status/2100186065541685374',
+    'Profit Split: 50/50',
+    ARRAY[
+        'https://pbs.twimg.com/media/HSVcFq1W0AAWx0G?format=jpg&name=large',
+        'https://pbs.twimg.com/media/HSVcFqzWAAAxI20?format=jpg&name=large'
+    ],
+    true
+),
+(
+    3,
+    'Sep 14, 2026',
+    '15X RETURN 🚀',
+    'neon',
+    'Deposit: $100',
+    '+$1,500',
+    'Small account scalability proof: $100 starting deposit grown to $1,500 net profit with strict stop-loss rules on Gold (XAUUSD).',
+    ARRAY['#Gold', '#XAUUSD', '#ForexSignals', '#Growth'],
+    'https://x.com/seifeddin06/status/2099978339200962981',
+    'Profit Split: 50/50',
+    ARRAY[
+        'https://pbs.twimg.com/media/HSSe1-HWkAAavQ2?format=jpg&name=large',
+        'https://pbs.twimg.com/media/HSSe1-tXwAEBFsL?format=jpg&name=large',
+        'https://pbs.twimg.com/media/HSSe17SWQAA1R6u?format=jpg&name=large',
+        'https://pbs.twimg.com/media/HSSe17ZW8AAqO1h?format=jpg&name=large'
+    ],
+    true
+),
+(
+    4,
+    'Sep 13, 2026',
+    'TIERS OPEN 💼',
+    'gold',
+    'Starting: $100+',
+    '$500+ Max',
+    'TRADING ACCOUNT MANAGEMENT TIERS: Available for $100+, $200+, $300+, $400+, $500+. Dedicated risk management on Gold (XAUUSD).',
+    ARRAY['#Forex', '#Trading', '#Gold', '#AccountManagement'],
+    'https://x.com/seifeddin06/status/2099508672397275183',
+    'Telegram: @HNTSB15',
+    ARRAY[
+        'https://pbs.twimg.com/media/HSLx32aa8AEPunw?format=jpg&name=large',
+        'https://pbs.twimg.com/media/HSLx32HXcAELU5b?format=jpg&name=large'
+    ],
+    true
+);

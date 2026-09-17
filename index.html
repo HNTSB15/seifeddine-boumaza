@@ -5585,7 +5585,31 @@ html[dir="rtl"] .mono-arrow {
   })();
 
   // Results Feed Carousel Controller
-  (function(){
+  var cvxGalleries = [
+    // Default Static Galleries (Fallback)
+    [
+      { src: 'https://pbs.twimg.com/media/HSaqRvdXsAE_gBX?format=jpg&name=large', cap: 'Account Management Execution Proof #1 ($430 ➡️ +$16,000)' },
+      { src: 'https://pbs.twimg.com/media/HSaqRvrXsAACCxJ?format=jpg&name=large', cap: 'Account Management Execution Proof #2 ($430 ➡️ +$16,000)' },
+      { src: 'https://pbs.twimg.com/media/HSaqRveXAAAOcYp?format=jpg&name=large', cap: 'Account Management Execution Proof #3 ($430 ➡️ +$16,000)' },
+      { src: 'https://pbs.twimg.com/media/HSaqRvcWYAEduzN?format=jpg&name=large', cap: 'Account Management Execution Proof #4 ($430 ➡️ +$16,000)' }
+    ],
+    [
+      { src: 'https://pbs.twimg.com/media/HSVcFq1W0AAWx0G?format=jpg&name=large', cap: 'Gold Account Growth Proof #1 ($500 ➡️ +$5,700)' },
+      { src: 'https://pbs.twimg.com/media/HSVcFqzWAAAxI20?format=jpg&name=large', cap: 'Gold Account Growth Proof #2 ($500 ➡️ +$5,700)' }
+    ],
+    [
+      { src: 'https://pbs.twimg.com/media/HSSe1-HWkAAavQ2?format=jpg&name=large', cap: 'Small Account Growth Proof #1 ($100 ➡️ +$1,500)' },
+      { src: 'https://pbs.twimg.com/media/HSSe1-tXwAEBFsL?format=jpg&name=large', cap: 'Small Account Growth Proof #2 ($100 ➡️ +$1,500)' },
+      { src: 'https://pbs.twimg.com/media/HSSe17SWQAA1R6u?format=jpg&name=large', cap: 'Small Account Growth Proof #3 ($100 ➡️ +$1,500)' },
+      { src: 'https://pbs.twimg.com/media/HSSe17ZW8AAqO1h?format=jpg&name=large', cap: 'Small Account Growth Proof #4 ($100 ➡️ +$1,500)' }
+    ],
+    [
+      { src: 'https://pbs.twimg.com/media/HSLx32aa8AEPunw?format=jpg&name=large', cap: 'Trading Account Management Tiers & Terms #1' },
+      { src: 'https://pbs.twimg.com/media/HSLx32HXcAELU5b?format=jpg&name=large', cap: 'Trading Account Management Tiers & Terms #2' }
+    ]
+  ];
+
+  window.cvxInitCarousel = function(){
     var stream = document.getElementById('cvxXStream');
     var counter = document.getElementById('cvxTlCounter');
     var prevBtn = document.getElementById('cvxTlPrev');
@@ -5630,32 +5654,20 @@ html[dir="rtl"] .mono-arrow {
       }, 600);
     }
 
-    // Prev / Next buttons in bottom bar
     if(prevBtn) {
-      prevBtn.addEventListener('click', function(){
-        scrollToSlide(currentIndex - 1);
-      });
+      prevBtn.onclick = function(){ scrollToSlide(currentIndex - 1); };
     }
     if(nextBtn) {
-      nextBtn.addEventListener('click', function(){
-        scrollToSlide(currentIndex + 1);
-      });
+      nextBtn.onclick = function(){ scrollToSlide(currentIndex + 1); };
     }
-
-    // Side floating stream arrows
     if(streamPrev) {
-      streamPrev.addEventListener('click', function(){
-        scrollToSlide(currentIndex - 1);
-      });
+      streamPrev.onclick = function(){ scrollToSlide(currentIndex - 1); };
     }
     if(streamNext) {
-      streamNext.addEventListener('click', function(){
-        scrollToSlide(currentIndex + 1);
-      });
+      streamNext.onclick = function(){ scrollToSlide(currentIndex + 1); };
     }
 
-    // Track scroll events on stream (touch/swipe/wheel)
-    stream.addEventListener('scroll', function(){
+    stream.onscroll = function(){
       if(isManualScrolling) return;
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(function(){
@@ -5676,57 +5688,62 @@ html[dir="rtl"] .mono-arrow {
 
         updateActiveState(closestIdx);
       }, 100);
-    }, { passive: true });
+    };
 
-    // Keyboard navigation when lightbox is not active
-    document.addEventListener('keydown', function(e){
-      var lb = document.getElementById('cvxLightbox');
-      if(lb && lb.classList.contains('active')) return;
-      var isRtl = (document.documentElement.getAttribute('dir') === 'rtl');
-      if(e.key === 'ArrowRight') {
-        scrollToSlide(isRtl ? currentIndex - 1 : currentIndex + 1);
-      } else if(e.key === 'ArrowLeft') {
-        scrollToSlide(isRtl ? currentIndex + 1 : currentIndex - 1);
-      }
-    });
-
-    // Initialize first slide as active
     updateActiveState(0);
-  })();
+  };
+
+  // Keyboard navigation for Carousel
+  document.addEventListener('keydown', function(e){
+    var lb = document.getElementById('cvxLightbox');
+    if(lb && lb.classList.contains('active')) return;
+    var isRtl = (document.documentElement.getAttribute('dir') === 'rtl');
+    var slides = document.querySelectorAll('.cvx-x-slide');
+    if(!slides.length) return;
+    var activeIdx = 0;
+    slides.forEach(function(s, i){ if(s.classList.contains('active-slide')) activeIdx = i; });
+    if(e.key === 'ArrowRight') {
+      var nextIdx = isRtl ? activeIdx - 1 : activeIdx + 1;
+      if(nextIdx >= 0 && nextIdx < slides.length) slides[nextIdx].scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center'});
+    } else if(e.key === 'ArrowLeft') {
+      var prevIdx = isRtl ? activeIdx + 1 : activeIdx - 1;
+      if(prevIdx >= 0 && prevIdx < slides.length) slides[prevIdx].scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center'});
+    }
+  });
+
+  // Run initial carousel setup for static slides
+  window.cvxInitCarousel();
 
   // Multi-image Lightbox Gallery Controller
-  (function(){
-    var cvxGalleries = [
-      // Post 0: Sep 16, 2026 ($430 -> +$16,000)
-      [
-        { src: 'https://pbs.twimg.com/media/HSaqRvdXsAE_gBX?format=jpg&name=large', cap: 'Account Management Execution Proof #1 ($430 ➡️ +$16,000)' },
-        { src: 'https://pbs.twimg.com/media/HSaqRvrXsAACCxJ?format=jpg&name=large', cap: 'Account Management Execution Proof #2 ($430 ➡️ +$16,000)' },
-        { src: 'https://pbs.twimg.com/media/HSaqRveXAAAOcYp?format=jpg&name=large', cap: 'Account Management Execution Proof #3 ($430 ➡️ +$16,000)' },
-        { src: 'https://pbs.twimg.com/media/HSaqRvcWYAEduzN?format=jpg&name=large', cap: 'Account Management Execution Proof #4 ($430 ➡️ +$16,000)' }
-      ],
-      // Post 1: Sep 15, 2026 ($500 -> +$5,700)
-      [
-        { src: 'https://pbs.twimg.com/media/HSVcFq1W0AAWx0G?format=jpg&name=large', cap: 'Gold Account Growth Proof #1 ($500 ➡️ +$5,700)' },
-        { src: 'https://pbs.twimg.com/media/HSVcFqzWAAAxI20?format=jpg&name=large', cap: 'Gold Account Growth Proof #2 ($500 ➡️ +$5,700)' }
-      ],
-      // Post 2: Sep 14, 2026 ($100 -> +$1,500)
-      [
-        { src: 'https://pbs.twimg.com/media/HSSe1-HWkAAavQ2?format=jpg&name=large', cap: 'Small Account Growth Proof #1 ($100 ➡️ +$1,500)' },
-        { src: 'https://pbs.twimg.com/media/HSSe1-tXwAEBFsL?format=jpg&name=large', cap: 'Small Account Growth Proof #2 ($100 ➡️ +$1,500)' },
-        { src: 'https://pbs.twimg.com/media/HSSe17SWQAA1R6u?format=jpg&name=large', cap: 'Small Account Growth Proof #3 ($100 ➡️ +$1,500)' },
-        { src: 'https://pbs.twimg.com/media/HSSe17ZW8AAqO1h?format=jpg&name=large', cap: 'Small Account Growth Proof #4 ($100 ➡️ +$1,500)' }
-      ],
-      // Post 3: Sep 13, 2026 (Management Tiers)
-      [
-        { src: 'https://pbs.twimg.com/media/HSLx32aa8AEPunw?format=jpg&name=large', cap: 'Trading Account Management Tiers & Terms #1' },
-        { src: 'https://pbs.twimg.com/media/HSLx32HXcAELU5b?format=jpg&name=large', cap: 'Trading Account Management Tiers & Terms #2' }
-      ]
-    ];
+  var curPost = 0;
+  var curImg = 0;
 
-    var curPost = 0;
-    var curImg = 0;
+  function renderLb() {
+    var lb = document.getElementById('cvxLightbox');
+    var img = document.getElementById('cvxLbImg');
+    var cap = document.getElementById('cvxLbCaption');
+    var counter = document.getElementById('cvxLbCounter');
+    var prevBtn = document.getElementById('cvxLbPrev');
+    var nextBtn = document.getElementById('cvxLbNext');
+    if(!lb || !img) return;
 
-    function renderLb() {
+    var post = cvxGalleries[curPost];
+    if(!post || !post.length) return;
+    if(curImg < 0) curImg = 0;
+    if(curImg >= post.length) curImg = post.length - 1;
+
+    var item = post[curImg];
+    img.src = item.src;
+    if(cap) cap.textContent = item.cap;
+    if(counter) counter.textContent = (curImg + 1) + ' / ' + post.length;
+
+    var hasMulti = (post.length > 1);
+    if(prevBtn) prevBtn.style.display = hasMulti ? 'flex' : 'none';
+    if(nextBtn) nextBtn.style.display = hasMulti ? 'flex' : 'none';
+  }
+
+  window.cvxOpenLightbox = function(postIdx, imgIdx) {
+    if(typeof postIdx === 'string') {
       var lb = document.getElementById('cvxLightbox');
       var img = document.getElementById('cvxLbImg');
       var cap = document.getElementById('cvxLbCaption');
@@ -5734,93 +5751,175 @@ html[dir="rtl"] .mono-arrow {
       var prevBtn = document.getElementById('cvxLbPrev');
       var nextBtn = document.getElementById('cvxLbNext');
       if(!lb || !img) return;
-
-      var post = cvxGalleries[curPost];
-      if(!post || !post.length) return;
-      if(curImg < 0) curImg = 0;
-      if(curImg >= post.length) curImg = post.length - 1;
-
-      var item = post[curImg];
-      img.src = item.src;
-      if(cap) cap.textContent = item.cap;
-      if(counter) counter.textContent = (curImg + 1) + ' / ' + post.length;
-
-      var hasMulti = (post.length > 1);
-      if(prevBtn) prevBtn.style.display = hasMulti ? 'flex' : 'none';
-      if(nextBtn) nextBtn.style.display = hasMulti ? 'flex' : 'none';
+      img.src = postIdx;
+      if(cap) cap.textContent = imgIdx || '';
+      if(counter) counter.textContent = '1 / 1';
+      if(prevBtn) prevBtn.style.display = 'none';
+      if(nextBtn) nextBtn.style.display = 'none';
+      lb.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      return;
     }
 
-    window.cvxOpenLightbox = function(postIdx, imgIdx) {
-      if(typeof postIdx === 'string') {
-        var lb = document.getElementById('cvxLightbox');
-        var img = document.getElementById('cvxLbImg');
-        var cap = document.getElementById('cvxLbCaption');
-        var counter = document.getElementById('cvxLbCounter');
-        var prevBtn = document.getElementById('cvxLbPrev');
-        var nextBtn = document.getElementById('cvxLbNext');
-        if(!lb || !img) return;
-        img.src = postIdx;
-        if(cap) cap.textContent = imgIdx || '';
-        if(counter) counter.textContent = '1 / 1';
-        if(prevBtn) prevBtn.style.display = 'none';
-        if(nextBtn) nextBtn.style.display = 'none';
-        lb.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        return;
-      }
+    curPost = (typeof postIdx === 'number') ? postIdx : 0;
+    curImg = (typeof imgIdx === 'number') ? imgIdx : 0;
 
-      curPost = (typeof postIdx === 'number') ? postIdx : 0;
-      curImg = (typeof imgIdx === 'number') ? imgIdx : 0;
+    renderLb();
 
-      renderLb();
+    var lb = document.getElementById('cvxLightbox');
+    if(lb) {
+      lb.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  };
 
-      var lb = document.getElementById('cvxLightbox');
-      if(lb) {
-        lb.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      }
-    };
+  window.cvxLbStep = function(dir) {
+    var post = cvxGalleries[curPost];
+    if(!post || post.length <= 1) return;
+    var newIdx = curImg + dir;
+    if(newIdx < 0) {
+      newIdx = post.length - 1;
+    } else if(newIdx >= post.length) {
+      newIdx = 0;
+    }
+    curImg = newIdx;
+    renderLb();
+  };
 
-    window.cvxLbStep = function(dir) {
-      var post = cvxGalleries[curPost];
-      if(!post || post.length <= 1) return;
-      var newIdx = curImg + dir;
-      if(newIdx < 0) {
-        newIdx = post.length - 1;
-      } else if(newIdx >= post.length) {
-        newIdx = 0;
-      }
-      curImg = newIdx;
-      renderLb();
-    };
+  window.cvxCloseLightbox = function(e) {
+    if(e && e.target && (e.target.id === 'cvxLbImg' || (e.target.closest && (e.target.closest('#cvxLbBar') || e.target.closest('.cvx-lb-nav'))))) {
+      return;
+    }
+    var lb = document.getElementById('cvxLightbox');
+    if(lb) {
+      lb.classList.remove('active');
+      document.body.style.overflow = '';
+      var img = document.getElementById('cvxLbImg');
+      if(img) img.src = '';
+    }
+  };
 
-    window.cvxCloseLightbox = function(e) {
-      if(e && e.target && (e.target.id === 'cvxLbImg' || (e.target.closest && (e.target.closest('#cvxLbBar') || e.target.closest('.cvx-lb-nav'))))) {
-        return;
-      }
-      var lb = document.getElementById('cvxLightbox');
-      if(lb) {
-        lb.classList.remove('active');
-        document.body.style.overflow = '';
-        var img = document.getElementById('cvxLbImg');
-        if(img) img.src = '';
-      }
-    };
+  document.addEventListener('keydown', function(e){
+    var lb = document.getElementById('cvxLightbox');
+    if(!lb || !lb.classList.contains('active')) return;
+    if(e.key === 'Escape') {
+      window.cvxCloseLightbox();
+    } else if(e.key === 'ArrowRight') {
+      var isRtl = (document.documentElement.getAttribute('dir') === 'rtl');
+      window.cvxLbStep(isRtl ? -1 : 1);
+    } else if(e.key === 'ArrowLeft') {
+      var isRtl = (document.documentElement.getAttribute('dir') === 'rtl');
+      window.cvxLbStep(isRtl ? 1 : -1);
+    }
+  });
 
-    document.addEventListener('keydown', function(e){
-      var lb = document.getElementById('cvxLightbox');
-      if(!lb || !lb.classList.contains('active')) return;
-      if(e.key === 'Escape') {
-        window.cvxCloseLightbox();
-      } else if(e.key === 'ArrowRight') {
-        var isRtl = (document.documentElement.getAttribute('dir') === 'rtl');
-        window.cvxLbStep(isRtl ? -1 : 1);
-      } else if(e.key === 'ArrowLeft') {
-        var isRtl = (document.documentElement.getAttribute('dir') === 'rtl');
-        window.cvxLbStep(isRtl ? 1 : -1);
+  // Supabase Real-Time / Dynamic Fetch for Managed Trades
+  function loadLiveTrades() {
+    var stream = document.getElementById('cvxXStream');
+    if (!stream) return;
+
+    var url = 'https://kbioxkoifvyivhkzbxke.supabase.co/rest/v1/managed_trades?select=*&is_active=eq.true&order=created_at.desc';
+    var key = 'sb_publishable_TXezItY2oN4gFgCxDLqZPw_B_ormkoG';
+
+    if (!window.fetch) return;
+
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'apikey': key,
+        'Authorization': 'Bearer ' + key,
+        'Content-Type': 'application/json'
       }
+    })
+    .then(function(res){
+      if(!res.ok) throw new Error('Trades fetch error');
+      return res.json();
+    })
+    .then(function(trades){
+      if (!Array.isArray(trades) || !trades.length) return;
+
+      var newGalleries = [];
+      var html = '';
+
+      trades.forEach(function(trade, slideIdx) {
+        var imgs = Array.isArray(trade.images) ? trade.images : [];
+        var galleryItems = [];
+        imgs.forEach(function(imgUrl, imgIdx) {
+          galleryItems.push({
+            src: imgUrl,
+            cap: (trade.description ? trade.description.substring(0, 80) + '...' : 'Trade Proof #' + (imgIdx + 1))
+          });
+        });
+        newGalleries.push(galleryItems);
+
+        var gridClass = 'grid-4';
+        if (imgs.length === 2) gridClass = 'grid-2';
+        else if (imgs.length === 3) gridClass = 'grid-3';
+
+        var galleryHtml = '';
+        if (imgs.length > 0) {
+          galleryHtml = '<div class="cvx-gallery-grid ' + gridClass + '">';
+          imgs.forEach(function(imgUrl, imgIdx) {
+            galleryHtml += '<div class="cvx-gallery-item" onclick="cvxOpenLightbox(' + slideIdx + ', ' + imgIdx + ')">' +
+              '<img src="' + imgUrl + '" alt="Trade Proof ' + (imgIdx + 1) + '" loading="lazy">' +
+              '<span class="cvx-zoom-hint">🔍 Zoom</span>' +
+            '</div>';
+          });
+          galleryHtml += '</div>';
+        }
+
+        var tagsHtml = '';
+        if (Array.isArray(trade.tags) && trade.tags.length) {
+          tagsHtml = '<div class="cvx-slide-tags">' +
+            trade.tags.map(function(t){ return '<span>' + t + '</span>'; }).join('') +
+          '</div>';
+        }
+
+        var badgeClass = (trade.badge_type === 'gold') ? 'gold' : 'neon';
+
+        html += '<article class="cvx-x-slide' + (slideIdx === 0 ? ' active-slide' : '') + '" data-slide="' + slideIdx + '">' +
+          '<div class="cvx-slide-head">' +
+            '<div class="cvx-slide-author">' +
+              '<img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-slide-avatar">' +
+              '<div class="cvx-slide-author-info">' +
+                '<b>Saifeddine Boumaza</b>' +
+                '<small>@seifeddin06 · ' + (trade.published_date || 'Live') + '</small>' +
+              '</div>' +
+            '</div>' +
+            '<div class="cvx-slide-head-right">' +
+              '<span class="cvx-slide-badge ' + badgeClass + '">' + (trade.badge_text || 'VERIFIED ⚡') + '</span>' +
+              '<a href="' + (trade.tweet_url || 'https://x.com/seifeddin06') + '" target="_blank" rel="noopener" title="View on X">' +
+                '<svg class="cvx-slide-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>' +
+              '</a>' +
+            '</div>' +
+          '</div>' +
+          '<div class="cvx-slide-body">' +
+            '<div class="cvx-slide-profit-row">' +
+              '<span class="dep">' + (trade.deposit_amount || '') + '</span>' +
+              '<span class="pft">' + (trade.profit_amount || '') + '</span>' +
+            '</div>' +
+            '<p class="cvx-slide-desc">' + (trade.description || '') + '</p>' +
+            tagsHtml +
+            galleryHtml +
+          '</div>' +
+          '<div class="cvx-slide-foot">' +
+            '<span class="cvx-slide-split">' + (trade.profit_split || 'Profit Split: 50/50') + '</span>' +
+            '<a href="' + (trade.tweet_url || 'https://x.com/seifeddin06') + '" target="_blank" rel="noopener" class="cvx-slide-link">View Tweet on X ↗</a>' +
+          '</div>' +
+        '</article>';
+      });
+
+      stream.innerHTML = html;
+      cvxGalleries = newGalleries;
+      window.cvxInitCarousel();
+    })
+    .catch(function(){
+      // Silently keeps static fallback posts
     });
-  })();
+  }
+
+  // Load trades from Supabase
+  loadLiveTrades();
 //]]>
 </script>
 <script type="text/javascript">
