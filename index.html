@@ -613,6 +613,39 @@ footer.cv-foot .mono{color:var(--neon)}
   .cvx-x-bottom-bar{flex-direction:column;align-items:stretch;text-align:center}
 }
 
+/* real tweets cards */
+.cvx-tweet-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:28px}
+.cvx-tweet-card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;display:flex;flex-direction:column}
+.cvx-tweet-card:hover{transform:translateY(-4px);border-color:var(--neon2);box-shadow:0 12px 36px rgba(0,0,0,.35)}
+.cvx-tc-top{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 12px;border-bottom:1px solid rgba(255,255,255,.04)}
+.cvx-tc-author{display:flex;align-items:center;gap:10px}
+.cvx-tc-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;border:1.5px solid var(--neon)}
+.cvx-tc-author-info b{font-size:14px;color:var(--text);display:block;line-height:1.2}
+.cvx-tc-author-info small{font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.cvx-tc-xlogo{width:18px;height:18px;fill:var(--muted);transition:fill .2s}
+.cvx-tweet-card:hover .cvx-tc-xlogo{fill:var(--text)}
+.cvx-tc-body{padding:16px 18px;flex:1}
+.cvx-tc-badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 9px;border-radius:999px;margin-bottom:12px}
+.cvx-tc-badge.gold{background:rgba(242,193,78,.12);color:var(--gold);border:1px solid rgba(242,193,78,.35)}
+.cvx-tc-badge.neon{background:rgba(0,255,156,.12);color:var(--neon);border:1px solid rgba(0,255,156,.35)}
+.cvx-tc-profit-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.cvx-tc-profit-row .dep{font-size:13px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.cvx-tc-profit-row .pft{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:800;color:var(--neon);text-shadow:0 0 16px rgba(0,255,156,.35)}
+.cvx-tc-desc{font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:14px}
+.cvx-tc-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.cvx-tc-tags span{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--neon2);background:rgba(18,214,255,.06);border:1px solid rgba(18,214,255,.2);padding:2px 7px;border-radius:4px}
+.cvx-tc-img-box{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#000;margin-bottom:14px;max-height:260px;position:relative}
+.cvx-tc-img-box img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
+.cvx-tc-img-box:hover img{transform:scale(1.02)}
+.cvx-tc-foot{padding:12px 18px;border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,.15)}
+.cvx-tc-split{font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.cvx-tc-link{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--neon);text-decoration:none;display:inline-flex;align-items:center;gap:5px;font-weight:600;transition:color .18s}
+.cvx-tc-link:hover{color:#fff;text-decoration:underline}
+
+@media(max-width:768px){
+  .cvx-tweet-cards{grid-template-columns:1fr}
+}
+
 /* timeline */
 .cvx-tl{border-left:2px solid transparent;border-image:var(--rgb) 1;padding-left:26px;margin-left:8px}
 .cvx-ti{position:relative;padding-bottom:28px}
@@ -2365,6 +2398,147 @@ html[dir="rtl"] .mono-arrow {
     <div class="m-val" style="color:var(--text)">XAUUSD / FX</div>
     <div class="m-lbl" id="resM4">Primary Asset Focus</div>
   </div>
+</div>
+
+<!-- Live Verified Tweet Proofs -->
+<div class="cvx-tweet-cards">
+
+  <!-- Tweet 1 -->
+  <div class="cvx-tweet-card">
+    <div class="cvx-tc-top">
+      <div class="cvx-tc-author">
+        <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-tc-avatar">
+        <div class="cvx-tc-author-info">
+          <b>Saifeddine Boumaza</b>
+          <small>@seifeddin06</small>
+        </div>
+      </div>
+      <a href="https://x.com/seifeddin06/status/2100553514652983364" target="_blank" rel="noopener" title="View on X">
+        <svg class="cvx-tc-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+    </div>
+    <div class="cvx-tc-body">
+      <span class="cvx-tc-badge neon">RECORD PROFIT HIT ⚡</span>
+      <div class="cvx-tc-profit-row">
+        <span class="dep">Deposit: <b>$430</b></span>
+        <span class="pft">+$16,000</span>
+      </div>
+      <p class="cvx-tc-desc">MANAGING A NEW ACCOUNT — Live verified trading execution with disciplined drawdown control on Gold &amp; Forex.</p>
+      <div class="cvx-tc-tags">
+        <span>#Gold</span><span>#XAUUSD</span><span>#Forex</span><span>#ManagedAccount</span>
+      </div>
+      <a href="https://x.com/seifeddin06/status/2100553514652983364" target="_blank" rel="noopener" class="cvx-tc-img-box">
+        <img src="https://pbs.twimg.com/media/HSaqRvdXsAE_gBX?format=jpg&amp;name=medium" alt="Managed Account Profit $16,000 Proof" loading="lazy">
+      </a>
+    </div>
+    <div class="cvx-tc-foot">
+      <span class="cvx-tc-split">Profit Split: 50/50</span>
+      <a href="https://x.com/seifeddin06/status/2100553514652983364" target="_blank" rel="noopener" class="cvx-tc-link">View on X ↗</a>
+    </div>
+  </div>
+
+  <!-- Tweet 2 -->
+  <div class="cvx-tweet-card">
+    <div class="cvx-tc-top">
+      <div class="cvx-tc-author">
+        <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-tc-avatar">
+        <div class="cvx-tc-author-info">
+          <b>Saifeddine Boumaza</b>
+          <small>@seifeddin06</small>
+        </div>
+      </div>
+      <a href="https://x.com/seifeddin06/status/2100186065541685374" target="_blank" rel="noopener" title="View on X">
+        <svg class="cvx-tc-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+    </div>
+    <div class="cvx-tc-body">
+      <span class="cvx-tc-badge gold">11X RETURN ACHIEVED 🎯</span>
+      <div class="cvx-tc-profit-row">
+        <span class="dep">Deposit: <b>$500</b></span>
+        <span class="pft">+$5,700</span>
+      </div>
+      <p class="cvx-tc-desc">MANAGING A NEW ACCOUNT — Account growth from $500 to $5,700 net profit through strict risk management and momentum trading.</p>
+      <div class="cvx-tc-tags">
+        <span>#Forex</span><span>#XAUUSD</span><span>#Trading</span><span>#Profits</span>
+      </div>
+      <a href="https://x.com/seifeddin06/status/2100186065541685374" target="_blank" rel="noopener" class="cvx-tc-img-box">
+        <img src="https://pbs.twimg.com/media/HSVcFq1W0AAWx0G?format=jpg&amp;name=medium" alt="Managed Account Profit $5,700 Proof" loading="lazy">
+      </a>
+    </div>
+    <div class="cvx-tc-foot">
+      <span class="cvx-tc-split">Profit Split: 50/50</span>
+      <a href="https://x.com/seifeddin06/status/2100186065541685374" target="_blank" rel="noopener" class="cvx-tc-link">View on X ↗</a>
+    </div>
+  </div>
+
+  <!-- Tweet 3 -->
+  <div class="cvx-tweet-card">
+    <div class="cvx-tc-top">
+      <div class="cvx-tc-author">
+        <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-tc-avatar">
+        <div class="cvx-tc-author-info">
+          <b>Saifeddine Boumaza</b>
+          <small>@seifeddin06</small>
+        </div>
+      </div>
+      <a href="https://x.com/seifeddin06/status/2099978339200962981" target="_blank" rel="noopener" title="View on X">
+        <svg class="cvx-tc-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+    </div>
+    <div class="cvx-tc-body">
+      <span class="cvx-tc-badge neon">15X RETURN 🚀</span>
+      <div class="cvx-tc-profit-row">
+        <span class="dep">Deposit: <b>$100</b></span>
+        <span class="pft">+$1,500</span>
+      </div>
+      <p class="cvx-tc-desc">Small account scalability proof: $100 starting deposit grown to $1,500 profit with strict stop-loss rules on Gold (XAUUSD).</p>
+      <div class="cvx-tc-tags">
+        <span>#Gold</span><span>#XAUUSD</span><span>#ForexSignals</span><span>#Growth</span>
+      </div>
+      <a href="https://x.com/seifeddin06/status/2099978339200962981" target="_blank" rel="noopener" class="cvx-tc-img-box">
+        <img src="https://pbs.twimg.com/media/HSSe1-HWkAAavQ2?format=jpg&amp;name=medium" alt="Managed Account $100 to $1500 Proof" loading="lazy">
+      </a>
+    </div>
+    <div class="cvx-tc-foot">
+      <span class="cvx-tc-split">Profit Split: 50/50</span>
+      <a href="https://x.com/seifeddin06/status/2099978339200962981" target="_blank" rel="noopener" class="cvx-tc-link">View on X ↗</a>
+    </div>
+  </div>
+
+  <!-- Tweet 4 -->
+  <div class="cvx-tweet-card">
+    <div class="cvx-tc-top">
+      <div class="cvx-tc-author">
+        <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-tc-avatar">
+        <div class="cvx-tc-author-info">
+          <b>Saifeddine Boumaza</b>
+          <small>@seifeddin06</small>
+        </div>
+      </div>
+      <a href="https://x.com/seifeddin06/status/2099508672397275183" target="_blank" rel="noopener" title="View on X">
+        <svg class="cvx-tc-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+    </div>
+    <div class="cvx-tc-body">
+      <span class="cvx-tc-badge gold">ACCOUNT TIERS OPEN 💼</span>
+      <div class="cvx-tc-profit-row">
+        <span class="dep">Starting: <b>$100+</b></span>
+        <span class="pft">$500+ Max</span>
+      </div>
+      <p class="cvx-tc-desc">TRADING ACCOUNT MANAGEMENT TIERS: Available for $100+, $200+, $300+, $400+, $500+. Dedicated risk management on Gold (XAUUSD).</p>
+      <div class="cvx-tc-tags">
+        <span>#Forex</span><span>#Trading</span><span>#Gold</span><span>#AccountManagement</span>
+      </div>
+      <a href="https://x.com/seifeddin06/status/2099508672397275183" target="_blank" rel="noopener" class="cvx-tc-img-box">
+        <img src="https://pbs.twimg.com/media/HSLx32aa8AEPunw?format=jpg&amp;name=medium" alt="Trading Account Management Tiers" loading="lazy">
+      </a>
+    </div>
+    <div class="cvx-tc-foot">
+      <span class="cvx-tc-split">Telegram: @HNTSB15</span>
+      <a href="https://x.com/seifeddin06/status/2099508672397275183" target="_blank" rel="noopener" class="cvx-tc-link">View on X ↗</a>
+    </div>
+  </div>
+
 </div>
 
 <div class="cvx-x-feed-box">
