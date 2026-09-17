@@ -290,7 +290,7 @@ VALUES
     'TIERS OPEN 💼',
     'gold',
     'Starting: $100+',
-    '$500+ Max',
+    '+$1,700',
     'TRADING ACCOUNT MANAGEMENT TIERS: Available for $100+, $200+, $300+, $400+, $500+. Dedicated risk management on Gold (XAUUSD).',
     ARRAY['#Forex', '#Trading', '#Gold', '#AccountManagement'],
     'https://x.com/seifeddin06/status/2099508672397275183',
