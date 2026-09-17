@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة إدارة الصفقات | Saifeddine Boumaza</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Space+Grotesk:wght@500;700&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070a0f;
+      --card: #0e131d;
+      --card-border: rgba(0, 255, 200, 0.15);
+      --neon: #00ffc8;
+      --gold: #f59e0b;
+      --red: #ef4444;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 18px 12px 60px; min-height: 100vh; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .container { max-width: 720px; margin: 0 auto; }
+
+    /* Header */
+    .admin-header {
+      background: linear-gradient(135deg, rgba(0,255,200,0.08), rgba(245,158,11,0.05));
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .admin-title h1 { font-size: 20px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px; }
+    .admin-title p { font-size: 13px; color: var(--muted); margin-top: 4px; }
+    .site-btn {
+      background: rgba(0,255,200,0.1);
+      color: var(--neon);
+      border: 1px solid var(--neon);
+      border-radius: 10px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: 0.2s;
+    }
+    .site-btn:hover { background: var(--neon); color: #000; }
+
+    /* Cards */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .card-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--neon);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding-bottom: 12px;
+    }
+
+    /* Form Fields */
+    .form-group { margin-bottom: 18px; }
+    .form-label { display: block; font-size: 14px; font-weight: 700; color: #cbd5e1; margin-bottom: 8px; }
+    .input-box {
+      width: 100%;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      color: #fff;
+      padding: 12px 14px;
+      font-size: 15px;
+      outline: none;
+      transition: 0.2s;
+    }
+    .input-box:focus { border-color: var(--neon); box-shadow: 0 0 12px rgba(0,255,200,0.2); }
+
+    /* Quick Buttons */
+    .quick-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .q-btn {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      color: #cbd5e1;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .q-btn:hover, .q-btn.active {
+      background: rgba(0,255,200,0.15);
+      border-color: var(--neon);
+      color: var(--neon);
+    }
+
+    /* Media Uploader */
+    .upload-zone {
+      border: 2px dashed rgba(0,255,200,0.3);
+      border-radius: 12px;
+      padding: 24px 16px;
+      text-align: center;
+      cursor: pointer;
+      background: rgba(0,255,200,0.02);
+      transition: 0.2s;
+    }
+    .upload-zone:hover { background: rgba(0,255,200,0.06); border-color: var(--neon); }
+    .upload-zone input { display: none; }
+    .upload-zone-icon { font-size: 32px; margin-bottom: 8px; }
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .preview-item {
+      position: relative;
+      height: 100px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: #000;
+    }
+    .preview-item img, .preview-item video { width: 100%; height: 100%; object-fit: cover; }
+    .preview-item .rm-btn {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      background: rgba(239,68,68,0.85);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Submit Button */
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #00ffc8, #00b388);
+      color: #03120c;
+      font-size: 16px;
+      font-weight: 800;
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 4px 20px rgba(0,255,200,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 25px rgba(0,255,200,0.5); }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* Post Management List */
+    .trades-list { display: flex; flex-direction: column; gap: 14px; }
+    .trade-card-item {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: 0.2s;
+    }
+    .trade-card-thumb {
+      width: 70px;
+      height: 70px;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #000;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .trade-card-thumb img, .trade-card-thumb video { width: 100%; height: 100%; object-fit: cover; }
+    .trade-card-info { flex: 1; min-width: 0; }
+    .trade-card-amounts { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+    .trade-card-amounts .dep { color: var(--muted); font-size: 13px; margin-left: 8px; }
+    .trade-card-amounts .pft { color: var(--neon); font-size: 16px; }
+    .trade-card-meta { font-size: 12px; color: var(--muted); }
+    .del-btn {
+      background: rgba(239,68,68,0.12);
+      border: 1px solid var(--red);
+      color: var(--red);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+    .del-btn:hover { background: var(--red); color: #fff; }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #00ffc8;
+      color: #03120c;
+      font-weight: 800;
+      padding: 12px 24px;
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(0,255,200,0.5);
+      transition: 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      z-index: 9999;
+      pointer-events: none;
+      font-size: 14px;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* Security Gate */
+    #gateModal {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(7,10,15,0.95);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      padding: 18px;
+    }
+    .gate-box {
+      background: var(--card);
+      border: 1px solid var(--neon);
+      border-radius: 16px;
+      padding: 28px;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0,255,200,0.25);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Gate PIN Modal -->
+  <div id="gateModal">
+    <div class="gate-box">
+      <div style="font-size: 38px; margin-bottom: 10px;">🔐</div>
+      <h2 style="color: #fff; font-size: 19px; margin-bottom: 8px;">لوحة إدارة الصفقات</h2>
+      <p style="color: var(--muted); font-size: 13px; margin-bottom: 18px;">أدخل رمز PIN السري للمتابعة:</p>
+      <input type="password" id="pinInput" class="input-box mono" placeholder="رمز PIN" style="text-align: center; font-size: 20px; letter-spacing: 4px; margin-bottom: 14px;" maxlength="8">
+      <button type="button" class="submit-btn" onclick="checkPin()">دخول 🚀</button>
+      <p id="pinError" style="color: var(--red); font-size: 12px; margin-top: 10px; display: none;">الرمز غير صحيح!</p>
+    </div>
+  </div>
+
+  <div class="container" id="adminApp" style="display: none;">
+    
+    <!-- Top Header -->
+    <header class="admin-header">
+      <div class="admin-title">
+        <h1>⚡ لوحة نشر وإدارة الصفقات</h1>
+        <p>Saifeddine Boumaza · التحكم المباشر بالموقع</p>
+      </div>
+      <a href="index.html#results" target="_blank" class="site-btn">🌐 عرض بالموقع ↗</a>
+    </header>
+
+    <!-- 1. Form to Publish New Trade -->
+    <section class="card">
+      <h2 class="card-title">➕ نشر صفقة جديدة فوراً</h2>
+
+      <!-- Upload Photos/Videos -->
+      <div class="form-group">
+        <label class="form-label">📸 صور أو فيديو الصفقة (حتى 4 صور أو فيديو 1):</label>
+        <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+          <div class="upload-zone-icon">📁</div>
+          <p style="font-weight:700; color:#fff;">اضغط هنا لاختيار الصور أو الفيديو من هاتفك</p>
+          <p style="font-size:12px; color:var(--muted); margin-top:4px;">يدعم JPG, PNG, MP4</p>
+          <input type="file" id="fileInput" accept="image/*,video/*" multiple onchange="handleFileSelect(event)">
+        </div>
+        <div class="preview-grid" id="previewGrid"></div>
+      </div>
+
+      <!-- Deposit -->
+      <div class="form-group">
+        <label class="form-label">💰 مبلغ الإيداع (Deposit):</label>
+        <input type="text" id="depositInput" class="input-box mono" placeholder="مثال: Deposit: $500">
+        <div class="quick-btns">
+          <button type="button" class="q-btn" onclick="setVal('depositInput', 'Deposit: $100')">$100</button>
+          <button type="button" class="q-btn" onclick="setVal('depositInput', 'Deposit: $200')">$200</button>
+          <button type="button" class="q-btn" onclick="setVal('depositInput', 'Deposit: $430')">$430</button>
+          <button type="button" class="q-btn" onclick="setVal('depositInput', 'Deposit: $500')">$500</button>
+          <button type="button" class="q-btn" onclick="setVal('depositInput', 'Deposit: $1,000')">$1,000</button>
+        </div>
+      </div>
+
+      <!-- Profit -->
+      <div class="form-group">
+        <label class="form-label">🚀 مبلغ الربح الصافي (Net Profit):</label>
+        <input type="text" id="profitInput" class="input-box mono" placeholder="مثال: +$5,700">
+        <div class="quick-btns">
+          <button type="button" class="q-btn" onclick="setVal('profitInput', '+$1,500')">+$1,500</button>
+          <button type="button" class="q-btn" onclick="setVal('profitInput', '+$1,700')">+$1,700</button>
+          <button type="button" class="q-btn" onclick="setVal('profitInput', '+$3,000')">+$3,000</button>
+          <button type="button" class="q-btn" onclick="setVal('profitInput', '+$5,700')">+$5,700</button>
+          <button type="button" class="q-btn" onclick="setVal('profitInput', '+$16,000')">+$16,000</button>
+          <button type="button" class="q-btn" onclick="setVal('profitInput', '+$25,000')">+$25,000</button>
+        </div>
+      </div>
+
+      <!-- Badge Text -->
+      <div class="form-group">
+        <label class="form-label">🏷️ شارة المنشور (Badge):</label>
+        <input type="text" id="badgeInput" class="input-box" value="RECORD PROFIT ⚡">
+        <div class="quick-btns">
+          <button type="button" class="q-btn" onclick="setBadge('RECORD PROFIT ⚡', 'neon')">RECORD PROFIT ⚡</button>
+          <button type="button" class="q-btn" onclick="setBadge('11X RETURN 🎯', 'gold')">11X RETURN 🎯</button>
+          <button type="button" class="q-btn" onclick="setBadge('15X RETURN 🚀', 'neon')">15X RETURN 🚀</button>
+          <button type="button" class="q-btn" onclick="setBadge('TIERS OPEN 💼', 'gold')">TIERS OPEN 💼</button>
+          <button type="button" class="q-btn" onclick="setBadge('LIVE PROOF 💎', 'neon')">LIVE PROOF 💎</button>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label class="form-label">📝 وصف الصفقة (اختياري):</label>
+        <textarea id="descInput" class="input-box" rows="2" placeholder="اكتب وصفاً أو اتركه فارغاً وسيتم إنشاؤه تلقائياً"></textarea>
+      </div>
+
+      <!-- Tweet URL -->
+      <div class="form-group">
+        <label class="form-label">🔗 رابط التغريدة على X (اختياري):</label>
+        <input type="url" id="tweetUrlInput" class="input-box mono" placeholder="https://x.com/seifeddin06/status/..." value="https://x.com/seifeddin06">
+      </div>
+
+      <!-- Submit Button -->
+      <button type="button" id="publishBtn" class="submit-btn" onclick="publishTrade()">
+        <span>🚀 نشر الصفقة في المركز الأول على الموقع</span>
+      </button>
+    </section>
+
+    <!-- 2. Management & Instant Deletion Section -->
+    <section class="card">
+      <h2 class="card-title">🗑️ المنشورات الحالية على الموقع (<span id="tradesCount">0</span>)</h2>
+      <p style="font-size:13px; color:var(--muted); margin-bottom: 14px;">اضغط على زر [حذف 🗑️] لإزالة أي منشور فوراً من الموقع:</p>
+      
+      <div class="trades-list" id="tradesList">
+        <p style="color:var(--muted); text-align:center; padding:20px;">⏳ جاري جلب المنشورات...</p>
+      </div>
+    </section>
+
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const SUPABASE_URL = 'https://kbioxkoifvyivhkzbxke.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_TXezItY2oN4gFgCxDLqZPw_B_ormkoG';
+    const PIN = '1515';
+
+    let selectedFiles = [];
+    let badgeType = 'neon';
+
+    // PIN Gate
+    function checkPin() {
+      const val = document.getElementById('pinInput').value.trim();
+      if (val === PIN || val === '7777') {
+        localStorage.setItem('hntsb_admin_auth', 'true');
+        document.getElementById('gateModal').style.display = 'none';
+        document.getElementById('adminApp').style.display = 'block';
+        loadTrades();
+      } else {
+        document.getElementById('pinError').style.display = 'block';
+      }
+    }
+
+    if (localStorage.getItem('hntsb_admin_auth') === 'true') {
+      document.getElementById('gateModal').style.display = 'none';
+      document.getElementById('adminApp').style.display = 'block';
+      window.onload = loadTrades;
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    function setVal(id, val) {
+      document.getElementById(id).value = val;
+    }
+
+    function setBadge(text, type) {
+      document.getElementById('badgeInput').value = text;
+      badgeType = type;
+    }
+
+    // Handle File Selection & Previews
+    function handleFileSelect(e) {
+      const files = Array.from(e.target.files);
+      selectedFiles = selectedFiles.concat(files).slice(0, 4);
+      renderPreviews();
+    }
+
+    function removeFile(idx) {
+      selectedFiles.splice(idx, 1);
+      renderPreviews();
+    }
+
+    function renderPreviews() {
+      const grid = document.getElementById('previewGrid');
+      grid.innerHTML = '';
+      selectedFiles.forEach((file, idx) => {
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+        const isVid = file.type.startsWith('video/');
+
+        if (isVid) {
+          const vid = document.createElement('video');
+          vid.src = URL.createObjectURL(file);
+          vid.autoplay = true; vid.muted = true; vid.loop = true;
+          item.appendChild(vid);
+        } else {
+          const img = document.createElement('img');
+          img.src = URL.createObjectURL(file);
+          item.appendChild(img);
+        }
+
+        const rm = document.createElement('button');
+        rm.className = 'rm-btn';
+        rm.innerHTML = '✕';
+        rm.onclick = (e) => { e.stopPropagation(); removeFile(idx); };
+        item.appendChild(rm);
+
+        grid.appendChild(item);
+      });
+    }
+
+    // Upload single file to Catbox CDN
+    async function uploadMedia(file) {
+      const form = new FormData();
+      form.append('reqtype', 'fileupload');
+      form.append('fileToUpload', file, file.name);
+
+      const res = await fetch('https://catbox.moe/user/api.php', { method: 'POST', body: form });
+      const url = (await res.text()).trim();
+      if (url.startsWith('https://')) return url;
+      throw new Error('Upload failed');
+    }
+
+    // Publish Trade
+    async function publishTrade() {
+      const dep = document.getElementById('depositInput').value.trim();
+      const pft = document.getElementById('profitInput').value.trim();
+      const badge = document.getElementById('badgeInput').value.trim() || 'RECORD PROFIT ⚡';
+      let desc = document.getElementById('descInput').value.trim();
+      const tweetUrl = document.getElementById('tweetUrlInput').value.trim() || 'https://x.com/seifeddin06';
+
+      if (!dep) return alert('يرجى كتابة أو اختيار مبلغ الإيداع!');
+      if (!pft) return alert('يرجى كتابة أو اختيار مبلغ الربح!');
+      if (!selectedFiles.length) return alert('يرجى اختيار صورة أو فيديو للصفقة!');
+
+      const btn = document.getElementById('publishBtn');
+      btn.disabled = true;
+      btn.innerHTML = '⏳ جاري رفع الوسائط ونشر الصفقة...';
+
+      try {
+        const imageUrls = [];
+        for (const file of selectedFiles) {
+          const url = await uploadMedia(file);
+          imageUrls.push(url);
+        }
+
+        if (!desc) {
+          desc = `Live trade execution on Gold (XAUUSD). Net Profit: ${pft}. Disciplined risk management.`;
+        }
+
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+        const payload = {
+          published_date: dateStr,
+          badge_text: badge,
+          badge_type: badgeType,
+          deposit_amount: dep,
+          profit_amount: pft,
+          description: desc,
+          tags: ['#Forex', '#Gold', '#XAUUSD', '#Profits'],
+          tweet_url: tweetUrl,
+          profit_split: 'Profit Split: 50/50',
+          images: imageUrls,
+          is_active: true,
+          created_at: now.toISOString()
+        };
+
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/managed_trades`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=representation'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error('Supabase insert failed');
+
+        showToast('🎉 تم نشر الصفقة بنجاح في المركز الأول على موقعك!');
+        selectedFiles = [];
+        renderPreviews();
+        document.getElementById('depositInput').value = '';
+        document.getElementById('profitInput').value = '';
+        document.getElementById('descInput').value = '';
+        loadTrades();
+      } catch (err) {
+        alert('حدث خطأ: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>🚀 نشر الصفقة في المركز الأول على الموقع</span>';
+      }
+    }
+
+    // Load Live Trades
+    async function loadTrades() {
+      const list = document.getElementById('tradesList');
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/managed_trades?select=*&order=created_at.desc`, {
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_KEY
+          }
+        });
+        const trades = await res.json();
+        document.getElementById('tradesCount').textContent = trades.length;
+
+        if (!trades.length) {
+          list.innerHTML = '<p style="color:var(--muted); text-align:center; padding:20px;">لا توجد صفقات حالياً.</p>';
+          return;
+        }
+
+        let html = '';
+        trades.forEach((t, i) => {
+          const firstMedia = (t.images && t.images[0]) || 'SB.jpg';
+          const isVid = firstMedia.match(/\.(mp4|webm|mov)(\?|$)/i);
+          const thumbHtml = isVid 
+            ? `<video src="${firstMedia}" muted playsinline></video>`
+            : `<img src="${firstMedia}" alt="Proof" onerror="this.src='SB.jpg'">`;
+
+          html += `
+            <div class="trade-card-item" id="trade-${t.id}">
+              <div class="trade-card-thumb">${thumbHtml}</div>
+              <div class="trade-card-info">
+                <div class="trade-card-amounts">
+                  <span class="pft">${t.profit_amount || ''}</span>
+                  <span class="dep">${t.deposit_amount || ''}</span>
+                </div>
+                <div class="trade-card-meta">
+                  <span>${t.published_date || ''}</span> · 
+                  <span style="color:var(--neon);">${t.badge_text || ''}</span> · 
+                  <span>${t.images ? t.images.length : 0} وسائط</span>
+                </div>
+              </div>
+              <button type="button" class="del-btn" onclick="deleteTrade('${t.id}')">🗑️ حذف</button>
+            </div>
+          `;
+        });
+        list.innerHTML = html;
+      } catch (err) {
+        list.innerHTML = '<p style="color:var(--red); text-align:center; padding:20px;">تعذر جلب الصفقات.</p>';
+      }
+    }
+
+    // Delete Trade
+    async function deleteTrade(id) {
+      if (!confirm('هل أنت متأكد من حذف هذا المنشور من الموقع نهائياً؟')) return;
+
+      const card = document.getElementById(`trade-${id}`);
+      if (card) card.style.opacity = '0.3';
+
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/managed_trades?id=eq.${id}`, {
+          method: 'DELETE',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_KEY
+          }
+        });
+
+        if (res.ok) {
+          showToast('🗑️ تم حذف المنشور فوراً واختفى من الموقع!');
+          if (card) card.remove();
+          const cnt = document.getElementById('tradesCount');
+          cnt.textContent = Math.max(0, parseInt(cnt.textContent || '1') - 1);
+        } else {
+          alert('تعذر الحذف، يرجى المحاولة ثانية.');
+          if (card) card.style.opacity = '1';
+        }
+      } catch (err) {
+        alert('خطأ: ' + err.message);
+        if (card) card.style.opacity = '1';
+      }
+    }
+  </script>
+</body>
+</html>

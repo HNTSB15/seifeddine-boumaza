@@ -1,61 +1,43 @@
 /**
  * ==============================================================================
- * 🤖 TELEGRAM BOT CONTROLLER FOR SAIFEDDINE BOUMAZA TRADES
+ * 🤖 ULTRA-FAST TELEGRAM BOT CONTROLLER FOR SAIFEDDINE BOUMAZA TRADES
  * Bot Username: @HNTSB15_trades_bot
+ * Owner Chat ID: 5513814495 (@HNTSB15)
  * ==============================================================================
  */
 
-const https = require('https');
-
 const BOT_TOKEN = '8685200299:AAG2nR9wmeskmHH3ZHS7NWSTYANZcRUskQo';
+const OWNER_ID = 5513814495; // Saifeddine Boumaza
 const SUPABASE_URL = 'https://kbioxkoifvyivhkzbxke.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_TXezItY2oN4gFgCxDLqZPw_B_ormkoG';
 
 // In-memory conversation state tracking per user
 const userStates = {};
 
-// Helper: Rock-solid Telegram API caller using https with IPv4 (family: 4)
-function tg(method, body = {}) {
-  return new Promise((resolve) => {
-    const data = JSON.stringify(body);
-    const req = https.request({
-      hostname: 'api.telegram.org',
-      path: `/bot${BOT_TOKEN}/${method}`,
+// Helper: Ultra-fast native fetch caller to Telegram API with no socket hangs
+async function tg(method, body = {}) {
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 25000);
+
+    const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/${method}`, {
       method: 'POST',
-      family: 4,
-      timeout: 15000,
-      headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': Buffer.byteLength(data)
-      }
-    }, (res) => {
-      let raw = '';
-      res.on('data', chunk => raw += chunk);
-      res.on('end', () => {
-        try {
-          resolve(JSON.parse(raw));
-        } catch {
-          resolve({ ok: false });
-        }
-      });
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal: controller.signal
     });
-
-    req.on('error', (err) => {
+    clearTimeout(timeoutId);
+    return await res.json();
+  } catch (err) {
+    // Only log real errors (ignore aborts)
+    if (err.name !== 'AbortError') {
       console.error(`TG API error [${method}]:`, err.message);
-      resolve({ ok: false });
-    });
-
-    req.on('timeout', () => {
-      req.destroy();
-      resolve({ ok: false });
-    });
-
-    req.write(data);
-    req.end();
-  });
+    }
+    return { ok: false };
+  }
 }
 
-// Helper: Upload a photo/video buffer to permanent Catbox CDN
+// Helper: Upload file buffer to Catbox CDN with fallback
 async function uploadToCatbox(fileBuffer, fileName = 'media.jpg') {
   try {
     const form = new FormData();
@@ -63,10 +45,15 @@ async function uploadToCatbox(fileBuffer, fileName = 'media.jpg') {
     const blob = new Blob([fileBuffer]);
     form.append('fileToUpload', blob, fileName);
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
     const res = await fetch('https://catbox.moe/user/api.php', {
       method: 'POST',
-      body: form
+      body: form,
+      signal: controller.signal
     });
+    clearTimeout(timeoutId);
     const url = (await res.text()).trim();
     if (url.startsWith('https://')) return url;
     throw new Error('Upload failed: ' + url);
@@ -76,7 +63,7 @@ async function uploadToCatbox(fileBuffer, fileName = 'media.jpg') {
   }
 }
 
-// Helper: Download a file from Telegram by file_id and re-upload to CDN
+// Helper: Download a file from Telegram and upload to CDN
 async function processTelegramFile(fileId) {
   try {
     const fileInfo = await tg('getFile', { file_id: fileId });
@@ -155,7 +142,7 @@ function getMainMenuKeyboard() {
   return {
     keyboard: [
       [{ text: '➕ نشر صفقة جديدة 🚀' }],
-      [{ text: '🗑️ حذف وإدارة الصفقات' }, { text: '🌐 معاينة الموقع' }]
+      [{ text: '🗑️ حذف منشور من الموقع' }, { text: '🌐 معاينة الموقع' }]
     ],
     resize_keyboard: true
   };
@@ -178,10 +165,23 @@ function resetState(chatId) {
   };
 }
 
+// Helper: Check authorization
+function isAuthorized(chatId) {
+  return chatId === OWNER_ID;
+}
+
 // Handle Incoming Text & Commands
 async function handleMessage(msg) {
   const chatId = msg.chat.id;
   const text = (msg.text || '').trim();
+
+  // Security check: Only Saifeddine Boumaza
+  if (!isAuthorized(chatId)) {
+    return tg('sendMessage', {
+      chat_id: chatId,
+      text: '🔒 هذا البوت خاص بإدارة موقع الأستاذ سيف الدين بومعزة فقط.'
+    });
+  }
 
   if (!userStates[chatId]) resetState(chatId);
   const state = userStates[chatId];
@@ -191,7 +191,7 @@ async function handleMessage(msg) {
     resetState(chatId);
     return tg('sendMessage', {
       chat_id: chatId,
-      text: `👋 **أهلاً بك يا سيف الدين في بوت إدارة صفقات الموقع!** 💼\n\nمن هنا يمكنك نشر الصفقات الجديدة مباشرة على موقعك، أو حذف أي منشور بضغطة زر واحدة ومن هاتفك.\n\nاختر من الأزرار أدناه:`,
+      text: `👋 **أهلاً بك يا سيف الدين!** 💼\n\nالبوت الآن فائق السرعة وجاهز لنشر وحذف الصفقات فوراً على موقعك.\n\nاختر من الأزرار أدناه أو أرسل صورة/فيديو مباشرة:`,
       parse_mode: 'Markdown',
       reply_markup: getMainMenuKeyboard()
     });
@@ -206,29 +206,29 @@ async function handleMessage(msg) {
     });
   }
 
-  // 1. Delete / Manage Flow
-  if (text === '🗑️ حذف وإدارة الصفقات' || text === '/list') {
+  // 1. Delete Flow
+  if (text === '🗑️ حذف منشور من الموقع' || text === '/list') {
     resetState(chatId);
-    await tg('sendMessage', { chat_id: chatId, text: '⏳ جاري جلب الصفقات الحالية من موقعك...' });
+    await tg('sendMessage', { chat_id: chatId, text: '⏳ جاري جلب المنشورات من موقعك...' });
     const trades = await getSupabaseTrades();
     if (!Array.isArray(trades) || !trades.length) {
       return tg('sendMessage', {
         chat_id: chatId,
-        text: '⚠️ لا توجد صفقات حالياً في قاعدة البيانات.',
+        text: '⚠️ لا توجد منشورات حالياً في قاعدة البيانات.',
         reply_markup: getMainMenuKeyboard()
       });
     }
 
     await tg('sendMessage', {
       chat_id: chatId,
-      text: `📋 **المنشورات الحالية على موقعك (${trades.length} منشور):**\nاضغط على زر [حذف 🗑️] أسفل أي منشور ترغب في إزالته:`,
+      text: `📋 **المنشورات الحالية على موقعك (${trades.length} منشور):**\nاضغط على زر [حذف 🗑️] أسفل المنشور الذي تريد إزالته:`,
       parse_mode: 'Markdown'
     });
 
     for (let i = 0; i < trades.length; i++) {
       const t = trades[i];
-      const descSnippet = (t.description || '').substring(0, 60);
-      const msgText = `📌 **منشور #${i + 1}**\n💰 الإيداع: \`${t.deposit_amount || 'N/A'}\`\n🚀 الربح: \`${t.profit_amount || 'N/A'}\`\n🏷️ الشارة: ${t.badge_text || ''}\n📅 التاريخ: ${t.published_date || ''}\n📝 ${descSnippet}...`;
+      const descSnippet = (t.description || '').substring(0, 50);
+      const msgText = `📌 **منشور #${i + 1}**\n💰 الإيداع: \`${t.deposit_amount || 'N/A'}\`\n🚀 الربح: \`${t.profit_amount || 'N/A'}\`\n📅 ${t.published_date || ''} | ${t.badge_text || ''}\n📝 ${descSnippet}...`;
 
       await tg('sendMessage', {
         chat_id: chatId,
@@ -236,7 +236,7 @@ async function handleMessage(msg) {
         parse_mode: 'Markdown',
         reply_markup: {
           inline_keyboard: [
-            [{ text: '🗑️ حذف هذا المنشور من الموقع', callback_data: `del_${t.id}` }]
+            [{ text: '🗑️ حذف هذا المنشور فوراً من الموقع', callback_data: `del_${t.id}` }]
           ]
         }
       });
@@ -244,17 +244,16 @@ async function handleMessage(msg) {
     return;
   }
 
-  // 2. Start New Trade Wizard
+  // 2. Start New Trade
   if (text === '➕ نشر صفقة جديدة 🚀' || text === '/new') {
     resetState(chatId);
     state.step = 'WAITING_MEDIA';
     return tg('sendMessage', {
       chat_id: chatId,
-      text: `📸 **الخطوة 1 من 5: أرسل صور أو فيديو الصفقة**\n\nأرسل الآن صورة أو حتى 4 صور للصفقة (أو فيديو MP4).\n\nعندما تنتهي من إرسال الصور، اضغط زر **[ تم إرسال الصور ✅ ]** أدناه:`,
+      text: `📸 **الخطوة 1: أرسل صورة أو فيديو الصفقة**\n\nأرسل الآن الصورة أو الفيديو من استوديو هاتفك:`,
       parse_mode: 'Markdown',
       reply_markup: {
         keyboard: [
-          [{ text: 'تم إرسال الصور ✅' }],
           [{ text: 'إلغاء ❌' }]
         ],
         resize_keyboard: true
@@ -262,135 +261,56 @@ async function handleMessage(msg) {
     });
   }
 
-  // Handling Wizard Steps
+  // Wizard Steps
   switch (state.step) {
     case 'WAITING_MEDIA': {
-      if (text === 'تم إرسال الصور ✅') {
+      if (text === 'تم إرسال الصور ✅' || text === 'متابعة ➡️') {
         if (!state.trade.images.length) {
           return tg('sendMessage', {
             chat_id: chatId,
-            text: '⚠️ لم ترسل أي صورة بعد! أرسل صورة واحدة على الأقل للصفقة من الألبوم.'
+            text: '⚠️ لم ترسل أي صورة أو فيديو بعد! أرسل وسائط الصفقة أولاً.'
           });
         }
         state.step = 'WAITING_DEPOSIT';
-        return tg('sendMessage', {
-          chat_id: chatId,
-          text: `💰 **الخطوة 2 من 5: ما هو مبلغ الإيداع؟**\n\nاختر من الأزرار السريعة أو اكتب المبلغ يدوياً (مثال: \`Deposit: $500\`):`,
-          parse_mode: 'Markdown',
-          reply_markup: {
-            keyboard: [
-              [{ text: 'Deposit: $100' }, { text: 'Deposit: $200' }],
-              [{ text: 'Deposit: $430' }, { text: 'Deposit: $500' }],
-              [{ text: 'Starting: $100+' }, { text: 'Deposit: $1,000' }],
-              [{ text: 'إلغاء ❌' }]
-            ],
-            resize_keyboard: true
-          }
-        });
+        return askDeposit(chatId);
       }
       break;
     }
 
     case 'WAITING_DEPOSIT': {
-      state.trade.deposit = text.startsWith('Deposit:') || text.startsWith('Starting:') ? text : `Deposit: ${text}`;
+      let dep = text;
+      if (!dep.startsWith('Deposit:') && !dep.startsWith('Starting:')) {
+        dep = dep.startsWith('$') ? `Deposit: ${dep}` : `Deposit: $${dep}`;
+      }
+      state.trade.deposit = dep;
       state.step = 'WAITING_PROFIT';
-      return tg('sendMessage', {
-        chat_id: chatId,
-        text: `🚀 **الخطوة 3 من 5: ما هو مبلغ الربح الصافي؟**\n\nاختر من الأزرار السريعة أو اكتب أي رقم (مثال: \`+$4,500\`):`,
-        parse_mode: 'Markdown',
-        reply_markup: {
-          keyboard: [
-            [{ text: '+$1,500' }, { text: '+$3,000' }],
-            [{ text: '+$5,700' }, { text: '+$16,000' }],
-            [{ text: '+$1,700' }, { text: '+$25,000' }],
-            [{ text: 'إلغاء ❌' }]
-          ],
-          resize_keyboard: true
-        }
-      });
+      return askProfit(chatId);
     }
 
     case 'WAITING_PROFIT': {
-      state.trade.profit = text.startsWith('+') || text.startsWith('$') ? text : `+${text}`;
-      state.step = 'WAITING_BADGE';
-      return tg('sendMessage', {
-        chat_id: chatId,
-        text: `🏷️ **الخطوة 4 من 5: اختر شارة المنشور (Badge):**`,
-        parse_mode: 'Markdown',
-        reply_markup: {
-          keyboard: [
-            [{ text: 'RECORD PROFIT ⚡' }, { text: '11X RETURN 🎯' }],
-            [{ text: '15X RETURN 🚀' }, { text: 'TIERS OPEN 💼' }],
-            [{ text: 'NEW TRADE 📈' }, { text: 'LIVE PROOF 💎' }],
-            [{ text: 'إلغاء ❌' }]
-          ],
-          resize_keyboard: true
-        }
-      });
-    }
-
-    case 'WAITING_BADGE': {
-      state.trade.badge = text;
-      state.trade.badge_type = (text.includes('TIERS') || text.includes('11X')) ? 'gold' : 'neon';
-      state.step = 'WAITING_DESC';
-      return tg('sendMessage', {
-        chat_id: chatId,
-        text: `📝 **الخطوة 5 من 5: اكتب وصفاً للصفقة**\n\nأرسل جملة توضيحية للصفقة، أو اضغط **[ تخطي ⏭️ ]**:`,
-        parse_mode: 'Markdown',
-        reply_markup: {
-          keyboard: [
-            [{ text: 'تخطي ⏭️' }],
-            [{ text: 'إلغاء ❌' }]
-          ],
-          resize_keyboard: true
-        }
-      });
-    }
-
-    case 'WAITING_DESC': {
-      if (text !== 'تخطي ⏭️') {
-        state.trade.desc = text;
-      } else {
-        state.trade.desc = `Live trade execution on Gold (XAUUSD). Net Profit: ${state.trade.profit}. Strict risk management.`;
+      let pft = text;
+      if (!pft.startsWith('+')) {
+        pft = pft.startsWith('$') ? `+${pft}` : `+$${pft}`;
       }
-
+      state.trade.profit = pft;
       state.step = 'CONFIRM';
-      const preview = `🔍 **معاينة المنشور قبل الرفع للموقع:**\n\n` +
-        `💰 الإيداع: *${state.trade.deposit}*\n` +
-        `🚀 الربح: *${state.trade.profit}*\n` +
-        `🏷️ الشارة: *${state.trade.badge}*\n` +
-        `📸 عدد الصور/الفيديوهات: *${state.trade.images.length}*\n` +
-        `📝 الوصف: _${state.trade.desc}_\n\n` +
-        `هل تريد نشر هذا المنشور الآن في المركز الأول على موقعك؟`;
-
-      return tg('sendMessage', {
-        chat_id: chatId,
-        text: preview,
-        parse_mode: 'Markdown',
-        reply_markup: {
-          keyboard: [
-            [{ text: '🚀 تأكيد ونشر على الموقع الآن' }],
-            [{ text: 'إلغاء ❌' }]
-          ],
-          resize_keyboard: true
-        }
-      });
+      return showConfirm(chatId, state);
     }
 
     case 'CONFIRM': {
       if (text === '🚀 تأكيد ونشر على الموقع الآن') {
-        await tg('sendMessage', { chat_id: chatId, text: '⏳ جاري النشر ورفع الصفقة إلى موقعك...' });
+        await tg('sendMessage', { chat_id: chatId, text: '⏳ جاري النشر في المركز الأول على موقعك...' });
 
         const now = new Date();
         const dateStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
         const payload = {
           published_date: dateStr,
-          badge_text: state.trade.badge,
-          badge_type: state.trade.badge_type,
+          badge_text: state.trade.badge || 'RECORD PROFIT ⚡',
+          badge_type: state.trade.badge_type || 'neon',
           deposit_amount: state.trade.deposit,
           profit_amount: state.trade.profit,
-          description: state.trade.desc,
+          description: state.trade.desc || `Live trade execution on Gold (XAUUSD). Net Profit: ${state.trade.profit}. Discipline and risk management.`,
           tags: ['#Forex', '#Gold', '#XAUUSD', '#Profits'],
           tweet_url: state.trade.tweet_url,
           profit_split: state.trade.split,
@@ -405,14 +325,14 @@ async function handleMessage(msg) {
         if (success) {
           return tg('sendMessage', {
             chat_id: chatId,
-            text: `🎉 **مبروك! تم نشر الصفقة بنجاح على موقعك!** 🚀\n\nلقد أخذت المركز الأول مباشرة قبل كل المنشورات القديمة.\n\n🔗 تفقدها الآن: https://hntsb15.github.io/seifeddine-boumaza/#results`,
+            text: `🎉 **مبروك! تم نشر الصفقة فوراً على موقعك!** 🚀\n\nلقد أصبحت المنشور الأول في الواجهة.\n\n🔗 تفقدها مباشرة: https://hntsb15.github.io/seifeddine-boumaza/#results`,
             parse_mode: 'Markdown',
             reply_markup: getMainMenuKeyboard()
           });
         } else {
           return tg('sendMessage', {
             chat_id: chatId,
-            text: `⚠️ حدث خطأ أثناء النشر في Supabase.\nتأكد من تطبيق كود الصلاحيات في SQL Editor لمرة واحدة.`,
+            text: `⚠️ تعذر النشر في Supabase. حاول مجدداً.`,
             reply_markup: getMainMenuKeyboard()
           });
         }
@@ -421,10 +341,9 @@ async function handleMessage(msg) {
     }
 
     default: {
-      // If user typed random text while IDLE, guide them nicely
       return tg('sendMessage', {
         chat_id: chatId,
-        text: `💡 أهلاً بك! لنشر صفقة جديدة اضغط على **[ ➕ نشر صفقة جديدة 🚀 ]**، أو أرسل صورة الصفقة مباشرة من ألبوم هاتفك!`,
+        text: `💡 أهلاً بك! اضغط على **[ ➕ نشر صفقة جديدة 🚀 ]** أو أرسل صورة/فيديو مباشرة من ألبومك!`,
         parse_mode: 'Markdown',
         reply_markup: getMainMenuKeyboard()
       });
@@ -432,57 +351,134 @@ async function handleMessage(msg) {
   }
 }
 
+// Ask Deposit helper
+function askDeposit(chatId) {
+  return tg('sendMessage', {
+    chat_id: chatId,
+    text: `💰 **ما هو مبلغ الإيداع؟**\n\nاضغط زراً سريعاً أو اكتب الرقم مباشرة (مثال: \`500\` أو \`$430\`):`,
+    parse_mode: 'Markdown',
+    reply_markup: {
+      keyboard: [
+        [{ text: 'Deposit: $100' }, { text: 'Deposit: $200' }],
+        [{ text: 'Deposit: $430' }, { text: 'Deposit: $500' }],
+        [{ text: 'Starting: $100+' }, { text: 'Deposit: $1,000' }],
+        [{ text: 'إلغاء ❌' }]
+      ],
+      resize_keyboard: true
+    }
+  });
+}
+
+// Ask Profit helper
+function askProfit(chatId) {
+  return tg('sendMessage', {
+    chat_id: chatId,
+    text: `🚀 **ما هو مبلغ الربح الصافي؟**\n\nاضغط زراً سريعاً أو اكتب الرقم مباشرة (مثال: \`5700\` أو \`+$16,000\`):`,
+    parse_mode: 'Markdown',
+    reply_markup: {
+      keyboard: [
+        [{ text: '+$1,500' }, { text: '+$1,700' }],
+        [{ text: '+$5,700' }, { text: '+$16,000' }],
+        [{ text: '+$25,000' }, { text: '+$3,000' }],
+        [{ text: 'إلغاء ❌' }]
+      ],
+      resize_keyboard: true
+    }
+  });
+}
+
+// Show Confirm helper
+function showConfirm(chatId, state) {
+  const preview = `🔍 **معاينة المنشور قبل الرفع للموقع:**\n\n` +
+    `💰 الإيداع: *${state.trade.deposit}*\n` +
+    `🚀 الربح: *${state.trade.profit}*\n` +
+    `🏷️ الشارة: *${state.trade.badge}*\n` +
+    `📸 عدد الوسائط: *${state.trade.images.length}*\n\n` +
+    `هل تريد نشر هذا المنشور الآن في المركز الأول على موقعك؟`;
+
+  return tg('sendMessage', {
+    chat_id: chatId,
+    text: preview,
+    parse_mode: 'Markdown',
+    reply_markup: {
+      keyboard: [
+        [{ text: '🚀 تأكيد ونشر على الموقع الآن' }],
+        [{ text: 'إلغاء ❌' }]
+      ],
+      resize_keyboard: true
+    }
+  });
+}
+
 // Handle Incoming Photos and Videos
 async function handleMedia(msg) {
   const chatId = msg.chat.id;
+  if (!isAuthorized(chatId)) return;
+
   if (!userStates[chatId]) resetState(chatId);
   const state = userStates[chatId];
 
-  // Auto-switch to WAITING_MEDIA if user directly sent media
-  if (state.step === 'IDLE') {
-    state.step = 'WAITING_MEDIA';
+  // Fast chat action acknowledgement (< 200ms)
+  tg('sendChatAction', { chat_id: chatId, action: 'upload_photo' });
+
+  let fileId = null;
+  if (msg.photo && msg.photo.length) {
+    fileId = msg.photo[msg.photo.length - 1].file_id;
+  } else if (msg.video) {
+    fileId = msg.video.file_id;
+  } else if (msg.document && msg.document.mime_type && (msg.document.mime_type.startsWith('image/') || msg.document.mime_type.startsWith('video/'))) {
+    fileId = msg.document.file_id;
   }
 
-  if (state.step === 'WAITING_MEDIA') {
-    await tg('sendChatAction', { chat_id: chatId, action: 'upload_photo' });
+  if (!fileId) return;
 
-    let fileId = null;
-    if (msg.photo && msg.photo.length) {
-      fileId = msg.photo[msg.photo.length - 1].file_id;
-    } else if (msg.video) {
-      fileId = msg.video.file_id;
-    } else if (msg.document && msg.document.mime_type && msg.document.mime_type.startsWith('image/')) {
-      fileId = msg.document.file_id;
+  // Check if caption contains quick deposit + profit (e.g. "500 5700")
+  const caption = (msg.caption || '').trim();
+  const matchNumbers = caption.match(/\$?([0-9,]+)\s+\+?\$?([0-9,]+)/);
+
+  // Send fast progress message
+  const waitMsg = await tg('sendMessage', {
+    chat_id: chatId,
+    text: '⚡ تم استلام الوسائط، جاري المعالجة السريعة...'
+  });
+
+  const url = await processTelegramFile(fileId);
+  if (url) {
+    state.trade.images.push(url);
+
+    // If caption had deposit & profit, auto-fill and jump straight to confirm!
+    if (matchNumbers) {
+      state.trade.deposit = `Deposit: $${matchNumbers[1]}`;
+      state.trade.profit = `+$${matchNumbers[2]}`;
+      state.step = 'CONFIRM';
+      return showConfirm(chatId, state);
     }
 
-    if (!fileId) return;
-
-    const url = await processTelegramFile(fileId);
-    if (url) {
-      state.trade.images.push(url);
-      await tg('sendMessage', {
-        chat_id: chatId,
-        text: `✅ تم استلام الصورة رقم (${state.trade.images.length}/4) بنجاح!\n\nأرسل صورة أخرى، أو اضغط زر **[ تم إرسال الصور ✅ ]** للمتابعة.`,
-        reply_markup: {
-          keyboard: [
-            [{ text: 'تم إرسال الصور ✅' }],
-            [{ text: 'إلغاء ❌' }]
-          ],
-          resize_keyboard: true
-        }
-      });
-    }
+    state.step = 'WAITING_DEPOSIT';
+    await tg('sendMessage', {
+      chat_id: chatId,
+      text: `✅ **تم استلام الصورة/الفيديو بنجاح!** 🚀`,
+      parse_mode: 'Markdown'
+    });
+    return askDeposit(chatId);
+  } else {
+    return tg('sendMessage', {
+      chat_id: chatId,
+      text: '⚠️ تعذر رفع الوسائط، يرجى المحاولة مجدداً.'
+    });
   }
 }
 
 // Handle Callback Queries (Delete buttons)
 async function handleCallbackQuery(cq) {
   const chatId = cq.message.chat.id;
+  if (!isAuthorized(chatId)) return;
+
   const data = cq.data || '';
 
   if (data.startsWith('del_')) {
     const tradeId = data.replace('del_', '');
-    await tg('answerCallbackQuery', { callback_query_id: cq.id, text: 'جاري الحذف...' });
+    tg('answerCallbackQuery', { callback_query_id: cq.id, text: '⏳ جاري الحذف...' });
 
     const ok = await deleteSupabaseTrade(tradeId);
     if (ok) {
@@ -495,13 +491,13 @@ async function handleCallbackQuery(cq) {
     } else {
       await tg('sendMessage', {
         chat_id: chatId,
-        text: `⚠️ تعذر حذف المنشور. تحقق من صلاحية DELETE في Supabase.`
+        text: `⚠️ تعذر حذف المنشور. تحقق من الاتصال.`
       });
     }
   }
 }
 
-// Long Polling Loop
+// Ultra-fast Short Polling Loop (5s poll, 0 socket hang up)
 let lastUpdateId = 0;
 let isPolling = false;
 
@@ -512,7 +508,8 @@ async function pollUpdates() {
   try {
     const res = await tg('getUpdates', {
       offset: lastUpdateId + 1,
-      timeout: 20
+      timeout: 5,
+      limit: 10
     });
 
     if (res.ok && Array.isArray(res.result)) {
@@ -520,7 +517,7 @@ async function pollUpdates() {
         lastUpdateId = update.update_id;
 
         if (update.message) {
-          if (update.message.photo || update.message.video) {
+          if (update.message.photo || update.message.video || update.message.document) {
             await handleMedia(update.message);
           } else if (update.message.text) {
             await handleMessage(update.message);
@@ -534,11 +531,11 @@ async function pollUpdates() {
     console.error('Polling error:', err.message);
   } finally {
     isPolling = false;
-    setTimeout(pollUpdates, 500);
+    setTimeout(pollUpdates, 300);
   }
 }
 
-// Catch uncaught exceptions to ensure the bot NEVER crashes
+// Global safety error catchers
 process.on('uncaughtException', (err) => {
   console.error('Uncaught Exception:', err.message);
 });
@@ -547,5 +544,5 @@ process.on('unhandledRejection', (reason) => {
   console.error('Unhandled Rejection:', reason);
 });
 
-console.log('🤖 Telegram Bot is running...');
+console.log('⚡ Ultra-fast Telegram Bot is running...');
 pollUpdates();
