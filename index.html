@@ -3345,7 +3345,7 @@ html[dir="rtl"] .mono-arrow {
 <p id="cvxDisclP1"><strong>High-Risk Investment Disclosure:</strong> Trading foreign exchange (Forex), cryptocurrencies, digital assets, CFDs, and leveraged financial products involves a substantial degree of risk of capital loss and is not suitable for every investor. High leverage can amplify losses as well as profits. You should never trade or invest funds you cannot afford to completely lose. Before engaging in trading, thoroughly evaluate your investment objectives, financial situation, trading experience, and risk appetite.</p>
 <p id="cvxDisclP2"><strong>No Financial Advice &amp; Software Utility Notice:</strong> All historical statistics, past performance metrics, signal accuracy rates, and automated trading algorithms presented on this website are for analytical, educational, and simulation purposes only. Past performance does not guarantee or predict future results. "Flash USDT" software solutions, testnet tools, and MT4/MT5 indicators are distributed strictly as technical and developer software utilities. Saifeddine Boumaza does not provide registered financial advisory, brokerage, or custodial services. All trade executions and financial decisions remain solely at your own independent discretion and liability.</p>
 </div>
-<div class="cvx-foot-copy"><span class="mono">© Saifeddine Boumaza — Forex &amp; Crypto Trading Manager</span> — All rights reserved <a href="admin.html" title="Admin Portal" style="color:rgba(255,255,255,0.2); text-decoration:none; margin-left:8px; font-size:12px;" target="_blank">🔒</a></div>
+<div class="cvx-foot-copy"><span class="mono">© Saifeddine Boumaza — Forex &amp; Crypto Trading Manager</span> — All rights reserved</div>
 </div>
 </footer>
 <a class="cvx-fab tg" href="https://t.me/HNTSB15" rel="noopener" target="_blank" title="Message me on Telegram"><svg viewBox="0 0 24 24"><path d="M21.9 4.3 18.7 19c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.7 13 1.9 11.5c-1-.3-1-1 .2-1.5l18.4-7.1c.9-.3 1.6.2 1.4 1.4Z"></path></svg></a>
@@ -5849,133 +5849,6 @@ html[dir="rtl"] .mono-arrow {
     }
   });
 
-  // Supabase Real-Time / Dynamic Fetch for Managed Trades
-  function loadLiveTrades() {
-    var stream = document.getElementById('cvxXStream');
-    if (!stream) return;
-
-    var url = 'https://kbioxkoifvyivhkzbxke.supabase.co/rest/v1/managed_trades?select=*&is_active=eq.true&order=created_at.desc';
-    var key = 'sb_publishable_TXezItY2oN4gFgCxDLqZPw_B_ormkoG';
-
-    if (!window.fetch) return;
-
-    fetch(url, {
-      method: 'GET',
-      headers: {
-        'apikey': key,
-        'Authorization': 'Bearer ' + key,
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(function(res){
-      if(!res.ok) throw new Error('Trades fetch error');
-      return res.json();
-    })
-    .then(function(trades){
-      if (!Array.isArray(trades) || !trades.length) return;
-
-      // Automatic deduplication safeguard
-      var seen = {};
-      var uniqueTrades = [];
-      trades.forEach(function(t) {
-        var sig = (t.tweet_url && t.tweet_url.length > 15) ? t.tweet_url : (t.published_date + '_' + t.profit_amount + '_' + t.deposit_amount);
-        if (!seen[sig]) {
-          seen[sig] = true;
-          uniqueTrades.push(t);
-        }
-      });
-      trades = uniqueTrades;
-
-      var newGalleries = [];
-      var html = '';
-
-      trades.forEach(function(trade, slideIdx) {
-        var imgs = Array.isArray(trade.images) ? trade.images : [];
-        var galleryItems = [];
-        imgs.forEach(function(imgUrl, imgIdx) {
-          galleryItems.push({
-            src: imgUrl,
-            cap: (trade.description ? trade.description.substring(0, 80) + '...' : 'Trade Proof #' + (imgIdx + 1))
-          });
-        });
-        newGalleries.push(galleryItems);
-
-        var gridClass = 'grid-4';
-        if (imgs.length === 2) gridClass = 'grid-2';
-        else if (imgs.length === 3) gridClass = 'grid-3';
-
-        var galleryHtml = '';
-        if (imgs.length > 0) {
-          galleryHtml = '<div class="cvx-gallery-grid ' + gridClass + '">';
-          imgs.forEach(function(imgUrl, imgIdx) {
-            var isVid = imgUrl && imgUrl.match(/\.(mp4|webm|mov)(\?|$)/i);
-            if(isVid) {
-              galleryHtml += '<div class="cvx-gallery-item cvx-video-item" onclick="cvxOpenLightbox(' + slideIdx + ', ' + imgIdx + ')" style="position:relative; overflow:hidden;">' +
-                '<video src="' + imgUrl + '" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;pointer-events:none;"></video>' +
-                '<span class="cvx-zoom-hint" style="background:rgba(0,255,200,0.25);border-color:var(--neon);color:#fff;">▶ Full Video</span>' +
-              '</div>';
-            } else {
-              galleryHtml += '<div class="cvx-gallery-item" onclick="cvxOpenLightbox(' + slideIdx + ', ' + imgIdx + ')">' +
-                '<img src="' + imgUrl + '" alt="Trade Proof ' + (imgIdx + 1) + '" loading="lazy">' +
-                '<span class="cvx-zoom-hint">🔍 Zoom</span>' +
-              '</div>';
-            }
-          });
-          galleryHtml += '</div>';
-        }
-
-        var tagsHtml = '';
-        if (Array.isArray(trade.tags) && trade.tags.length) {
-          tagsHtml = '<div class="cvx-slide-tags">' +
-            trade.tags.map(function(t){ return '<span>' + t + '</span>'; }).join('') +
-          '</div>';
-        }
-
-        var badgeClass = (trade.badge_type === 'gold') ? 'gold' : 'neon';
-
-        html += '<article class="cvx-x-slide' + (slideIdx === 0 ? ' active-slide' : '') + '" data-slide="' + slideIdx + '">' +
-          '<div class="cvx-slide-head">' +
-            '<div class="cvx-slide-author">' +
-              '<img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-slide-avatar">' +
-              '<div class="cvx-slide-author-info">' +
-                '<b>Saifeddine Boumaza</b>' +
-                '<small>@seifeddin06 · ' + (trade.published_date || 'Live') + '</small>' +
-              '</div>' +
-            '</div>' +
-            '<div class="cvx-slide-head-right">' +
-              '<span class="cvx-slide-badge ' + badgeClass + '">' + (trade.badge_text || 'VERIFIED ⚡') + '</span>' +
-              '<a href="' + (trade.tweet_url || 'https://x.com/seifeddin06') + '" target="_blank" rel="noopener" title="View on X">' +
-                '<svg class="cvx-slide-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>' +
-              '</a>' +
-            '</div>' +
-          '</div>' +
-          '<div class="cvx-slide-body">' +
-            '<div class="cvx-slide-profit-row">' +
-              '<span class="dep">' + (trade.deposit_amount || '') + '</span>' +
-              '<span class="pft">' + (trade.profit_amount || '') + '</span>' +
-            '</div>' +
-            '<p class="cvx-slide-desc">' + (trade.description || '') + '</p>' +
-            tagsHtml +
-            galleryHtml +
-          '</div>' +
-          '<div class="cvx-slide-foot">' +
-            '<span class="cvx-slide-split">' + (trade.profit_split || 'Profit Split: 50/50') + '</span>' +
-            '<a href="' + (trade.tweet_url || 'https://x.com/seifeddin06') + '" target="_blank" rel="noopener" class="cvx-slide-link">View Tweet on X ↗</a>' +
-          '</div>' +
-        '</article>';
-      });
-
-      stream.innerHTML = html;
-      cvxGalleries = newGalleries;
-      window.cvxInitCarousel();
-    })
-    .catch(function(){
-      // Silently keeps static fallback posts
-    });
-  }
-
-  // Load trades from Supabase
-  loadLiveTrades();
 //]]>
 </script>
 <script type="text/javascript">
