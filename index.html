@@ -2137,291 +2137,7 @@ html[dir="rtl"] .mono-arrow {
   .cvx-lang-toggle {
     padding: 7px 10px;
     font-size: 11.5px;
-/* ==============================================================================
-   ⭐ SECTION: INVESTOR REVIEWS & TESTIMONIALS STYLING
-   ============================================================================== */
-.cvx-reviews-summary {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1fr;
-  gap: 14px;
-  margin-bottom: 28px;
-}
-.rev-sum-card {
-  background: linear-gradient(135deg, rgba(242,193,78,0.12), rgba(0,255,156,0.06));
-  border: 1px solid rgba(242,193,78,0.3);
-  border-radius: var(--radius);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-.rev-sum-score {
-  font-size: 38px;
-  font-weight: 900;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--gold);
-  line-height: 1;
-}
-.rev-sum-score span {
-  font-size: 18px;
-  color: var(--muted);
-  font-weight: 500;
-}
-.rev-sum-stars {
-  color: var(--gold);
-  font-size: 18px;
-  letter-spacing: 3px;
-  margin: 6px 0 4px;
-}
-.rev-sum-text {
-  font-size: 12px;
-  color: var(--text);
-  font-weight: 600;
-}
-.rev-sum-metric {
-  background: rgba(13,20,32,0.6);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-.rev-sum-metric .num {
-  font-size: 26px;
-  font-weight: 800;
-  color: var(--neon);
-  margin-bottom: 4px;
-}
-.rev-sum-metric .lbl {
-  font-size: 12px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.cvx-reviews-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
-}
-.cvx-review-card {
-  background: linear-gradient(180deg, var(--panel), var(--bg-2));
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-  position: relative;
-  overflow: hidden;
-}
-.cvx-review-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(242,193,78,0.4);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.35), 0 0 20px rgba(242,193,78,0.1);
-}
-.cvx-review-card::before {
-  content: "“";
-  position: absolute;
-  top: 10px;
-  right: 18px;
-  font-size: 80px;
-  font-family: serif;
-  color: rgba(255,255,255,0.03);
-  pointer-events: none;
-  line-height: 1;
-}
-html[dir="rtl"] .cvx-review-card::before {
-  right: auto;
-  left: 18px;
-}
-.rev-card-head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-.rev-author-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  flex-shrink: 0;
-}
-.rev-author-info {
-  flex: 1;
-  min-width: 0;
-}
-.rev-author-name {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.rev-author-name b {
-  font-size: 15px;
-  color: #fff;
-}
-.rev-verified-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--neon);
-  background: rgba(0,255,156,0.1);
-  border: 1px solid rgba(0,255,156,0.3);
-  border-radius: 6px;
-  padding: 2px 6px;
-}
-.rev-author-info small {
-  display: block;
-  font-size: 11.5px;
-  color: var(--muted);
-  margin-top: 2px;
-}
-.rev-stars {
-  color: var(--gold);
-  font-size: 14px;
-  letter-spacing: 2px;
-  margin-bottom: 12px;
-}
-.rev-body {
-  font-size: 13.5px;
-  color: #cbd5e1;
-  line-height: 1.65;
-  margin-bottom: 18px;
-  flex: 1;
-}
-.rev-card-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  padding-top: 12px;
-  margin-top: auto;
-  font-size: 12px;
-  gap: 8px;
-}
-.rev-tag {
-  color: var(--muted);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-}
-.rev-profit {
-  color: var(--neon);
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-}
-.cvx-reviews-cta {
-  display: flex;
-  justify-content: center;
-  margin-top: 32px;
-}
-
-@media(max-width: 820px) {
-  .cvx-reviews-summary {
-    grid-template-columns: 1fr 1fr;
   }
-  .rev-sum-card {
-    grid-column: span 2;
-  }
-  .cvx-reviews-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ==============================================================================
-   ❓ SECTION: INTERACTIVE FAQ ACCORDION STYLING
-   ============================================================================== */
-.cvx-faq-container {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 900px;
-  margin: 0 auto;
-}
-.cvx-faq-item {
-  background: linear-gradient(180deg, var(--panel), var(--bg-2));
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  overflow: hidden;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-.cvx-faq-item.active {
-  border-color: rgba(0,255,156,0.45);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.3), 0 0 16px rgba(0,255,156,0.12);
-}
-.cvx-faq-question {
-  width: 100%;
-  background: transparent;
-  border: none;
-  padding: 18px 22px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  cursor: pointer;
-  color: #fff;
-  font-size: 15.5px;
-  font-weight: 700;
-  text-align: left;
-  outline: none;
-  transition: color 0.2s ease;
-}
-html[dir="rtl"] .cvx-faq-question {
-  text-align: right;
-}
-.cvx-faq-item:hover .cvx-faq-question {
-  color: var(--neon);
-}
-.cvx-faq-item.active .cvx-faq-question {
-  color: var(--neon);
-}
-.faq-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--muted);
-  flex-shrink: 0;
-  transition: transform 0.3s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-}
-.cvx-faq-item.active .faq-icon {
-  transform: rotate(45deg);
-  background: rgba(0,255,156,0.15);
-  border-color: var(--neon);
-  color: var(--neon);
-}
-.cvx-faq-answer {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease;
-  padding: 0 22px;
-}
-.cvx-faq-item.active .cvx-faq-answer {
-  max-height: 400px;
-  padding: 0 22px 20px 22px;
-}
-.cvx-faq-answer p {
-  color: #cbd5e1;
-  font-size: 14px;
-  line-height: 1.7;
-  border-top: 1px solid rgba(255,255,255,0.05);
-  padding-top: 14px;
 }
 </style>
 <div class="cvx" id="cvtop">
@@ -2463,12 +2179,12 @@ html[dir="rtl"] .cvx-faq-question {
 <div class="cvx-links">
 <a href="#about">About</a>
 <a href="#expertise">Expertise</a>
+<a href="#skills">Skills</a>
 <a href="#projects">Projects</a>
 <a href="#results" style="color:var(--gold);font-weight:700">Results 📊</a>
-<a href="#reviews" style="color:var(--neon);font-weight:700">Reviews ⭐</a>
 <a href="#newsx" style="color:var(--neon-2);font-weight:700">NewsX AI ⚡</a>
 <a href="#flash" style="color:var(--neon);font-weight:700">Flash USDT ⚡</a>
-<a href="#faq" style="color:#e2e8f0;font-weight:700">FAQ ❓</a>
+<a href="#experience">Experience</a>
 <a href="#contact">Contact</a>
 </div>
 <button class="cvx-lang-toggle" id="langToggleBtn" type="button" aria-label="Toggle language" onclick="toggleSiteLanguage()">
@@ -2509,14 +2225,13 @@ html[dir="rtl"] .cvx-faq-question {
       <a href="#cvtop" onclick="closeMobileMenu()"><span class="mono">// 00</span> Home / Top</a>
       <a href="#about" onclick="closeMobileMenu()"><span class="mono">// 01</span> About Me</a>
       <a href="#expertise" onclick="closeMobileMenu()"><span class="mono">// 02</span> Expertise</a>
-      <a href="#projects" onclick="closeMobileMenu()"><span class="mono">// 03</span> Trading Records</a>
-      <a href="#results" onclick="closeMobileMenu()" style="color:var(--gold)"><span class="mono">// 04</span> Live Results (X) <span class="mob-badge gold">LIVE</span></a>
-      <a href="#reviews" onclick="closeMobileMenu()" style="color:var(--neon)"><span class="mono">// 05</span> Investor Reviews <span class="mob-badge">TRUSTED</span></a>
+      <a href="#skills" onclick="closeMobileMenu()"><span class="mono">// 03</span> Skills &amp; Pairs</a>
+      <a href="#projects" onclick="closeMobileMenu()"><span class="mono">// 04</span> Trading Records</a>
+      <a href="#results" onclick="closeMobileMenu()" style="color:var(--gold)"><span class="mono">// 05</span> Live Results (X) <span class="mob-badge gold">LIVE</span></a>
       <a href="#newsx" onclick="closeMobileMenu()" class="mob-hl-newsx"><span class="mono">// 06</span> NewsX AI Platform <span class="mob-badge">AI LIVE</span></a>
       <a href="#flash" onclick="closeMobileMenu()" class="mob-hl-flash"><span class="mono">// 07</span> Flash USDT Offers <span class="mob-badge gold">OFFERS</span></a>
-      <a href="#faq" onclick="closeMobileMenu()"><span class="mono">// 08</span> FAQ &amp; Questions ❓</a>
-      <a href="#experience" onclick="closeMobileMenu()"><span class="mono">// 09</span> Experience Timeline</a>
-      <a href="#contact" onclick="closeMobileMenu()"><span class="mono">// 10</span> Direct Contact &amp; Inquiry</a>
+      <a href="#experience" onclick="closeMobileMenu()"><span class="mono">// 08</span> Experience Timeline</a>
+      <a href="#contact" onclick="closeMobileMenu()"><span class="mono">// 09</span> Direct Contact &amp; Inquiry</a>
     </div>
     <div class="cvx-mob-actions">
       <button class="cvx-navcta" style="width:100%;margin:0;justify-content:center;display:flex" type="button" onclick="closeMobileMenu();document.getElementById('cvxDl').click()">⇩ Download Trading Profile</button>
@@ -3020,137 +2735,6 @@ html[dir="rtl"] .cvx-faq-question {
 
 </div>
 </section>
-
-<!-- ==============================================================================
-     ⭐ SECTION: INVESTOR REVIEWS & PAYOUT PROOFS
-     ============================================================================== -->
-<section class="cvx-sec" id="reviews">
-<div class="cvx-wrap cvx-reveal">
-  <div class="cvx-head">
-    <div class="kick" style="color:var(--gold)">// client feedback &amp; payout proofs</div>
-    <h2># Investor <span class="h">Testimonials</span></h2>
-    <p>Real feedback from verified account management investors, signal subscribers, and institutional software clients across the globe.</p>
-  </div>
-
-  <div class="cvx-reviews-summary">
-    <div class="rev-sum-card">
-      <div class="rev-sum-score">5.0<span>/5.0</span></div>
-      <div class="rev-sum-stars">★★★★★</div>
-      <div class="rev-sum-text">100% Verified Satisfaction</div>
-    </div>
-    <div class="rev-sum-metric">
-      <div class="mono num">$100k+</div>
-      <div class="lbl">Client Capital Managed</div>
-    </div>
-    <div class="rev-sum-metric">
-      <div class="mono num">50/50</div>
-      <div class="lbl">Transparent Profit Split</div>
-    </div>
-    <div class="rev-sum-metric">
-      <div class="mono num">&lt; 8.5%</div>
-      <div class="lbl">Controlled Max Drawdown</div>
-    </div>
-  </div>
-
-  <div class="cvx-reviews-grid">
-    <!-- Review 1: Abu Faisal (KSA) -->
-    <div class="cvx-review-card">
-      <div class="rev-card-head">
-        <div class="rev-author-avatar">🇸🇦</div>
-        <div class="rev-author-info">
-          <div class="rev-author-name">
-            <b>أبو فيصل الشمري</b>
-            <span class="rev-verified-tag">VERIFIED INVESTOR ✅</span>
-          </div>
-          <small class="mono">Riyadh, Saudi Arabia · Gold Account Management</small>
-        </div>
-      </div>
-      <div class="rev-stars">★★★★★</div>
-      <p class="rev-body">
-        "تجربة استثنائية مع الأخ سيف الدين بومعزة. أكثر ما أعجبني هو الالتزام الحديدي بإدارة المخاطر والستوب لوز وعدم التهور بالحساب. تم تحقيق نمو 34% في الشهر الأول مع تحويل حصة الأرباح (50/50) في نفس اليوم عبر USDT بدون أي تأخير."
-      </p>
-      <div class="rev-card-foot">
-        <span class="rev-tag">Managed Account: $1,000+ Tier</span>
-        <span class="rev-profit">Net Profit: +$4,200</span>
-      </div>
-    </div>
-
-    <!-- Review 2: Marcus Vance (UK) -->
-    <div class="cvx-review-card">
-      <div class="rev-card-head">
-        <div class="rev-author-avatar">🇬🇧</div>
-        <div class="rev-author-info">
-          <div class="rev-author-name">
-            <b>Marcus Vance</b>
-            <span class="rev-verified-tag">VERIFIED INVESTOR ✅</span>
-          </div>
-          <small class="mono">London, United Kingdom · XAUUSD &amp; US30 Strategy</small>
-        </div>
-      </div>
-      <div class="rev-stars">★★★★★</div>
-      <p class="rev-body">
-        "Disciplined execution with zero emotional trading. Drawdown never exceeded 7%, and weekly profit split transfers are transparent and immediate via USDT. Saifeddine is the real deal when it comes to XAUUSD breakout momentum."
-      </p>
-      <div class="rev-card-foot">
-        <span class="rev-tag">Managed Account: Gold Momentum</span>
-        <span class="rev-profit">Net Profit: +$5,700</span>
-      </div>
-    </div>
-
-    <!-- Review 3: Karim M. (Algeria) -->
-    <div class="cvx-review-card">
-      <div class="rev-card-head">
-        <div class="rev-author-avatar">🇩🇿</div>
-        <div class="rev-author-info">
-          <div class="rev-author-name">
-            <b>كريم مرابطي</b>
-            <span class="rev-verified-tag">VERIFIED CLIENT 💎</span>
-          </div>
-          <small class="mono">Algiers, Algeria · Flash USDT Software Suite</small>
-        </div>
-      </div>
-      <div class="rev-stars">★★★★★</div>
-      <p class="rev-body">
-        "قمة في الاحترافية والمصداقية. تم تفعيل باقة Flash USDT على شبكة TRC20 بسرعة قياسية وشرح لي طريقة عمل العقود الذكية خطوة بخطوة عبر التليجرام. دعم فني متواصل واهتمام بكل التفاصيل."
-      </p>
-      <div class="rev-card-foot">
-        <span class="rev-tag">Flash USDT: 100K 3-Days Package</span>
-        <span class="rev-profit">Status: Completed &amp; Verified</span>
-      </div>
-    </div>
-
-    <!-- Review 4: Dr. Omar Al-Kuwaiti (Kuwait) -->
-    <div class="cvx-review-card">
-      <div class="rev-card-head">
-        <div class="rev-author-avatar">🇰🇼</div>
-        <div class="rev-author-info">
-          <div class="rev-author-name">
-            <b>د. عمر العتيبي</b>
-            <span class="rev-verified-tag">VERIFIED INVESTOR ✅</span>
-          </div>
-          <small class="mono">Kuwait City, Kuwait · NewsX AI &amp; VIP Signals</small>
-        </div>
-      </div>
-      <div class="rev-stars">★★★★★</div>
-      <p class="rev-body">
-        "منصة NewsX AI وتوصيات سيف الدين وقت أخبار الـ CPI والـ NFP هي الأفضل دون منازع. دقة عالية جداً في توقع اتجاه الذهب قبل صدور الخبر بدقائق، والأهداف تتحقق بسرعة مع نسبة أمان ممتازة."
-      </p>
-      <div class="rev-card-foot">
-        <span class="rev-tag">NewsX AI Ultimate + Signals</span>
-        <span class="rev-profit">ROI: +48% Monthly</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="cvx-reviews-cta">
-    <a href="https://t.me/HNTSB15" target="_blank" rel="noopener" class="cvx-btn pri">
-      <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M21.9 4.3 18.7 19c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.7 13 1.9 11.5c-1-.3-1-1 .2-1.5l18.4-7.1c.9-.3 1.6.2 1.4 1.4Z"/></svg>
-      <span>Join Our VIP Investors on Telegram ↗</span>
-    </a>
-  </div>
-</div>
-</section>
-
 <section class="cvx-sec" id="newsx">
 <div class="cvx-wrap cvx-reveal">
 <div class="cvx-head"><div class="kick" style="color:var(--neon-2)">// automated market intelligence</div><h2># NewsX <span class="h">AI</span></h2><p>AI-powered economic news &amp; predictive market analysis platform. Tracks every high-impact USD release to forecast market direction before the data hits.</p></div>
@@ -3674,97 +3258,6 @@ html[dir="rtl"] .cvx-faq-question {
 </div>
 </div>
 </section>
-
-<!-- ==============================================================================
-     ❓ SECTION: FREQUENTLY ASKED QUESTIONS (FAQ ACCORDION)
-     ============================================================================== -->
-<section class="cvx-sec" id="faq">
-<div class="cvx-wrap cvx-reveal">
-  <div class="cvx-head">
-    <div class="kick" style="color:var(--neon-2)">// transparent answers &amp; investor safety</div>
-    <h2># Frequently Asked <span class="h">Questions</span></h2>
-    <p>Essential details regarding account management security, profit splits, drawdown protection, and software execution.</p>
-  </div>
-
-  <div class="cvx-faq-container">
-    <!-- Item 1: How does account management work? -->
-    <div class="cvx-faq-item active">
-      <button type="button" class="cvx-faq-question" onclick="toggleFaq(this)">
-        <span class="faq-q-text">كيف يعمل نظام إدارة الحسابات وما هي شروط مشاركة الأرباح (50/50 Profit Split)؟</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="cvx-faq-answer">
-        <p>نظام إدارة الحسابات يتيح لك ربط حساب التداول الخاص بك لدى أي وسيط موثوق مرخص (مثل Exness، IC Markets، XM...) بنظام التداول الخاص بنا عبر <b>Investor / Trading Password</b> فقط. تتولى استراتيجيتنا وخبرتنا تنفيذ الصفقات على الذهب (XAUUSD) والفوركس بمخاطرة منضبطة جداً. وفي نهاية دورة التداول (أسبوعياً أو شهرياً)، يتم اقتسام صافي الأرباح المحققة بنسبة <b>50% للمستثمر و 50% لمدير الحساب</b>، ويتم تحويل النسبة بسهولة عبر USDT.</p>
-      </div>
-    </div>
-
-    <!-- Item 2: Can you withdraw my funds? -->
-    <div class="cvx-faq-item">
-      <button type="button" class="cvx-faq-question" onclick="toggleFaq(this)">
-        <span class="faq-q-text">هل تملك أي صلاحية لسحب أموالي أو التدخل في الإيداع والسحب؟</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="cvx-faq-answer">
-        <p><b style="color:var(--neon)">مستحيل تماماً و100% مستبعد.</b> في أسواق المال وشركات الوساطة العالمية، صلاحية السحب والإيداع مرتبطة حصراً بهويتك البنكية، إيميلك الشخصي، ورقم هاتفك. نحن نحصل فقط على صلاحية تنفيذ الصفقات (Trading Only)، بينما تبقى أموالك ورأس مالك بالكامل تحت تصرفك وتحت يدك وحدك في أي لحظة.</p>
-      </div>
-    </div>
-
-    <!-- Item 3: Minimum deposit -->
-    <div class="cvx-faq-item">
-      <button type="button" class="cvx-faq-question" onclick="toggleFaq(this)">
-        <span class="faq-q-text">ما هو الحد الأدنى لرأس المال لبدء إدارة الحساب؟</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="cvx-faq-answer">
-        <p>نوفر مستويات متعددة تناسب مختلف رؤوس الأموال:
-        <br/>• <b>المستوى الأساسي (Starter Tier):</b> يبدأ من <b>$100+</b> و <b>$200+</b> لاختبار الأداء والاطمئنان.
-        <br/>• <b>المستوى الاحترافي (Pro Tier):</b> من <b>$500+</b> إلى <b>$1,000+</b> لحسابات النمو السريع.
-        <br/>• <b>مستوى كبار المستثمرين (Whale Tier):</b> <b>$5,000+ فما فوق</b> مع إدارة محافظ مخصصة واستراتيجيات تحوط متقدمة.</p>
-      </div>
-    </div>
-
-    <!-- Item 4: Drawdown & Risk Control -->
-    <div class="cvx-faq-item">
-      <button type="button" class="cvx-faq-question" onclick="toggleFaq(this)">
-        <span class="faq-q-text">كيف تضمن حماية رأس المال وعدم تعرض الحساب لخسائر كبيرة (Drawdown)؟</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="cvx-faq-answer">
-        <p>نتبع قواعد إدارة مخاطر مؤسسية حديدية لا نتهاون فيها أبداً:
-        <br/>1. <b>تحديد حجم اللوت (Lot Sizing):</b> لا تتجاوز المخاطرة 1% إلى 2% من رأس المال في الصفقة الواحدة.
-        <br/>2. <b>وقف خسارة إلزامي (Strict Stop Loss):</b> كل صفقة تفتح مع أمر حماية فوري لحمايتها من أي حركة عنيفة.
-        <br/>3. <b>الحد الأقصى للتراجع (Max Controlled Drawdown):</b> سقف أمان صارم لا يتعدى 8.5%، وإذا حدث تقلب غير طبيعي يتوقف التداول تلقائياً لحماية رأس المال.</p>
-      </div>
-    </div>
-
-    <!-- Item 5: Flash USDT -->
-    <div class="cvx-faq-item">
-      <button type="button" class="cvx-faq-question" onclick="toggleFaq(this)">
-        <span class="faq-q-text">ما هي حزم وبرامج الـ Flash USDT وما الفرق بين شبكتي TRC20 و BEP20؟</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="cvx-faq-answer">
-        <p>حزم وبرمجيات Flash USDT هي أدوات برمجية تقنية متطورة مخصصة لمحاكاة وتجربة المعاملات على شبكات البلوكتشين مع صلاحيات زمنية محددة (24 ساعة، 3 أيام، أو أسبوع). شبكة <b>TRC20 (Tron)</b> تتميز بالسرعة والانتشار العالمي وتوافقها مع معظم المحافظ الباردة والساخنة، بينما شبكة <b>BEP20 (Binance Smart Chain)</b> تتميز برسوم الغاز المنخفضة جداً والسرعة الفائقة.</p>
-      </div>
-    </div>
-
-    <!-- Item 6: How to start -->
-    <div class="cvx-faq-item">
-      <button type="button" class="cvx-faq-question" onclick="toggleFaq(this)">
-        <span class="faq-q-text">كيف أبدأ الاشتراك معك أو طلب إدارة حسابي اليوم؟</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="cvx-faq-answer">
-        <p>الخطوة بسيطة وسريعة جداً:
-        <br/>1. قم بتعبئة نموذج الاتصال أسفل هذه الصفحة بالضغط على <a href="#contact" style="color:var(--neon);font-weight:700">طلب استشارة</a>.
-        <br/>2. أو تواصل معي مباشرة وفورياً على حسابي الرسمي في تيليجرام: <a href="https://t.me/HNTSB15" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">@HNTSB15 ↗</a>.
-        <br/>سنناقش معاً حجم رأس المال، وسيطك المفضل، ونبدأ العمل المشترك فوراً بكل أمان واحترافية.</p>
-      </div>
-    </div>
-  </div>
-</div>
-</section>
-
 <section class="cvx-sec" id="contact">
 <div class="cvx-wrap cvx-reveal">
 
@@ -4683,12 +4176,12 @@ html[dir="rtl"] .cvx-faq-question {
         'brand_sub': 'مدير تداول<br/>الفوركس والكريبتو',
         'nav_about': 'عني',
         'nav_expertise': 'الخبرات',
+        'nav_skills': 'المهارات',
         'nav_projects': 'المشاريع',
-        'nav_results': '<span style="color:var(--gold);font-weight:700">النتائج 📊</span>',
-        'nav_reviews': '<span style="color:var(--neon);font-weight:700">الآراء ⭐</span>',
-        'nav_newsx': '<span style="color:var(--neon-2);font-weight:700">NewsX AI ⚡</span>',
-        'nav_flash': '<span style="color:var(--neon);font-weight:700">فلاش USDT ⚡</span>',
-        'nav_faq': '<span style="color:#e2e8f0;font-weight:700">الأسئلة ❓</span>',
+        'nav_results': 'النتائج 📊',
+        'nav_newsx': 'NewsX AI ⚡',
+        'nav_flash': 'فلاش USDT ⚡',
+        'nav_experience': 'المسيرة',
         'nav_contact': 'تواصل',
         'nav_cta': '⇩ ملف التداول',
         'theme_dark': 'داكن',
@@ -4698,14 +4191,13 @@ html[dir="rtl"] .cvx-faq-question {
         'mob_home': '<span class="mono">// 00</span> الرئيسية / البداية',
         'mob_about': '<span class="mono">// 01</span> عن سيف الدين',
         'mob_expertise': '<span class="mono">// 02</span> مجالات التخصص',
-        'mob_projects': '<span class="mono">// 03</span> سجل الصفقات والمشاريع',
-        'mob_results': '<span class="mono">// 04</span> سجل النتائج الحية <span class="mob-badge gold">تويتر X</span>',
-        'mob_reviews': '<span class="mono">// 05</span> آراء المستثمرين <span class="mob-badge">موثوقة</span>',
+        'mob_skills': '<span class="mono">// 03</span> المهارات والأزواج',
+        'mob_projects': '<span class="mono">// 04</span> سجل الصفقات والمشاريع',
+        'mob_results': '<span class="mono">// 05</span> سجل النتائج الحية <span class="mob-badge gold">تويتر X</span>',
         'mob_newsx': '<span class="mono">// 06</span> منصة NewsX AI <span class="mob-badge">AI LIVE</span>',
         'mob_flash': '<span class="mono">// 07</span> باقات Flash USDT <span class="mob-badge gold">عروض</span>',
-        'mob_faq': '<span class="mono">// 08</span> الأسئلة الشائعة ❓',
-        'mob_exp': '<span class="mono">// 09</span> المسيرة المهنية',
-        'mob_contact': '<span class="mono">// 10</span> التواصل المباشر والاستفسار',
+        'mob_exp': '<span class="mono">// 08</span> المسيرة المهنية',
+        'mob_contact': '<span class="mono">// 09</span> التواصل المباشر والاستفسار',
         'mob_dl': '⇩ تحميل ملف التداول',
 
         // Hero Section
@@ -5048,12 +4540,12 @@ html[dir="rtl"] .cvx-faq-question {
         'brand_sub': 'Forex & Crypto<br/>Trading Manager',
         'nav_about': 'About',
         'nav_expertise': 'Expertise',
+        'nav_skills': 'Skills',
         'nav_projects': 'Projects',
-        'nav_results': '<span style="color:var(--gold);font-weight:700">Results 📊</span>',
-        'nav_reviews': '<span style="color:var(--neon);font-weight:700">Reviews ⭐</span>',
-        'nav_newsx': '<span style="color:var(--neon-2);font-weight:700">NewsX AI ⚡</span>',
-        'nav_flash': '<span style="color:var(--neon);font-weight:700">Flash USDT ⚡</span>',
-        'nav_faq': '<span style="color:#e2e8f0;font-weight:700">FAQ ❓</span>',
+        'nav_results': 'Results 📊',
+        'nav_newsx': 'NewsX AI ⚡',
+        'nav_flash': 'Flash USDT ⚡',
+        'nav_experience': 'Experience',
         'nav_contact': 'Contact',
         'nav_cta': '⇩ Trading Profile',
         'theme_dark': 'Dark',
@@ -5063,14 +4555,13 @@ html[dir="rtl"] .cvx-faq-question {
         'mob_home': '<span class="mono">// 00</span> Home / Top',
         'mob_about': '<span class="mono">// 01</span> About Me',
         'mob_expertise': '<span class="mono">// 02</span> Expertise',
-        'mob_projects': '<span class="mono">// 03</span> Trading Records',
-        'mob_results': '<span class="mono">// 04</span> Live Results &amp; Trades <span class="mob-badge gold">LIVE X</span>',
-        'mob_reviews': '<span class="mono">// 05</span> Investor Reviews <span class="mob-badge">TRUSTED</span>',
+        'mob_skills': '<span class="mono">// 03</span> Skills & Pairs',
+        'mob_projects': '<span class="mono">// 04</span> Trading Records',
+        'mob_results': '<span class="mono">// 05</span> Live Results & Trades <span class="mob-badge gold">LIVE X</span>',
         'mob_newsx': '<span class="mono">// 06</span> NewsX AI Platform <span class="mob-badge">AI LIVE</span>',
         'mob_flash': '<span class="mono">// 07</span> Flash USDT Offers <span class="mob-badge gold">OFFERS</span>',
-        'mob_faq': '<span class="mono">// 08</span> FAQ &amp; Questions ❓',
-        'mob_exp': '<span class="mono">// 09</span> Experience Timeline',
-        'mob_contact': '<span class="mono">// 10</span> Direct Contact &amp; Inquiry',
+        'mob_exp': '<span class="mono">// 08</span> Experience Timeline',
+        'mob_contact': '<span class="mono">// 09</span> Direct Contact & Inquiry',
         'mob_dl': '⇩ Download Trading Profile',
 
         // Hero Section
@@ -5453,12 +4944,12 @@ html[dir="rtl"] .cvx-faq-question {
       var nMap = [
         ['a[href="#about"]', 'nav_about'],
         ['a[href="#expertise"]', 'nav_expertise'],
+        ['a[href="#skills"]', 'nav_skills'],
         ['a[href="#projects"]', 'nav_projects'],
         ['a[href="#results"]', 'nav_results'],
-        ['a[href="#reviews"]', 'nav_reviews'],
         ['a[href="#newsx"]', 'nav_newsx'],
         ['a[href="#flash"]', 'nav_flash'],
-        ['a[href="#faq"]', 'nav_faq'],
+        ['a[href="#experience"]', 'nav_experience'],
         ['a[href="#contact"]', 'nav_contact']
       ];
       nMap.forEach(function(pair) {
@@ -5471,7 +4962,7 @@ html[dir="rtl"] .cvx-faq-question {
       if (dlBtn && t['nav_cta']) dlBtn.textContent = t['nav_cta'];
 
       var mobLinks = document.querySelectorAll('.cvx-mob-links a');
-      var mKeys = ['mob_home', 'mob_about', 'mob_expertise', 'mob_projects', 'mob_results', 'mob_reviews', 'mob_newsx', 'mob_flash', 'mob_faq', 'mob_exp', 'mob_contact'];
+      var mKeys = ['mob_home', 'mob_about', 'mob_expertise', 'mob_skills', 'mob_projects', 'mob_results', 'mob_newsx', 'mob_flash', 'mob_exp', 'mob_contact'];
       mobLinks.forEach(function(link, idx) {
         if (mKeys[idx] && t[mKeys[idx]]) link.innerHTML = t[mKeys[idx]];
       });
@@ -5613,22 +5104,6 @@ html[dir="rtl"] .cvx-faq-question {
       if (resNote && t['res_status_note']) resNote.innerHTML = t['res_status_note'];
       var resViewAll = document.getElementById('resViewAllBtn');
       if (resViewAll && t['res_view_all_btn']) resViewAll.textContent = t['res_view_all_btn'];
-
-      // 7c. Reviews Section Translation
-      var revKick = document.querySelector('#reviews .kick');
-      if (revKick) revKick.textContent = isAr ? '// آراء المستثمرين وإثباتات الأرباح' : '// client feedback & payout proofs';
-      var revTitle = document.querySelector('#reviews h2');
-      if (revTitle) revTitle.innerHTML = isAr ? '# آراء <span class="h">المستثمرين</span>' : '# Investor <span class="h">Testimonials</span>';
-      var revSub = document.querySelector('#reviews .cvx-head p');
-      if (revSub) revSub.textContent = isAr ? 'تقييمات حقيقية من مستثمرين مدارة محافظهم ومشتركين موثقين حول العالم.' : 'Real feedback from verified account management investors, signal subscribers, and institutional software clients across the globe.';
-
-      // 7d. FAQ Section Translation
-      var faqKick = document.querySelector('#faq .kick');
-      if (faqKick) faqKick.textContent = isAr ? '// إجابات شفافة وأمان المستثمر' : '// transparent answers & investor safety';
-      var faqTitle = document.querySelector('#faq h2');
-      if (faqTitle) faqTitle.innerHTML = isAr ? '# الأسئلة <span class="h">الشائعة</span>' : '# Frequently Asked <span class="h">Questions</span>';
-      var faqSub = document.querySelector('#faq .cvx-head p');
-      if (faqSub) faqSub.textContent = isAr ? 'كل ما تحتاج لمعرفته حول أمان إدارة الحساب، تقسيم الأرباح 50/50، وحماية رأس المال.' : 'Essential details regarding account management security, profit splits, drawdown protection, and software execution.';
 
       // 8. NewsX AI Section
       var nxKick = document.querySelector('#newsx .kick');
@@ -6373,24 +5848,6 @@ html[dir="rtl"] .cvx-faq-question {
       window.cvxLbStep(isRtl ? 1 : -1);
     }
   });
-
-  // Interactive FAQ Accordion Logic
-  window.toggleFaq = function(btn) {
-    if(!btn) return;
-    var item = btn.closest ? btn.closest('.cvx-faq-item') : null;
-    if(!item) return;
-    var isActive = item.classList.contains('active');
-    
-    // Close other FAQ items for a clean single-open accordion experience
-    var all = document.querySelectorAll('.cvx-faq-item');
-    for(var i = 0; i < all.length; i++) {
-      all[i].classList.remove('active');
-    }
-
-    if(!isActive) {
-      item.classList.add('active');
-    }
-  };
 
 //]]>
 </script>
