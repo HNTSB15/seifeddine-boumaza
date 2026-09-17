@@ -613,26 +613,12 @@ footer.cv-foot .mono{color:var(--neon)}
   .cvx-x-bottom-bar{flex-direction:column;align-items:stretch;text-align:center}
 }
 
-/* verified twitter results slider & feed inside box */
-.cvx-timeline-track-wrap{padding:16px 22px 14px;background:rgba(0,0,0,.25);border-bottom:1px solid var(--line)}
-.cvx-tl-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
-.cvx-tl-title{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace}
-.cvx-tl-icon{font-size:14px}
+/* verified twitter results feed controls inside box */
+.cvx-x-feed-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .cvx-tl-nav-controls{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border:1px solid var(--line);padding:3px 6px;border-radius:999px}
 .cvx-tl-btn{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--text);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;transition:all .2s;line-height:1}
 .cvx-tl-btn:hover{background:var(--neon);color:#000;border-color:var(--neon);box-shadow:0 0 10px rgba(0,255,156,.5)}
 .cvx-tl-counter{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--neon);padding:0 6px;min-width:44px;text-align:center}
-.cvx-tl-slider-bar{position:relative;padding:4px 0 2px}
-.cvx-tl-range{-webkit-appearance:none;appearance:none;width:100%;height:6px;background:linear-gradient(90deg,var(--neon),var(--neon2),var(--gold));border-radius:999px;outline:none;cursor:pointer;margin-bottom:10px}
-.cvx-tl-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--neon);box-shadow:0 0 14px var(--neon);cursor:grab;transition:transform .15s,box-shadow .15s}
-.cvx-tl-range::-webkit-slider-thumb:active{cursor:grabbing;transform:scale(1.2);box-shadow:0 0 20px var(--neon)}
-.cvx-tl-range::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--neon);box-shadow:0 0 14px var(--neon);cursor:grab}
-.cvx-tl-markers{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.cvx-tl-marker{background:none;border:none;padding:4px 2px;text-align:center;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--muted);font-size:11px;font-family:'JetBrains Mono',monospace;transition:color .2s}
-.cvx-tl-marker .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);border:1px solid var(--line);transition:all .2s}
-.cvx-tl-marker.active .dot{background:var(--neon);border-color:var(--neon);box-shadow:0 0 10px var(--neon);transform:scale(1.3)}
-.cvx-tl-marker.active{color:var(--neon);font-weight:700}
-.cvx-tl-marker:hover{color:var(--text)}
 
 /* Horizontal post stream */
 .cvx-x-stream{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding:22px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--neon) rgba(255,255,255,.05)}
@@ -2469,45 +2455,16 @@ html[dir="rtl"] .mono-arrow {
         <div class="cvx-x-sub">@seifeddin06 · Live Trade Recaps &amp; Statement Proofs</div>
       </div>
     </div>
-    <a href="https://x.com/seifeddin06" target="_blank" rel="noopener" class="cvx-x-follow-btn" id="resFollowBtn">
-      <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-      <span>Follow on X (Twitter) ↗</span>
-    </a>
-  </div>
-
-  <!-- Draggable Timeline Track Line ("خط تسحبو تشوف الأقدم") -->
-  <div class="cvx-timeline-track-wrap">
-    <div class="cvx-tl-top">
-      <div class="cvx-tl-title">
-        <span class="cvx-tl-icon">⚡</span>
-        <span id="resTlTitle">الخط الزمني للصفقات الموثقة (اسحب الخط للتنقل بين الأحدث والأقدم)</span>
-      </div>
+    <div class="cvx-x-feed-actions">
       <div class="cvx-tl-nav-controls">
         <button type="button" class="cvx-tl-btn" id="cvxTlPrev" title="Previous Post" aria-label="Previous Post">‹</button>
         <span class="cvx-tl-counter" id="cvxTlCounter">1 / 4</span>
         <button type="button" class="cvx-tl-btn" id="cvxTlNext" title="Next Post" aria-label="Next Post">›</button>
       </div>
-    </div>
-    <div class="cvx-tl-slider-bar">
-      <input type="range" class="cvx-tl-range" id="cvxTlRange" min="0" max="3" value="0" step="1" aria-label="Timeline Slider">
-      <div class="cvx-tl-markers">
-        <button type="button" class="cvx-tl-marker active" data-idx="0">
-          <span class="dot"></span>
-          <span class="label" id="resTlM0">الأحدث: +$16,000 (4 صور)</span>
-        </button>
-        <button type="button" class="cvx-tl-marker" data-idx="1">
-          <span class="dot"></span>
-          <span class="label" id="resTlM1">+$5,700 أرباح (صورتان)</span>
-        </button>
-        <button type="button" class="cvx-tl-marker" data-idx="2">
-          <span class="dot"></span>
-          <span class="label" id="resTlM2">+$1,500 أرباح (4 صور)</span>
-        </button>
-        <button type="button" class="cvx-tl-marker" data-idx="3">
-          <span class="dot"></span>
-          <span class="label" id="resTlM3">الأقدم: باقات الإدارة (صورتان)</span>
-        </button>
-      </div>
+      <a href="https://x.com/seifeddin06" target="_blank" rel="noopener" class="cvx-x-follow-btn" id="resFollowBtn">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        <span>Follow on X (Twitter) ↗</span>
+      </a>
     </div>
   </div>
 
@@ -4368,11 +4325,6 @@ html[dir="rtl"] .mono-arrow {
         'res_m3': 'توثيق بالوقت والتاريخ',
         'res_m4': 'الأصول الأساسية للتداول',
         'res_follow_btn': 'متابعة الحساب على X (تويتر) ↗',
-        'res_tl_title': 'الخط الزمني للصفقات الموثقة (اسحب الخط للتنقل بين الأحدث والأقدم)',
-        'res_tl_m0': 'الأحدث: +$16,000 (4 صور)',
-        'res_tl_m1': '+$5,700 أرباح (صورتان)',
-        'res_tl_m2': '+$1,500 أرباح (4 صور)',
-        'res_tl_m3': 'الأقدم: باقات الإدارة (صورتان)',
         'res_status_note': '<span class="status-pulse"></span> صفقات حية، إثباتات سحب وأرباح، وتقارير دورية تُنشر فورياً على الحساب.',
         'res_view_all_btn': 'عرض جميع الصفقات والتحليلات على X ↗',
 
@@ -4737,11 +4689,6 @@ html[dir="rtl"] .mono-arrow {
         'res_m3': '100% Timestamped Proof',
         'res_m4': 'Primary Market Focus',
         'res_follow_btn': 'Follow on X (Twitter) ↗',
-        'res_tl_title': 'Verified Trades Timeline (Drag slider to browse newest to oldest)',
-        'res_tl_m0': 'Latest: +$16,000 (4 Photos)',
-        'res_tl_m1': '+$5,700 Profit (2 Photos)',
-        'res_tl_m2': '+$1,500 Profit (4 Photos)',
-        'res_tl_m3': 'Oldest: Account Tiers (2 Photos)',
         'res_status_note': '<span class="status-pulse"></span> Live trade setups, withdrawal proofs, and performance recaps published in real time.',
         'res_view_all_btn': 'View All Trades on X ↗',
 
@@ -5111,16 +5058,6 @@ html[dir="rtl"] .mono-arrow {
       if (resFollow && t['res_follow_btn']) {
         resFollow.innerHTML = '<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> <span>' + t['res_follow_btn'] + '</span>';
       }
-      var resTlTitle = document.getElementById('resTlTitle');
-      if (resTlTitle && t['res_tl_title']) resTlTitle.textContent = t['res_tl_title'];
-      var resTlM0 = document.getElementById('resTlM0');
-      if (resTlM0 && t['res_tl_m0']) resTlM0.textContent = t['res_tl_m0'];
-      var resTlM1 = document.getElementById('resTlM1');
-      if (resTlM1 && t['res_tl_m1']) resTlM1.textContent = t['res_tl_m1'];
-      var resTlM2 = document.getElementById('resTlM2');
-      if (resTlM2 && t['res_tl_m2']) resTlM2.textContent = t['res_tl_m2'];
-      var resTlM3 = document.getElementById('resTlM3');
-      if (resTlM3 && t['res_tl_m3']) resTlM3.textContent = t['res_tl_m3'];
       var resNote = document.getElementById('resStatusNote');
       if (resNote && t['res_status_note']) resNote.innerHTML = t['res_status_note'];
       var resViewAll = document.getElementById('resViewAllBtn');
@@ -5606,16 +5543,14 @@ html[dir="rtl"] .mono-arrow {
     nums.forEach(function(n){ io.observe(n); });
   })();
 
-  // Interactive Results Timeline Slider & Lightbox Controller
+  // Results Feed Carousel & Lightbox Controller
   (function(){
-    var slider = document.getElementById('cvxTlRange');
     var stream = document.getElementById('cvxXStream');
     var counter = document.getElementById('cvxTlCounter');
     var prevBtn = document.getElementById('cvxTlPrev');
     var nextBtn = document.getElementById('cvxTlNext');
-    var markers = document.querySelectorAll('.cvx-tl-marker');
     var slides = document.querySelectorAll('.cvx-x-slide');
-    if(!slider || !stream || !slides.length) return;
+    if(!stream || !slides.length) return;
 
     var total = slides.length;
     var currentIndex = 0;
@@ -5626,13 +5561,7 @@ html[dir="rtl"] .mono-arrow {
       if(idx < 0) idx = 0;
       if(idx >= total) idx = total - 1;
       currentIndex = idx;
-      slider.value = idx;
       if(counter) counter.textContent = (idx + 1) + ' / ' + total;
-      
-      markers.forEach(function(m, i){
-        if(i === idx) m.classList.add('active');
-        else m.classList.remove('active');
-      });
 
       slides.forEach(function(s, i){
         if(i === idx) s.classList.add('active-slide');
@@ -5658,11 +5587,6 @@ html[dir="rtl"] .mono-arrow {
       }, 600);
     }
 
-    // Slider input event (dragging the line)
-    slider.addEventListener('input', function(){
-      scrollToSlide(parseInt(slider.value, 10));
-    });
-
     // Prev / Next buttons
     if(prevBtn) {
       prevBtn.addEventListener('click', function(){
@@ -5675,15 +5599,7 @@ html[dir="rtl"] .mono-arrow {
       });
     }
 
-    // Click on timeline step markers
-    markers.forEach(function(m){
-      m.addEventListener('click', function(){
-        var idx = parseInt(m.getAttribute('data-idx'), 10);
-        if(!isNaN(idx)) scrollToSlide(idx);
-      });
-    });
-
-    // Track scroll events on stream (when user swipes on mobile / trackpad)
+    // Track scroll events on stream (when user swipes on mobile / trackpad / mouse)
     stream.addEventListener('scroll', function(){
       if(isManualScrolling) return;
       clearTimeout(scrollTimeout);
