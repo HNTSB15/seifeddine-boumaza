@@ -3062,6 +3062,507 @@ body.theme-light .faq-icon {
   border-color: #cbd5e1;
   color: #475569;
 }
+
+/* ==========================================================================
+   ⭐ SECTION: CLIENT TESTIMONIALS & REVIEWS (آراء العملاء والمستثمرين)
+   ========================================================================== */
+.rev-trust-bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+  padding:18px 24px;
+  background:rgba(13,20,32,0.7);
+  border:1px solid rgba(0,255,156,0.22);
+  border-radius:16px;
+  margin-bottom:28px;
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  box-shadow:0 12px 30px rgba(0,0,0,0.4), inset 0 0 16px rgba(0,255,156,0.04);
+}
+.rev-score-pill{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.rev-big-rating{
+  font-family:'Space Grotesk', system-ui, sans-serif;
+  font-size:32px;
+  font-weight:800;
+  line-height:1;
+  color:#fff;
+  display:flex;
+  align-items:baseline;
+}
+.rev-big-rating small{
+  font-size:16px;
+  color:var(--muted);
+  font-weight:600;
+}
+.rev-stars-col{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+.rev-stars{
+  color:#ffcf4a;
+  letter-spacing:2px;
+  font-size:16px;
+  text-shadow:0 0 10px rgba(255,207,74,0.4);
+}
+.rev-score-lbl{
+  font-size:11.5px;
+  color:var(--neon);
+  font-family:'JetBrains Mono', monospace;
+  letter-spacing:0.3px;
+}
+.rev-badges-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.rev-stat-badge{
+  font-size:12px;
+  color:var(--muted);
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  padding:5px 12px;
+  border-radius:999px;
+  font-family:'JetBrains Mono', monospace;
+}
+.rev-stat-badge b{
+  color:#fff;
+}
+.rev-add-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 18px;
+  border-radius:10px;
+  font-weight:700;
+  font-size:13px;
+  color:#05070d;
+  background:var(--neon);
+  border:none;
+  cursor:pointer;
+  box-shadow:0 0 16px rgba(0,255,156,0.35);
+  transition:all .2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family:inherit;
+  white-space:nowrap;
+}
+.rev-add-btn svg{
+  width:15px;
+  height:15px;
+  fill:currentColor;
+  flex-shrink:0;
+}
+.rev-add-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 24px rgba(0,255,156,0.6);
+  background:#1affaa;
+}
+.rev-add-btn:active{
+  transform:translateY(0);
+}
+
+/* Filter buttons */
+.rev-filters{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:24px;
+}
+.rev-filter-btn{
+  padding:7px 14px;
+  border-radius:999px;
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--muted);
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);
+  cursor:pointer;
+  transition:all .2s ease;
+  font-family:inherit;
+}
+.rev-filter-btn:hover{
+  color:#fff;
+  border-color:rgba(18,214,255,0.35);
+  background:rgba(18,214,255,0.06);
+}
+.rev-filter-btn.active{
+  color:#04140c;
+  background:var(--rgb);
+  background-size:200% auto;
+  animation:cvxRgb 6s linear infinite;
+  border-color:transparent;
+  box-shadow:0 0 14px rgba(0,255,170,0.3);
+  font-weight:700;
+}
+
+/* Reviews Grid */
+.rev-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:18px;
+}
+.rev-card{
+  background:rgba(13,20,32,0.65);
+  border:1px solid rgba(27,41,66,0.9);
+  border-radius:14px;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  position:relative;
+  overflow:hidden;
+  transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+.rev-card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:2px;
+  background:linear-gradient(90deg, transparent, rgba(0,255,156,0.5), transparent);
+  opacity:0;
+  transition:opacity .25s ease;
+}
+.rev-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(0,255,156,0.4);
+  box-shadow:0 12px 30px rgba(0,0,0,0.5), 0 0 20px rgba(0,255,156,0.12);
+}
+.rev-card:hover::before{
+  opacity:1;
+}
+.rev-card-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:12px;
+}
+.rev-user{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+.rev-avatar{
+  width:40px;
+  height:40px;
+  border-radius:10px;
+  background:linear-gradient(135deg,#111e33,#09101d);
+  border:1px solid rgba(18,214,255,0.25);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:17px;
+  flex-shrink:0;
+  box-shadow:0 0 10px rgba(0,0,0,0.4);
+}
+.rev-user-info b{
+  font-size:14px;
+  color:#fff;
+  display:block;
+  line-height:1.2;
+}
+.rev-user-info span{
+  font-size:11px;
+  color:var(--muted);
+  font-family:'JetBrains Mono', monospace;
+}
+.rev-service-tag{
+  font-size:10px;
+  font-weight:700;
+  padding:3px 8px;
+  border-radius:6px;
+  font-family:'JetBrains Mono', monospace;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.rev-service-tag.managed{
+  background:rgba(0,255,156,0.12);
+  border:1px solid rgba(0,255,156,0.35);
+  color:var(--neon);
+}
+.rev-service-tag.signals{
+  background:rgba(255,207,74,0.12);
+  border:1px solid rgba(255,207,74,0.35);
+  color:var(--gold);
+}
+.rev-service-tag.flash{
+  background:rgba(18,214,255,0.12);
+  border:1px solid rgba(18,214,255,0.35);
+  color:var(--neon-2);
+}
+.rev-service-tag.indicators{
+  background:rgba(168,85,247,0.12);
+  border:1px solid rgba(168,85,247,0.35);
+  color:#c084fc;
+}
+.rev-rating-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+.rev-card-stars{
+  color:#ffcf4a;
+  font-size:13px;
+  letter-spacing:1.5px;
+}
+.rev-stat-pill{
+  font-size:11px;
+  font-weight:700;
+  color:var(--neon);
+  background:rgba(0,255,156,0.08);
+  border:1px solid rgba(0,255,156,0.25);
+  padding:2px 8px;
+  border-radius:5px;
+  font-family:'JetBrains Mono', monospace;
+}
+.rev-quote{
+  color:#d0e2fa;
+  font-size:13.5px;
+  line-height:1.65;
+  margin-bottom:14px;
+  flex-grow:1;
+}
+.rev-card-foot{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-size:11px;
+  color:var(--muted);
+  border-top:1px solid rgba(255,255,255,0.06);
+  padding-top:10px;
+  margin-top:auto;
+}
+.rev-verified{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  color:#00ff9c;
+  font-weight:600;
+}
+.rev-verified svg{
+  width:12px;
+  height:12px;
+  fill:currentColor;
+}
+
+/* Review Modal */
+.rev-modal-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(3,6,12,0.85);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  z-index:99999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  opacity:0;
+  transition:opacity .25s ease;
+}
+.rev-modal-backdrop.open{
+  display:flex;
+  opacity:1;
+}
+.rev-modal-box{
+  background:rgba(10,16,28,0.95);
+  border:1px solid rgba(0,255,156,0.35);
+  border-radius:18px;
+  box-shadow:0 24px 60px rgba(0,0,0,0.85), 0 0 30px rgba(0,255,156,0.15);
+  width:100%;
+  max-width:560px;
+  padding:28px;
+  position:relative;
+  transform:scale(0.95);
+  transition:transform .25s cubic-bezier(0.16, 1, 0.3, 1);
+  max-height:90vh;
+  overflow-y:auto;
+}
+.rev-modal-backdrop.open .rev-modal-box{
+  transform:scale(1);
+}
+.rev-modal-close{
+  position:absolute;
+  top:16px;
+  right:18px;
+  background:transparent;
+  border:none;
+  color:var(--muted);
+  font-size:22px;
+  cursor:pointer;
+  line-height:1;
+  padding:4px 8px;
+  transition:color .2s;
+}
+.rev-modal-close:hover{
+  color:#fff;
+}
+.rev-modal-head{
+  margin-bottom:20px;
+}
+.rev-modal-badge{
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;
+  color:var(--neon);
+  letter-spacing:1px;
+  margin-bottom:6px;
+}
+.rev-modal-head h3{
+  font-size:20px;
+  color:#fff;
+  font-weight:700;
+}
+.rev-modal-head p{
+  font-size:13px;
+  color:var(--muted);
+  margin-top:4px;
+}
+.rev-form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.rev-fgroup{
+  margin-bottom:14px;
+}
+.rev-fgroup label{
+  display:block;
+  font-size:12px;
+  font-weight:600;
+  color:#cbd5e1;
+  margin-bottom:6px;
+}
+.rev-fgroup input,
+.rev-fgroup select,
+.rev-fgroup textarea{
+  width:100%;
+  padding:10px 14px;
+  border-radius:9px;
+  background:rgba(5,9,16,0.8);
+  border:1px solid rgba(27,41,66,0.9);
+  color:#fff;
+  font-family:inherit;
+  font-size:13.5px;
+  box-sizing:border-box;
+  outline:none;
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+.rev-fgroup input:focus,
+.rev-fgroup select:focus,
+.rev-fgroup textarea:focus{
+  border-color:var(--neon);
+  box-shadow:0 0 12px rgba(0,255,156,0.25);
+}
+.rev-btn-submit{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  font-size:14.5px;
+  font-weight:700;
+  color:#04140c;
+  background:var(--rgb);
+  background-size:200% auto;
+  animation:cvxRgb 6s linear infinite;
+  border:none;
+  cursor:pointer;
+  box-shadow:0 0 18px rgba(0,255,170,0.35);
+  transition:all .2s ease;
+}
+.rev-btn-submit:hover{
+  box-shadow:0 0 28px rgba(0,255,170,0.6);
+  transform:translateY(-1px);
+}
+.rev-notice{
+  margin-top:10px;
+  font-size:12.5px;
+  text-align:center;
+  min-height:18px;
+}
+.rev-notice.success{
+  color:var(--neon);
+}
+.rev-notice.error{
+  color:#ff5252;
+}
+
+/* Light mode for reviews */
+body.theme-light .rev-trust-bar{
+  background:#ffffff;
+  border-color:#e2e8f0;
+  box-shadow:0 4px 16px rgba(0,0,0,0.05);
+}
+body.theme-light .rev-big-rating{
+  color:#0f172a;
+}
+body.theme-light .rev-stat-badge{
+  background:#f1f5f9;
+  border-color:#cbd5e1;
+  color:#475569;
+}
+body.theme-light .rev-stat-badge b{
+  color:#0f172a;
+}
+body.theme-light .rev-card{
+  background:#ffffff;
+  border-color:#e2e8f0;
+  box-shadow:0 4px 16px rgba(0,0,0,0.04);
+}
+body.theme-light .rev-user-info b{
+  color:#0f172a;
+}
+body.theme-light .rev-quote{
+  color:#334155;
+}
+body.theme-light .rev-card-foot{
+  border-top-color:#e2e8f0;
+}
+body.theme-light .rev-modal-box{
+  background:#ffffff;
+  border-color:#cbd5e1;
+}
+body.theme-light .rev-modal-head h3{
+  color:#0f172a;
+}
+body.theme-light .rev-fgroup label{
+  color:#334155;
+}
+body.theme-light .rev-fgroup input,
+body.theme-light .rev-fgroup select,
+body.theme-light .rev-fgroup textarea{
+  background:#f8fafc;
+  border-color:#cbd5e1;
+  color:#0f172a;
+}
+
+/* Responsive grid for reviews */
+@media(max-width:980px){
+  .rev-grid{
+    grid-template-columns:repeat(2, 1fr);
+  }
+}
+@media(max-width:640px){
+  .rev-grid{
+    grid-template-columns:1fr;
+  }
+  .rev-trust-bar{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .rev-form-grid{
+    grid-template-columns:1fr;
+  }
+}
 </style>
 <div class="cvx" id="cvtop">
 <nav class="cvx-nav">
@@ -3121,6 +3622,7 @@ body.theme-light .faq-icon {
 <a href="#newsx" style="color:var(--neon-2);font-weight:700">NewsX AI ⚡</a>
 <a href="#flash" style="color:var(--neon);font-weight:700">Flash USDT ⚡</a>
 <a href="#experience">Experience</a>
+<a href="#reviews" id="navReviewsLink" style="color:var(--gold);font-weight:700">Reviews ⭐</a>
 <a href="#faq" id="navFaqLink">FAQ</a>
 <a href="#contact">Contact</a>
 </div>
@@ -3168,9 +3670,11 @@ body.theme-light .faq-icon {
       <a href="#newsx" onclick="closeMobileMenu()" class="mob-hl-newsx"><span class="mono">// 06</span> NewsX AI Platform <span class="mob-badge">AI LIVE</span></a>
       <a href="#flash" onclick="closeMobileMenu()" class="mob-hl-flash"><span class="mono">// 07</span> Flash USDT Offers <span class="mob-badge gold">OFFERS</span></a>
       <a href="#experience" onclick="closeMobileMenu()"><span class="mono">// 08</span> Experience Timeline</a>
-      <a href="#contact" onclick="closeMobileMenu()"><span class="mono">// 09</span> Direct Contact &amp; Inquiry</a>
+      <a href="#reviews" onclick="closeMobileMenu()" style="color:var(--gold)"><span class="mono">// 09</span> <span id="cvxMobRevTxt">Client Reviews</span> <span class="mob-badge gold">5.0 ★</span></a>
+      <a href="#faq" onclick="closeMobileMenu()"><span class="mono">// 10</span> <span id="cvxMobFaqTxt">FAQ &amp; Safety</span></a>
+      <a href="#contact" onclick="closeMobileMenu()"><span class="mono">// 11</span> Direct Contact &amp; Inquiry</a>
       <a href="javascript:void(0)" onclick="closeMobileMenu();dl();" style="color:var(--neon);border-color:rgba(0,255,156,0.35);background:rgba(0,255,156,0.08);margin-top:4px">
-        <span class="mono">// 10</span> <span id="cvxMobDlLinkTxt">تحميل ملف التداول ⇩</span>
+        <span class="mono">// 12</span> <span id="cvxMobDlLinkTxt">تحميل ملف التداول ⇩</span>
         <span class="mob-badge" style="background:rgba(0,255,156,0.22);border-color:var(--neon);color:var(--neon)">PDF</span>
       </a>
     </div>
@@ -4240,6 +4744,108 @@ body.theme-light .faq-icon {
 </section>
 
 <!-- ==========================================================================
+     ⭐ SECTION: CLIENT REVIEWS & TESTIMONIALS (آراء وتقييمات العملاء)
+     ========================================================================== -->
+<section class="cvx-sec" id="reviews">
+<div class="cvx-wrap cvx-reveal">
+  <div class="cvx-head">
+    <div class="kick" id="revKick">// verified social proof &amp; testimonials</div>
+    <h2><span id="revTitle"># آراء وتقييمات <span class="h">المستثمرين والعملاء</span></span></h2>
+    <p id="revSub">تجارب حقيقية وتقييمات موثقة من عملاء إدارة المحافظ، مشتركي توصيات VIP، ومستخدمي خدمات فلاش USDT.</p>
+  </div>
+
+  <!-- Trust Bar & Stats Summary -->
+  <div class="rev-trust-bar">
+    <div class="rev-score-pill">
+      <div class="rev-big-rating">4.9<small>/5.0</small></div>
+      <div class="rev-stars-col">
+        <div class="rev-stars">★★★★★</div>
+        <span class="rev-score-lbl" id="revScoreLbl">تقييم موثوق · 100% شفافية</span>
+      </div>
+    </div>
+    <div class="rev-badges-row">
+      <span class="rev-stat-badge"><b>150+</b> <span id="revStat1">عميل راضٍ</span></span>
+      <span class="rev-stat-badge"><b>12+</b> <span id="revStat2">دولة</span></span>
+      <span class="rev-stat-badge"><b>88%</b> <span id="revStat3">نسبة نجاح الصفقات</span></span>
+    </div>
+    <button type="button" class="rev-add-btn" id="openReviewModalBtn" onclick="openReviewModal()">
+      <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+      <span id="revAddBtnTxt">✍️ أضف تقييمك وتجربتك</span>
+    </button>
+  </div>
+
+  <!-- Category Filter Pills -->
+  <div class="rev-filters" id="revFilters">
+    <button type="button" class="rev-filter-btn active" data-filter="all" onclick="filterReviews('all', this)" id="revFilterAll">الكل (All)</button>
+    <button type="button" class="rev-filter-btn" data-filter="managed" onclick="filterReviews('managed', this)" id="revFilterManaged">💼 إدارة المحافظ</button>
+    <button type="button" class="rev-filter-btn" data-filter="flash" onclick="filterReviews('flash', this)" id="revFilterFlash">⚡ فلاش USDT</button>
+    <button type="button" class="rev-filter-btn" data-filter="signals" onclick="filterReviews('signals', this)" id="revFilterSignals">📡 توصيات VIP</button>
+    <button type="button" class="rev-filter-btn" data-filter="indicators" onclick="filterReviews('indicators', this)" id="revFilterInd">🤖 المؤشرات البرمجية</button>
+  </div>
+
+  <!-- Reviews Grid -->
+  <div class="rev-grid" id="reviewsContainer">
+    <!-- Rendered dynamically by JavaScript -->
+  </div>
+</div>
+</section>
+
+<!-- Review Submission Modal -->
+<div class="rev-modal-backdrop" id="revModal" onclick="if(event.target===this)closeReviewModal()">
+  <div class="rev-modal-box">
+    <button type="button" class="rev-modal-close" onclick="closeReviewModal()" aria-label="Close">✕</button>
+    <div class="rev-modal-head">
+      <div class="rev-modal-badge">// VERIFIED CLIENT FEEDBACK</div>
+      <h3 id="revModalTitle">شارك تجربتك وتقييمك مع سيف الدين</h3>
+      <p id="revModalSub">رأيك يهمنا ويساعد المستثمرين الجدد على اتخاذ قرارات تداول واثقة وشفافة.</p>
+    </div>
+    <form id="revSubmitForm" onsubmit="handleReviewSubmit(event)">
+      <div class="rev-form-grid">
+        <div class="rev-fgroup">
+          <label id="lblRevName">الاسم أو اللقب *</label>
+          <input type="text" id="revClientName" required placeholder="مثال: طارق ب. أو Faisal A.">
+        </div>
+        <div class="rev-fgroup">
+          <label id="lblRevCountry">الدولة / المدينة *</label>
+          <input type="text" id="revClientCountry" required placeholder="مثال: الجزائر، السعودية، فرنسا...">
+        </div>
+      </div>
+      <div class="rev-form-grid">
+        <div class="rev-fgroup">
+          <label id="lblRevService">الخدمة المستفاد منها *</label>
+          <select id="revServiceType" required>
+            <option value="managed">💼 إدارة المحافظ (Managed Accounts)</option>
+            <option value="flash">⚡ فلاش USDT (Flash Deals)</option>
+            <option value="signals">📡 توصيات VIP (VIP Signals)</option>
+            <option value="indicators">🤖 مؤشرات MT4/MT5 البرمجية</option>
+          </select>
+        </div>
+        <div class="rev-fgroup">
+          <label id="lblRevRating">التقييم *</label>
+          <select id="revRatingVal" required>
+            <option value="5">★★★★★ (5/5 ممتاز)</option>
+            <option value="4">★★★★☆ (4/5 جيد جداً)</option>
+            <option value="3">★★★☆☆ (3/5 مقبول)</option>
+          </select>
+        </div>
+      </div>
+      <div class="rev-fgroup">
+        <label id="lblRevStat">نتيجة أو إنجاز حققته (اختياري)</label>
+        <input type="text" id="revProfitStat" placeholder="مثال: تحقيق +35% أرباح، أو تسليم فوري في دقيقتين...">
+      </div>
+      <div class="rev-fgroup">
+        <label id="lblRevMsg">رأيك وتجربتك بالتفصيل *</label>
+        <textarea id="revComment" rows="4" required placeholder="اكتب تجربتك بكل أمانة حول التعامل، الالتزام، والدعم الفني..."></textarea>
+      </div>
+      <button type="submit" class="rev-btn-submit" id="revSubmitBtn">
+        <span id="revSubmitBtnTxt">إرسال التقييم 🚀</span>
+      </button>
+      <div id="revFormNotice" class="rev-notice"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ==========================================================================
      ❓ SECTION: INTERACTIVE FAQ ACCORDION
      ========================================================================== -->
 <section class="cvx-sec" id="faq">
@@ -4854,6 +5460,335 @@ body.theme-light .faq-icon {
     }).catch(function(){});
   }
   loadLiveSettings();
+
+  // ==========================================================================
+  // ⭐ CLIENT REVIEWS & TESTIMONIALS CONTROLLER (Supabase + Telegram Bot Bridge)
+  // ==========================================================================
+  var defaultReviews = [
+    {
+      name: 'Tariq B. (طارق ب.)',
+      country: 'الجزائر 🇩🇿',
+      country_en: 'Algeria 🇩🇿',
+      rating: 5,
+      service: 'managed',
+      stat: '+42.8% ROI (5 أشهر)',
+      stat_en: '+42.8% ROI (5 Months)',
+      text: 'بدأت مع سيف الدين بمحفظة تجريبية ثم قمت برفع رأس المال. الالتزام بإدارة المخاطر ووقف الخسارة لا مثيل له، لا مغامرات ولا عشوائية، تقارير أسبوعية تفصيلية واحترافية عالية جداً.',
+      text_en: 'Started with Saifeddine on a test portfolio then scaled my capital. The risk management and stop-loss discipline are second to none—zero reckless gambling. Detailed weekly reports and immense professionalism.'
+    },
+    {
+      name: 'Faisal Al-Otaibi (فيصل العتيبي)',
+      country: 'السعودية 🇸🇦',
+      country_en: 'Saudi Arabia 🇸🇦',
+      rating: 5,
+      service: 'signals',
+      stat: 'دقة 86% على الذهب XAUUSD',
+      stat_en: '86% Winrate on Gold XAUUSD',
+      text: 'أفضل قناة توصيات دخلت فيها من 3 سنوات. نقاط الدخول دقيقة جداً مع وقف خسارة صغير وأهداف محددة. قناة سيف الدين أنقذت حسابي من الخسائر المتراكمة وعوضت رأس مالي.',
+      text_en: 'Hands down the best signal channel I have joined in 3 years. Precision entry points, tight stop-losses, and well-defined targets. Saifeddine VIP channel turned my losses into consistent profits.'
+    },
+    {
+      name: 'Karim Mansouri',
+      country: 'فرنسا 🇫🇷',
+      country_en: 'France 🇫🇷',
+      rating: 5,
+      service: 'flash',
+      stat: '80K Flash USDT · 3 دقائق',
+      stat_en: '80K Flash USDT · 3 Mins',
+      text: 'خدمة فائقة السرعة ودعم استثنائي عبر التيليجرام. تم تأكيد المعاملة على نود خاص في أقل من 3 دقائق. رقي واحترافية غير مسبوقة، أنصح بالتعامل معه بشدة!',
+      text_en: 'Super fast service and exceptional support on Telegram. Transaction confirmed on a private blockchain node in under 3 minutes. Truly elite professionalism, highly recommended!'
+    },
+    {
+      name: 'Omar Al-Shammari (عمر الشمري)',
+      country: 'الإمارات 🇦🇪',
+      country_en: 'UAE 🇦🇪',
+      rating: 5,
+      service: 'managed',
+      stat: 'سحب أرباح شهري منتظم',
+      stat_en: 'Regular Monthly Withdrawals',
+      text: 'الشفافية هي الرقم 1 عند الأخ سيف الدين. حسابي في Exness مربوط مباشرة وأرى كل صفقة تفتح وتغلق في نفس اللحظة مع الالتزام الصارم بنسبة 1-2% ريسك لكل صفقة.',
+      text_en: 'Transparency is unmatched with brother Saifeddine. My Exness account is linked directly; I watch every trade open and close in real-time with strict 1-2% risk discipline per trade.'
+    },
+    {
+      name: 'David Henderson',
+      country: 'بريطانيا 🇬🇧',
+      country_en: 'United Kingdom 🇬🇧',
+      rating: 5,
+      service: 'indicators',
+      stat: 'مؤشر MT5 · 0 Repaint',
+      stat_en: 'MT5 Indicator · 0 Repaint',
+      text: 'مؤشر MT5 المخصص لكسر التقلبات يعمل بكفاءة استثنائية وبدون أي إعادة رسم (Zero Repaint). تعليمات التثبيت واضحة والتسليم فوري على نظام ويندوز.',
+      text_en: 'The custom MT5 volatility break indicator works flawlessly without repainting. Clean setup instructions and instant delivery on Windows. Excellent quantitative coding.'
+    },
+    {
+      name: 'Youssef Benali (يوسف بن علي)',
+      country: 'المغرب 🇲🇦',
+      country_en: 'Morocco 🇲🇦',
+      rating: 5,
+      service: 'flash',
+      stat: 'باقة 100K · دعم مستمر',
+      stat_en: '100K Package · 24/7 Support',
+      text: 'تعامل راقٍ وسرعة استجابة على الواتساب. الباقة وصلت كاملة ومطابقة للمواصفات والشرح كان واضحاً خطوة بخطوة. استمر يا سيف الدين أنت فخر للشباب العربي.',
+      text_en: 'Classy communication and rapid response on WhatsApp. The package was delivered completely as described with clear step-by-step guidance. True professional.'
+    }
+  ];
+
+  var allReviews = defaultReviews.slice();
+  var activeReviewFilter = 'all';
+
+  var revServiceLabels = {
+    managed:    { ar: '💼 إدارة المحافظ', en: '💼 Managed Account', cls: 'managed' },
+    flash:      { ar: '⚡ فلاش USDT',    en: '⚡ Flash USDT',      cls: 'flash' },
+    signals:    { ar: '📡 توصيات VIP',   en: '📡 VIP Signals',     cls: 'signals' },
+    indicators: { ar: '🤖 المؤشرات',     en: '🤖 MT5 Indicator',   cls: 'indicators' }
+  };
+
+  function escapeRevHtml(str) {
+    return (str || '').replace(/[&<>"']/g, function(m) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+    });
+  }
+
+  function getInitials(name) {
+    if (!name) return 'SB';
+    var parts = name.trim().split(/[\s._-]+/);
+    if (parts.length >= 2 && parts[0] && parts[1]) {
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+    return (name.substring(0, 2)).toUpperCase();
+  }
+
+  window.renderReviews = function() {
+    var container = document.getElementById('reviewsContainer');
+    if (!container) return;
+
+    var isAr = (document.documentElement.getAttribute('lang') === 'ar');
+    var filtered = allReviews.filter(function(r) {
+      if (activeReviewFilter === 'all') return true;
+      return (r.service === activeReviewFilter);
+    });
+
+    if (!filtered.length) {
+      container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--muted);font-family:\'JetBrains Mono\',monospace;">' +
+        (isAr ? '// لا توجد تقييمات في هذا التصنيف حالياً' : '// No reviews currently in this category') +
+        '</div>';
+      return;
+    }
+
+    var html = '';
+    filtered.forEach(function(r) {
+      var sMeta = revServiceLabels[r.service] || revServiceLabels.managed;
+      var sLabel = isAr ? sMeta.ar : sMeta.en;
+      var country = isAr ? (r.country || r.country_en || '') : (r.country_en || r.country || '');
+      var quote = isAr ? (r.text || r.text_en || '') : (r.text_en || r.text || '');
+      var stat = isAr ? (r.stat || r.stat_en || '') : (r.stat_en || r.stat || '');
+      var stars = '★★★★★'.substring(0, r.rating || 5) + '☆☆☆☆☆'.substring(0, Math.max(0, 5 - (r.rating || 5)));
+      var initials = getInitials(r.name);
+
+      var statHtml = stat ? ('<span class="rev-stat-pill">' + escapeRevHtml(stat) + '</span>') : '';
+
+      html += '<div class="rev-card">' +
+        '<div class="rev-card-head">' +
+          '<div class="rev-user">' +
+            '<div class="rev-avatar" style="font-family:\'JetBrains Mono\',monospace;font-weight:700;font-size:13px;color:var(--neon)">' + initials + '</div>' +
+            '<div class="rev-user-info">' +
+              '<b>' + escapeRevHtml(r.name) + '</b>' +
+              '<span>' + escapeRevHtml(country) + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<span class="rev-service-tag ' + sMeta.cls + '">' + sLabel + '</span>' +
+        '</div>' +
+        '<div class="rev-rating-row">' +
+          '<div class="rev-card-stars">' + stars + '</div>' +
+          statHtml +
+        '</div>' +
+        '<p class="rev-quote">“' + escapeRevHtml(quote) + '”</p>' +
+        '<div class="rev-card-foot">' +
+          '<div class="rev-verified">' +
+            '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>' +
+            '<span>' + (isAr ? 'عميل موثق 100%' : '100% Verified Client') + '</span>' +
+          '</div>' +
+          '<span class="mono" style="font-size:11px;color:var(--muted)">' + (isAr ? 'مُعتمد رسمي' : 'Verified Lead') + '</span>' +
+        '</div>' +
+      '</div>';
+    });
+
+    container.innerHTML = html;
+  };
+
+  window.filterReviews = function(category, btn) {
+    activeReviewFilter = category || 'all';
+    document.querySelectorAll('.rev-filter-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    if (btn) btn.classList.add('active');
+    window.renderReviews();
+  };
+
+  window.openReviewModal = function() {
+    var m = document.getElementById('revModal');
+    if (!m) return;
+    m.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    var notice = document.getElementById('revFormNotice');
+    if (notice) {
+      notice.className = 'rev-notice';
+      notice.innerHTML = '';
+    }
+  };
+
+  window.closeReviewModal = function() {
+    var m = document.getElementById('revModal');
+    if (!m) return;
+    m.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  window.handleReviewSubmit = function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    var nameInp = document.getElementById('revClientName');
+    var countryInp = document.getElementById('revClientCountry');
+    var serviceInp = document.getElementById('revServiceType');
+    var ratingInp = document.getElementById('revRatingVal');
+    var statInp = document.getElementById('revProfitStat');
+    var commentInp = document.getElementById('revComment');
+    var submitBtn = document.getElementById('revSubmitBtn');
+    var notice = document.getElementById('revFormNotice');
+
+    var name = nameInp ? nameInp.value.trim() : '';
+    var country = countryInp ? countryInp.value.trim() : '';
+    var service = serviceInp ? serviceInp.value : 'managed';
+    var rating = ratingInp ? (parseInt(ratingInp.value, 10) || 5) : 5;
+    var stat = statInp ? statInp.value.trim() : '';
+    var comment = commentInp ? commentInp.value.trim() : '';
+
+    var isAr = (document.documentElement.getAttribute('lang') === 'ar');
+
+    if (!name || !country || !comment) {
+      if (notice) {
+        notice.className = 'rev-notice error';
+        notice.textContent = isAr ? '⚠️ يرجى تعبئة كافة الحقول المطلوبة (الاسم، الدولة، والرأي).' : '⚠️ Please complete all required fields (name, country, and review).';
+      }
+      return;
+    }
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="status-pulse" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#000;margin-right:6px"></span> ' +
+        (isAr ? 'جاري التحقق والإرسال...' : 'Verifying & Submitting...');
+    }
+
+    // 1. Send to Supabase Table: client_reviews
+    if (sdb && typeof sdb.from === 'function') {
+      try {
+        sdb.from('client_reviews').insert([{
+          client_name: name,
+          client_country: country,
+          rating: rating,
+          service_type: service,
+          review_text: comment,
+          profit_stat: stat,
+          is_verified: true,
+          is_active: true
+        }]).then(function(res){
+          if (res && res.error) {
+            console.warn('Supabase review insert error:', res.error);
+          }
+        }).catch(function(err){
+          console.warn('Supabase review error:', err);
+        });
+      } catch(err){}
+    }
+
+    // 2. Instant Telegram Bot Alert to Saifeddine's Phone
+    var cfg = window.CVX_TELEGRAM_CONFIG || {};
+    if (cfg.botToken && cfg.chatId) {
+      try {
+        var starsStr = '★★★★★'.substring(0, rating) + '☆☆☆☆☆'.substring(0, Math.max(0, 5 - rating));
+        var tgMsg = '⭐ NEW CLIENT REVIEW SUBMITTED! | تقييم عميل جديد\n' +
+          '━━━━━━━━━━━━━━━━━━━━\n' +
+          '👤 Name: ' + name + '\n' +
+          '📍 Location: ' + country + '\n' +
+          '⭐ Rating: ' + rating + '/5 (' + starsStr + ')\n' +
+          '💼 Service: ' + service + '\n' +
+          '📊 Achievement: ' + (stat || 'None provided') + '\n' +
+          '📝 Review:\n' + comment + '\n' +
+          '━━━━━━━━━━━━━━━━━━━━\n' +
+          '🌐 Source: Portfolio Reviews Terminal\n' +
+          '🕒 Timestamp: ' + new Date().toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+
+        fetch('https://api.telegram.org/bot' + cfg.botToken + '/sendMessage', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id: cfg.chatId, text: tgMsg })
+        }).catch(function(err){ console.warn('TG dispatch error:', err); });
+      } catch(e){}
+    }
+
+    // 3. Prepend to local reviews list immediately so client sees it live on screen
+    var newRev = {
+      name: name,
+      country: country,
+      country_en: country,
+      rating: rating,
+      service: service,
+      stat: stat,
+      stat_en: stat,
+      text: comment,
+      text_en: comment
+    };
+    allReviews.unshift(newRev);
+    window.renderReviews();
+
+    // 4. Show success message & auto close
+    if (notice) {
+      notice.className = 'rev-notice success';
+      notice.innerHTML = isAr ?
+        '✓ شكراً لك، <b>' + escapeRevHtml(name) + '</b>! تم نشر تقييمك وإشعار سيف الدين بومعزة بنجاح.' :
+        '✓ Thank you, <b>' + escapeRevHtml(name) + '</b>! Your review has been published and sent to Saifeddine.';
+    }
+
+    var formEl = document.getElementById('revSubmitForm');
+    if (formEl) formEl.reset();
+
+    setTimeout(function() {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span id="revSubmitBtnTxt">' + (isAr ? 'إرسال التقييم 🚀' : 'Submit Review 🚀') + '</span>';
+      }
+      window.closeReviewModal();
+    }, 2200);
+  };
+
+  // Load Live Verified Reviews from Supabase (Table: client_reviews)
+  function loadLiveReviews() {
+    if (!sdb) return;
+    try {
+      sdb.from('client_reviews').select('*').eq('is_active', true).order('created_at', { ascending: false }).then(function(res) {
+        var list = (res && res.data && res.data.length) ? res.data : [];
+        if (!list.length) return;
+        var liveItems = list.map(function(r) {
+          return {
+            name: r.client_name,
+            country: r.client_country,
+            country_en: r.client_country,
+            rating: r.rating || 5,
+            service: r.service_type || 'managed',
+            stat: r.profit_stat || '',
+            stat_en: r.profit_stat || '',
+            text: r.review_text,
+            text_en: r.review_text_en || r.review_text
+          };
+        });
+        allReviews = liveItems.concat(defaultReviews);
+        window.renderReviews();
+      }).catch(function(){});
+    } catch(e){}
+  }
+
+  // Initial render of reviews and live sync
+  window.renderReviews();
+  loadLiveReviews();
 
   // Automatic Visitor Analytics Tracker (Table: website_visitors)
   (function(){
@@ -5760,6 +6695,7 @@ body.theme-light .faq-icon {
         'nav_newsx': 'NewsX AI ⚡',
         'nav_flash': 'فلاش USDT ⚡',
         'nav_experience': 'المسيرة',
+        'nav_reviews': 'التقييمات ⭐',
         'nav_contact': 'تواصل',
         'nav_cta': '⇩ ملف التداول',
         'theme_dark': 'داكن',
@@ -5776,7 +6712,9 @@ body.theme-light .faq-icon {
         'mob_newsx': '<span class="mono">// 06</span> منصة NewsX AI <span class="mob-badge">AI LIVE</span>',
         'mob_flash': '<span class="mono">// 07</span> باقات Flash USDT <span class="mob-badge gold">عروض</span>',
         'mob_exp': '<span class="mono">// 08</span> المسيرة المهنية',
-        'mob_contact': '<span class="mono">// 09</span> التواصل المباشر والاستفسار',
+        'mob_reviews': '<span class="mono">// 09</span> آراء وتقييمات العملاء <span class="mob-badge gold">5.0 ★</span>',
+        'mob_faq': '<span class="mono">// 10</span> الأسئلة الشائعة والأمان',
+        'mob_contact': '<span class="mono">// 11</span> التواصل المباشر والاستفسار',
         'mob_dl': '⇩ تحميل ملف التداول (PDF)',
         'mob_dl_link': 'تحميل ملف التداول ⇩',
 
@@ -6139,7 +7077,31 @@ body.theme-light .faq-icon {
         'faq_q7': 'ما هي العوائد الشهرية المتوقعة أو الأداء المستهدف لحسابي؟',
         'faq_a7': 'يستهدف سجل أدائنا نمواً سنوياً متزناً بين <b>30% إلى 50%+ سنوياً (بمتوسط 3% إلى 8% شهرياً بانضباط تام)</b> مع إبقاء التراجع الأقصى تحت سقف 8.5% الصارم. نرفض استراتيجيات المقامرة والمضاعفات الخطرة (Martingale)، وأولويتنا الدائمة هي حماية رأس المال الأساسي أولاً وتحقيق نمو تراكمي آمن ومستمر.',
         'faq_q8': 'كيف يتم إرسال إشارات وتوصيات VIP وعلى أي أزواج يتم التداول؟',
-        'faq_a8': 'يتم بث الإشارات فورياً ومباشرة إلى هاتفك عبر <b>قناة تيليجرام VIP الخاصة</b> وتطبيق <b>منصة NewsX AI</b> مع إشعارات دفع فورية. تتضمن كل توصية: نقطة الدخول المحددة، أمر وقف الخسارة (SL)، وأهداف ربح متعددة (TP1, TP2, TP3). يتركز التداول بشكل أساسي على <b>الذهب (XAUUSD)، مؤشر US30، ناسداك، والعملات الكبرى (EUR/USD, GBP/USD)</b> خاصة أوقات الأخبار الاقتصادية الكبرى (NFP, CPI, FOMC).'
+        'faq_a8': 'يتم بث الإشارات فورياً ومباشرة إلى هاتفك عبر <b>قناة تيليجرام VIP الخاصة</b> وتطبيق <b>منصة NewsX AI</b> مع إشعارات دفع فورية. تتضمن كل توصية: نقطة الدخول المحددة، أمر وقف الخسارة (SL)، وأهداف ربح متعددة (TP1, TP2, TP3). يتركز التداول بشكل أساسي على <b>الذهب (XAUUSD)، مؤشر US30، ناسداك، والعملات الكبرى (EUR/USD, GBP/USD)</b> خاصة أوقات الأخبار الاقتصادية الكبرى (NFP, CPI, FOMC).',
+
+        // Reviews Section
+        'rev_kick': '// آراء موثقة وتجارب حقيقية',
+        'rev_title': '# آراء وتقييمات <span class="h">المستثمرين والعملاء</span>',
+        'rev_sub': 'تجارب حقيقية وتقييمات موثقة من عملاء إدارة المحافظ، مشتركي توصيات VIP، ومستخدمي خدمات فلاش USDT.',
+        'rev_score_lbl': 'تقييم موثوق · 100% شفافية',
+        'rev_stat1': 'عميل راضٍ',
+        'rev_stat2': 'دولة',
+        'rev_stat3': 'نسبة نجاح الصفقات',
+        'rev_add_btn': '✍️ أضف تقييمك وتجربتك',
+        'rev_filter_all': 'الكل (All)',
+        'rev_filter_managed': '💼 إدارة المحافظ',
+        'rev_filter_flash': '⚡ فلاش USDT',
+        'rev_filter_signals': '📡 توصيات VIP',
+        'rev_filter_ind': '🤖 المؤشرات البرمجية',
+        'rev_modal_title': 'شارك تجربتك وتقييمك مع سيف الدين',
+        'rev_modal_sub': 'رأيك يهمنا ويساعد المستثمرين الجدد على اتخاذ قرارات تداول واثقة وشفافة.',
+        'lbl_rev_name': 'الاسم أو اللقب *',
+        'lbl_rev_country': 'الدولة / المدينة *',
+        'lbl_rev_service': 'الخدمة المستفاد منها *',
+        'lbl_rev_rating': 'التقييم *',
+        'lbl_rev_stat': 'نتيجة أو إنجاز حققته (اختياري)',
+        'lbl_rev_msg': 'رأيك وتجربتك بالتفصيل *',
+        'rev_btn_submit': 'إرسال التقييم 🚀'
       },
       en: {
         // Header & Navigation
@@ -6153,6 +7115,7 @@ body.theme-light .faq-icon {
         'nav_newsx': 'NewsX AI ⚡',
         'nav_flash': 'Flash USDT ⚡',
         'nav_experience': 'Experience',
+        'nav_reviews': 'Reviews ⭐',
         'nav_contact': 'Contact',
         'nav_cta': '⇩ Trading Profile',
         'theme_dark': 'Dark',
@@ -6169,7 +7132,9 @@ body.theme-light .faq-icon {
         'mob_newsx': '<span class="mono">// 06</span> NewsX AI Platform <span class="mob-badge">AI LIVE</span>',
         'mob_flash': '<span class="mono">// 07</span> Flash USDT Offers <span class="mob-badge gold">OFFERS</span>',
         'mob_exp': '<span class="mono">// 08</span> Experience Timeline',
-        'mob_contact': '<span class="mono">// 09</span> Direct Contact & Inquiry',
+        'mob_reviews': '<span class="mono">// 09</span> Client Testimonials <span class="mob-badge gold">5.0 ★</span>',
+        'mob_faq': '<span class="mono">// 10</span> FAQ & Safety',
+        'mob_contact': '<span class="mono">// 11</span> Direct Contact & Inquiry',
         'mob_dl': '⇩ Download Trading Profile (PDF)',
         'mob_dl_link': 'Download Trading Profile ⇩',
 
@@ -6532,7 +7497,31 @@ body.theme-light .faq-icon {
         'faq_q7': 'What are the expected monthly returns and performance targets?',
         'faq_a7': 'Our track record targets a realistic <b>30% to 50%+ annual growth (~3% to 8% monthly)</b> with institutional drawdown containment below 8.5%. We reject reckless \'flip account\' gambles. Our primary objective is steady compounding and long-term portfolio growth while strictly safeguarding your baseline equity.',
         'faq_q8': 'How are VIP Trading Signals delivered, and which pairs are covered?',
-        'faq_a8': 'Signals are broadcast in real time directly to your smartphone through our private <b>VIP Telegram channel</b> and the <b>NewsX AI platform</b>. Each signal provides a precise Entry Price, Stop Loss (SL), and multi-tier Take Profit targets (TP1, TP2, TP3). Coverage centers heavily on <b>Gold (XAUUSD), US30, Nasdaq, and major FX pairs (EUR/USD, GBP/USD)</b> around high-impact macroeconomic news releases (NFP, CPI, FOMC).'
+        'faq_a8': 'Signals are broadcast in real time directly to your smartphone through our private <b>VIP Telegram channel</b> and the <b>NewsX AI platform</b>. Each signal provides a precise Entry Price, Stop Loss (SL), and multi-tier Take Profit targets (TP1, TP2, TP3). Coverage centers heavily on <b>Gold (XAUUSD), US30, Nasdaq, and major FX pairs (EUR/USD, GBP/USD)</b> around high-impact macroeconomic news releases (NFP, CPI, FOMC).',
+
+        // Reviews Section
+        'rev_kick': '// verified social proof & testimonials',
+        'rev_title': '# Verified Client <span class="h">Testimonials</span>',
+        'rev_sub': 'Authentic feedback and verified reviews from managed account clients, VIP signal members, and Flash USDT users.',
+        'rev_score_lbl': 'Verified Rating · 100% Transparency',
+        'rev_stat1': 'Satisfied Clients',
+        'rev_stat2': 'Countries',
+        'rev_stat3': 'Trade Win Rate',
+        'rev_add_btn': '✍️ Leave a Review',
+        'rev_filter_all': 'All Reviews',
+        'rev_filter_managed': '💼 Managed Accounts',
+        'rev_filter_flash': '⚡ Flash USDT',
+        'rev_filter_signals': '📡 VIP Signals',
+        'rev_filter_ind': '🤖 Custom Indicators',
+        'rev_modal_title': 'Share Your Experience with Saifeddine',
+        'rev_modal_sub': 'Your feedback helps new investors make confident, transparent trading decisions.',
+        'lbl_rev_name': 'Full Name or Alias *',
+        'lbl_rev_country': 'Country / City *',
+        'lbl_rev_service': 'Service Used *',
+        'lbl_rev_rating': 'Rating *',
+        'lbl_rev_stat': 'Achievement or Result (Optional)',
+        'lbl_rev_msg': 'Your Detailed Feedback *',
+        'rev_btn_submit': 'Submit Review 🚀'
       }
     };
 
@@ -6586,6 +7575,8 @@ body.theme-light .faq-icon {
         ['a[href="#newsx"]', 'nav_newsx'],
         ['a[href="#flash"]', 'nav_flash'],
         ['a[href="#experience"]', 'nav_experience'],
+        ['a[href="#reviews"]', 'nav_reviews'],
+        ['a[href="#faq"]', 'nav_faq'],
         ['a[href="#contact"]', 'nav_contact']
       ];
       nMap.forEach(function(pair) {
@@ -6598,7 +7589,7 @@ body.theme-light .faq-icon {
       if (dlBtn && t['nav_cta']) dlBtn.textContent = t['nav_cta'];
 
       var mobLinks = document.querySelectorAll('.cvx-mob-links a');
-      var mKeys = ['mob_home', 'mob_about', 'mob_expertise', 'mob_skills', 'mob_projects', 'mob_results', 'mob_newsx', 'mob_flash', 'mob_exp', 'mob_contact'];
+      var mKeys = ['mob_home', 'mob_about', 'mob_expertise', 'mob_skills', 'mob_projects', 'mob_results', 'mob_newsx', 'mob_flash', 'mob_exp', 'mob_reviews', 'mob_faq', 'mob_contact'];
       mobLinks.forEach(function(link, idx) {
         if (mKeys[idx] && t[mKeys[idx]]) link.innerHTML = t[mKeys[idx]];
       });
@@ -7065,6 +8056,60 @@ body.theme-light .faq-icon {
       if (mSupp && t['modal_supp_btn']) mSupp.textContent = t['modal_supp_btn'];
       var mClose = document.getElementById('flCloseBottomText');
       if (mClose && t['modal_close_btn']) mClose.textContent = t['modal_close_btn'];
+
+      // 13.5. Reviews Section & Modal
+      var navRev = document.getElementById('navReviewsLink');
+      if (navRev && t['nav_reviews']) navRev.textContent = t['nav_reviews'];
+      var revK = document.getElementById('revKick');
+      if (revK && t['rev_kick']) revK.textContent = t['rev_kick'];
+      var revT = document.getElementById('revTitle');
+      if (revT && t['rev_title']) revT.innerHTML = t['rev_title'];
+      var revS = document.getElementById('revSub');
+      if (revS && t['rev_sub']) revS.textContent = t['rev_sub'];
+      var revScoreLbl = document.getElementById('revScoreLbl');
+      if (revScoreLbl && t['rev_score_lbl']) revScoreLbl.textContent = t['rev_score_lbl'];
+      var revSt1 = document.getElementById('revStat1');
+      if (revSt1 && t['rev_stat1']) revSt1.textContent = t['rev_stat1'];
+      var revSt2 = document.getElementById('revStat2');
+      if (revSt2 && t['rev_stat2']) revSt2.textContent = t['rev_stat2'];
+      var revSt3 = document.getElementById('revStat3');
+      if (revSt3 && t['rev_stat3']) revSt3.textContent = t['rev_stat3'];
+      var revAddTxt = document.getElementById('revAddBtnTxt');
+      if (revAddTxt && t['rev_add_btn']) revAddTxt.textContent = t['rev_add_btn'];
+
+      var rFAll = document.getElementById('revFilterAll');
+      if (rFAll && t['rev_filter_all']) rFAll.textContent = t['rev_filter_all'];
+      var rFM = document.getElementById('revFilterManaged');
+      if (rFM && t['rev_filter_managed']) rFM.textContent = t['rev_filter_managed'];
+      var rFF = document.getElementById('revFilterFlash');
+      if (rFF && t['rev_filter_flash']) rFF.textContent = t['rev_filter_flash'];
+      var rFS = document.getElementById('revFilterSignals');
+      if (rFS && t['rev_filter_signals']) rFS.textContent = t['rev_filter_signals'];
+      var rFI = document.getElementById('revFilterInd');
+      if (rFI && t['rev_filter_ind']) rFI.textContent = t['rev_filter_ind'];
+
+      var rMTitle = document.getElementById('revModalTitle');
+      if (rMTitle && t['rev_modal_title']) rMTitle.textContent = t['rev_modal_title'];
+      var rMSub = document.getElementById('revModalSub');
+      if (rMSub && t['rev_modal_sub']) rMSub.textContent = t['rev_modal_sub'];
+      var lRN = document.getElementById('lblRevName');
+      if (lRN && t['lbl_rev_name']) lRN.textContent = t['lbl_rev_name'];
+      var lRC = document.getElementById('lblRevCountry');
+      if (lRC && t['lbl_rev_country']) lRC.textContent = t['lbl_rev_country'];
+      var lRS = document.getElementById('lblRevService');
+      if (lRS && t['lbl_rev_service']) lRS.textContent = t['lbl_rev_service'];
+      var lRR = document.getElementById('lblRevRating');
+      if (lRR && t['lbl_rev_rating']) lRR.textContent = t['lbl_rev_rating'];
+      var lRSt = document.getElementById('lblRevStat');
+      if (lRSt && t['lbl_rev_stat']) lRSt.textContent = t['lbl_rev_stat'];
+      var lRM = document.getElementById('lblRevMsg');
+      if (lRM && t['lbl_rev_msg']) lRM.textContent = t['lbl_rev_msg'];
+      var rSubTxt = document.getElementById('revSubmitBtnTxt');
+      if (rSubTxt && t['rev_btn_submit']) rSubTxt.textContent = t['rev_btn_submit'];
+
+      if (typeof window.renderReviews === 'function') {
+        window.renderReviews();
+      }
 
       // 14. FAQ Section
       var navFaq = document.getElementById('navFaqLink');

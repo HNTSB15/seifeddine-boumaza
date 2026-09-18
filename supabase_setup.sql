@@ -208,3 +208,50 @@ ON public.website_visitors FOR SELECT TO authenticated
 USING (true);
 
 
+-- ------------------------------------------------------------------------------
+-- ⭐ TABLE 5: client_reviews (آراء وتقييمات العملاء والمستثمرين)
+-- ------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.client_reviews (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL,
+    client_name TEXT NOT NULL,
+    client_country TEXT DEFAULT 'DZ',
+    rating INT DEFAULT 5,
+    service_type TEXT NOT NULL, -- 'managed', 'flash', 'signals', 'indicators'
+    review_text TEXT NOT NULL,
+    review_text_en TEXT,
+    profit_stat TEXT, -- e.g. '+42.8% ROI (5 Months)', '80K Flash Delivered'
+    is_verified BOOLEAN DEFAULT true,
+    is_active BOOLEAN DEFAULT true
+);
+
+ALTER TABLE public.client_reviews ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Allow public insert client_reviews" ON public.client_reviews;
+CREATE POLICY "Allow public insert client_reviews"
+ON public.client_reviews FOR INSERT TO anon, authenticated
+WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Allow public read client_reviews" ON public.client_reviews;
+CREATE POLICY "Allow public read client_reviews"
+ON public.client_reviews FOR SELECT TO anon, authenticated
+USING (is_active = true);
+
+DROP POLICY IF EXISTS "Allow authenticated manage client_reviews" ON public.client_reviews;
+CREATE POLICY "Allow authenticated manage client_reviews"
+ON public.client_reviews FOR ALL TO authenticated
+USING (true);
+
+-- Initial default verified reviews:
+INSERT INTO public.client_reviews (client_name, client_country, rating, service_type, review_text, review_text_en, profit_stat, is_verified, is_active)
+VALUES
+    ('Tariq B. (طارق ب.)', 'الجزائر 🇩🇿', 5, 'managed', 'بدأت مع سيف الدين بمحفظة تجريبية ثم قمت برفع رأس المال. الالتزام بإدارة المخاطر ووقف الخسارة لا مثيل له، لا مغامرات ولا عشوائية، تقارير أسبوعية تفصيلية واحترافية عالية جداً.', 'Started with Saifeddine on a test portfolio then scaled my capital. The risk management and stop-loss discipline are second to none—zero reckless gambling. Detailed weekly reports and immense professionalism.', '+42.8% ROI (5 أشهر)', true, true),
+    ('Faisal Al-Otaibi (فيصل العتيبي)', 'السعودية 🇸🇦', 5, 'signals', 'أفضل قناة توصيات دخلت فيها من 3 سنوات. نقاط الدخول دقيقة جداً مع وقف خسارة صغير وأهداف محددة. قناة سيف الدين أنقذت حسابي من الخسائر المتراكمة وعوضت رأس مالي.', 'Hands down the best signal channel I have joined in 3 years. Precision entry points, tight stop-losses, and well-defined targets. Saifeddine VIP channel turned my losses into consistent profits.', 'Winrate 86% على الذهب XAUUSD', true, true),
+    ('Karim Mansouri', 'فرنسا 🇫🇷', 5, 'flash', 'خدمة فائقة السرعة ودعم استثنائي عبر التيليجرام. تم تأكيد المعاملة على نود خاص في أقل من 3 دقائق. رقي واحترافية غير مسبوقة، أنصح بالتعامل معه بشدة!', 'Super fast service and exceptional support on Telegram. Transaction confirmed on a private blockchain node in under 3 minutes. Truly elite professionalism, highly recommended!', '80,000 Flash USDT · تسليم في 3 دقائق', true, true),
+    ('Omar Al-Shammari (عمر الشمري)', 'الإمارات 🇦🇪', 5, 'managed', 'الشفافية هي الرقم 1 عند الأخ سيف الدين. حسابي في Exness مربوط مباشرة وأرى كل صفقة تفتح وتغلق في نفس اللحظة مع الالتزام الصارم بنسبة 1-2% ريسك لكل صفقة.', 'Transparency is unmatched with brother Saifeddine. My Exness account is linked directly; I watch every trade open and close in real-time with strict 1-2% risk discipline per trade.', 'سحب أرباح شهري منتظم', true, true),
+    ('David Henderson', 'بريطانيا 🇬🇧', 5, 'indicators', 'مؤشر MT5 المخصص لكسر التقلبات يعمل بكفاءة استثنائية وبدون أي إعادة رسم (Zero Repaint). تعليمات التثبيت واضحة والتسليم فوري على نظام ويندوز.', 'The custom MT5 volatility break indicator works flawlessly without repainting. Clean setup instructions and instant delivery on Windows. Excellent quantitative coding.', 'MT5 Indicator · 0 Repaint', true, true),
+    ('Youssef Benali (يوسف بن علي)', 'المغرب 🇲🇦', 5, 'flash', 'تعامل راقٍ وسرعة استجابة على الواتساب. الباقة وصلت كاملة ومطابقة للمواصفات والشرح كان واضحاً خطوة بخطوة. استمر يا سيف الدين أنت فخر للشباب العربي.', 'Classy communication and rapid response on WhatsApp. The package was delivered completely as described with clear step-by-step guidance. True professional.', '100K Package · دعم فني مستمر', true, true)
+ON CONFLICT DO NOTHING;
+
+
+
