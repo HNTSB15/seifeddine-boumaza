@@ -798,9 +798,313 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
 .cvx-fab svg{width:25px;height:25px}
 .cvx-fab.tg{left:22px;background:var(--rgb);background-size:200% auto;animation:cvxRgb 6s linear infinite;box-shadow:0 0 22px rgba(0,255,170,.45)}
 .cvx-fab.tg svg{fill:#04140c}
-.cvx-fab.top{right:22px;background:rgba(13,20,32,.85);border:1px solid var(--line);opacity:0;pointer-events:none;transform:translateY(10px)}
+.cvx-fab.top{right:22px;bottom:22px;background:rgba(13,20,32,.85);border:1px solid var(--line);opacity:0;pointer-events:none;transform:translateY(10px);z-index:9990;}
 .cvx-fab.top svg{fill:var(--neon)}
 .cvx-fab.top.show{opacity:1;pointer-events:auto;transform:none}
+@media(max-width:768px){
+  .cvx-fab.top{bottom:82px;right:14px;width:44px;height:44px;}
+  .cvx-fab.top svg{width:20px;height:20px;}
+}
+
+/* ==========================================================================
+   🚀 CYBERPUNK VIP HUD COMMAND DOCK (Floating Bottom Dock)
+   ========================================================================== */
+.cvx-hud-dock-wrap{
+  position:fixed;
+  bottom:max(16px, env(safe-area-inset-bottom));
+  left:50%;
+  transform:translateX(-50%);
+  z-index:9998;
+  pointer-events:none;
+  transition:all .35s cubic-bezier(0.16, 1, 0.3, 1);
+  width:max-content;
+  max-width:calc(100vw - 24px);
+}
+.cvx-hud-dock-wrap.hide-dock{
+  transform:translateX(-50%) translateY(130%);
+  opacity:0;
+}
+.cvx-hud-dock{
+  pointer-events:auto;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:7px 14px;
+  background:rgba(6, 11, 20, 0.88);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border-radius:9999px;
+  border:1px solid rgba(0, 240, 255, 0.28);
+  border-top:1px solid rgba(0, 255, 170, 0.5);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.65),
+    0 0 20px rgba(0, 240, 255, 0.18),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  position:relative;
+  transition:all .3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cvx-hud-dock:hover{
+  border-color:rgba(0, 255, 156, 0.45);
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.75),
+    0 0 28px rgba(0, 255, 156, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.25);
+}
+
+/* Status Pill with Live Radar Pulse */
+.cvx-hud-status{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:5px 12px 5px 8px;
+  background:rgba(0, 255, 156, 0.08);
+  border:1px solid rgba(0, 255, 156, 0.25);
+  border-radius:9999px;
+  cursor:default;
+  white-space:nowrap;
+  user-select:none;
+}
+.cvx-hud-radar{
+  position:relative;
+  width:10px;
+  height:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+.cvx-hud-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#00ff9c;
+  box-shadow:0 0 8px #00ff9c;
+  position:relative;
+  z-index:2;
+}
+.cvx-hud-ping{
+  position:absolute;
+  inset:-3px;
+  border-radius:50%;
+  background:rgba(0, 255, 156, 0.6);
+  animation:cvxHudPulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  z-index:1;
+}
+@keyframes cvxHudPulse{
+  0%{transform:scale(0.8);opacity:0.9;}
+  70%{transform:scale(2.2);opacity:0;}
+  100%{transform:scale(2.2);opacity:0;}
+}
+
+.cvx-hud-status-txt{
+  font-size:11.5px;
+  line-height:1.2;
+  color:#dbe8fa;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  font-family:'Space Grotesk', 'Tajawal', sans-serif;
+}
+.cvx-hud-status-txt .hud-bold{
+  font-weight:700;
+  color:#ffffff;
+  letter-spacing:0.2px;
+}
+.cvx-hud-status-txt .hud-sep{
+  color:var(--neon);
+  opacity:0.7;
+}
+.cvx-hud-status-txt .hud-sub{
+  color:var(--neon);
+  font-weight:600;
+  font-size:11px;
+}
+
+/* Vertical Divider */
+.cvx-hud-divider{
+  width:1px;
+  height:22px;
+  background:linear-gradient(180deg, transparent, rgba(0, 240, 255, 0.35), transparent);
+  flex-shrink:0;
+}
+
+/* Action Items Container */
+.cvx-hud-actions{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* Action Buttons */
+.cvx-hud-btn{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 12px;
+  border-radius:9999px;
+  background:rgba(14, 23, 38, 0.7);
+  border:1px solid rgba(255, 255, 255, 0.08);
+  color:#c8d9ed !important;
+  text-decoration:none !important;
+  font-size:12px;
+  font-weight:600;
+  font-family:'Space Grotesk', 'Tajawal', sans-serif;
+  white-space:nowrap;
+  transition:all .22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing:border-box;
+}
+.cvx-hud-btn svg{
+  width:16px;
+  height:16px;
+  fill:currentColor;
+  flex-shrink:0;
+  transition:transform .2s ease;
+}
+.cvx-hud-btn:hover{
+  transform:translateY(-2px);
+  color:#ffffff !important;
+}
+.cvx-hud-btn:hover svg{
+  transform:scale(1.15);
+}
+.cvx-hud-btn:active{
+  transform:scale(0.96);
+}
+
+/* Button Variants */
+.cvx-hud-btn.cvx-hud-res:hover{
+  background:rgba(255, 215, 0, 0.15);
+  border-color:rgba(255, 215, 0, 0.55);
+  box-shadow:0 0 16px rgba(255, 215, 0, 0.35);
+  color:#ffd700 !important;
+}
+.cvx-hud-btn.cvx-hud-res:hover svg{
+  fill:#ffd700;
+}
+
+.cvx-hud-btn.cvx-hud-flash:hover{
+  background:rgba(0, 240, 255, 0.15);
+  border-color:rgba(0, 240, 255, 0.55);
+  box-shadow:0 0 16px rgba(0, 240, 255, 0.35);
+  color:#00f0ff !important;
+}
+.cvx-hud-btn.cvx-hud-flash:hover svg{
+  fill:#00f0ff;
+}
+
+.cvx-hud-btn.cvx-hud-wa:hover{
+  background:rgba(37, 211, 102, 0.16);
+  border-color:rgba(37, 211, 102, 0.55);
+  box-shadow:0 0 18px rgba(37, 211, 102, 0.4);
+  color:#25d366 !important;
+}
+.cvx-hud-btn.cvx-hud-wa:hover svg{
+  fill:#25d366;
+}
+
+.cvx-hud-btn.cvx-hud-tg{
+  background:linear-gradient(135deg, rgba(0, 136, 204, 0.3), rgba(0, 240, 255, 0.25));
+  border-color:rgba(0, 240, 255, 0.45);
+  color:#ffffff !important;
+}
+.cvx-hud-btn.cvx-hud-tg:hover{
+  background:linear-gradient(135deg, #0088cc, #00b4d8);
+  border-color:#00f0ff;
+  box-shadow:0 0 20px rgba(0, 240, 255, 0.55);
+  color:#ffffff !important;
+}
+.cvx-hud-btn.cvx-hud-tg svg{
+  fill:#00f0ff;
+}
+.cvx-hud-btn.cvx-hud-tg:hover svg{
+  fill:#ffffff;
+}
+
+/* Minimize Toggle */
+.cvx-hud-toggle{
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:rgba(255, 255, 255, 0.05);
+  border:1px solid rgba(255, 255, 255, 0.1);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  padding:0;
+  flex-shrink:0;
+  transition:all .2s ease;
+  color:var(--muted);
+}
+.cvx-hud-toggle svg{
+  width:14px;
+  height:14px;
+  fill:currentColor;
+  transition:transform .3s ease;
+}
+.cvx-hud-toggle:hover{
+  background:rgba(0, 240, 255, 0.15);
+  border-color:rgba(0, 240, 255, 0.4);
+  color:#00f0ff;
+}
+
+/* Collapsed State */
+.cvx-hud-dock.collapsed .cvx-hud-status-txt,
+.cvx-hud-dock.collapsed .cvx-hud-divider,
+.cvx-hud-dock.collapsed .cvx-hud-lbl{
+  display:none;
+}
+.cvx-hud-dock.collapsed .cvx-hud-status{
+  padding:5px 7px;
+}
+.cvx-hud-dock.collapsed .cvx-hud-toggle svg{
+  transform:rotate(180deg);
+}
+
+/* Mobile Responsive */
+@media(max-width:768px){
+  .cvx-hud-dock-wrap{
+    bottom:max(12px, env(safe-area-inset-bottom));
+  }
+  .cvx-hud-dock{
+    padding:6px 10px;
+    gap:7px;
+  }
+  .cvx-hud-status{
+    padding:4px 8px;
+  }
+  .cvx-hud-status-txt .hud-sub{
+    display:none;
+  }
+  .cvx-hud-status-txt .hud-sep{
+    display:none;
+  }
+  .cvx-hud-status-txt .hud-bold{
+    font-size:11px;
+  }
+  .cvx-hud-btn{
+    padding:6px 9px;
+  }
+  .cvx-hud-btn .cvx-hud-lbl{
+    display:none;
+  }
+}
+
+@media(max-width:420px){
+  .cvx-hud-status{
+    display:none;
+  }
+  .cvx-hud-divider{
+    display:none;
+  }
+  .cvx-hud-dock{
+    padding:6px 12px;
+  }
+  .cvx-hud-btn{
+    padding:7px 11px;
+  }
+}
 
 .cvx-reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
 .cvx-reveal.in{opacity:1;transform:none}
@@ -4355,7 +4659,57 @@ body.theme-light .faq-icon {
 <div class="cvx-foot-copy"><span class="mono">© Saifeddine Boumaza — Forex &amp; Crypto Trading Manager</span> — All rights reserved</div>
 </div>
 </footer>
-<a class="cvx-fab tg" href="https://t.me/HNTSB15" rel="noopener" target="_blank" title="Message me on Telegram"><svg viewBox="0 0 24 24"><path d="M21.9 4.3 18.7 19c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.7 13 1.9 11.5c-1-.3-1-1 .2-1.5l18.4-7.1c.9-.3 1.6.2 1.4 1.4Z"></path></svg></a>
+<!-- 🚀 CYBERPUNK VIP HUD COMMAND DOCK (Floating Bottom Console) -->
+<div class="cvx-hud-dock-wrap" id="cvxHudDock">
+  <div class="cvx-hud-dock">
+    <!-- Live Status Pill -->
+    <div class="cvx-hud-status" id="cvxHudStatus">
+      <span class="cvx-hud-radar">
+        <span class="cvx-hud-ping"></span>
+        <span class="cvx-hud-dot"></span>
+      </span>
+      <span class="cvx-hud-status-txt" id="cvxHudStatusTxt">
+        <span class="hud-bold">متاح لقبول محافظ جديدة</span>
+        <span class="hud-sep">·</span>
+        <span class="hud-sub">سيف الدين متصل</span>
+      </span>
+    </div>
+
+    <div class="cvx-hud-divider"></div>
+
+    <!-- Quick 1-Tap Action Items -->
+    <div class="cvx-hud-actions">
+      <!-- 1. Live Trading Results & Records -->
+      <a href="#results" class="cvx-hud-btn cvx-hud-res" title="سجل الصفقات والنتائج الحية">
+        <svg viewBox="0 0 24 24"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z" opacity=".4"/></svg>
+        <span class="cvx-hud-lbl" id="hudLblResults">النتائج 📊</span>
+      </a>
+
+      <!-- 2. Flash USDT Deals -->
+      <a href="#flash" class="cvx-hud-btn cvx-hud-flash" title="حاسبة وباقات فلاش USDT">
+        <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+        <span class="cvx-hud-lbl" id="hudLblFlash">فلاش USDT ⚡</span>
+      </a>
+
+      <!-- 3. Direct WhatsApp Chat -->
+      <a href="https://wa.me/213697114385?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D8%B3%D9%8A%D9%81%20%D8%A7%D9%84%D8%AF%D9%8A%D9%86%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%A5%D8%AF%D8%A7%D8%B1%D8%A9%20%D8%A7%D9%84%D9%85%D8%AD%D8%A7%D9%81%D8%B8%20%D9%88%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AA%D8%AF%D8%A7%D9%88%D9%84" target="_blank" rel="noopener" class="cvx-hud-btn cvx-hud-wa" id="cvxHudWaBtn" title="محادثة واتساب فورية">
+        <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.53c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.24-.75-.67-1.25-1.49-1.4-1.74-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.17-.48-.29z"/></svg>
+        <span class="cvx-hud-lbl" id="hudLblWa">واتساب 🟢</span>
+      </a>
+
+      <!-- 4. Telegram VIP -->
+      <a href="https://t.me/HNTSB15" target="_blank" rel="noopener" class="cvx-hud-btn cvx-hud-tg" id="cvxHudTgBtn" title="محادثة تيليجرام VIP المباشرة">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+        <span class="cvx-hud-lbl" id="hudLblTg">تيليجرام ✈️</span>
+      </a>
+    </div>
+
+    <!-- Minimize Toggle -->
+    <button type="button" class="cvx-hud-toggle" id="cvxHudToggle" title="تصغير / تكبير شريط الأوامر" aria-label="Toggle Command Dock">
+      <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+    </button>
+  </div>
+</div>
 <button class="cvx-fab top" id="cvxTop" title="Back to top" type="button"><svg viewBox="0 0 24 24"><path d="M12 5l7 7-1.4 1.4L13 8.8V20h-2V8.8L6.4 13.4 5 12z"></path></svg></button>
 </div>
 <div class="cvx-print">
@@ -4505,6 +4859,41 @@ body.theme-light .faq-icon {
     top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
     window.addEventListener('scroll',function(){ if(window.pageYOffset>500)top.classList.add('show'); else top.classList.remove('show'); },{passive:true});
   }
+
+  // 🚀 CYBERPUNK VIP HUD COMMAND DOCK CONTROLLER
+  (function initHudDock() {
+    var dockWrap = document.getElementById('cvxHudDock');
+    var dock = dockWrap ? dockWrap.querySelector('.cvx-hud-dock') : null;
+    var toggleBtn = document.getElementById('cvxHudToggle');
+    if (!dockWrap || !dock) return;
+
+    // Toggle minimize/expand
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        dock.classList.toggle('collapsed');
+      });
+    }
+
+    // Smart scroll auto-hide on downward scroll, reveal on upward scroll
+    var lastScroll = window.pageYOffset || 0;
+    var scrollTicking = false;
+    window.addEventListener('scroll', function() {
+      if (!scrollTicking) {
+        window.requestAnimationFrame(function() {
+          var curScroll = window.pageYOffset || 0;
+          if (curScroll > lastScroll && curScroll > 350) {
+            dockWrap.classList.add('hide-dock');
+          } else {
+            dockWrap.classList.remove('hide-dock');
+          }
+          lastScroll = curScroll;
+          scrollTicking = false;
+        });
+        scrollTicking = true;
+      }
+    }, { passive: true });
+  })();
 
   // download CV (print) — prints the dedicated dark cyber resume (.cvx-print)
   function dl(){ window.print(); }
@@ -4667,6 +5056,9 @@ body.theme-light .faq-icon {
         }
         if (k === 'whatsapp_number' || k === 'whatsapp') {
           window.CVX_WHATSAPP = val;
+          var cleanWa = val.replace(/[^0-9]/g, '');
+          var hudWa = document.getElementById('cvxHudWaBtn');
+          if (hudWa) hudWa.href = 'https://wa.me/' + cleanWa + '?text=' + encodeURIComponent('مرحباً سيف الدين، أرغب في الاستفسار عن إدارة المحافظ وخدمات التداول');
         }
         if (k === 'telegram_bot_token') {
           if (window.CVX_TELEGRAM_CONFIG) window.CVX_TELEGRAM_CONFIG.botToken = val;
@@ -5594,6 +5986,12 @@ body.theme-light .faq-icon {
         'nav_cta': '⇩ ملف التداول',
         'theme_dark': 'داكن',
         'theme_light': 'فاتح',
+        'hud_status_bold': 'متاح لقبول محافظ جديدة',
+        'hud_status_sub': 'سيف الدين متصل',
+        'hud_lbl_results': 'النتائج 📊',
+        'hud_lbl_flash': 'فلاش USDT ⚡',
+        'hud_lbl_wa': 'واتساب 🟢',
+        'hud_lbl_tg': 'تيليجرام ✈️',
 
         // Mobile Menu
         'mob_home': '<span class="mono">// 00</span> الرئيسية / البداية',
@@ -5985,6 +6383,12 @@ body.theme-light .faq-icon {
         'nav_cta': '⇩ Trading Profile',
         'theme_dark': 'Dark',
         'theme_light': 'Light',
+        'hud_status_bold': 'Accepting Accounts',
+        'hud_status_sub': 'Saifeddine Online',
+        'hud_lbl_results': 'Results 📊',
+        'hud_lbl_flash': 'Flash USDT ⚡',
+        'hud_lbl_wa': 'WhatsApp 🟢',
+        'hud_lbl_tg': 'Telegram ✈️',
 
         // Mobile Menu
         'mob_home': '<span class="mono">// 00</span> Home / Top',
@@ -6865,6 +7269,20 @@ body.theme-light .faq-icon {
       if (disclP1 && t['discl_p1']) disclP1.innerHTML = t['discl_p1'];
       var disclP2 = document.getElementById('cvxDisclP2');
       if (disclP2 && t['discl_p2']) disclP2.innerHTML = t['discl_p2'];
+
+      // HUD Command Dock
+      var hStatB = document.querySelector('.cvx-hud-status-txt .hud-bold');
+      if (hStatB && t['hud_status_bold']) hStatB.textContent = t['hud_status_bold'];
+      var hStatS = document.querySelector('.cvx-hud-status-txt .hud-sub');
+      if (hStatS && t['hud_status_sub']) hStatS.textContent = t['hud_status_sub'];
+      var hLblRes = document.getElementById('hudLblResults');
+      if (hLblRes && t['hud_lbl_results']) hLblRes.textContent = t['hud_lbl_results'];
+      var hLblFl = document.getElementById('hudLblFlash');
+      if (hLblFl && t['hud_lbl_flash']) hLblFl.textContent = t['hud_lbl_flash'];
+      var hLblWa = document.getElementById('hudLblWa');
+      if (hLblWa && t['hud_lbl_wa']) hLblWa.textContent = t['hud_lbl_wa'];
+      var hLblTg = document.getElementById('hudLblTg');
+      if (hLblTg && t['hud_lbl_tg']) hLblTg.textContent = t['hud_lbl_tg'];
 
       // 13. Checkout Modal
       var mTitle = document.getElementById('flModalTitleText');
