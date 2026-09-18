@@ -6751,9 +6751,54 @@ body.theme-light .rev-fgroup select option {
   window.renderReviews();
   loadLiveReviews();
 
-  // Automatic Visitor Analytics Tracker (Table: website_visitors)
+  // ==========================================================================
+  // 🌍 UNIQUE VISITOR TRACKER (Table: website_visitors)
+  // Only records each visitor ONCE on their very first visit.
+  // Never duplicates on re-entries, page refreshes, or return visits.
+  // ==========================================================================
   (function(){
     try {
+      var TRACK_KEY = 'sb_visitor_tracked_v1';
+      var COOKIE_KEY = 'sb_vtr';
+
+      // 1. Guard check: If visitor was already tracked previously, exit immediately
+      function isAlreadyTracked() {
+        try {
+          if (localStorage.getItem(TRACK_KEY)) return true;
+          if (sessionStorage.getItem(TRACK_KEY)) return true;
+          if (document.cookie && document.cookie.indexOf(COOKIE_KEY + '=1') !== -1) return true;
+        } catch(e) {}
+        return false;
+      }
+
+      // If already tracked on a prior visit, STOP right here (no network calls, no Supabase insert)
+      if (isAlreadyTracked()) {
+        return;
+      }
+
+      // Mark session as pending immediately to avoid any duplicate calls during rapid loads
+      try {
+        sessionStorage.setItem(TRACK_KEY, 'pending');
+      } catch(e) {}
+
+      function markAsTracked() {
+        try {
+          localStorage.setItem(TRACK_KEY, new Date().toISOString());
+          sessionStorage.setItem(TRACK_KEY, '1');
+          document.cookie = COOKIE_KEY + '=1; path=/; max-age=31536000; SameSite=Lax';
+        } catch(e) {}
+      }
+
+      // Optional manual reset helper for testing in browser console: window.resetVisitorTracking()
+      window.resetVisitorTracking = function() {
+        try {
+          localStorage.removeItem(TRACK_KEY);
+          sessionStorage.removeItem(TRACK_KEY);
+          document.cookie = COOKIE_KEY + '=; Max-Age=-99999999; path=/;';
+          console.log('[VisitorTracker] Reset complete. Next page reload will record as a fresh visit.');
+        } catch(e) {}
+      };
+
       function getDeviceInfo() {
         var ua = navigator.userAgent || '';
         var device = 'Desktop PC';
@@ -6805,6 +6850,9 @@ body.theme-light .rev-fgroup select option {
       }
 
       function sendVisitorLog(geo) {
+        // Mark as tracked immediately so subsequent attempts or reloads never re-trigger
+        markAsTracked();
+
         var info = getDeviceInfo();
         var payload = {
           ip_address: (geo && geo.ip) ? geo.ip : 'Direct Visitor',
@@ -6828,7 +6876,7 @@ body.theme-light .rev-fgroup select option {
               'apikey': postKey,
               'Authorization': 'Bearer ' + postKey,
               'Content-Type': 'application/json',
-              'Prefer': 'return=minimal'
+              'Prefer': 'return=minimal,resolution=ignore-duplicates'
             },
             body: JSON.stringify(payload)
           }).catch(function(){});
@@ -6838,6 +6886,10 @@ body.theme-light .rev-fgroup select option {
       }
 
       function trackVisitor() {
+        if (isAlreadyTracked() && sessionStorage.getItem(TRACK_KEY) !== 'pending') {
+          return;
+        }
+
         // Use ipwho.is (fast, reliable, free CORS JSON geolocation)
         fetch('https://ipwho.is/')
           .then(function(res){
@@ -6867,9 +6919,9 @@ body.theme-light .rev-fgroup select option {
       }
 
       if (document.readyState === 'complete') {
-        setTimeout(trackVisitor, 500);
+        setTimeout(trackVisitor, 1200);
       } else {
-        window.addEventListener('load', function(){ setTimeout(trackVisitor, 500); });
+        window.addEventListener('load', function(){ setTimeout(trackVisitor, 1200); });
       }
     } catch(err){}
   })();

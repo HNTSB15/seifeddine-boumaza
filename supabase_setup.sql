@@ -197,6 +197,19 @@ CREATE TABLE IF NOT EXISTS public.website_visitors (
 
 ALTER TABLE public.website_visitors ENABLE ROW LEVEL SECURITY;
 
+-- 🛡️ Deduplicate existing rows (keeps only the first visit time for each IP address):
+DELETE FROM public.website_visitors a
+USING public.website_visitors b
+WHERE a.ip_address = b.ip_address
+  AND a.ip_address IS NOT NULL
+  AND a.ip_address != 'Direct Visitor'
+  AND a.visit_time > b.visit_time;
+
+-- 🔒 Enforce UNIQUE IP address so subsequent visits never insert duplicates into Supabase:
+CREATE UNIQUE INDEX IF NOT EXISTS website_visitors_unique_ip 
+ON public.website_visitors (ip_address) 
+WHERE ip_address IS NOT NULL AND ip_address != 'Direct Visitor';
+
 DROP POLICY IF EXISTS "Allow public insert to website_visitors" ON public.website_visitors;
 CREATE POLICY "Allow public insert to website_visitors"
 ON public.website_visitors FOR INSERT TO anon, authenticated
