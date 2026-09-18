@@ -51,15 +51,16 @@
 --glow:0 0 24px rgba(0,255,156,.35); --radius:16px; --maxw:960px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden;width:100%;max-width:100vw}
 body{
 font-family:'Space Grotesk',system-ui,sans-serif;
 background:
 radial-gradient(1000px 600px at 80% -10%, rgba(18,214,255,.10), transparent 60%),
 radial-gradient(900px 600px at -10% 20%, rgba(255,0,140,.08), transparent 55%),
 var(--bg);
-color:var(--text); line-height:1.6; overflow-x:hidden;
+color:var(--text); line-height:1.6; overflow-x:hidden; width:100%; max-width:100vw; position:relative;
 }
+.cvx{overflow-x:hidden;width:100%;max-width:100%}
 body::before{
 content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 background-image:linear-gradient(rgba(27,41,66,.25) 1px,transparent 1px),
@@ -522,10 +523,11 @@ footer.cv-foot .mono{color:var(--neon)}
 
 /* hero */
 .cvx-hero{min-height:calc(100vh - 61px);display:flex;flex-direction:column;justify-content:center;text-align:center;padding:60px 20px 50px}
-.cvx-badge{display:inline-flex;align-items:center;gap:8px;margin:0 auto 24px;padding:7px 16px;border:1px solid var(--line);border-radius:999px;background:rgba(13,20,32,.6);font-size:13px;color:var(--muted)}
+.cvx-badge{display:inline-flex;align-items:center;gap:8px;margin:0 auto 24px;padding:7px 16px;border:1px solid var(--line);border-radius:999px;background:rgba(13,20,32,.6);font-size:13px;color:var(--muted);max-width:94%;word-break:break-word;text-align:center;justify-content:center}
 .cvx-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--neon);box-shadow:0 0 12px var(--neon);animation:cvxPulse 1.8s infinite}
-.cvx-avatar{width:132px;height:132px;border-radius:50%;margin:0 auto 22px;padding:4px;position:relative;background:conic-gradient(from 0deg,#0ca883,#0a9bb0,#1877c4,#2f63c0,#3d54b0,#0ca883);animation:cvxSpin 7s linear infinite;box-shadow:0 0 34px rgba(0,255,180,.35)}
-.cvx-avatar img{width:100%;height:100%;border-radius:50%;background:var(--bg2);object-fit:cover;animation:cvxSpin 7s linear infinite reverse}
+.cvx-avatar{width:132px;height:132px;border-radius:50%;margin:0 auto 22px;padding:4px;position:relative;box-shadow:0 0 34px rgba(0,255,180,.35);display:flex;align-items:center;justify-content:center}
+.cvx-avatar::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,#0ca883,#0a9bb0,#1877c4,#2f63c0,#3d54b0,#0ca883);animation:cvxSpin 7s linear infinite;z-index:0}
+.cvx-avatar img{width:100%;height:100%;border-radius:50%;background:var(--bg2);object-fit:cover;position:relative;z-index:1}
 .cvx-hero h1{font-size:clamp(38px,7vw,72px);font-weight:700;line-height:1.04;letter-spacing:-1px}
 .cvx-role{font-family:'JetBrains Mono',monospace;font-size:clamp(15px,2.4vw,21px);color:var(--neon2);margin-top:14px;letter-spacing:.5px;min-height:1.4em;text-shadow:0 0 12px rgba(18,214,255,.4)}
 .cvx-role .cur{display:inline-block;width:10px;background:var(--neon);animation:cvxBlink 1s steps(2) infinite;margin-left:2px;transform:translateY(2px)}
@@ -802,8 +804,10 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
 .cvx-fab.top svg{fill:var(--neon)}
 .cvx-fab.top.show{opacity:1;pointer-events:auto;transform:none}
 @media(max-width:768px){
-  .cvx-fab.top{bottom:82px;right:14px;width:44px;height:44px;}
-  .cvx-fab.top svg{width:20px;height:20px;}
+  .cvx-fab{bottom:max(16px, calc(10px + env(safe-area-inset-bottom))) !important;width:46px !important;height:46px !important;}
+  .cvx-fab svg{width:20px !important;height:20px !important;}
+  .cvx-fab.tg{left:16px !important;}
+  .cvx-fab.top{bottom:max(16px, calc(10px + env(safe-area-inset-bottom))) !important;right:16px !important;}
 }
 
 /* ==========================================================================
@@ -887,8 +891,8 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
 }
 .cvx-avatar-status{
   position:absolute;
-  bottom:6px;
-  right:10px;
+  bottom:4px;
+  right:6px;
   width:24px;
   height:24px;
   border-radius:50%;
@@ -949,10 +953,11 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
 .cvx-reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
 .cvx-reveal.in{opacity:1;transform:none}
 
+.cvx-nav-actions{display:flex;align-items:center;gap:8px;margin-inline-start:auto;flex-shrink:0}
 @media(max-width:1180px){
   .cvx-links{display:none !important}
-  .cvx-burger{display:flex !important;margin-inline-start:0 !important}
-  .cvx-lang-toggle{margin-inline-start:auto !important}
+  .cvx-burger{display:flex !important}
+  .cvx-nav-actions{display:flex !important;align-items:center;gap:8px;margin-inline-start:auto}
   .cvx-nav .in{padding:8px 16px}
   .cvx-brand b{font-size:14px;line-height:1.15;display:block}
   .cvx-brand small{font-size:10px;line-height:1.25;display:block;color:var(--neon-2)}
@@ -962,20 +967,24 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
   .cvx-skills{grid-template-columns:1fr}
 }
 @media(max-width:768px){
-  .cvx-nav .in > .cvx-navcta{display:none !important}
+  .cvx-nav{z-index:1000 !important}
+  .cvx-navcta{display:none !important}
+  .cvx-nav-actions .cvx-theme-toggle{display:none !important}
+  .cvx-nav-actions .cvx-lang-toggle .lang-label{display:none !important}
+  .cvx-nav-actions .cvx-lang-toggle{padding:6px 10px !important;min-width:36px !important;height:38px !important;justify-content:center}
+  .cvx-nav-actions .cvx-burger{width:38px !important;height:38px !important}
+  .cvx-brand small{display:none !important}
+  .cvx-brand{max-width:calc(100% - 94px);overflow:hidden;gap:8px}
+  .cvx-brand b{font-size:13.5px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cvx-brand .lg{width:38px;height:38px;flex:0 0 38px;padding:7px}
+  .cvx-nav .in{padding:8px 12px;gap:8px;justify-content:space-between}
 }
 @media(max-width:540px){
-  .cvx-theme-toggle .theme-label,
-  .cvx-lang-toggle .lang-label{display:none !important}
-  .cvx-theme-toggle,
-  .cvx-lang-toggle{padding:7px 9px !important}
   .cvx-stats{grid-template-columns:repeat(2,1fr)}
   .cvx-grid3{grid-template-columns:1fr}
   .cvx-2col{grid-template-columns:1fr}
-  .cvx-brand .lg{width:40px;height:40px;flex:0 0 40px}
-  .cvx-brand b{font-size:13px;line-height:1.15;display:block}
-  .cvx-brand small{font-size:9px;line-height:1.25;display:block;color:var(--neon-2)}
-  .cvx-nav .in{padding:7px 12px;gap:8px}
+  .cvx-brand b{font-size:12.5px}
+  .cvx-nav .in{padding:6px 10px;gap:6px}
 }
 
 /* ===== Download CV &#8212; dedicated dark cyber resume (print only) ===== */
@@ -2851,7 +2860,7 @@ html[dir="rtl"] .cvx-navcta {
   margin-right: 8px;
   margin-left: 0;
 }
-html[dir="rtl"] .cvx-burger {
+html[dir="rtl"] .cvx-nav-actions {
   margin-right: auto;
   margin-left: 0;
 }
@@ -3602,15 +3611,9 @@ body.theme-light .rev-fgroup textarea{
       <span class="dot-core"></span>
     </span>
   </span>
-  <span>
-    <b style="display:inline-flex;align-items:center;gap:6px">
-      Saifeddine<br/>Boumaza
-      <span class="cvx-live-beacon" id="cvxNavStatus" title="متصل الآن · Online Now">
-        <span class="cvx-radar-ping"></span>
-        <span class="cvx-radar-core"></span>
-      </span>
-    </b>
-    <small>Forex &amp; Crypto<br/>Trading Manager</small>
+  <span class="cvx-brand-text">
+    <b id="cvxBrandName">Saifeddine Boumaza</b>
+    <small id="cvxBrandSub">Forex &amp; Crypto Trading Manager</small>
   </span>
 </a>
 <div class="cvx-links">
@@ -3626,21 +3629,23 @@ body.theme-light .rev-fgroup textarea{
 <a href="#faq" id="navFaqLink">FAQ</a>
 <a href="#contact">Contact</a>
 </div>
-<button class="cvx-lang-toggle" id="langToggleBtn" type="button" aria-label="Toggle language" onclick="toggleSiteLanguage()">
-  <span class="lang-flag">🌐</span>
-  <span class="lang-label mono">العربية</span>
-</button>
-<button class="cvx-theme-toggle" id="themeToggleBtn" type="button" aria-label="Toggle dark or light mode" onclick="toggleSiteTheme()">
-  <span class="theme-icon moon-icon"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12.3 2a10 10 0 0 0-.19 20 10 10 0 0 0 8.08-4.14 1 1 0 0 0-.89-1.57A8 8 0 1 1 11.71 3.5a1 1 0 0 0 .59-1.5z"/></svg></span>
-  <span class="theme-icon sun-icon"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" fill="none"/></svg></span>
-  <span class="theme-label mono">Dark</span>
-</button>
-<button class="cvx-navcta" id="cvxDl" type="button">⇩ Trading Profile</button>
-<button class="cvx-burger" id="cvxBurger" aria-label="Toggle navigation menu" type="button" onclick="toggleMobileMenu()">
-  <span class="b-line b-top"></span>
-  <span class="b-line b-mid"></span>
-  <span class="b-line b-bot"></span>
-</button>
+<div class="cvx-nav-actions">
+  <button class="cvx-lang-toggle" id="langToggleBtn" type="button" aria-label="Toggle language" onclick="toggleSiteLanguage()">
+    <span class="lang-flag">🌐</span>
+    <span class="lang-label mono">العربية</span>
+  </button>
+  <button class="cvx-theme-toggle" id="themeToggleBtn" type="button" aria-label="Toggle dark or light mode" onclick="toggleSiteTheme()">
+    <span class="theme-icon moon-icon"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12.3 2a10 10 0 0 0-.19 20 10 10 0 0 0 8.08-4.14 1 1 0 0 0-.89-1.57A8 8 0 1 1 11.71 3.5a1 1 0 0 0 .59-1.5z"/></svg></span>
+    <span class="theme-icon sun-icon"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" fill="none"/></svg></span>
+    <span class="theme-label mono">Dark</span>
+  </button>
+  <button class="cvx-navcta" id="cvxDl" type="button">⇩ Trading Profile</button>
+  <button class="cvx-burger" id="cvxBurger" aria-label="Toggle navigation menu" type="button" onclick="toggleMobileMenu(event)">
+    <span class="b-line b-top"></span>
+    <span class="b-line b-mid"></span>
+    <span class="b-line b-bot"></span>
+  </button>
+</div>
 </div>
 
 <!-- Mobile Full Dropdown Menu Drawer -->
@@ -6611,7 +6616,8 @@ body.theme-light .rev-fgroup textarea{
     };
 
     // 5. Mobile Navigation Menu Bar
-    window.toggleMobileMenu = function() {
+        window.toggleMobileMenu = function(e) {
+      if (e && e.stopPropagation) e.stopPropagation();
       var m = document.getElementById('cvxMobileMenu');
       var b = document.getElementById('cvxBurger');
       if (!m) return;
@@ -7560,11 +7566,11 @@ body.theme-light .rev-fgroup textarea{
         }
       });
 
-      // 1. Header & Brand
-      var bTitle = document.querySelector('.cvx-brand span b');
-      if (bTitle && t['brand_title']) bTitle.innerHTML = t['brand_title'];
-      var bSub = document.querySelector('.cvx-brand span small');
-      if (bSub && t['brand_sub']) bSub.innerHTML = t['brand_sub'];
+            // 1. Header & Brand
+      var bTitle = document.getElementById('cvxBrandName') || document.querySelector('.cvx-brand span b');
+      if (bTitle && t['brand_title']) bTitle.innerHTML = t['brand_title'].replace(/<br\s*\/?>/gi, ' ');
+      var bSub = document.getElementById('cvxBrandSub') || document.querySelector('.cvx-brand span small');
+      if (bSub && t['brand_sub']) bSub.innerHTML = t['brand_sub'].replace(/<br\s*\/?>/gi, ' ');
 
       var nMap = [
         ['a[href="#about"]', 'nav_about'],
