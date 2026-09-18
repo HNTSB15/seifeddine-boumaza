@@ -4976,6 +4976,107 @@ body.theme-light #cvxLedSpotlight {
   animation-duration: 1.8s !important;
   filter: drop-shadow(0 0 8px #00ff9c) drop-shadow(0 0 18px #00e5ff) brightness(1.25) !important;
 }
+
+/* ==========================================================================
+   🚀 ULTRA-SMOOTH MOBILE 60-120 FPS PERFORMANCE ENGINE
+   ========================================================================== */
+@media (max-width: 768px), (pointer: coarse) {
+  /* 1. Eliminate heavy backdrop blur compositing on mobile */
+  .cvx-nav,
+  .nav,
+  .badge,
+  .fab-top,
+  .cvx-mobile-menu,
+  .cvx-card,
+  .rev-card,
+  .cvx-faq-item,
+  .fl-deal-card,
+  .fl-pack-card,
+  .nx-price-card,
+  .cvx-led-console {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  .cvx-nav,
+  .nav {
+    background: rgba(5, 7, 13, 0.95) !important;
+  }
+  body.theme-light .cvx-nav,
+  body.theme-light .nav {
+    background: rgba(255, 255, 255, 0.96) !important;
+  }
+
+  /* 2. Stop heavy fixed-position background animations on mobile */
+  .scanbars,
+  #matrix,
+  #cvxLedSpotlight {
+    display: none !important;
+  }
+  .cyber-glow i {
+    animation: none !important;
+    filter: none !important;
+    opacity: 0.08 !important;
+    background: radial-gradient(circle, var(--neon) 0%, transparent 70%) !important;
+  }
+  .cyber-glow i:nth-child(2) {
+    background: radial-gradient(circle, var(--neon-2) 0%, transparent 70%) !important;
+  }
+  .cyber-glow i:nth-child(3) {
+    background: radial-gradient(circle, #2f63c0 0%, transparent 70%) !important;
+  }
+
+  /* 3. Streamline card LED borders on mobile: keep avatar laser ring, replace card spinners with sleek static neon borders */
+  .cvx-led-border::before,
+  .fl-deal-card::before,
+  .fl-pack-card::before,
+  .nx-price-card::before,
+  .cvx-stat::before {
+    animation: none !important;
+    filter: none !important;
+    opacity: 0.75 !important;
+    transform: none !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(135deg, rgba(0, 255, 156, 0.45), rgba(18, 214, 255, 0.35)) !important;
+  }
+  .fl-deal-card.ruby::before {
+    background: linear-gradient(135deg, rgba(255, 51, 102, 0.45), rgba(255, 190, 26, 0.35)) !important;
+  }
+  .nx-price-card.popular::before {
+    background: linear-gradient(135deg, rgba(255, 190, 26, 0.45), rgba(0, 255, 156, 0.35)) !important;
+  }
+  .fl-pack-card.featured::before {
+    background: linear-gradient(135deg, rgba(0, 229, 255, 0.45), rgba(192, 66, 255, 0.35)) !important;
+  }
+
+  /* 4. Optimize ticker containment to avoid mobile layout repaints */
+  .cvx-live-market-tape {
+    contain: layout paint;
+    will-change: auto;
+  }
+
+  /* 5. GPU Hardware Acceleration for smooth scrolling */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  .cvx-card,
+  .fl-deal-card,
+  .fl-pack-card,
+  .nx-price-card,
+  .cvx-stat {
+    transform: translateZ(0);
+  }
+
+  /* 6. Skip off-screen rendering of deep sections for instant mobile responsiveness */
+  #reviews,
+  #faq,
+  #experience {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 600px;
+  }
+}
 </style>
 
 <div class="cvx" id="cvtop">
@@ -9888,6 +9989,10 @@ body.theme-light #cvxLedSpotlight {
   (function(){
     var canvas = document.getElementById('matrix');
     if (!canvas || !canvas.getContext) return;
+    if (window.innerWidth < 768 || ('ontouchstart' in window && window.innerWidth < 1024)) {
+      canvas.style.display = 'none';
+      return;
+    }
     var ctx = canvas.getContext('2d');
     if (!ctx) return;
 
@@ -10070,6 +10175,7 @@ body.theme-light #cvxLedSpotlight {
   // ==========================================================================
   (function initAdvancedUI() {
     function setupTiltEffect() {
+      if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
       var cards = document.querySelectorAll(
         '.cvx-card, .cvx-proj, .fl-deal-card, .fl-pack-card, .nx-feat, .nx-price-card, .cvx-x-slide, .cvx-stat, .cvx-led-console'
       );
@@ -10197,6 +10303,7 @@ body.theme-light #cvxLedSpotlight {
     }
 
     function setupMagneticButtons() {
+      if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
       var btns = document.querySelectorAll('.cvx-btn.pri, .cvx-navcta');
       btns.forEach(function(btn) {
         btn.classList.add('cvx-magnetic-btn');
