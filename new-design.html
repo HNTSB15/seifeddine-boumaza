@@ -931,6 +931,35 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
   animation:cvxLiveRadarPing 2s cubic-bezier(0,0,.2,1) infinite;
 }
 
+/* Scheduled Status Diode Styles (Green: 08:00 - 18:00 | Red: 18:00 - 08:00) */
+body.status-offline .cvx-brand-logo-dot,
+body.status-offline .cvx-avatar-status {
+  box-shadow: 0 0 16px rgba(255, 51, 102, 0.75), 0 3px 8px rgba(0, 0, 0, 0.8) !important;
+}
+
+body.status-offline .cvx-brand-logo-dot .dot-core,
+body.status-offline .cvx-avatar-dot,
+body.status-offline .cvx-radar-core,
+body.status-offline .cvx-badge .dot {
+  background: #ff3366 !important;
+  box-shadow: 0 0 10px #ff3366, 0 0 20px rgba(255, 51, 102, 0.85) !important;
+}
+
+body.status-offline .cvx-brand-logo-dot .dot-ping,
+body.status-offline .cvx-avatar-ping,
+body.status-offline .cvx-radar-ping {
+  border-color: #ff3366 !important;
+}
+
+body.status-offline .cvx-badge {
+  border-color: rgba(255, 51, 102, 0.35) !important;
+  background: rgba(30, 10, 18, 0.6) !important;
+}
+body.theme-light.status-offline .cvx-badge {
+  border-color: rgba(255, 51, 102, 0.4) !important;
+  background: rgba(255, 235, 240, 0.9) !important;
+}
+
 /* Mobile Menu Download Button (Always Visible & Styled) */
 .cvx-mob-dl-btn{
   width:100% !important;
@@ -9744,6 +9773,83 @@ body.theme-light #cvxLedSpotlight {
       try {
         localStorage.setItem('cvx_lang', lang);
       } catch(e){}
+
+      if (window.updateOnlineStatusSchedule) {
+        window.updateOnlineStatusSchedule(lang);
+      }
+    };
+
+    // ========================================================================
+    // ⏰ Live Scheduled Online Status System (08:00 to 18:00 = Online Green, else Offline Red)
+    // ========================================================================
+    window.updateOnlineStatusSchedule = function(overrideLang) {
+      var lang = overrideLang || document.documentElement.getAttribute('lang') || 'ar';
+      var isAr = (lang === 'ar');
+
+      // Calculate hour in Algeria time zone (UTC+1, Africa/Algiers)
+      var currentHour = 0;
+      try {
+        var now = new Date();
+        var algStr = now.toLocaleString('en-US', { timeZone: 'Africa/Algiers' });
+        var algDate = new Date(algStr);
+        currentHour = algDate.getHours() + (algDate.getMinutes() / 60);
+      } catch(err) {
+        var d = new Date();
+        var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+        var fallbackAlg = new Date(utc + (3600000 * 1));
+        currentHour = fallbackAlg.getHours() + (fallbackAlg.getMinutes() / 60);
+      }
+
+      // 8:00 AM (8.0) to 6:00 PM (18.0) -> Online (Green), otherwise Offline (Red)
+      var isOnline = (currentHour >= 8 && currentHour < 18);
+
+      if (isOnline) {
+        document.body.classList.remove('status-offline');
+        document.body.classList.add('status-online');
+      } else {
+        document.body.classList.remove('status-online');
+        document.body.classList.add('status-offline');
+      }
+
+      // 1. Hero Badge
+      var hBadge = document.getElementById('cvxHeroBadgeTxt') || document.querySelector('.cvx-badge .mono');
+      if (hBadge) {
+        if (isOnline) {
+          hBadge.textContent = isAr
+            ? 'متصل الآن · متاح لقبول محافظ جديدة للإدارة'
+            : 'Online Now · Accepting New Managed Accounts';
+        } else {
+          hBadge.textContent = isAr
+            ? 'غير متصل الآن (أوقات العمل: 8:00 ص - 6:00 م) · اترك رسالتك وسأرد عليك'
+            : 'Offline Now (Active Hours: 8:00 AM - 6:00 PM) · Leave a message';
+        }
+      }
+
+      // 2. Navbar Brand Beacon Tooltip
+      var brandDot = document.querySelector('.cvx-brand-logo-dot');
+      if (brandDot) {
+        brandDot.setAttribute('title', isOnline
+          ? (isAr ? 'متصل الآن (أوقات العمل: 8:00 ص - 6:00 م)' : 'Online Now · Working Hours: 8:00 AM - 6:00 PM')
+          : (isAr ? 'غير متصل الآن (أوقات العمل من 8:00 ص إلى 6:00 م)' : 'Offline Now · Business Hours: 8:00 AM - 6:00 PM'));
+      }
+
+      // 3. Avatar Status Dot Tooltip
+      var avatarStat = document.querySelector('.cvx-avatar-status');
+      if (avatarStat) {
+        avatarStat.setAttribute('title', isOnline
+          ? (isAr ? 'متصل الآن (أوقات العمل: 8:00 ص - 6:00 م)' : 'Online Now · Working Hours: 8:00 AM - 6:00 PM')
+          : (isAr ? 'غير متصل الآن (أوقات العمل من 8:00 ص إلى 6:00 م)' : 'Offline Now · Business Hours: 8:00 AM - 6:00 PM'));
+      }
+
+      // 4. Navbar Live Status text (if exists)
+      var navStat = document.getElementById('cvxNavStatusTxt');
+      if (navStat) {
+        if (isOnline) {
+          navStat.textContent = isAr ? 'متصل الآن' : 'Online Now';
+        } else {
+          navStat.textContent = isAr ? 'غير متصل' : 'Offline';
+        }
+      }
     };
 
     window.toggleSiteLanguage = function() {
@@ -9761,6 +9867,12 @@ body.theme-light #cvxLedSpotlight {
     } else {
       window.setSiteLanguage('en');
     }
+
+    // Initialize scheduled online status and keep updating every minute
+    window.updateOnlineStatusSchedule(savedLang);
+    setInterval(function(){
+      window.updateOnlineStatusSchedule();
+    }, 60000);
 
   })();
 })();
