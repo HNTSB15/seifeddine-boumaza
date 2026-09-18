@@ -4838,14 +4838,8 @@ body.theme-light .faq-icon {
           '</div>';
         }
 
-        // Try opening Telegram in new tab automatically
-        try {
-          var w = window.open(tgUrl, '_blank');
-          if (w) w.focus();
-        } catch(e){}
-
-        cForm.reset();
-      }, 500);
+          cForm.reset();
+        }, 500);
     });
   }
 
