@@ -346,9 +346,9 @@ footer.cv-foot .mono{color:var(--neon)}
 .cvx-brand b{font-size:14.5px;display:block;line-height:1.15;color:#fff;white-space:nowrap}
 .cvx-brand small{font-size:10.5px;color:var(--neon-2);font-family:'JetBrains Mono',monospace;letter-spacing:.2px;display:block;line-height:1.25;margin-top:2px;white-space:nowrap}
 .cvx-links{display:flex;gap:clamp(2px, 0.35vw, 5px);margin-inline-start:auto;align-items:center;flex-shrink:0}
-.cvx-links a{padding:clamp(6px, 0.5vw, 8px) clamp(7px, 0.65vw, 11px);border-radius:8px;font-size:clamp(12px, 0.88vw, 13.5px);color:var(--muted);transition:.18s;white-space:nowrap !important;word-break:keep-all !important;flex-shrink:0;display:inline-flex;align-items:center}
+.cvx-links a{padding:clamp(5px, 0.45vw, 8px) clamp(6px, 0.55vw, 10px);border-radius:8px;font-size:clamp(12px, 0.88vw, 13.5px);color:var(--muted);transition:.18s;white-space:nowrap !important;word-break:keep-all !important;flex-shrink:0;display:inline-flex;align-items:center}
 .cvx-links a:hover{color:#fff;background:rgba(255,255,255,.06)}
-.cvx-navcta{margin-inline-start:4px;padding:clamp(7px, 0.6vw, 9px) clamp(11px, 0.9vw, 16px);border-radius:10px;font-weight:600;font-size:clamp(12px, 0.88vw, 13.5px);color:#04140c;background:var(--rgb);background-size:200% auto;animation:cvxRgb 6s linear infinite;box-shadow:0 0 16px rgba(0,255,170,.35);white-space:nowrap !important;word-break:keep-all !important;flex-shrink:0 !important;cursor:pointer;border:0;font-family:inherit}
+.cvx-navcta{margin-inline-start:4px;padding:clamp(7px, 0.6vw, 9px) clamp(11px, 0.9vw, 16px);border-radius:10px;font-weight:600;font-size:clamp(12px, 0.88vw, 13.5px);color:#04140c;background:var(--rgb);background-size:200% auto;animation:cvxRgb 6s linear infinite;box-shadow:0 0 16px rgba(0,255,170,.35);white-space:nowrap !important;word-break:keep-all !important;flex-shrink:0 !important;min-width:max-content !important;cursor:pointer;border:0;font-family:inherit}
 
 /* Mobile Hamburger Button */
 .cvx-burger{
@@ -807,40 +807,8 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
 }
 
 /* ==========================================================================
-   🟢 LIVE ONLINE STATUS INDICATOR (Navbar & Profile Avatar)
+   🟢 LIVE ONLINE STATUS INDICATOR (Brand Logo, Avatar & Hero Badge)
    ========================================================================== */
-.cvx-nav-status{
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  padding:4px 12px;
-  background:rgba(0, 255, 156, 0.07);
-  border:1px solid rgba(0, 255, 156, 0.28);
-  border-radius:999px;
-  font-size:12px;
-  font-weight:600;
-  color:#00ff9c;
-  letter-spacing:0.2px;
-  box-shadow:0 0 14px rgba(0, 255, 156, 0.12);
-  white-space:nowrap;
-  flex-shrink:0;
-  transition:all .25s ease;
-  user-select:none;
-}
-.cvx-nav-status:hover{
-  background:rgba(0, 255, 156, 0.14);
-  border-color:rgba(0, 255, 156, 0.5);
-  box-shadow:0 0 20px rgba(0, 255, 156, 0.28);
-}
-.cvx-radar-dot{
-  position:relative;
-  width:9px;
-  height:9px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  flex-shrink:0;
-}
 .cvx-radar-core{
   width:7px;
   height:7px;
@@ -861,6 +829,56 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
 @keyframes cvxLiveRadarPing{
   0%{transform:scale(.7);opacity:1}
   75%,100%{transform:scale(2.4);opacity:0}
+}
+
+/* Brand Logo Live Dot Beacon */
+.cvx-brand .lg{
+  position:relative !important;
+  overflow:visible !important;
+}
+.cvx-brand-logo-dot{
+  position:absolute;
+  bottom:-2px;
+  right:-2px;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:#050a14;
+  border:2px solid #050a14;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:15;
+  box-shadow:0 0 10px rgba(0, 255, 156, 0.7);
+}
+.cvx-brand-logo-dot .dot-core{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#00ff9c;
+  box-shadow:0 0 8px #00ff9c;
+  position:relative;
+  z-index:2;
+}
+.cvx-brand-logo-dot .dot-ping{
+  position:absolute;
+  inset:-3px;
+  border-radius:50%;
+  border:1.5px solid #00ff9c;
+  animation:cvxLiveRadarPing 2s cubic-bezier(0,0,.2,1) infinite;
+  z-index:1;
+}
+
+/* Live Beacon Beside Name */
+.cvx-live-beacon{
+  position:relative;
+  width:9px;
+  height:9px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-inline-start:4px;
+  vertical-align:middle;
 }
 
 /* Avatar Live Online Status Badge */
@@ -898,30 +916,40 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
   border-radius:50%;
   border:2px solid #00ff9c;
   animation:cvxLiveRadarPing 2s cubic-bezier(0,0,.2,1) infinite;
-  z-index:1;
 }
 
-/* Responsive adjustment for nav status */
-@media(max-width:480px){
-  .cvx-nav-status{
-    padding:4px 8px;
-    font-size:11px;
-  }
+/* Mobile Menu Download Button (Always Visible & Styled) */
+.cvx-mob-dl-btn{
+  width:100% !important;
+  margin:0 !important;
+  padding:12px 18px !important;
+  border-radius:10px !important;
+  font-weight:700 !important;
+  font-size:14px !important;
+  color:#04140c !important;
+  background:var(--rgb) !important;
+  background-size:200% auto !important;
+  animation:cvxRgb 6s linear infinite !important;
+  box-shadow:0 0 18px rgba(0,255,170,.4) !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:8px !important;
+  cursor:pointer !important;
+  border:none !important;
+  font-family:inherit !important;
+  text-decoration:none !important;
+  box-sizing:border-box !important;
+  white-space:nowrap !important;
 }
-@media(max-width:360px){
-  .cvx-nav-status .cvx-status-txt{
-    display:none;
-  }
-  .cvx-nav-status{
-    padding:6px;
-    border-radius:50%;
-  }
+.cvx-mob-dl-btn:active{
+  transform:scale(0.98);
 }
 
 .cvx-reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
 .cvx-reveal.in{opacity:1;transform:none}
 
-@media(max-width:1100px){
+@media(max-width:1180px){
   .cvx-links{display:none !important}
   .cvx-burger{display:flex !important;margin-inline-start:0 !important}
   .cvx-lang-toggle{margin-inline-start:auto !important}
@@ -934,7 +962,7 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
   .cvx-skills{grid-template-columns:1fr}
 }
 @media(max-width:768px){
-  .cvx-navcta{display:none !important}
+  .cvx-nav .in > .cvx-navcta{display:none !important}
 }
 @media(max-width:540px){
   .cvx-theme-toggle .theme-label,
@@ -3068,16 +3096,22 @@ body.theme-light .faq-icon {
       <text x="18" y="27" font-family="'JetBrains Mono', 'Space Grotesk', monospace" font-size="15" font-weight="900" fill="url(#sbText)" letter-spacing="-1" text-anchor="middle" filter="drop-shadow(0 2px 6px rgba(0,0,0,0.9))">SB</text>
       <circle cx="18" cy="33.5" r="1.3" fill="#12d6ff"/>
     </svg>
+    <span class="cvx-brand-logo-dot" title="متصل الآن · Online Now">
+      <span class="dot-ping"></span>
+      <span class="dot-core"></span>
+    </span>
   </span>
-  <span><b>Saifeddine<br/>Boumaza</b><small>Forex &amp; Crypto<br/>Trading Manager</small></span>
+  <span>
+    <b style="display:inline-flex;align-items:center;gap:6px">
+      Saifeddine<br/>Boumaza
+      <span class="cvx-live-beacon" id="cvxNavStatus" title="متصل الآن · Online Now">
+        <span class="cvx-radar-ping"></span>
+        <span class="cvx-radar-core"></span>
+      </span>
+    </b>
+    <small>Forex &amp; Crypto<br/>Trading Manager</small>
+  </span>
 </a>
-<div class="cvx-nav-status" id="cvxNavStatus" title="متصل الآن · Online Now">
-  <span class="cvx-radar-dot">
-    <span class="cvx-radar-ping"></span>
-    <span class="cvx-radar-core"></span>
-  </span>
-  <span class="cvx-status-txt" id="cvxNavStatusTxt">متصل الآن</span>
-</div>
 <div class="cvx-links">
 <a href="#about">About</a>
 <a href="#expertise">Expertise</a>
@@ -3135,9 +3169,16 @@ body.theme-light .faq-icon {
       <a href="#flash" onclick="closeMobileMenu()" class="mob-hl-flash"><span class="mono">// 07</span> Flash USDT Offers <span class="mob-badge gold">OFFERS</span></a>
       <a href="#experience" onclick="closeMobileMenu()"><span class="mono">// 08</span> Experience Timeline</a>
       <a href="#contact" onclick="closeMobileMenu()"><span class="mono">// 09</span> Direct Contact &amp; Inquiry</a>
+      <a href="javascript:void(0)" onclick="closeMobileMenu();dl();" style="color:var(--neon);border-color:rgba(0,255,156,0.35);background:rgba(0,255,156,0.08);margin-top:4px">
+        <span class="mono">// 10</span> <span id="cvxMobDlLinkTxt">تحميل ملف التداول ⇩</span>
+        <span class="mob-badge" style="background:rgba(0,255,156,0.22);border-color:var(--neon);color:var(--neon)">PDF</span>
+      </a>
     </div>
     <div class="cvx-mob-actions">
-      <button class="cvx-navcta" style="width:100%;margin:0;justify-content:center;display:flex" type="button" onclick="closeMobileMenu();document.getElementById('cvxDl').click()">⇩ Download Trading Profile</button>
+      <button class="cvx-mob-dl-btn" id="cvxMobDlBtn" type="button" onclick="closeMobileMenu();dl();">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="flex-shrink:0"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+        <span id="cvxMobDlTxt">⇩ تحميل ملف التداول (PDF)</span>
+      </button>
       <a class="cvx-mob-tg" href="https://t.me/HNTSB15" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M21.9 4.3 18.7 19c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.7 13 1.9 11.5c-1-.3-1-1 .2-1.5l18.4-7.1c.9-.3 1.6.2 1.4 1.4Z"/></svg> Direct Telegram: @HNTSB15
       </a>
@@ -5736,7 +5777,8 @@ body.theme-light .faq-icon {
         'mob_flash': '<span class="mono">// 07</span> باقات Flash USDT <span class="mob-badge gold">عروض</span>',
         'mob_exp': '<span class="mono">// 08</span> المسيرة المهنية',
         'mob_contact': '<span class="mono">// 09</span> التواصل المباشر والاستفسار',
-        'mob_dl': '⇩ تحميل ملف التداول',
+        'mob_dl': '⇩ تحميل ملف التداول (PDF)',
+        'mob_dl_link': 'تحميل ملف التداول ⇩',
 
         // Hero Section
         'hero_badge': 'متصل الآن · متاح لقبول محافظ جديدة للإدارة',
@@ -6128,7 +6170,8 @@ body.theme-light .faq-icon {
         'mob_flash': '<span class="mono">// 07</span> Flash USDT Offers <span class="mob-badge gold">OFFERS</span>',
         'mob_exp': '<span class="mono">// 08</span> Experience Timeline',
         'mob_contact': '<span class="mono">// 09</span> Direct Contact & Inquiry',
-        'mob_dl': '⇩ Download Trading Profile',
+        'mob_dl': '⇩ Download Trading Profile (PDF)',
+        'mob_dl_link': 'Download Trading Profile ⇩',
 
         // Hero Section
         'hero_badge': 'Online Now · Accepting New Managed Accounts',
@@ -6559,8 +6602,10 @@ body.theme-light .faq-icon {
       mobLinks.forEach(function(link, idx) {
         if (mKeys[idx] && t[mKeys[idx]]) link.innerHTML = t[mKeys[idx]];
       });
-      var mobDl = document.querySelector('.cvx-mob-actions .cvx-navcta');
+      var mobDl = document.getElementById('cvxMobDlTxt') || document.querySelector('.cvx-mob-actions .cvx-mob-dl-btn span') || document.querySelector('.cvx-mob-actions .cvx-navcta');
       if (mobDl && t['mob_dl']) mobDl.textContent = t['mob_dl'];
+      var mobDlLink = document.getElementById('cvxMobDlLinkTxt');
+      if (mobDlLink && t['mob_dl_link']) mobDlLink.textContent = t['mob_dl_link'];
 
       // 2. Hero Section
       var hBadge = document.querySelector('.cvx-badge .mono');
