@@ -4798,27 +4798,43 @@ body.theme-light .cvx-market-console-title {
 }
 .cvx-market-tv-wrap {
   width: 100%;
-  min-height: 46px;
+  height: 72px;
+  min-height: 72px;
+  padding: 8px 0 16px;
   overflow: hidden;
   position: relative;
-  -webkit-overflow-scrolling: touch;
+  box-sizing: content-box;
 }
 .cvx-market-tv-wrap .tradingview-widget-container {
   width: 100% !important;
-  height: 46px !important;
+  height: 72px !important;
+  overflow: hidden;
 }
 .cvx-market-tv-wrap iframe {
   width: 100% !important;
-  height: 46px !important;
+  height: 72px !important;
   display: block;
+  border: 0;
 }
-@media (max-width: 640px) {
+@media (max-width: 768px), (pointer: coarse) {
   .cvx-hero-market-console {
     margin-top: 20px;
     border-radius: 10px;
   }
+  .cvx-market-console-header {
+    padding: 8px 14px;
+  }
   .cvx-market-console-tag {
     display: none;
+  }
+  .cvx-market-tv-wrap {
+    height: 72px;
+    padding: 6px 0 16px;
+  }
+  .cvx-market-tv-wrap .tradingview-widget-container,
+  .cvx-market-tv-wrap iframe {
+    height: 72px !important;
+    pointer-events: none !important;
   }
 }
 
@@ -5095,7 +5111,7 @@ body.theme-light .cvx-market-console-title {
         ],
         "showSymbolLogo": true,
         "isTransparent": true,
-        "displayMode": "adaptive",
+        "displayMode": "regular",
         "colorTheme": "dark",
         "locale": "en"
       }
