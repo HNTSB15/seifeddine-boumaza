@@ -687,6 +687,7 @@ html[dir="rtl"] .cvx-stream-arrow svg{transform:rotate(180deg)}
 
 /* Multi-photo gallery grid - unified filled layout with distinct dividers */
 .cvx-gallery-grid{display:grid;width:100%;height:310px;gap:8px;padding:7px;margin-bottom:14px;border-radius:14px;background:#050914;border:1.5px solid rgba(18,214,255,.3);box-shadow:inset 0 0 20px rgba(0,0,0,.7);box-sizing:border-box}
+.cvx-gallery-grid.grid-1{grid-template-columns:1fr;grid-template-rows:1fr}
 .cvx-gallery-grid.grid-2{grid-template-columns:1fr 1fr;grid-template-rows:1fr}
 .cvx-gallery-grid.grid-3{grid-template-columns:1.2fr 1fr;grid-template-rows:1fr 1fr}
 .cvx-gallery-grid.grid-3 .cvx-gallery-item:first-child{grid-row:span 2}
@@ -695,6 +696,11 @@ html[dir="rtl"] .cvx-stream-arrow svg{transform:rotate(180deg)}
 .cvx-gallery-item img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .35s ease,filter .35s ease}
 .cvx-gallery-item:hover img{transform:scale(1.05);filter:brightness(1.12)}
 .cvx-gallery-item:hover{border-color:var(--neon);box-shadow:0 0 16px rgba(0,255,156,.5)}
+.cvx-play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);transition:background .25s ease;pointer-events:none}
+.cvx-gallery-item:hover .cvx-play-overlay{background:rgba(0,0,0,.15)}
+.cvx-play-btn{width:56px;height:56px;border-radius:50%;background:rgba(0,255,156,.92);display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(0,255,156,.75);transition:all .25s ease}
+.cvx-play-btn svg{width:26px;height:26px;fill:#05070d;margin-left:3px}
+.cvx-gallery-item:hover .cvx-play-btn{transform:scale(1.12);background:#00ff9c;box-shadow:0 0 32px rgba(0,255,156,.95)}
 .cvx-gallery-item .cvx-zoom-hint{position:absolute;bottom:8px;right:8px;background:rgba(5,10,20,.88);backdrop-filter:blur(6px);color:#fff;font-size:10.5px;font-family:'JetBrains Mono',monospace;padding:3px 8px;border-radius:6px;border:1px solid rgba(0,255,156,.4);opacity:0;transform:translateY(4px);transition:all .2s ease;pointer-events:none}
 html[dir="rtl"] .cvx-gallery-item .cvx-zoom-hint{right:auto;left:8px}
 .cvx-gallery-item:hover .cvx-zoom-hint{opacity:1;transform:translateY(0)}
@@ -4003,7 +4009,7 @@ body.theme-light .rev-fgroup textarea{
     <div class="cvx-x-feed-actions">
       <div class="cvx-tl-nav-controls">
         <button type="button" class="cvx-tl-btn" id="cvxTlPrev" title="Previous Post" aria-label="Previous Post">‹</button>
-        <span class="cvx-tl-counter" id="cvxTlCounter">1 / 4</span>
+        <span class="cvx-tl-counter" id="cvxTlCounter">1 / 5</span>
         <button type="button" class="cvx-tl-btn" id="cvxTlNext" title="Next Post" aria-label="Next Post">›</button>
       </div>
       <a href="https://x.com/seifeddin06" target="_blank" rel="noopener" class="cvx-x-follow-btn" id="resFollowBtn">
@@ -4021,8 +4027,54 @@ body.theme-light .rev-fgroup textarea{
 
     <div class="cvx-x-stream" id="cvxXStream">
 
-      <!-- Slide 1: Tweet 2100553514652983364 (4 Images) -->
+      <!-- Slide 1: Tweet 2100985355927179755 (Live Video Proof - Sep 18, 2026) -->
       <article class="cvx-x-slide active-slide" data-slide="0">
+        <div class="cvx-slide-head">
+          <div class="cvx-slide-author">
+            <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-slide-avatar">
+            <div class="cvx-slide-author-info">
+              <b>Saifeddine Boumaza</b>
+              <small>@seifeddin06 · Sep 18, 2026</small>
+            </div>
+          </div>
+          <div class="cvx-slide-head-right">
+            <span class="cvx-slide-badge neon">LIVE VIDEO PROOF 🎬</span>
+            <a href="https://x.com/seifeddin06/status/2100985355927179755" target="_blank" rel="noopener" title="View on X">
+              <svg class="cvx-slide-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="cvx-slide-body">
+          <div class="cvx-slide-profit-row">
+            <span class="dep">Deposit: <b>$68</b></span>
+            <span class="pft">+$6,300</span>
+          </div>
+          <p class="cvx-slide-desc">MANAGING A NEW ACCOUNT — Live verified MT5 video trade execution on Gold (XAUUSD). Deposit: $68 ➡️ Net Profit: +$6,300. Profit split: 50/50.</p>
+          <div class="cvx-slide-tags">
+            <span>#Forex</span><span>#XAUUSD</span><span>#Gold</span><span>#Trading</span><span>#ManagedAccount</span>
+          </div>
+          
+          <!-- Video Proof Player / Thumbnail -->
+          <div class="cvx-gallery-grid grid-1">
+            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(0, 0)" style="cursor:pointer;">
+              <img src="https://pbs.twimg.com/amplify_video_thumb/2100985203426480128/img/cUD8bgVpD7goSl9s?format=webp&amp;name=medium" alt="Live Account Management Video Proof" loading="lazy">
+              <div class="cvx-play-overlay">
+                <div class="cvx-play-btn">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+              <span class="cvx-zoom-hint" style="opacity:1;transform:none;">▶ تشغيل الفيديو (Watch Video)</span>
+            </div>
+          </div>
+        </div>
+        <div class="cvx-slide-foot">
+          <span class="cvx-slide-split">Profit Split: 50/50</span>
+          <a href="https://x.com/seifeddin06/status/2100985355927179755" target="_blank" rel="noopener" class="cvx-slide-link">View Tweet on X ↗</a>
+        </div>
+      </article>
+
+      <!-- Slide 2: Tweet 2100553514652983364 (4 Images) -->
+      <article class="cvx-x-slide" data-slide="1">
         <div class="cvx-slide-head">
           <div class="cvx-slide-author">
             <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-slide-avatar">
@@ -4050,19 +4102,19 @@ body.theme-light .rev-fgroup textarea{
           
           <!-- 4-Photo Gallery (Unified 2x2 grid filling media box) -->
           <div class="cvx-gallery-grid grid-4">
-            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(0, 0)">
+            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(1, 0)">
               <img src="https://pbs.twimg.com/media/HSaqRvdXsAE_gBX?format=jpg&amp;name=medium" alt="Trade Execution Proof 1" loading="lazy">
               <span class="cvx-zoom-hint">🔍 Zoom</span>
             </div>
-            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(0, 1)">
+            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(1, 1)">
               <img src="https://pbs.twimg.com/media/HSaqRvrXsAACCxJ?format=jpg&amp;name=medium" alt="Trade Execution Proof 2" loading="lazy">
               <span class="cvx-zoom-hint">🔍 Zoom</span>
             </div>
-            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(0, 2)">
+            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(1, 2)">
               <img src="https://pbs.twimg.com/media/HSaqRveXAAAOcYp?format=jpg&amp;name=medium" alt="Trade Execution Proof 3" loading="lazy">
               <span class="cvx-zoom-hint">🔍 Zoom</span>
             </div>
-            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(0, 3)">
+            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(1, 3)">
               <img src="https://pbs.twimg.com/media/HSaqRvcWYAEduzN?format=jpg&amp;name=medium" alt="Trade Execution Proof 4" loading="lazy">
               <span class="cvx-zoom-hint">🔍 Zoom</span>
             </div>
@@ -4074,8 +4126,8 @@ body.theme-light .rev-fgroup textarea{
         </div>
       </article>
 
-      <!-- Slide 2: Tweet 2100186065541685374 (2 Images) -->
-      <article class="cvx-x-slide" data-slide="1">
+      <!-- Slide 3: Tweet 2100186065541685374 (2 Images) -->
+      <article class="cvx-x-slide" data-slide="2">
         <div class="cvx-slide-head">
           <div class="cvx-slide-author">
             <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-slide-avatar">
@@ -4103,11 +4155,11 @@ body.theme-light .rev-fgroup textarea{
           
           <!-- 2-Photo Gallery (Unified 2-col grid filling media box) -->
           <div class="cvx-gallery-grid grid-2">
-            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(1, 0)">
+            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(2, 0)">
               <img src="https://pbs.twimg.com/media/HSVcFq1W0AAWx0G?format=jpg&amp;name=medium" alt="Account Growth Proof 1" loading="lazy">
               <span class="cvx-zoom-hint">🔍 Zoom</span>
             </div>
-            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(1, 1)">
+            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(2, 1)">
               <img src="https://pbs.twimg.com/media/HSVcFqzWAAAxI20?format=jpg&amp;name=medium" alt="Account Growth Proof 2" loading="lazy">
               <span class="cvx-zoom-hint">🔍 Zoom</span>
             </div>
@@ -4119,8 +4171,8 @@ body.theme-light .rev-fgroup textarea{
         </div>
       </article>
 
-      <!-- Slide 3: Tweet 2099978339200962981 (4 Images) -->
-      <article class="cvx-x-slide" data-slide="2">
+      <!-- Slide 4: Tweet 2099978339200962981 (4 Images) -->
+      <article class="cvx-x-slide" data-slide="3">
         <div class="cvx-slide-head">
           <div class="cvx-slide-author">
             <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-slide-avatar">
@@ -4148,19 +4200,19 @@ body.theme-light .rev-fgroup textarea{
           
           <!-- 4-Photo Gallery (Unified 2x2 grid filling media box) -->
           <div class="cvx-gallery-grid grid-4">
-            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(2, 0)">
+            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(3, 0)">
               <img src="https://pbs.twimg.com/media/HSSe1-HWkAAavQ2?format=jpg&amp;name=medium" alt="Deposit $100 Proof 1" loading="lazy">
               <span class="cvx-zoom-hint">🔍 Zoom</span>
             </div>
-            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(2, 1)">
+            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(3, 1)">
               <img src="https://pbs.twimg.com/media/HSSe1-tXwAEBFsL?format=jpg&amp;name=medium" alt="Deposit $100 Proof 2" loading="lazy">
               <span class="cvx-zoom-hint">🔍 Zoom</span>
             </div>
-            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(2, 2)">
+            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(3, 2)">
               <img src="https://pbs.twimg.com/media/HSSe17SWQAA1R6u?format=jpg&amp;name=medium" alt="Deposit $100 Proof 3" loading="lazy">
               <span class="cvx-zoom-hint">🔍 Zoom</span>
             </div>
-            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(2, 3)">
+            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(3, 3)">
               <img src="https://pbs.twimg.com/media/HSSe17ZW8AAqO1h?format=jpg&amp;name=medium" alt="Deposit $100 Proof 4" loading="lazy">
               <span class="cvx-zoom-hint">🔍 Zoom</span>
             </div>
@@ -4172,8 +4224,8 @@ body.theme-light .rev-fgroup textarea{
         </div>
       </article>
 
-      <!-- Slide 4: Tweet 2099508672397275183 (2 Images) -->
-      <article class="cvx-x-slide" data-slide="3">
+      <!-- Slide 5: Tweet 2099508672397275183 (2 Images) -->
+      <article class="cvx-x-slide" data-slide="4">
         <div class="cvx-slide-head">
           <div class="cvx-slide-author">
             <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-slide-avatar">
@@ -4201,11 +4253,11 @@ body.theme-light .rev-fgroup textarea{
           
           <!-- 2-Photo Gallery (Unified 2-col grid filling media box) -->
           <div class="cvx-gallery-grid grid-2">
-            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(3, 0)">
+            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(4, 0)">
               <img src="https://pbs.twimg.com/media/HSLx32aa8AEPunw?format=jpg&amp;name=medium" alt="Management Tiers 1" loading="lazy">
               <span class="cvx-zoom-hint">🔍 Zoom</span>
             </div>
-            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(3, 1)">
+            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(4, 1)">
               <img src="https://pbs.twimg.com/media/HSLx32HXcAELU5b?format=jpg&amp;name=medium" alt="Management Tiers 2" loading="lazy">
               <span class="cvx-zoom-hint">🔍 Zoom</span>
             </div>
@@ -8421,6 +8473,9 @@ body.theme-light .rev-fgroup textarea{
   // Results Feed Carousel Controller
   var cvxGalleries = [
     // Default Static Galleries (Fallback)
+    [
+      { src: 'https://video.twimg.com/amplify_video/2100985203426480128/vid/avc1/720x1558/oU3DXtjduk3443mN.mp4?tag=14', cap: 'Live Video Proof: Managing New Account ($68 ➡️ +$6,300 Profit on Gold)' }
+    ],
     [
       { src: 'https://pbs.twimg.com/media/HSaqRvdXsAE_gBX?format=jpg&name=large', cap: 'Account Management Execution Proof #1 ($430 ➡️ +$16,000)' },
       { src: 'https://pbs.twimg.com/media/HSaqRvrXsAACCxJ?format=jpg&name=large', cap: 'Account Management Execution Proof #2 ($430 ➡️ +$16,000)' },
