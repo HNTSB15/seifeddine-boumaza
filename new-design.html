@@ -4506,34 +4506,88 @@ body.theme-light .rev-fgroup select option {
   --led-glow-gold: 0 0 10px #ffbe1a, 0 0 25px rgba(255, 190, 26, 0.6), 0 0 50px rgba(255, 190, 26, 0.35);
 }
 
-/* 1. Real-Time Live Financial Market Ticker (TradingView Continuous WebSocket Tape) */
-.cvx-live-market-tape {
-  background: #040810;
-  border-bottom: 1px solid rgba(0, 255, 156, 0.28);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(0, 255, 156, 0.25);
+/* 1. Live Financial Market Terminal in Hero Section */
+.cvx-hero-market-console {
+  margin: 28px auto 0;
+  max-width: 960px;
+  width: 100%;
+  background: rgba(6, 11, 24, 0.92);
+  border: 1px solid rgba(0, 255, 156, 0.35);
+  border-radius: 14px;
+  box-shadow: 0 0 30px rgba(0, 255, 156, 0.16), inset 0 0 20px rgba(0, 229, 255, 0.06);
   overflow: hidden;
   position: relative;
-  z-index: 65;
-  height: 46px;
-  width: 100%;
+  z-index: 5;
+  text-align: left;
 }
-body.theme-light .cvx-live-market-tape {
-  background: #090e1c;
-  border-bottom-color: rgba(0, 204, 126, 0.4);
+body.theme-light .cvx-hero-market-console {
+  background: rgba(245, 248, 255, 0.96);
+  border-color: rgba(0, 204, 126, 0.45);
+  box-shadow: 0 10px 25px rgba(0, 204, 126, 0.12);
 }
-.cvx-tv-ticker-wrap {
+.cvx-market-console-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: rgba(4, 8, 16, 0.75);
+  border-bottom: 1px solid rgba(0, 255, 156, 0.2);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+body.theme-light .cvx-market-console-header {
+  background: rgba(235, 240, 250, 0.9);
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+.cvx-market-console-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: #00ff9c;
+  letter-spacing: 0.8px;
+}
+body.theme-light .cvx-market-console-title {
+  color: #008f58;
+}
+.live-diode-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00ff9c;
+  box-shadow: 0 0 8px #00ff9c, 0 0 14px #00ff9c;
+  display: inline-block;
+}
+.cvx-market-console-tag {
+  color: #7b93b8;
+  font-size: 10.5px;
+}
+.cvx-market-tv-wrap {
   width: 100%;
-  height: 46px;
+  min-height: 46px;
   overflow: hidden;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
 }
-.cvx-tv-ticker-wrap .tradingview-widget-container {
-  height: 46px !important;
+.cvx-market-tv-wrap .tradingview-widget-container {
   width: 100% !important;
+  height: 46px !important;
 }
-.cvx-tv-ticker-wrap iframe {
-  height: 46px !important;
+.cvx-market-tv-wrap iframe {
   width: 100% !important;
+  height: 46px !important;
   display: block;
+}
+@media (max-width: 640px) {
+  .cvx-hero-market-console {
+    margin-top: 20px;
+    border-radius: 10px;
+  }
+  .cvx-market-console-tag {
+    display: none;
+  }
 }
 
 /* 2. Hardware LED Indicator Diodes */
@@ -5051,13 +5105,7 @@ body.theme-light #cvxLedSpotlight {
     background: linear-gradient(135deg, rgba(0, 229, 255, 0.45), rgba(192, 66, 255, 0.35)) !important;
   }
 
-  /* 4. Optimize ticker containment to avoid mobile layout repaints */
-  .cvx-live-market-tape {
-    contain: layout paint;
-    will-change: auto;
-  }
-
-  /* 5. GPU Hardware Acceleration for smooth scrolling */
+  /* 4. GPU Hardware Acceleration for smooth scrolling */
   * {
     -webkit-tap-highlight-color: transparent;
   }
@@ -5069,7 +5117,7 @@ body.theme-light #cvxLedSpotlight {
     transform: translateZ(0);
   }
 
-  /* 6. Skip off-screen rendering of deep sections for instant mobile responsiveness */
+  /* 5. Skip off-screen rendering of deep sections for instant mobile responsiveness */
   #reviews,
   #faq,
   #experience {
@@ -5080,36 +5128,6 @@ body.theme-light #cvxLedSpotlight {
 </style>
 
 <div class="cvx" id="cvtop">
-
-<!-- ⚡ REAL-TIME LIVE FINANCIAL MARKET TICKER (TRADINGVIEW CONTINUOUS WEBSOCKET TAPE) ⚡ -->
-<div class="cvx-live-market-tape" id="cvxLiveTicker">
-  <div class="cvx-tv-ticker-wrap">
-    <!-- TradingView Widget BEGIN -->
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-      {
-        "symbols": [
-          { "proName": "FOREXCOM:XAUUSD", "title": "Gold (XAU/USD)" },
-          { "proName": "FOREXCOM:DJI", "title": "US30 (Dow Jones)" },
-          { "proName": "FOREXCOM:NSXUSD", "title": "Nasdaq 100" },
-          { "proName": "BINANCE:BTCUSDT", "title": "Bitcoin (BTC)" },
-          { "proName": "BINANCE:ETHUSDT", "title": "Ethereum (ETH)" },
-          { "proName": "FX_IDC:EURUSD", "title": "EUR / USD" },
-          { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500" },
-          { "proName": "TVC:USOIL", "title": "Crude Oil (WTI)" }
-        ],
-        "showSymbolLogo": true,
-        "isTransparent": true,
-        "displayMode": "regular",
-        "colorTheme": "dark",
-        "locale": "en"
-      }
-      </script>
-    </div>
-    <!-- TradingView Widget END -->
-  </div>
-</div>
 
 <nav class="cvx-nav">
 <div class="in">
@@ -5261,26 +5279,42 @@ body.theme-light #cvxLedSpotlight {
 <a class="cvx-chip" href="#flash" style="text-decoration:none;border-color:rgba(0,255,156,0.45);background:rgba(0,255,156,0.08);color:var(--neon)">⚡ <b>Flash USDT</b> Offers</a>
 </div>
 
-<!-- ⚡ CYBER LED HARDWARE EQUALIZER CONSOLE ⚡ -->
-<div class="cvx-led-console cvx-spring-reveal" id="cvxLedEqualizer">
-  <div class="cvx-led-console-top">
-    <div class="cvx-led-console-title">
-      <span class="led-diode"></span>
-      <span>REAL-TIME MARKET VOLATILITY SPECTRUM</span>
+<!-- ⚡ LIVE FINANCIAL MARKET TERMINAL (REAL-TIME WEBSOCKET TICKS) ⚡ -->
+<div class="cvx-hero-market-console">
+  <div class="cvx-market-console-header">
+    <div class="cvx-market-console-title">
+      <span class="live-diode-pulse"></span>
+      <span>LIVE MARKET DESK // REAL-TIME TICKS</span>
     </div>
-    <div class="cvx-led-console-meta">
-      <span>AI-CORE: <b class="cvx-shimmer-val">240Hz FAST-LOCK</b></span>
-      <span>LATENCY: <b style="color:var(--led-cyan)">1.2ms</b></span>
-      <span>STATUS: <b style="color:var(--led-green)">● OPTIMAL</b></span>
+    <div class="cvx-market-console-tag">
+      <span class="mono">WEBSOCKET FEED · GOLD · US30 · CRYPTO · FOREX</span>
     </div>
   </div>
-  <div class="cvx-led-bars-grid" id="cvxLedBarsGrid" title="Interactive LED Volatility Equalizer (Move mouse to interact)">
-    <!-- 24 Dynamic LED Columns will be injected and animated here -->
-  </div>
-  <div class="cvx-led-console-bot">
-    <span>CHANNEL: <span class="cvx-led-stat-badge">XAU/USD · BTC/USDT · EUR/USD</span></span>
-    <span>EXECUTION: <span class="cvx-led-stat-badge" style="color:var(--led-gold)">ALGO-TRADING ACTIVE</span></span>
-    <span>STABILITY: <span class="cvx-led-stat-badge" style="color:var(--led-green)">99.98%</span></span>
+  <div class="cvx-market-tv-wrap">
+    <!-- TradingView Widget BEGIN -->
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+      {
+        "symbols": [
+          { "proName": "FOREXCOM:XAUUSD", "title": "Gold (XAU/USD)" },
+          { "proName": "FOREXCOM:DJI", "title": "US30 (Dow Jones)" },
+          { "proName": "FOREXCOM:NSXUSD", "title": "Nasdaq 100" },
+          { "proName": "BINANCE:BTCUSDT", "title": "Bitcoin (BTC)" },
+          { "proName": "BINANCE:ETHUSDT", "title": "Ethereum (ETH)" },
+          { "proName": "FX_IDC:EURUSD", "title": "EUR / USD" },
+          { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500" },
+          { "proName": "TVC:USOIL", "title": "Crude Oil (WTI)" }
+        ],
+        "showSymbolLogo": true,
+        "isTransparent": true,
+        "displayMode": "adaptive",
+        "colorTheme": "dark",
+        "locale": "en"
+      }
+      </script>
+    </div>
+    <!-- TradingView Widget END -->
   </div>
 </div>
 </div>
