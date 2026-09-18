@@ -4461,6 +4461,143 @@ body.theme-light .rev-fgroup select option {
     grid-template-columns:1fr;
   }
 }
+
+/* ==========================================================================
+   ✨ ULTRA-LUXURY ANIMATION ENGINE (Sandbox Design v2)
+   ========================================================================== */
+
+/* 1. Magic Border Beam Animation */
+.cvx-magic-beam {
+  position: relative !important;
+  overflow: hidden !important;
+}
+.cvx-magic-beam::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent 0% 70%, var(--neon) 82%, var(--neon-2) 92%, transparent 100%);
+  animation: cvxBeamRotate 5s linear infinite;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.95;
+}
+.cvx-magic-beam::after {
+  content: "";
+  position: absolute;
+  inset: 1.5px;
+  background: inherit;
+  border-radius: inherit;
+  z-index: 1;
+  pointer-events: none;
+}
+.cvx-magic-beam > * {
+  position: relative;
+  z-index: 2;
+}
+@keyframes cvxBeamRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 2. 3D Tilt Card Container & Specular Shine */
+.cvx-tilt-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.15s ease-out, box-shadow 0.25s ease;
+  position: relative;
+}
+.cvx-tilt-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  background: radial-gradient(circle 320px at var(--shine-x, 50%) var(--shine-y, 50%), rgba(255, 255, 255, 0.14), transparent 75%);
+}
+.cvx-tilt-card:hover .cvx-tilt-shine {
+  opacity: 1;
+}
+
+/* 3. Text Shimmer Wave on Profit & Numbers */
+@keyframes cvxTextShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.cvx-shimmer-val {
+  background: linear-gradient(90deg, var(--neon) 0%, #ffffff 40%, #a7f3d0 60%, var(--neon) 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: cvxTextShimmer 4s ease-in-out infinite;
+  display: inline-block;
+}
+.cvx-shimmer-gold {
+  background: linear-gradient(90deg, #ffcf4a 0%, #ffffff 45%, #ffd978 60%, #ffcf4a 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: cvxTextShimmer 4.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* 4. Staggered Spring Reveal Animations */
+.cvx-spring-reveal {
+  opacity: 0;
+  transform: translateY(32px) scale(0.97);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.cvx-spring-reveal.in-view {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.cvx-delay-1 { transition-delay: 60ms !important; }
+.cvx-delay-2 { transition-delay: 130ms !important; }
+.cvx-delay-3 { transition-delay: 200ms !important; }
+.cvx-delay-4 { transition-delay: 270ms !important; }
+
+/* 5. Smooth Floating Breathing Badges */
+@keyframes cvxFloatGently {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-7px) rotate(0.6deg); }
+}
+.cvx-float-badge {
+  animation: cvxFloatGently 4.2s ease-in-out infinite;
+}
+
+/* 6. Magnetic Glowing CTA Button */
+.cvx-magnetic-btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+.cvx-magnetic-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle 90px at var(--btn-x, 50%) var(--btn-y, 50%), rgba(255, 255, 255, 0.3), transparent 80%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.cvx-magnetic-btn:hover::after {
+  opacity: 1;
+}
+
+/* 7. Enhanced Glowing Ambient Mesh */
+#matrix {
+  opacity: 0.28 !important;
+  transition: opacity 0.3s ease;
+}
 </style>
 <div class="cvx" id="cvtop">
 <nav class="cvx-nav">
@@ -9229,31 +9366,314 @@ body.theme-light .rev-fgroup select option {
 <div class="hidden-blog no-items section" id="hidden-required"></div>
 <script type="text/javascript">
 //<![CDATA[
-  // Matrix / data-center background (subtle, neon)
+  // ==========================================================================
+  // ✨ INTERACTIVE CONSTELLATION & AURORA CANVAS (Sandbox v2)
+  // Replaces matrix text with high-end interactive financial node network
+  // ==========================================================================
   (function(){
-    var c=document.getElementById('matrix'); if(!c||!c.getContext) return;
-    var ctx=c.getContext('2d');
-    var glyphs='01</>{}[]#$%&*+=;:!?01ｦｱｳｴｵﾊﾋﾐﾑ01ABCDEF'.split('');
-    var fs=15, cols=0, drops=[];
+    var canvas = document.getElementById('matrix');
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    var width, height;
+    var particles = [];
+    var mouse = { x: -1000, y: -1000, radius: 130 };
+
     function resize(){
-      c.width=window.innerWidth; c.height=window.innerHeight;
-      cols=Math.floor(c.width/fs); drops=[];
-      for(var i=0;i<cols;i++){ drops[i]=Math.random()*c.height/fs; }
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
     }
-    resize(); window.addEventListener('resize',resize);
-    function draw(){
-      ctx.fillStyle='rgba(5,7,13,0.10)';
-      ctx.fillRect(0,0,c.width,c.height);
-      ctx.font=fs+'px monospace';
-      for(var i=0;i<cols;i++){
-        var g=glyphs[(Math.random()*glyphs.length)|0];
-        ctx.fillStyle=(i%4===0)?'#12d6ff':'#00ff9c';
-        ctx.fillText(g, i*fs, drops[i]*fs);
-        if(drops[i]*fs>c.height && Math.random()>0.975){ drops[i]=0; }
-        drops[i]+=0.45;
+    resize();
+    window.addEventListener('resize', resize);
+
+    window.addEventListener('mousemove', function(e){
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    window.addEventListener('mouseout', function(){
+      mouse.x = -1000;
+      mouse.y = -1000;
+    });
+
+    // Touch support for mobile devices
+    window.addEventListener('touchmove', function(e){
+      if (e.touches && e.touches[0]) {
+        mouse.x = e.touches[0].clientX;
+        mouse.y = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchend', function(){
+      mouse.x = -1000;
+      mouse.y = -1000;
+    });
+
+    var count = Math.min(Math.floor(window.innerWidth / 22), 60);
+    for (var i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.45,
+        vy: (Math.random() - 0.5) * 0.45,
+        radius: Math.random() * 1.8 + 0.9,
+        color: Math.random() > 0.45 ? '#00ff9c' : '#12d6ff'
+      });
+    }
+
+    var lastFrame = 0;
+    function render(time) {
+      if (time - lastFrame > 15) {
+        lastFrame = time;
+        ctx.clearRect(0, 0, width, height);
+
+        var isLight = document.body && document.body.classList.contains('theme-light');
+        var lineBaseAlpha = isLight ? 0.08 : 0.22;
+        var pAlpha = isLight ? 0.35 : 0.65;
+
+        for (var i = 0; i < particles.length; i++) {
+          var p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.x < 0) p.x = width;
+          else if (p.x > width) p.x = 0;
+          if (p.y < 0) p.y = height;
+          else if (p.y > height) p.y = 0;
+
+          // Subtle mouse physics
+          var dx = mouse.x - p.x;
+          var dy = mouse.y - p.y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < mouse.radius) {
+            var force = (mouse.radius - dist) / mouse.radius;
+            p.x -= (dx / dist) * force * 2.2;
+            p.y -= (dy / dist) * force * 2.2;
+          }
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = pAlpha;
+          ctx.fill();
+
+          for (var j = i + 1; j < particles.length; j++) {
+            var p2 = particles[j];
+            var dxx = p.x - p2.x;
+            var dyy = p.y - p2.y;
+            var d = Math.sqrt(dxx * dxx + dyy * dyy);
+            if (d < 110) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = p.color;
+              ctx.globalAlpha = (1 - (d / 110)) * lineBaseAlpha;
+              ctx.lineWidth = 0.8;
+              ctx.stroke();
+            }
+          }
+        }
+        ctx.globalAlpha = 1;
+      }
+      requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
+  })();
+
+  // ==========================================================================
+  // 🎮 3D TILT WITH SPECULAR SHINE & SPRING REVEAL ENGINE
+  // ==========================================================================
+  (function initAdvancedUI() {
+    function setupTiltEffect() {
+      var cards = document.querySelectorAll(
+        '.cvx-card, .cvx-proj, .fl-deal-card, .fl-pack-card, .nx-feat, .nx-price-card, .cvx-x-slide, .cvx-stat'
+      );
+
+      cards.forEach(function(card) {
+        card.classList.add('cvx-tilt-card');
+        
+        if (!card.querySelector('.cvx-tilt-shine')) {
+          var shine = document.createElement('div');
+          shine.className = 'cvx-tilt-shine';
+          card.appendChild(shine);
+        }
+
+        var bounds = null;
+        function updateBounds() {
+          bounds = card.getBoundingClientRect();
+        }
+
+        card.addEventListener('mouseenter', updateBounds);
+
+        card.addEventListener('mousemove', function(e) {
+          if (!bounds) updateBounds();
+          var x = e.clientX - bounds.left;
+          var y = e.clientY - bounds.top;
+          var centerX = bounds.width / 2;
+          var centerY = bounds.height / 2;
+          var rotateX = ((y - centerY) / centerY) * -6.5;
+          var rotateY = ((x - centerX) / centerX) * 6.5;
+
+          card.style.transform = 'perspective(1000px) rotateX(' + rotateX.toFixed(2) + 'deg) rotateY(' + rotateY.toFixed(2) + 'deg) scale3d(1.018, 1.018, 1.018)';
+          card.style.setProperty('--shine-x', x + 'px');
+          card.style.setProperty('--shine-y', y + 'px');
+        });
+
+        card.addEventListener('mouseleave', function() {
+          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+          card.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+        });
+
+        card.addEventListener('transitionend', function(e) {
+          if (e.propertyName === 'transform' && card.style.transform.indexOf('rotateX(0deg)') !== -1) {
+            card.style.transition = '';
+          }
+        });
+      });
+    }
+
+    function setupSpringReveals() {
+      var revealTargets = document.querySelectorAll(
+        '.cvx-card, .cvx-proj, .cvx-stat, .fl-deal-card, .fl-pack-card, .nx-feat, .nx-price-card, .cvx-head, .cvx-x-feed-box, .cvx-faq-item, .rev-card'
+      );
+
+      revealTargets.forEach(function(el, i) {
+        el.classList.add('cvx-spring-reveal');
+        el.classList.add('cvx-delay-' + ((i % 4) + 1));
+      });
+
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in-view');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: '0px 0px -30px 0px'
+        });
+
+        revealTargets.forEach(function(el) {
+          observer.observe(el);
+        });
+      } else {
+        revealTargets.forEach(function(el) {
+          el.classList.add('in-view');
+        });
       }
     }
-    setInterval(draw,65);
+
+    function setupNumberCounters() {
+      var numElements = document.querySelectorAll('.cvx-stat .n, .cvx-res-metric .m-val, .stat .num');
+
+      function animateValue(obj, start, end, duration, prefix, suffix) {
+        var startTimestamp = null;
+        var step = function(timestamp) {
+          if (!startTimestamp) startTimestamp = timestamp;
+          var progress = Math.min((timestamp - startTimestamp) / duration, 1);
+          var easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+          var current = Math.floor(easeProgress * (end - start) + start);
+          obj.textContent = prefix + current.toLocaleString() + suffix;
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          } else {
+            obj.textContent = prefix + end.toLocaleString() + suffix;
+          }
+        };
+        window.requestAnimationFrame(step);
+      }
+
+      if ('IntersectionObserver' in window) {
+        var numObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              var el = entry.target;
+              var text = el.textContent.trim();
+              var match = text.match(/^([^0-9]*)([\d,.]+)([^0-9]*)$/);
+              if (match) {
+                var prefix = match[1] || '';
+                var rawNum = parseFloat(match[2].replace(/,/g, ''));
+                var suffix = match[3] || '';
+                if (!isNaN(rawNum) && rawNum > 0) {
+                  animateValue(el, 0, rawNum, 1700, prefix, suffix);
+                }
+              }
+              numObserver.unobserve(el);
+            }
+          });
+        }, { threshold: 0.25 });
+
+        numElements.forEach(function(el) {
+          numObserver.observe(el);
+        });
+      }
+    }
+
+    function setupMagneticButtons() {
+      var btns = document.querySelectorAll('.cvx-btn.pri, .cvx-navcta');
+      btns.forEach(function(btn) {
+        btn.classList.add('cvx-magnetic-btn');
+
+        btn.addEventListener('mousemove', function(e) {
+          var rect = btn.getBoundingClientRect();
+          var x = e.clientX - rect.left;
+          var y = e.clientY - rect.top;
+          var centerX = rect.width / 2;
+          var centerY = rect.height / 2;
+          var pullX = ((x - centerX) / centerX) * 5;
+          var pullY = ((y - centerY) / centerY) * 5;
+
+          btn.style.transform = 'translate(' + pullX.toFixed(1) + 'px, ' + pullY.toFixed(1) + 'px)';
+          btn.style.setProperty('--btn-x', x + 'px');
+          btn.style.setProperty('--btn-y', y + 'px');
+        });
+
+        btn.addEventListener('mouseleave', function() {
+          btn.style.transform = 'translate(0px, 0px)';
+        });
+      });
+    }
+
+    function applyVisualEnhancements() {
+      // Magic rotating beam on featured hero/offers
+      var beamTargets = document.querySelectorAll(
+        '.cvx-avatar, .fl-deal-card:first-child, .fl-pack-card.featured, .nx-price-card.popular'
+      );
+      beamTargets.forEach(function(el) {
+        el.classList.add('cvx-magic-beam');
+      });
+
+      // Shimmering profit numbers
+      var profitNums = document.querySelectorAll('.cvx-slide-profit-row .pft, .fl-deal-price');
+      profitNums.forEach(function(num) {
+        num.classList.add('cvx-shimmer-val');
+      });
+
+      // Floating chips in hero
+      var chips = document.querySelectorAll('.cvx-chip');
+      chips.forEach(function(c) {
+        c.classList.add('cvx-float-badge');
+      });
+    }
+
+    function runAll() {
+      setupTiltEffect();
+      setupSpringReveals();
+      setupNumberCounters();
+      setupMagneticButtons();
+      applyVisualEnhancements();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(runAll, 200);
+      });
+    } else {
+      setTimeout(runAll, 200);
+    }
   })();
 
   // Back-to-top button
