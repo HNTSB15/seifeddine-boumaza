@@ -3434,6 +3434,10 @@ body.theme-light .faq-icon {
 .rev-modal-backdrop.open .rev-modal-box{
   transform:scale(1);
 }
+body.lang-ar .rev-modal-box{
+  text-align:right;
+  direction:rtl;
+}
 .rev-modal-close{
   position:absolute;
   top:16px;
@@ -3446,6 +3450,10 @@ body.theme-light .faq-icon {
   line-height:1;
   padding:4px 8px;
   transition:color .2s;
+}
+body.lang-ar .rev-modal-close{
+  left:18px;
+  right:auto;
 }
 .rev-modal-close:hover{
   color:#fff;
@@ -4849,50 +4857,50 @@ body.theme-light .rev-fgroup textarea{
   <div class="rev-modal-box">
     <button type="button" class="rev-modal-close" onclick="closeReviewModal()" aria-label="Close">✕</button>
     <div class="rev-modal-head">
-      <div class="rev-modal-badge">// VERIFIED CLIENT FEEDBACK</div>
-      <h3 id="revModalTitle">شارك تجربتك وتقييمك مع سيف الدين</h3>
-      <p id="revModalSub">رأيك يهمنا ويساعد المستثمرين الجدد على اتخاذ قرارات تداول واثقة وشفافة.</p>
+      <div class="rev-modal-badge" id="revModalBadge">// VERIFIED CLIENT FEEDBACK</div>
+      <h3 id="revModalTitle">Share Your Experience with Saifeddine</h3>
+      <p id="revModalSub">Your feedback helps new investors make confident, transparent trading decisions.</p>
     </div>
     <form id="revSubmitForm" onsubmit="handleReviewSubmit(event)">
       <div class="rev-form-grid">
         <div class="rev-fgroup">
-          <label id="lblRevName">الاسم أو اللقب *</label>
-          <input type="text" id="revClientName" required placeholder="مثال: طارق ب. أو Faisal A.">
+          <label id="lblRevName">Full Name or Alias *</label>
+          <input type="text" id="revClientName" required placeholder="e.g. Tariq B. or David H.">
         </div>
         <div class="rev-fgroup">
-          <label id="lblRevCountry">الدولة / المدينة *</label>
-          <input type="text" id="revClientCountry" required placeholder="مثال: الجزائر، السعودية، فرنسا...">
+          <label id="lblRevCountry">Country / City *</label>
+          <input type="text" id="revClientCountry" required placeholder="e.g. United Kingdom, UAE, France, Saudi Arabia...">
         </div>
       </div>
       <div class="rev-form-grid">
         <div class="rev-fgroup">
-          <label id="lblRevService">الخدمة المستفاد منها *</label>
+          <label id="lblRevService">Service Used *</label>
           <select id="revServiceType" required>
-            <option value="managed">💼 إدارة المحافظ (Managed Accounts)</option>
-            <option value="flash">⚡ فلاش USDT (Flash Deals)</option>
-            <option value="signals">📡 توصيات VIP (VIP Signals)</option>
-            <option value="indicators">🤖 مؤشرات MT4/MT5 البرمجية</option>
+            <option value="managed">💼 Managed Accounts</option>
+            <option value="flash">⚡ Flash USDT Deals</option>
+            <option value="signals">📡 VIP Signals Channel</option>
+            <option value="indicators">🤖 MT4/MT5 Custom Indicators</option>
           </select>
         </div>
         <div class="rev-fgroup">
-          <label id="lblRevRating">التقييم *</label>
+          <label id="lblRevRating">Rating *</label>
           <select id="revRatingVal" required>
-            <option value="5">★★★★★ (5/5 ممتاز)</option>
-            <option value="4">★★★★☆ (4/5 جيد جداً)</option>
-            <option value="3">★★★☆☆ (3/5 مقبول)</option>
+            <option value="5">★★★★★ (5/5 Excellent)</option>
+            <option value="4">★★★★☆ (4/5 Very Good)</option>
+            <option value="3">★★★☆☆ (3/5 Average / Good)</option>
           </select>
         </div>
       </div>
       <div class="rev-fgroup">
-        <label id="lblRevStat">نتيجة أو إنجاز حققته (اختياري)</label>
-        <input type="text" id="revProfitStat" placeholder="مثال: تحقيق +35% أرباح، أو تسليم فوري في دقيقتين...">
+        <label id="lblRevStat">Achievement or Result (Optional)</label>
+        <input type="text" id="revProfitStat" placeholder="e.g. +35% ROI achieved, or instant 2-min delivery...">
       </div>
       <div class="rev-fgroup">
-        <label id="lblRevMsg">رأيك وتجربتك بالتفصيل *</label>
-        <textarea id="revComment" rows="4" required placeholder="اكتب تجربتك بكل أمانة حول التعامل، الالتزام، والدعم الفني..."></textarea>
+        <label id="lblRevMsg">Your Detailed Feedback *</label>
+        <textarea id="revComment" rows="4" required placeholder="Write your honest feedback regarding execution, discipline, and support..."></textarea>
       </div>
       <button type="submit" class="rev-btn-submit" id="revSubmitBtn">
-        <span id="revSubmitBtnTxt">إرسال التقييم 🚀</span>
+        <span id="revSubmitBtnTxt">Submit Review 🚀</span>
       </button>
       <div id="revFormNotice" class="rev-notice"></div>
     </form>
@@ -5520,7 +5528,7 @@ body.theme-light .rev-fgroup textarea{
   // ==========================================================================
   var defaultReviews = [
     {
-      name: 'Tariq B. (طارق ب.)',
+      name: 'Tariq B.',
       country: 'الجزائر 🇩🇿',
       country_en: 'Algeria 🇩🇿',
       rating: 5,
@@ -5531,7 +5539,7 @@ body.theme-light .rev-fgroup textarea{
       text_en: 'Started with Saifeddine on a test portfolio then scaled my capital. The risk management and stop-loss discipline are second to none—zero reckless gambling. Detailed weekly reports and immense professionalism.'
     },
     {
-      name: 'Faisal Al-Otaibi (فيصل العتيبي)',
+      name: 'Faisal Al-Otaibi',
       country: 'السعودية 🇸🇦',
       country_en: 'Saudi Arabia 🇸🇦',
       rating: 5,
@@ -5553,7 +5561,7 @@ body.theme-light .rev-fgroup textarea{
       text_en: 'Super fast service and exceptional support on Telegram. Transaction confirmed on a private blockchain node in under 3 minutes. Truly elite professionalism, highly recommended!'
     },
     {
-      name: 'Omar Al-Shammari (عمر الشمري)',
+      name: 'Omar Al-Shammari',
       country: 'الإمارات 🇦🇪',
       country_en: 'UAE 🇦🇪',
       rating: 5,
@@ -5575,7 +5583,7 @@ body.theme-light .rev-fgroup textarea{
       text_en: 'The custom MT5 volatility break indicator works flawlessly without repainting. Clean setup instructions and instant delivery on Windows. Excellent quantitative coding.'
     },
     {
-      name: 'Youssef Benali (يوسف بن علي)',
+      name: 'Youssef Benali',
       country: 'المغرب 🇲🇦',
       country_en: 'Morocco 🇲🇦',
       rating: 5,
@@ -5605,11 +5613,12 @@ body.theme-light .rev-fgroup textarea{
 
   function getInitials(name) {
     if (!name) return 'SB';
-    var parts = name.trim().split(/[\s._-]+/);
+    var clean = (name || '').replace(/\s*\([\u0600-\u06FF\s.]+\)/g, '').trim();
+    var parts = clean.split(/[\s._-]+/);
     if (parts.length >= 2 && parts[0] && parts[1]) {
       return (parts[0][0] + parts[1][0]).toUpperCase();
     }
-    return (name.substring(0, 2)).toUpperCase();
+    return (clean.substring(0, 2)).toUpperCase();
   }
 
   window.renderReviews = function() {
@@ -5637,7 +5646,8 @@ body.theme-light .rev-fgroup textarea{
       var quote = isAr ? (r.text || r.text_en || '') : (r.text_en || r.text || '');
       var stat = isAr ? (r.stat || r.stat_en || '') : (r.stat_en || r.stat || '');
       var stars = '★★★★★'.substring(0, r.rating || 5) + '☆☆☆☆☆'.substring(0, Math.max(0, 5 - (r.rating || 5)));
-      var initials = getInitials(r.name);
+      var cleanName = (r.name || '').replace(/\s*\([\u0600-\u06FF\s.]+\)/g, '').trim();
+      var initials = getInitials(cleanName || r.name);
 
       var statHtml = stat ? ('<span class="rev-stat-pill">' + escapeRevHtml(stat) + '</span>') : '';
 
@@ -5646,7 +5656,7 @@ body.theme-light .rev-fgroup textarea{
           '<div class="rev-user">' +
             '<div class="rev-avatar" style="font-family:\'JetBrains Mono\',monospace;font-weight:700;font-size:13px;color:var(--neon)">' + initials + '</div>' +
             '<div class="rev-user-info">' +
-              '<b>' + escapeRevHtml(r.name) + '</b>' +
+              '<b>' + escapeRevHtml(cleanName || r.name) + '</b>' +
               '<span>' + escapeRevHtml(country) + '</span>' +
             '</div>' +
           '</div>' +
@@ -7148,14 +7158,26 @@ body.theme-light .rev-fgroup textarea{
         'rev_filter_flash': '⚡ فلاش USDT',
         'rev_filter_signals': '📡 توصيات VIP',
         'rev_filter_ind': '🤖 المؤشرات البرمجية',
+        'rev_modal_badge': '// تقييمات العملاء الموثقة',
         'rev_modal_title': 'شارك تجربتك وتقييمك مع سيف الدين',
         'rev_modal_sub': 'رأيك يهمنا ويساعد المستثمرين الجدد على اتخاذ قرارات تداول واثقة وشفافة.',
         'lbl_rev_name': 'الاسم أو اللقب *',
+        'ph_rev_name': 'مثال: طارق ب. أو فيصل العتيبي',
         'lbl_rev_country': 'الدولة / المدينة *',
+        'ph_rev_country': 'مثال: الجزائر، السعودية، الإمارات، فرنسا...',
         'lbl_rev_service': 'الخدمة المستفاد منها *',
+        'opt_rev_serv_managed': '💼 إدارة المحافظ (Managed Accounts)',
+        'opt_rev_serv_flash': '⚡ فلاش USDT (Flash Deals)',
+        'opt_rev_serv_signals': '📡 توصيات VIP (VIP Signals)',
+        'opt_rev_serv_ind': '🤖 مؤشرات MT4/MT5 البرمجية',
         'lbl_rev_rating': 'التقييم *',
+        'opt_rev_rate_5': '★★★★★ (5/5 ممتاز)',
+        'opt_rev_rate_4': '★★★★☆ (4/5 جيد جداً)',
+        'opt_rev_rate_3': '★★★☆☆ (3/5 مقبول)',
         'lbl_rev_stat': 'نتيجة أو إنجاز حققته (اختياري)',
+        'ph_rev_stat': 'مثال: تحقيق +35% أرباح، أو تسليم فوري في دقيقتين...',
         'lbl_rev_msg': 'رأيك وتجربتك بالتفصيل *',
+        'ph_rev_msg': 'اكتب تجربتك بكل أمانة حول التعامل، الالتزام، والدعم الفني...',
         'rev_btn_submit': 'إرسال التقييم 🚀'
       },
       en: {
@@ -7568,14 +7590,26 @@ body.theme-light .rev-fgroup textarea{
         'rev_filter_flash': '⚡ Flash USDT',
         'rev_filter_signals': '📡 VIP Signals',
         'rev_filter_ind': '🤖 Custom Indicators',
+        'rev_modal_badge': '// VERIFIED CLIENT FEEDBACK',
         'rev_modal_title': 'Share Your Experience with Saifeddine',
         'rev_modal_sub': 'Your feedback helps new investors make confident, transparent trading decisions.',
         'lbl_rev_name': 'Full Name or Alias *',
+        'ph_rev_name': 'e.g. Tariq B. or David H.',
         'lbl_rev_country': 'Country / City *',
+        'ph_rev_country': 'e.g. United Kingdom, UAE, France, USA...',
         'lbl_rev_service': 'Service Used *',
+        'opt_rev_serv_managed': '💼 Managed Accounts',
+        'opt_rev_serv_flash': '⚡ Flash USDT Deals',
+        'opt_rev_serv_signals': '📡 VIP Signals Channel',
+        'opt_rev_serv_ind': '🤖 MT4/MT5 Custom Indicators',
         'lbl_rev_rating': 'Rating *',
+        'opt_rev_rate_5': '★★★★★ (5/5 Excellent)',
+        'opt_rev_rate_4': '★★★★☆ (4/5 Very Good)',
+        'opt_rev_rate_3': '★★★☆☆ (3/5 Average / Good)',
         'lbl_rev_stat': 'Achievement or Result (Optional)',
+        'ph_rev_stat': 'e.g. +35% ROI achieved, or instant 2-min delivery...',
         'lbl_rev_msg': 'Your Detailed Feedback *',
+        'ph_rev_msg': 'Write your honest feedback regarding execution, discipline, and support...',
         'rev_btn_submit': 'Submit Review 🚀'
       }
     };
@@ -8143,22 +8177,53 @@ body.theme-light .rev-fgroup textarea{
       var rFI = document.getElementById('revFilterInd');
       if (rFI && t['rev_filter_ind']) rFI.textContent = t['rev_filter_ind'];
 
+      var rMBadge = document.getElementById('revModalBadge');
+      if (rMBadge && t['rev_modal_badge']) rMBadge.textContent = t['rev_modal_badge'];
       var rMTitle = document.getElementById('revModalTitle');
       if (rMTitle && t['rev_modal_title']) rMTitle.textContent = t['rev_modal_title'];
       var rMSub = document.getElementById('revModalSub');
       if (rMSub && t['rev_modal_sub']) rMSub.textContent = t['rev_modal_sub'];
+
       var lRN = document.getElementById('lblRevName');
       if (lRN && t['lbl_rev_name']) lRN.textContent = t['lbl_rev_name'];
+      var inRevName = document.getElementById('revClientName');
+      if (inRevName && t['ph_rev_name']) inRevName.placeholder = t['ph_rev_name'];
+
       var lRC = document.getElementById('lblRevCountry');
       if (lRC && t['lbl_rev_country']) lRC.textContent = t['lbl_rev_country'];
+      var inRevCountry = document.getElementById('revClientCountry');
+      if (inRevCountry && t['ph_rev_country']) inRevCountry.placeholder = t['ph_rev_country'];
+
       var lRS = document.getElementById('lblRevService');
       if (lRS && t['lbl_rev_service']) lRS.textContent = t['lbl_rev_service'];
+      var selRevServ = document.getElementById('revServiceType');
+      if (selRevServ && selRevServ.options) {
+        var servKeys = ['opt_rev_serv_managed', 'opt_rev_serv_flash', 'opt_rev_serv_signals', 'opt_rev_serv_ind'];
+        for (var si = 0; si < selRevServ.options.length; si++) {
+          if (t[servKeys[si]]) selRevServ.options[si].text = t[servKeys[si]];
+        }
+      }
+
       var lRR = document.getElementById('lblRevRating');
       if (lRR && t['lbl_rev_rating']) lRR.textContent = t['lbl_rev_rating'];
+      var selRevRate = document.getElementById('revRatingVal');
+      if (selRevRate && selRevRate.options) {
+        var rateKeys = ['opt_rev_rate_5', 'opt_rev_rate_4', 'opt_rev_rate_3'];
+        for (var ri = 0; ri < selRevRate.options.length; ri++) {
+          if (t[rateKeys[ri]]) selRevRate.options[ri].text = t[rateKeys[ri]];
+        }
+      }
+
       var lRSt = document.getElementById('lblRevStat');
       if (lRSt && t['lbl_rev_stat']) lRSt.textContent = t['lbl_rev_stat'];
+      var inRevStat = document.getElementById('revProfitStat');
+      if (inRevStat && t['ph_rev_stat']) inRevStat.placeholder = t['ph_rev_stat'];
+
       var lRM = document.getElementById('lblRevMsg');
       if (lRM && t['lbl_rev_msg']) lRM.textContent = t['lbl_rev_msg'];
+      var inRevMsg = document.getElementById('revComment');
+      if (inRevMsg && t['ph_rev_msg']) inRevMsg.placeholder = t['ph_rev_msg'];
+
       var rSubTxt = document.getElementById('revSubmitBtnTxt');
       if (rSubTxt && t['rev_btn_submit']) rSubTxt.textContent = t['rev_btn_submit'];
 
