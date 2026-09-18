@@ -346,7 +346,7 @@ footer.cv-foot .mono{color:var(--neon)}
 }
 .cvx-brand b{font-size:14.5px;display:block;line-height:1.15;color:#fff;white-space:nowrap}
 .cvx-brand small{font-size:10.5px;color:var(--neon-2);font-family:'JetBrains Mono',monospace;letter-spacing:.2px;display:block;line-height:1.25;margin-top:2px;white-space:nowrap}
-.cvx-links{display:flex;gap:clamp(2px, 0.35vw, 5px);margin-inline-start:auto;align-items:center;flex-shrink:0}
+.cvx-links{display:flex;gap:clamp(2px, 0.35vw, 4px);margin-inline:auto;align-items:center;flex-shrink:0}
 .cvx-links a{padding:clamp(5px, 0.45vw, 8px) clamp(6px, 0.55vw, 10px);border-radius:8px;font-size:clamp(12px, 0.88vw, 13.5px);color:var(--muted);transition:.18s;white-space:nowrap !important;word-break:keep-all !important;flex-shrink:0;display:inline-flex;align-items:center}
 .cvx-links a:hover{color:#fff;background:rgba(255,255,255,.06)}
 .cvx-navcta{margin-inline-start:4px;padding:clamp(7px, 0.6vw, 9px) clamp(11px, 0.9vw, 16px);border-radius:10px;font-weight:600;font-size:clamp(12px, 0.88vw, 13.5px);color:#04140c;background:var(--rgb);background-size:200% auto;animation:cvxRgb 6s linear infinite;box-shadow:0 0 16px rgba(0,255,170,.35);white-space:nowrap !important;word-break:keep-all !important;flex-shrink:0 !important;min-width:max-content !important;cursor:pointer;border:0;font-family:inherit}
@@ -953,8 +953,24 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
 .cvx-reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
 .cvx-reveal.in{opacity:1;transform:none}
 
-.cvx-nav-actions{display:flex;align-items:center;gap:8px;margin-inline-start:auto;flex-shrink:0}
-@media(max-width:1180px){
+.cvx-nav-actions{display:flex;align-items:center;gap:clamp(5px, 0.7vw, 8px);margin-inline-start:auto;flex-shrink:0}
+
+/* Desktop & Laptop Responsive Navbar Optimization */
+@media(max-width:1440px){
+  .cvx-nav .in{padding:8px 16px;gap:8px}
+  .cvx-links{gap:2px}
+  .cvx-links a{padding:4px 6px;font-size:12px}
+  .cvx-nav-actions .cvx-theme-toggle .theme-label{display:none !important}
+  .cvx-nav-actions .cvx-theme-toggle{padding:7px 9px !important}
+  .cvx-navcta{padding:7px 11px;font-size:12px}
+}
+@media(max-width:1366px){
+  .cvx-brand small{display:none !important}
+  .cvx-nav-actions .cvx-lang-toggle .lang-label{display:none !important}
+  .cvx-nav-actions .cvx-lang-toggle{padding:7px 9px !important}
+  .cvx-nav-actions{gap:6px}
+}
+@media(max-width:1220px){
   .cvx-links{display:none !important}
   .cvx-burger{display:flex !important}
   .cvx-nav-actions{display:flex !important;align-items:center;gap:8px;margin-inline-start:auto}
