@@ -1468,33 +1468,33 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
 }
 .fl-app-btn.sec:hover{border-color:var(--neon);color:var(--neon);transform:translateY(-2px)}
 
-/* ================= Flash USDT Checkout Modal ================= */
+/* ================= Ultra-Luxury Instant Checkout Modal ================= */
 .fl-modal{
   display:none;
   position:fixed;
   inset:0;
   z-index:99999;
-  background:rgba(4,7,13,.86);
-  -webkit-backdrop-filter:blur(12px);
-  backdrop-filter:blur(12px);
+  background:rgba(3,6,12,.88);
+  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:blur(16px);
   align-items:center;
   justify-content:center;
-  padding:20px;
+  padding:16px;
   overflow-y:auto;
 }
 .fl-modal.open{display:flex}
 .fl-modal-content{
   position:relative;
-  background:linear-gradient(180deg,#0e1625 0%,#070b13 100%);
-  border:1px solid rgba(27,41,66,.95);
-  border-radius:22px;
+  background:radial-gradient(130% 120% at 50% 0%,#0e182a 0%,#050812 100%);
+  border:1px solid rgba(0,255,156,.28);
+  border-radius:24px;
   width:100%;
-  max-width:520px;
-  box-shadow:0 24px 70px rgba(0,0,0,.7),0 0 40px rgba(0,255,156,.1);
+  max-width:540px;
+  box-shadow:0 30px 80px rgba(0,0,0,.85),0 0 50px rgba(0,255,156,.12),inset 0 1px 0 rgba(255,255,255,.14);
   overflow:hidden;
-  animation:flModalIn .25s ease-out;
+  animation:flModalIn .25s cubic-bezier(.16,1,.3,1);
 }
-@keyframes flModalIn{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:none}}
+@keyframes flModalIn{from{opacity:0;transform:scale(.94) translateY(14px)}to{opacity:1;transform:none}}
 .fl-modal-top{
   display:flex;
   align-items:center;
@@ -1503,104 +1503,439 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
   background:rgba(5,9,16,.85);
   border-bottom:1px solid rgba(27,41,66,.85);
 }
+.fl-modal-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:12px;
+  font-weight:700;
+  color:var(--text);
+  letter-spacing:.5px;
+}
+.fl-modal-shield{
+  color:var(--neon);
+  font-size:13px;
+  animation:pulse 2s infinite;
+}
 .fl-modal-close{
-  background:transparent;
-  border:none;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.12);
   color:var(--muted);
-  font-size:22px;
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  font-size:20px;
   line-height:1;
   cursor:pointer;
-  transition:color .18s ease;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all .2s ease;
 }
-.fl-modal-close:hover{color:#ff6b6b}
-.fl-modal-body{padding:26px 24px 28px}
-.fl-steps-ind{display:flex;gap:6px;margin-bottom:22px;justify-content:center}
-.fl-step-pip{
-  width:36px;
-  height:4px;
-  border-radius:2px;
-  background:rgba(27,41,66,.8);
-  transition:all .3s ease;
-}
-.fl-step-pip.active{background:var(--neon);box-shadow:0 0 8px var(--neon)}
+.fl-modal-close:hover{color:#fff;background:#ff4757;border-color:#ff4757;transform:rotate(90deg)}
+.fl-modal-body{padding:22px 20px 26px}
 
-.fl-plat-btn{
-  width:100%;
-  padding:14px 18px;
-  background:#060a12;
-  border:1px solid rgba(34,53,82,.9);
-  border-radius:12px;
-  margin-bottom:10px;
+/* Summary Card */
+.fl-summary-card{
+  background:linear-gradient(135deg,rgba(16,28,50,.85) 0%,rgba(7,14,26,.95) 100%);
+  border:1px solid rgba(18,214,255,.3);
+  border-radius:16px;
+  padding:16px 18px;
+  margin-bottom:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 8px 24px rgba(0,0,0,.35);
+  gap:12px;
+}
+.fl-summary-left{flex:1;min-width:0}
+.fl-item-badge{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1px;
+  color:var(--neon);
+  background:rgba(0,255,156,.12);
+  border:1px solid rgba(0,255,156,.35);
+  padding:2px 8px;
+  border-radius:6px;
+  margin-bottom:6px;
+}
+.fl-item-title{
+  font-size:17px;
+  font-weight:800;
   color:#fff;
-  font-size:14.5px;
+  line-height:1.2;
+  margin-bottom:4px;
+}
+.fl-item-meta{
+  font-size:12px;
+  color:var(--muted);
+  font-family:'JetBrains Mono',monospace;
+}
+.fl-item-meta b{color:var(--neon-2)}
+.fl-summary-right{text-align:right;flex-shrink:0}
+.fl-price-label{
+  font-size:10px;
+  letter-spacing:1px;
+  color:var(--muted);
+  font-family:'JetBrains Mono',monospace;
   font-weight:700;
+  margin-bottom:2px;
+}
+.fl-price-val{
+  font-family:'JetBrains Mono',monospace;
+  font-size:26px;
+  font-weight:900;
+  color:var(--neon);
+  text-shadow:0 0 16px rgba(0,255,156,.4);
+  line-height:1;
+}
+.fl-price-val small{font-size:13px;color:var(--muted);font-weight:700}
+
+/* Section Labels */
+.fl-section-label{
+  display:block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:1px;
+  font-weight:700;
+  color:var(--muted);
+  margin-bottom:8px;
+  text-align:left;
+}
+html[dir="rtl"] .fl-section-label{text-align:right}
+
+/* Network Selector Tabs */
+.fl-net-section{margin-bottom:16px}
+.fl-net-tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fl-net-tab{
+  padding:11px 13px;
+  background:#060b16;
+  border:1.5px solid rgba(34,53,82,.85);
+  border-radius:12px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  transition:all .2s cubic-bezier(.2,.8,.2,1);
+  color:#fff;
+  text-align:left;
+  outline:none;
+}
+html[dir="rtl"] .fl-net-tab{text-align:right}
+.fl-net-tab .net-icon{font-size:18px;flex-shrink:0}
+.fl-net-tab .net-info{flex:1;min-width:0}
+.fl-net-tab .net-info b{display:block;font-size:13px;font-weight:700;line-height:1.2}
+.fl-net-tab .net-info small{display:block;font-size:10.5px;color:var(--muted);margin-top:2px;font-family:'JetBrains Mono',monospace}
+.fl-net-tab .net-check{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:rgba(255,255,255,.06);
+  color:transparent;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:11px;
+  font-weight:900;
+  transition:all .2s;
+  flex-shrink:0;
+}
+.fl-net-tab:hover{
+  border-color:var(--neon-2);
+  background:rgba(18,214,255,.06);
+  transform:translateY(-1px);
+}
+.fl-net-tab.active{
+  border-color:var(--neon);
+  background:rgba(0,255,156,.08);
+  box-shadow:0 0 16px rgba(0,255,156,.25);
+}
+.fl-net-tab.active .net-check{background:var(--neon);color:#031016}
+
+/* Identifier Input */
+.fl-input-group{margin-bottom:16px}
+.fl-input-wrapper{
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+.fl-inp-icon{
+  position:absolute;
+  left:14px;
+  font-size:16px;
+  pointer-events:none;
+  z-index:2;
+}
+html[dir="rtl"] .fl-inp-icon{left:auto;right:14px}
+.fl-luxury-input{
+  width:100%;
+  background:#050914;
+  border:1.5px solid rgba(34,53,82,.9);
+  border-radius:12px;
+  padding:12px 14px 12px 42px;
+  color:#fff;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12.5px;
+  outline:none;
+  transition:all .2s ease;
+  box-shadow:inset 0 2px 6px rgba(0,0,0,.5);
+}
+html[dir="rtl"] .fl-luxury-input{padding:12px 42px 12px 14px}
+.fl-luxury-input:focus{
+  border-color:var(--neon);
+  box-shadow:0 0 16px rgba(0,255,156,.25),inset 0 2px 6px rgba(0,0,0,.5);
+}
+.fl-luxury-input.valid{border-color:var(--neon)}
+.fl-luxury-input.error-shake{
+  border-color:#ff4757;
+  animation:inpShake .4s ease;
+}
+@keyframes inpShake{
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(-6px)}
+  75%{transform:translateX(6px)}
+}
+.fl-input-helper{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:6px;
+  text-align:left;
+  line-height:1.4;
+}
+html[dir="rtl"] .fl-input-helper{text-align:right}
+
+/* Payment Desk (QR & Address Box) */
+.fl-pay-desk{
+  background:#040710;
+  border:1px solid rgba(34,53,82,.75);
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:18px;
+  box-shadow:inset 0 0 20px rgba(0,0,0,.6);
+}
+.fl-desk-header{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  cursor:pointer;
-  transition:all .2s ease;
-}
-.fl-plat-btn:hover{
-  border-color:var(--neon-2);
-  background:#08111e;
-  box-shadow:0 0 16px rgba(18,214,255,.2);
-  transform:translateY(-1px);
-}
-.fl-node-console{
-  background:#030508;
-  border:1px solid rgba(34,53,82,.8);
-  border-radius:10px;
-  padding:14px;
-  font-family:'JetBrains Mono',monospace;
-  font-size:11px;
-  color:#00ff9c;
-  height:120px;
-  overflow-y:auto;
-  text-align:left;
-  line-height:1.7;
-  margin:16px 0;
-}
-.fl-qr-wrap{
-  background:#fff;
-  padding:10px;
-  border-radius:12px;
-  display:inline-block;
-  margin:12px auto;
-  box-shadow:0 0 20px rgba(0,255,156,.2);
-}
-.fl-qr-wrap img{width:160px;height:160px;display:block}
-.fl-wallet-box{
-  display:flex;
+  margin-bottom:12px;
+  padding-bottom:10px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  flex-wrap:wrap;
   gap:8px;
-  background:#050810;
-  border:1px solid rgba(34,53,82,.9);
-  border-radius:10px;
-  padding:6px;
-  margin:14px 0;
 }
-.fl-wallet-box input{
+.fl-timer-tag{
+  font-size:11px;
+  font-weight:800;
+  color:var(--gold);
+}
+.fl-timer-tag span{color:#fff}
+.fl-network-pill{
+  font-size:10.5px;
+  font-weight:800;
+  padding:3px 8px;
+  border-radius:6px;
+  background:rgba(18,214,255,.12);
+  color:var(--neon-2);
+  border:1px solid rgba(18,214,255,.3);
+}
+.fl-pay-grid{
+  display:grid;
+  grid-template-columns:130px 1fr;
+  gap:16px;
+  align-items:center;
+}
+.fl-qr-box{text-align:center}
+.fl-qr-frame{
+  width:124px;
+  height:124px;
+  background:#fff;
+  border-radius:12px;
+  padding:6px;
+  margin:0 auto 6px;
+  box-shadow:0 0 20px rgba(0,255,156,.25);
+  position:relative;
+  overflow:hidden;
+}
+.fl-qr-frame img{width:100%;height:100%;object-fit:contain;display:block}
+.fl-qr-caption{
+  display:block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9.5px;
+  color:var(--muted);
+  letter-spacing:.3px;
+}
+.fl-address-col{flex:1;min-width:0}
+.fl-addr-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10.5px;
+  color:var(--muted);
+  letter-spacing:.5px;
+  margin-bottom:6px;
+  text-align:left;
+}
+html[dir="rtl"] .fl-addr-label{text-align:right}
+.fl-addr-box{
+  display:flex;
+  gap:6px;
+  background:#070c17;
+  border:1.5px solid rgba(34,53,82,.9);
+  border-radius:10px;
+  padding:5px 6px;
+  margin-bottom:8px;
+  align-items:center;
+}
+.fl-addr-box input{
   flex:1;
   background:transparent;
   border:none;
   outline:none;
-  color:#fff;
+  color:var(--neon);
   font-family:'JetBrains Mono',monospace;
-  font-size:12px;
-  padding:8px;
+  font-size:11.5px;
+  padding:6px 8px;
+  font-weight:600;
+  text-overflow:ellipsis;
+  min-width:0;
 }
-.fl-copy-btn{
-  background:var(--neon);
-  color:#031016;
+.fl-copy-luxury-btn{
+  background:var(--rgb);
+  background-size:200% auto;
+  animation:cvxRgb 6s linear infinite;
+  color:#04140c;
   font-weight:800;
-  font-size:12px;
-  padding:8px 14px;
-  border-radius:8px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
   border:none;
+  border-radius:8px;
+  padding:8px 14px;
   cursor:pointer;
   transition:all .2s ease;
-  font-family:'JetBrains Mono',monospace;
+  white-space:nowrap;
+  flex-shrink:0;
 }
-.fl-copy-btn:hover{box-shadow:0 0 12px var(--neon)}
+.fl-copy-luxury-btn:hover{box-shadow:0 0 14px rgba(0,255,156,.5);transform:translateY(-1px)}
+.fl-copy-luxury-btn.copied{
+  background:#00ff9c !important;
+  color:#04140c !important;
+}
+.fl-deposit-notes{
+  font-size:11.5px;
+  color:var(--muted);
+  line-height:1.45;
+  text-align:left;
+}
+html[dir="rtl"] .fl-deposit-notes{text-align:right}
+
+/* Action Buttons */
+.fl-actions-row{
+  display:flex;
+  gap:10px;
+  margin-top:6px;
+}
+.fl-btn-primary{
+  flex:1.5;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:13px 18px;
+  border-radius:12px;
+  background:var(--rgb);
+  background-size:200% auto;
+  animation:cvxRgb 6s linear infinite;
+  color:#04140c;
+  font-size:14px;
+  font-weight:700;
+  text-decoration:none;
+  box-shadow:0 0 20px rgba(0,255,170,.35);
+  transition:all .2s ease;
+  border:none;
+  cursor:pointer;
+  font-family:inherit;
+}
+.fl-btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 28px rgba(0,255,170,.55);
+  color:#04140c;
+}
+.fl-btn-primary svg{width:18px;height:18px;fill:currentColor;flex-shrink:0}
+.fl-btn-secondary{
+  flex:1;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  padding:13px 14px;
+  border-radius:12px;
+  background:#060a14;
+  border:1px solid var(--line);
+  color:var(--text);
+  font-size:13px;
+  font-weight:600;
+  text-decoration:none;
+  transition:all .2s ease;
+  white-space:nowrap;
+  font-family:inherit;
+}
+.fl-btn-secondary:hover{
+  border-color:var(--neon-2);
+  color:var(--neon-2);
+  background:rgba(18,214,255,.08);
+  transform:translateY(-1px);
+}
+.fl-btn-secondary svg{width:16px;height:16px;fill:currentColor;flex-shrink:0}
+
+/* Floating Luxury Toast Notification */
+.fl-toast{
+  position:fixed;
+  top:24px;
+  left:50%;
+  transform:translateX(-50%) translateY(-40px);
+  background:rgba(6,12,22,.96);
+  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:blur(16px);
+  border:1.5px solid var(--neon);
+  border-radius:999px;
+  padding:10px 22px;
+  color:#fff;
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;
+  font-weight:700;
+  box-shadow:0 12px 36px rgba(0,0,0,.75),0 0 24px rgba(0,255,156,.35);
+  z-index:9999999;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .3s cubic-bezier(.16,1,.3,1),transform .3s cubic-bezier(.16,1,.3,1);
+}
+.fl-toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+  pointer-events:auto;
+}
+.fl-toast-icon{
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  background:var(--neon);
+  color:#04140c;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:900;
+}
+
+@media(max-width:540px){
+  .fl-net-tabs{grid-template-columns:1fr}
+  .fl-pay-grid{grid-template-columns:1fr;text-align:center}
+  .fl-actions-row{flex-direction:column}
+}
 
 @media(max-width:860px){
   .fl-deals-grid{grid-template-columns:1fr}
@@ -3097,103 +3432,130 @@ html[dir="rtl"] .mono-arrow {
 </div>
 </section>
 
-<!-- Interactive 5-Step Order & Payment Modal -->
+<!-- Ultra-Luxury Instant Checkout & Direct VIP Desk -->
 <div id="flModal" class="fl-modal" onclick="if(event.target===this)closeFlashModal()">
   <div class="fl-modal-content">
+    
+    <!-- Modal Header -->
     <div class="fl-modal-top">
       <div class="fl-modal-dots cvx-form-dots">
         <span class="d-red"></span><span class="d-yel"></span><span class="d-grn"></span>
       </div>
-      <div class="mono" id="flModalTitle" style="font-size:11.5px;color:var(--muted);font-weight:700">// TERMINAL: DIRECT CHECKOUT</div>
+      <div class="fl-modal-badge mono" id="flModalTitle">
+        <span class="fl-modal-shield">🔒</span> <span id="flModalTitleText">// DIRECT VIP CHECKOUT DESK</span>
+      </div>
       <button class="fl-modal-close" onclick="closeFlashModal()" aria-label="Close modal">&times;</button>
     </div>
+
+    <!-- Modal Body -->
     <div class="fl-modal-body">
-      <div class="fl-steps-ind">
-        <span class="fl-step-pip active" id="flStepPip1"></span>
-        <span class="fl-step-pip" id="flStepPip2"></span>
-        <span class="fl-step-pip" id="flStepPip3"></span>
-        <span class="fl-step-pip" id="flStepPip4"></span>
-        <span class="fl-step-pip" id="flStepPip5"></span>
-      </div>
 
-      <!-- Step 1: Platform Selection -->
-      <div id="flStep1">
-        <h4 id="flStep1Title" style="text-align:center;font-size:16px;font-weight:800;color:var(--neon);margin-bottom:6px">1. Select Destination Platform</h4>
-        <p id="flStep1Desc" style="text-align:center;font-size:13px;color:var(--muted);margin-bottom:18px">Choose where you will receive your Flash USDT.</p>
-        <button class="fl-plat-btn" onclick="flGoStep(2, {platform: 'Binance Exchange'})">
-          <span>Binance Exchange</span> <span class="mono" style="color:var(--gold)">BINANCE</span>
-        </button>
-        <button class="fl-plat-btn" onclick="flGoStep(2, {platform: 'Trust Wallet'})">
-          <span>Trust Wallet</span> <span class="mono" style="color:var(--neon-2)">TRUST</span>
-        </button>
-        <button class="fl-plat-btn" onclick="flGoStep(2, {platform: 'MetaMask'})">
-          <span>MetaMask</span> <span class="mono" style="color:#ff9800">METAMASK</span>
-        </button>
-        <button class="fl-plat-btn" onclick="flGoStep(2, {platform: 'OKX / Other'})">
-          <span>OKX / Self-Custody</span> <span class="mono" style="color:var(--neon)">OKX</span>
-        </button>
-      </div>
-
-      <!-- Step 2: Receiving Network -->
-      <div id="flStep2" style="display:none">
-        <h4 style="text-align:center;font-size:16px;font-weight:800;color:var(--neon);margin-bottom:6px">2. Select Payment Network</h4>
-        <p style="text-align:center;font-size:13px;color:var(--muted);margin-bottom:18px">Ensure your wallet supports the selected blockchain network.</p>
-        <button class="fl-plat-btn" onclick="flGoStep(3, {network: 'BEP20'})">
-          <span>BEP20 (Binance Smart Chain)</span> <span class="mono" style="color:var(--gold)">BSC</span>
-        </button>
-        <button class="fl-plat-btn" onclick="flGoStep(3, {network: 'TRC20'})">
-          <span>TRC20 (Tron Network)</span> <span class="mono" style="color:#ff6b6b">TRON</span>
-        </button>
-        <button style="width:100%;margin-top:10px;background:transparent;border:none;color:var(--muted);font-size:12.5px;cursor:pointer" onclick="flGoStep(1)">← Back to Platform</button>
-      </div>
-
-      <!-- Step 3: Destination Wallet Address / Handle -->
-      <div id="flStep3" style="display:none">
-        <h4 id="flStep3Title" style="text-align:center;font-size:16px;font-weight:800;color:var(--neon);margin-bottom:6px">3. Enter Receiving Identifier</h4>
-        <p id="flStep3Desc" style="text-align:center;font-size:13px;color:var(--muted);margin-bottom:18px">Paste the address or username where your activation will be sent.</p>
-        <input type="text" id="flDestWallet" class="fl-calc-input" style="width:100%;margin-bottom:14px;text-align:center;font-size:13px" placeholder="Paste your wallet address or Telegram @username..."/>
-        <button class="fl-calc-btn" style="width:100%;justify-content:center" onclick="flValidateWallet()">Confirm &amp; Proceed →</button>
-        <button style="width:100%;margin-top:10px;background:transparent;border:none;color:var(--muted);font-size:12.5px;cursor:pointer" onclick="flGoStep(2)">← Back to Network</button>
-      </div>
-
-      <!-- Step 4: Connecting Node Console -->
-      <div id="flStep4" style="display:none;text-align:center">
-        <div style="width:40px;height:40px;border-radius:50%;border:3px solid var(--neon);border-top-color:transparent;animation:cvxSpin .8s linear infinite;margin:12px auto"></div>
-        <h4 style="font-size:16px;font-weight:800;color:#fff;margin-bottom:4px">Connecting to Blockchain Nodes...</h4>
-        <p style="font-size:12.5px;color:var(--neon-2);font-family:'JetBrains Mono',monospace">// Verifying peer routing matrix</p>
-        <div id="flNodeConsole" class="fl-node-console"></div>
-      </div>
-
-      <!-- Step 5: Direct Payment Desk -->
-      <div id="flStep5" style="display:none;text-align:center">
-        <div class="mono" style="font-size:12px;color:var(--gold);font-weight:800;margin-bottom:6px">⏱️ PAYMENT WINDOW EXPIRES IN: <span id="flPayTimer" style="color:#fff">29:59</span></div>
-        <h4 style="font-size:18px;font-weight:800;color:#fff;margin-bottom:4px">Complete Order Deposit</h4>
-        <div style="font-size:24px;font-weight:900;color:var(--neon);font-family:'JetBrains Mono',monospace;margin-bottom:10px">
-          <span id="flModalPrice">0</span> <small style="font-size:14px;color:var(--muted)">USDT</small>
+      <!-- Order Summary Card -->
+      <div class="fl-summary-card">
+        <div class="fl-summary-left">
+          <span class="fl-item-badge" id="flModalItemBadge">⚡ FLASH USDT ORDER</span>
+          <h3 class="fl-item-title" id="flModalItemTitle">80,000 Flash USDT</h3>
+          <div class="fl-item-meta" id="flModalItemMeta">Validity: <b id="flModalItemDur">24 Hours</b> · Multi-Exchange</div>
+          <span id="flModalItemLabel" style="display:none">Flash USDT</span>
+          <span id="flModalFlashAmt" style="display:none">80000</span>
+          <span id="flModalNet" style="display:none">BEP20</span>
         </div>
-        <div style="font-size:12.5px;color:var(--muted);margin-bottom:12px">
-          For: <b id="flModalFlashAmt" style="color:#fff">0</b> <span id="flModalItemLabel">Flash USDT</span> on <span id="flModalNet" class="mono" style="color:var(--neon-2)">BEP20</span>
-        </div>
-        
-        <div class="fl-qr-wrap">
-          <img id="flQrImg" src="flashusdt/BEP20.png" alt="Deposit QR Code"/>
-        </div>
-
-        <div style="text-align:left;font-size:11.5px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-top:10px">
-          // OFFICIAL DEPOSIT WALLET (<span id="flWalletNetLabel">BEP20</span>):
-        </div>
-        <div class="fl-wallet-box">
-          <input type="text" id="flDepositWallet" readonly value="0x41f8a3a3a841cb3305bf1ebabe4ede7169a55bce"/>
-          <button class="fl-copy-btn" onclick="flCopyWallet()">COPY</button>
-        </div>
-        
-        <div style="display:flex;gap:10px;margin-top:14px">
-          <a id="flTelegramTxBtn" class="fl-calc-btn" style="flex:1;justify-content:center;text-decoration:none" href="https://t.me/HNTSB15" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M21.9 4.3 18.7 19c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.7 13 1.9 11.5c-1-.3-1-1 .2-1.5l18.4-7.1c.9-.3 1.6.2 1.4 1.4Z"/></svg> Send TX to Telegram
-          </a>
-          <button class="fl-deal-btn" style="background:#060a12;border:1px solid var(--line);color:#fff" onclick="closeFlashModal()">Done</button>
+        <div class="fl-summary-right">
+          <div class="fl-price-label">AMOUNT DUE</div>
+          <div class="fl-price-val"><span id="flModalPrice">100</span> <small>USDT</small></div>
         </div>
       </div>
+
+      <!-- Network Selector Tabs (BEP20 vs TRC20) -->
+      <div class="fl-net-section">
+        <label class="fl-section-label" id="flNetLabel">// 1. SELECT PAYMENT NETWORK</label>
+        <div class="fl-net-tabs">
+          <button type="button" class="fl-net-tab active" id="flNetTabBEP20" onclick="flSelectNetwork('BEP20')">
+            <span class="net-icon">🟡</span>
+            <div class="net-info">
+              <b>BEP20 (BNB Chain)</b>
+              <small>Low Gas Fee (~0.29 USDT)</small>
+            </div>
+            <span class="net-check">✓</span>
+          </button>
+          <button type="button" class="fl-net-tab" id="flNetTabTRC20" onclick="flSelectNetwork('TRC20')">
+            <span class="net-icon">🔴</span>
+            <div class="net-info">
+              <b>TRC20 (Tron Network)</b>
+              <small>Instant Finality (~1-2 USDT)</small>
+            </div>
+            <span class="net-check">✓</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Client Identifier Input -->
+      <div class="fl-input-group">
+        <label for="flDestWallet" id="flDestLabel" class="fl-section-label">
+          // 2. YOUR RECEIVING IDENTIFIER
+        </label>
+        <div class="fl-input-wrapper">
+          <span class="fl-inp-icon" id="flInpIcon">💼</span>
+          <input type="text" id="flDestWallet" class="fl-luxury-input" placeholder="Paste your receiving wallet address (BEP20 or TRC20)..." oninput="flValidateInputLive()"/>
+        </div>
+        <div class="fl-input-helper" id="flInputHelper">
+          * Activation and transaction proof will be linked to this identifier.
+        </div>
+      </div>
+
+      <!-- Instant Payment Desk (QR + Deposit Wallet + Auto-Timer) -->
+      <div class="fl-pay-desk">
+        <div class="fl-desk-header">
+          <span class="mono fl-timer-tag">⏱️ ORDER RESERVED: <span id="flPayTimer">29:59</span></span>
+          <span class="fl-network-pill mono" id="flWalletNetLabel">BEP20 DEPOSIT</span>
+        </div>
+
+        <div class="fl-pay-grid">
+          <!-- QR Box with scanning laser line -->
+          <div class="fl-qr-box">
+            <div class="fl-qr-frame">
+              <img id="flQrImg" src="flashusdt/BEP20.png" alt="USDT Deposit QR Code"/>
+            </div>
+            <span class="fl-qr-caption">BINANCE · TRUST · OKX</span>
+          </div>
+
+          <!-- Wallet Address & Copy -->
+          <div class="fl-address-col">
+            <div class="fl-addr-label" id="flAddrLabel">// OFFICIAL DEPOSIT ADDRESS:</div>
+            <div class="fl-addr-box">
+              <input type="text" id="flDepositWallet" readonly value="0x41f8a3a3a841cb3305bf1ebabe4ede7169a55bce"/>
+              <button type="button" class="fl-copy-luxury-btn" id="flCopyBtn" onclick="flCopyWallet()">
+                <span id="flCopyBtnText">COPY</span>
+              </button>
+            </div>
+            <div class="fl-deposit-notes" id="flDepositNotes">
+              • Send exact amount in USDT.<br/>• Direct confirmation via blockchain nodes within 1-3 minutes.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="fl-actions-row">
+        <a id="flTelegramTxBtn" class="fl-btn-primary" href="https://t.me/HNTSB15" target="_blank" rel="noopener" onclick="return flHandleTelegramClick(event)">
+          <svg viewBox="0 0 24 24"><path d="M21.9 4.3 18.7 19c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.7 13 1.9 11.5c-1-.3-1-1 .2-1.5l18.4-7.1c.9-.3 1.6.2 1.4 1.4Z"/></svg>
+          <span id="flTxBtnText">⚡ Confirm Payment on Telegram</span>
+        </a>
+        <a class="fl-btn-secondary" href="https://t.me/HNTSB15" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+          <span id="flSuppBtnText">Direct VIP Support</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Floating Luxury Toast Notification (Zero browser alert()) -->
+<div id="flToast" class="fl-toast">
+  <span class="fl-toast-icon">✓</span>
+  <span class="fl-toast-msg" id="flToastMsg">Deposit wallet address copied to clipboard!</span>
+</div>
 
     </div>
   </div>
@@ -3907,27 +4269,48 @@ html[dir="rtl"] .mono-arrow {
       curOrder.amt = amt;
       curOrder.price = price;
       curOrder.dur = dur || '24h';
+      curOrder.wallet = '';
 
-      var titleEl = document.getElementById('flModalTitle');
-      if (titleEl) titleEl.textContent = '// FLASH TERMINAL: DIRECT CHECKOUT';
-      var s1Title = document.getElementById('flStep1Title');
-      if (s1Title) s1Title.textContent = '1. Select Destination Platform';
-      var s1Desc = document.getElementById('flStep1Desc');
-      if (s1Desc) s1Desc.textContent = 'Choose where you will receive your Flash USDT.';
-      var s3Title = document.getElementById('flStep3Title');
-      if (s3Title) s3Title.textContent = '3. Enter Receiving Identifier';
-      var s3Desc = document.getElementById('flStep3Desc');
-      if (s3Desc) s3Desc.textContent = 'Paste your receiving address. Double-check network compatibility.';
+      var titleText = document.getElementById('flModalTitleText');
+      if (titleText) titleText.textContent = '// FLASH TERMINAL: DIRECT CHECKOUT';
+      var badgeEl = document.getElementById('flModalItemBadge');
+      if (badgeEl) {
+        badgeEl.textContent = '⚡ FLASH USDT ORDER';
+        badgeEl.style.color = 'var(--neon)';
+        badgeEl.style.borderColor = 'rgba(0,255,156,.35)';
+        badgeEl.style.background = 'rgba(0,255,156,.12)';
+      }
+      var itemTitle = document.getElementById('flModalItemTitle');
+      if (itemTitle) itemTitle.textContent = Number(amt).toLocaleString() + ' Flash USDT';
+      var itemDur = document.getElementById('flModalItemDur');
+      var durLabel = (dur === '1w' ? '1 Week' : dur === '3d' ? '3 Days' : '24 Hours');
+      if (itemDur) itemDur.textContent = durLabel;
+      var prEl = document.getElementById('flModalPrice');
+      if (prEl) prEl.textContent = price;
+
+      var destLabel = document.getElementById('flDestLabel');
+      if (destLabel) destLabel.textContent = '// 2. YOUR RECEIVING WALLET ADDRESS';
       var destInp = document.getElementById('flDestWallet');
-      if (destInp) destInp.placeholder = 'Paste your wallet address (BEP20 or TRC20)...';
+      if (destInp) {
+        destInp.placeholder = 'Paste your receiving wallet address (BEP20 or TRC20)...';
+        destInp.value = '';
+        destInp.classList.remove('valid', 'error-shake');
+      }
+      var inpIcon = document.getElementById('flInpIcon');
+      if (inpIcon) inpIcon.textContent = '💼';
+      var helper = document.getElementById('flInputHelper');
+      if (helper) helper.textContent = '* Flash USDT will be transferred directly to this destination wallet.';
+
       var itemLbl = document.getElementById('flModalItemLabel');
       if (itemLbl) itemLbl.textContent = 'Flash USDT';
+      var flashAmtEl = document.getElementById('flModalFlashAmt');
+      if (flashAmtEl) flashAmtEl.textContent = amt;
+
+      flSelectNetwork('BEP20');
+      startPayCountdown();
 
       var modal = document.getElementById('flModal');
-      if (modal) {
-        modal.classList.add('open');
-        flGoStep(1);
-      }
+      if (modal) modal.classList.add('open');
     };
 
     window.openPlanModal = function(planName, price) {
@@ -3936,165 +4319,186 @@ html[dir="rtl"] .mono-arrow {
       curOrder.amt = planName;
       curOrder.price = price;
       curOrder.dur = 'Monthly';
+      curOrder.wallet = '';
 
-      var titleEl = document.getElementById('flModalTitle');
-      if (titleEl) titleEl.textContent = '// NEWSX AI: ' + planName.toUpperCase() + ' CHECKOUT';
-      var s1Title = document.getElementById('flStep1Title');
-      if (s1Title) s1Title.textContent = '1. Select Primary Exchange / Platform';
-      var s1Desc = document.getElementById('flStep1Desc');
-      if (s1Desc) s1Desc.textContent = 'Select your trading platform for optimized NewsX AI signal delivery.';
-      var s3Title = document.getElementById('flStep3Title');
-      if (s3Title) s3Title.textContent = '3. Enter Telegram @Username or Email';
-      var s3Desc = document.getElementById('flStep3Desc');
-      if (s3Desc) s3Desc.textContent = 'Enter your Telegram handle to receive VIP bot invitation & activation key:';
+      var titleText = document.getElementById('flModalTitleText');
+      if (titleText) titleText.textContent = '// NEWSX AI: ' + planName.toUpperCase() + ' CHECKOUT';
+      var badgeEl = document.getElementById('flModalItemBadge');
+      if (badgeEl) {
+        badgeEl.textContent = '⚡ NEWSX AI MEMBERSHIP';
+        badgeEl.style.color = 'var(--neon-2)';
+        badgeEl.style.borderColor = 'rgba(18,214,255,.35)';
+        badgeEl.style.background = 'rgba(18,214,255,.12)';
+      }
+      var itemTitle = document.getElementById('flModalItemTitle');
+      if (itemTitle) itemTitle.textContent = planName + ' (1 Month License)';
+      var itemDur = document.getElementById('flModalItemDur');
+      if (itemDur) itemDur.textContent = '30 Days VIP Engine Access';
+      var prEl = document.getElementById('flModalPrice');
+      if (prEl) prEl.textContent = price;
+
+      var destLabel = document.getElementById('flDestLabel');
+      if (destLabel) destLabel.textContent = '// 2. YOUR TELEGRAM @USERNAME OR EMAIL';
       var destInp = document.getElementById('flDestWallet');
-      if (destInp) destInp.placeholder = 'e.g. @your_telegram_username or your@email.com';
+      if (destInp) {
+        destInp.placeholder = 'e.g. @your_telegram_username or your@email.com';
+        destInp.value = '';
+        destInp.classList.remove('valid', 'error-shake');
+      }
+      var inpIcon = document.getElementById('flInpIcon');
+      if (inpIcon) inpIcon.textContent = '💬';
+      var helper = document.getElementById('flInputHelper');
+      if (helper) helper.textContent = '* VIP Telegram bot invite & license key will be delivered to this handle.';
+
       var itemLbl = document.getElementById('flModalItemLabel');
       if (itemLbl) itemLbl.textContent = 'Subscription';
+      var flashAmtEl = document.getElementById('flModalFlashAmt');
+      if (flashAmtEl) flashAmtEl.textContent = planName;
+
+      flSelectNetwork('BEP20');
+      startPayCountdown();
 
       var modal = document.getElementById('flModal');
-      if (modal) {
-        modal.classList.add('open');
-        flGoStep(1);
-      }
+      if (modal) modal.classList.add('open');
     };
 
     window.closeFlashModal = function() {
       var modal = document.getElementById('flModal');
       if (modal) modal.classList.remove('open');
+      if (payTimerInterval) clearInterval(payTimerInterval);
     };
 
-    window.flGoStep = function(step, data) {
-      if (data) {
-        if (data.platform) curOrder.platform = data.platform;
-        if (data.network) curOrder.network = data.network;
-      }
-      for (var i = 1; i <= 5; i++) {
-        var s = document.getElementById('flStep' + i);
-        var p = document.getElementById('flStepPip' + i);
-        if (s) s.style.display = (i === step ? 'block' : 'none');
-        if (p) p.classList.toggle('active', i <= step);
-      }
+    window.flSelectNetwork = function(net) {
+      curOrder.network = net;
+      var tabB = document.getElementById('flNetTabBEP20');
+      var tabT = document.getElementById('flNetTabTRC20');
+      if (tabB) tabB.classList.toggle('active', net === 'BEP20');
+      if (tabT) tabT.classList.toggle('active', net === 'TRC20');
 
-      if (step === 4) {
-        runNodeSimulation();
-      } else if (step === 5) {
-        setupPaymentDesk();
-      }
+      var wLbl = document.getElementById('flWalletNetLabel');
+      if (wLbl) wLbl.textContent = net + ' DEPOSIT';
+      var modalNet = document.getElementById('flModalNet');
+      if (modalNet) modalNet.textContent = net;
+
+      var depWallet = document.getElementById('flDepositWallet');
+      if (depWallet) depWallet.value = depositWallets[net] || depositWallets['BEP20'];
+
+      var qrImg = document.getElementById('flQrImg');
+      if (qrImg) qrImg.src = 'flashusdt/' + (net === 'TRC20' ? 'TRC20' : 'BEP20') + '.png';
+
+      updateTelegramLink();
     };
 
-    window.flValidateWallet = function() {
-      var wInput = document.getElementById('flDestWallet');
-      var val = wInput ? wInput.value.trim() : '';
-      if (curOrder.isPlan) {
-        if (!val || val.length < 3) {
-          alert('Please enter your Telegram username (e.g. @username) or email address.');
-          return;
-        }
-      } else {
-        if (!val || val.length < 15) {
-          alert('Please enter a valid destination wallet address.');
-          return;
-        }
-      }
+    window.flValidateInputLive = function() {
+      var inp = document.getElementById('flDestWallet');
+      if (!inp) return;
+      var val = inp.value.trim();
       curOrder.wallet = val;
-      flGoStep(4);
+      if (val.length >= 3) {
+        inp.classList.add('valid');
+        inp.classList.remove('error-shake');
+      } else {
+        inp.classList.remove('valid');
+      }
+      updateTelegramLink();
     };
 
-    function runNodeSimulation() {
-      var con = document.getElementById('flNodeConsole');
-      if (!con) { flGoStep(5); return; }
-      con.innerHTML = '';
-      var logs = [];
+    function updateTelegramLink() {
+      var txBtn = document.getElementById('flTelegramTxBtn');
+      if (!txBtn) return;
+      var target = curOrder.wallet || '[NOT SPECIFIED]';
+      var msg = '';
       if (curOrder.isPlan) {
-        logs = [
-          '// Handshake initialized with NewsX AI node cluster...',
-          '// Subscriber registered: ' + curOrder.wallet,
-          '// Target platform profile: ' + curOrder.platform,
-          '// Network protocol verified: ' + curOrder.network,
-          '// Allocated Plan: ' + curOrder.planName + ' (1 Month License)',
-          '// Direct USDT invoice ready for payment.'
-        ];
+        msg = 'Hello Saifeddine,\n' +
+              'I am ordering NewsX AI membership:\n' +
+              '• Plan: ' + curOrder.planName + ' (30 Days)\n' +
+              '• Amount: ' + curOrder.price + ' USDT\n' +
+              '• Payment Network: ' + curOrder.network + '\n' +
+              '• My Telegram Handle: ' + target + '\n' +
+              'Please confirm activation.';
       } else {
-        logs = [
-          '// Handshake initialized with node cluster...',
-          '// Target platform: ' + curOrder.platform,
-          '// Network protocol verified: ' + curOrder.network,
-          '// Destination wallet: ' + (curOrder.wallet.length > 16 ? (curOrder.wallet.substring(0, 10) + '...' + curOrder.wallet.substring(curOrder.wallet.length - 6)) : curOrder.wallet),
-          '// Allocated Flash pool: ' + Number(curOrder.amt).toLocaleString() + ' FLASH USDT',
-          '// Ready for transaction generation.'
-        ];
+        msg = 'Hello Saifeddine,\n' +
+              'I am ordering Flash USDT:\n' +
+              '• Package: ' + Number(curOrder.amt).toLocaleString() + ' Flash USDT\n' +
+              '• Validity: ' + curOrder.dur + '\n' +
+              '• Amount: ' + curOrder.price + ' USDT\n' +
+              '• Payment Network: ' + curOrder.network + '\n' +
+              '• My Receiving Address: ' + target + '\n' +
+              'Please confirm order.';
       }
-      var idx = 0;
-      var timer = setInterval(function(){
-        if (idx < logs.length) {
-          con.innerHTML += logs[idx] + '<br/>';
-          con.scrollTop = con.scrollHeight;
-          idx++;
-        } else {
-          clearInterval(timer);
-          setTimeout(function(){ flGoStep(5); }, 600);
-        }
-      }, 350);
+      txBtn.href = 'https://t.me/HNTSB15?text=' + encodeURIComponent(msg);
     }
 
-    var payTimerInterval = null;
-    function setupPaymentDesk() {
-      var priceEl = document.getElementById('flModalPrice');
-      var amtEl = document.getElementById('flModalFlashAmt');
-      var netEl = document.getElementById('flModalNet');
-      var qrImg = document.getElementById('flQrImg');
-      var depWallet = document.getElementById('flDepositWallet');
-      var netLbl = document.getElementById('flWalletNetLabel');
-      var txBtn = document.getElementById('flTelegramTxBtn');
-      var itemLbl = document.getElementById('flModalItemLabel');
-
-      if (priceEl) priceEl.textContent = curOrder.price;
-      if (amtEl) {
-        if (curOrder.isPlan) {
-          amtEl.textContent = curOrder.planName;
-          if (itemLbl) itemLbl.textContent = 'Tier';
-        } else {
-          amtEl.textContent = Number(curOrder.amt).toLocaleString();
-          if (itemLbl) itemLbl.textContent = 'Flash USDT';
+    window.flHandleTelegramClick = function(e) {
+      var inp = document.getElementById('flDestWallet');
+      var val = inp ? inp.value.trim() : '';
+      if (!val || val.length < 3) {
+        if (inp) {
+          inp.classList.add('error-shake');
+          inp.focus();
         }
+        flShowToast('⚠️ Please enter your receiving address or handle first!');
+        if (e && e.preventDefault) e.preventDefault();
+        return false;
       }
-      if (netEl) netEl.textContent = curOrder.network;
-      if (netLbl) netLbl.textContent = curOrder.network;
+      updateTelegramLink();
+      return true;
+    };
 
-      var net = curOrder.network === 'TRC20' ? 'TRC20' : 'BEP20';
-      if (depWallet) depWallet.value = depositWallets[net];
-      if (qrImg) qrImg.src = 'flashusdt/' + net + '.png';
+    var toastTimeout = null;
+    window.flShowToast = function(msg) {
+      var toast = document.getElementById('flToast');
+      var msgEl = document.getElementById('flToastMsg');
+      if (!toast) return;
+      if (msgEl) msgEl.textContent = msg;
+      toast.classList.add('show');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(function() {
+        toast.classList.remove('show');
+      }, 2600);
+    };
 
-      if (txBtn) {
-        var msg = curOrder.isPlan
-          ? ('Hello Saifeddine, I completed payment of ' + curOrder.price + ' USDT (' + curOrder.network + ') for ' + curOrder.planName + ' subscription. My Telegram: ' + curOrder.wallet)
-          : ('Hello Saifeddine, I completed deposit of ' + curOrder.price + ' USDT (' + curOrder.network + ') for ' + curOrder.amt + ' Flash USDT. My Wallet: ' + curOrder.wallet);
-        txBtn.href = 'https://t.me/HNTSB15?text=' + encodeURIComponent(msg);
+    window.flCopyWallet = function() {
+      var input = document.getElementById('flDepositWallet');
+      var copyBtn = document.getElementById('flCopyBtn');
+      var copyText = document.getElementById('flCopyBtnText');
+      if (!input) return;
+      input.select();
+      var ok = false;
+      try {
+        navigator.clipboard.writeText(input.value);
+        ok = true;
+      } catch(err) {
+        try {
+          document.execCommand('copy');
+          ok = true;
+        } catch(e2){}
       }
+      if (copyBtn) copyBtn.classList.add('copied');
+      if (copyText) copyText.textContent = '✓ COPIED';
+      flShowToast('✓ Deposit wallet address copied to clipboard!');
+      setTimeout(function(){
+        if (copyBtn) copyBtn.classList.remove('copied');
+        if (copyText) copyText.textContent = 'COPY';
+      }, 2000);
+    };
 
+    var payTimerInterval = null;
+    function startPayCountdown() {
       if (payTimerInterval) clearInterval(payTimerInterval);
-      var pSecs = 1800;
+      var pSecs = 1799;
+      var timerEl = document.getElementById('flPayTimer');
+      if (timerEl) timerEl.textContent = '29:59';
       payTimerInterval = setInterval(function(){
         pSecs--;
         var m = Math.floor(pSecs / 60), s = pSecs % 60;
-        var timerEl = document.getElementById('flPayTimer');
         if (timerEl) timerEl.textContent = (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
         if (pSecs <= 0) clearInterval(payTimerInterval);
       }, 1000);
     }
 
-    window.flCopyWallet = function() {
-      var input = document.getElementById('flDepositWallet');
-      if (!input) return;
-      input.select();
-      try {
-        navigator.clipboard.writeText(input.value);
-        alert('✓ Deposit wallet address copied to clipboard!');
-      } catch(e) {
-        document.execCommand('copy');
-        alert('✓ Deposit wallet address copied to clipboard!');
-      }
+    window.flGoStep = function(step, data) {
+      if (data && data.network) flSelectNetwork(data.network);
     };
 
     // 5. Mobile Navigation Menu Bar
@@ -4512,27 +4916,14 @@ html[dir="rtl"] .mono-arrow {
         'footer_copy': '© سيف الدين بومعزة — مدير تداول الفوركس والكريبتو — جميع الحقوق محفوظة',
 
         // Modal
-        'modal_title': '// الطرفية: إتمام الشراء المباشر',
-        'modal_s1_t': '1. اختر المنصة أو المحفظة المستلمة',
-        'modal_s1_d': 'حدد أين تريد استلام رصيد Flash USDT الخاص بك.',
-        'modal_s2_t': '2. اختر شبكة الدفع',
-        'modal_s2_d': 'تأكد من توافق محفظتك مع شبكة البلوكشين المحددة (BEP20 أو TRC20).',
-        'modal_s2_back': '← العودة لاختيار المنصة',
-        'modal_s3_t': '3. أدخل عنوان المحفظة أو المعرف',
-        'modal_s3_d': 'الصق عنوان المحفظة أو المعرف الذي سيتم إرسال الرصيد إليه.',
-        'modal_s3_ph': 'الصق عنوان محفظتك أو معرف تيليجرام @username...',
-        'modal_s3_btn': 'تأكيد ومتابعة →',
-        'modal_s3_back': '← العودة لاختيار الشبكة',
-        'modal_s4_t': 'جاري ربط العقد والتحقق من الشبكة...',
-        'modal_s4_d': '// التحقق من مصفوفة التوجيه المباشر',
-        'modal_s5_timer': '⏱️ تنتهي صلاحية نافذة الدفع خلال:',
-        'modal_s5_t': 'إتمام إيداع الطلب',
-        'modal_s5_for': 'المقابل:',
-        'modal_s5_on': 'على شبكة',
-        'modal_s5_wlabel': '// عنوان محفظة الإيداع الرسمية',
-        'modal_s5_copy': 'نسخ',
-        'modal_s5_tx': 'إرسال تفاصيل المعاملة إلى تيليجرام',
-        'modal_s5_done': 'تم'
+        'modal_title': '// مكتب الدفع السريع VIP المباشر',
+        'modal_net_label': '// 1. حدد شبكة الدفع (البلوكشين)',
+        'modal_dest_label': '// 2. عنوان المحفظة أو المعرف للاستلام',
+        'modal_addr_label': '// عنوان محفظة الإيداع الرسمية:',
+        'modal_notes': '• أرسل المبلغ المحدد بدقة بعملة USDT.<br/>• تأكيد تلقائي مباشر عبر شبكة البلوكشين خلال 1-3 دقائق.',
+        'modal_copy_btn': 'نسخ',
+        'modal_tx_btn': '⚡ تأكيد التحويل عبر تيليجرام',
+        'modal_supp_btn': 'تواصل مباشر مع سيف الدين'
       },
       en: {
         // Header & Navigation
@@ -4876,27 +5267,14 @@ html[dir="rtl"] .mono-arrow {
         'footer_copy': '© Saifeddine Boumaza — Forex & Crypto Trading Manager — All rights reserved',
 
         // Modal
-        'modal_title': '// TERMINAL: DIRECT CHECKOUT',
-        'modal_s1_t': '1. Select Destination Platform',
-        'modal_s1_d': 'Choose where you will receive your Flash USDT.',
-        'modal_s2_t': '2. Select Payment Network',
-        'modal_s2_d': 'Ensure your wallet supports the selected blockchain network.',
-        'modal_s2_back': '← Back to Platform',
-        'modal_s3_t': '3. Enter Receiving Identifier',
-        'modal_s3_d': 'Paste the address or username where your activation will be sent.',
-        'modal_s3_ph': 'Paste your wallet address or Telegram @username...',
-        'modal_s3_btn': 'Confirm & Proceed →',
-        'modal_s3_back': '← Back to Network',
-        'modal_s4_t': 'Connecting to Blockchain Nodes...',
-        'modal_s4_d': '// Verifying peer routing matrix',
-        'modal_s5_timer': '⏱️ PAYMENT WINDOW EXPIRES IN:',
-        'modal_s5_t': 'Complete Order Deposit',
-        'modal_s5_for': 'For:',
-        'modal_s5_on': 'on',
-        'modal_s5_wlabel': '// OFFICIAL DEPOSIT WALLET',
-        'modal_s5_copy': 'COPY',
-        'modal_s5_tx': 'Send TX to Telegram',
-        'modal_s5_done': 'Done'
+        'modal_title': '// DIRECT VIP CHECKOUT DESK',
+        'modal_net_label': '// 1. SELECT PAYMENT NETWORK',
+        'modal_dest_label': '// 2. YOUR RECEIVING IDENTIFIER',
+        'modal_addr_label': '// OFFICIAL DEPOSIT ADDRESS:',
+        'modal_notes': '• Send exact amount in USDT.<br/>• Direct confirmation via blockchain nodes within 1-3 minutes.',
+        'modal_copy_btn': 'COPY',
+        'modal_tx_btn': '⚡ Confirm Payment on Telegram',
+        'modal_supp_btn': 'Direct VIP Support'
       }
     };
 
@@ -5377,42 +5755,22 @@ html[dir="rtl"] .mono-arrow {
       if (disclP2 && t['discl_p2']) disclP2.innerHTML = t['discl_p2'];
 
       // 13. Checkout Modal
-      var mTitle = document.getElementById('flModalTitle');
+      var mTitle = document.getElementById('flModalTitleText');
       if (mTitle && t['modal_title']) mTitle.textContent = t['modal_title'];
-      var mS1T = document.getElementById('flStep1Title');
-      if (mS1T && t['modal_s1_t']) mS1T.textContent = t['modal_s1_t'];
-      var mS1D = document.getElementById('flStep1Desc');
-      if (mS1D && t['modal_s1_d']) mS1D.textContent = t['modal_s1_d'];
-
-      var mS2T = document.querySelector('#flStep2 h4');
-      if (mS2T && t['modal_s2_t']) mS2T.textContent = t['modal_s2_t'];
-      var mS2D = document.querySelector('#flStep2 p');
-      if (mS2D && t['modal_s2_d']) mS2D.textContent = t['modal_s2_d'];
-      var mS2Back = document.querySelector('#flStep2 button:last-child');
-      if (mS2Back && t['modal_s2_back']) mS2Back.textContent = t['modal_s2_back'];
-
-      var mS3T = document.getElementById('flStep3Title');
-      if (mS3T && t['modal_s3_t']) mS3T.textContent = t['modal_s3_t'];
-      var mS3D = document.getElementById('flStep3Desc');
-      if (mS3D && t['modal_s3_d']) mS3D.textContent = t['modal_s3_d'];
-      var mDest = document.getElementById('flDestWallet');
-      if (mDest && t['modal_s3_ph']) mDest.placeholder = t['modal_s3_ph'];
-      var mS3Btn = document.querySelector('#flStep3 .fl-calc-btn');
-      if (mS3Btn && t['modal_s3_btn']) mS3Btn.textContent = t['modal_s3_btn'];
-      var mS3Back = document.querySelector('#flStep3 button:last-child');
-      if (mS3Back && t['modal_s3_back']) mS3Back.textContent = t['modal_s3_back'];
-
-      var mS4T = document.querySelector('#flStep4 h4');
-      if (mS4T && t['modal_s4_t']) mS4T.textContent = t['modal_s4_t'];
-      var mS4D = document.querySelector('#flStep4 p');
-      if (mS4D && t['modal_s4_d']) mS4D.textContent = t['modal_s4_d'];
-
-      var mS5T = document.querySelector('#flStep5 h4');
-      if (mS5T && t['modal_s5_t']) mS5T.textContent = t['modal_s5_t'];
-      var mS5Copy = document.querySelector('.fl-copy-btn');
-      if (mS5Copy && t['modal_s5_copy']) mS5Copy.textContent = t['modal_s5_copy'];
-      var mS5Tx = document.getElementById('flTelegramTxBtn');
-      if (mS5Tx && t['modal_s5_tx']) mS5Tx.innerHTML = '<svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M21.9 4.3 18.7 19c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.7 13 1.9 11.5c-1-.3-1-1 .2-1.5l18.4-7.1c.9-.3 1.6.2 1.4 1.4Z"/></svg> ' + t['modal_s5_tx'];
+      var mNetLabel = document.getElementById('flNetLabel');
+      if (mNetLabel && t['modal_net_label']) mNetLabel.textContent = t['modal_net_label'];
+      var mDestLabel = document.getElementById('flDestLabel');
+      if (mDestLabel && t['modal_dest_label']) mDestLabel.textContent = t['modal_dest_label'];
+      var mAddrLabel = document.getElementById('flAddrLabel');
+      if (mAddrLabel && t['modal_addr_label']) mAddrLabel.textContent = t['modal_addr_label'];
+      var mNotes = document.getElementById('flDepositNotes');
+      if (mNotes && t['modal_notes']) mNotes.innerHTML = t['modal_notes'];
+      var mCopy = document.getElementById('flCopyBtnText');
+      if (mCopy && t['modal_copy_btn']) mCopy.textContent = t['modal_copy_btn'];
+      var mTx = document.getElementById('flTxBtnText');
+      if (mTx && t['modal_tx_btn']) mTx.textContent = t['modal_tx_btn'];
+      var mSupp = document.getElementById('flSuppBtnText');
+      if (mSupp && t['modal_supp_btn']) mSupp.textContent = t['modal_supp_btn'];
 
       try {
         localStorage.setItem('cvx_lang', lang);
