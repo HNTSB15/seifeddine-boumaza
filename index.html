@@ -2,7 +2,7 @@
 <html class="v2" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:b="http://www.google.com/2005/gml/b" xmlns:data="http://www.google.com/2005/gml/data" xmlns:expr="http://www.google.com/2005/gml/expr"><head>
 <link href="https://www.blogger.com/static/v1/widgets/478643198-css_bundle_v2_rtl.css" rel="stylesheet" type="text/css">
 <meta charset="UTF-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
 <meta content="#05070d" name="theme-color">
 <!-- redirect short/bare paths to their real /p/*.html pages -->
 <script type="text/javascript">//<![CDATA[
@@ -88,9 +88,10 @@ animation:scanmove 16s linear infinite}
 @keyframes drift1{50%{transform:translate(60px,-40px)}}
 @keyframes drift2{50%{transform:translate(-60px,40px)}}
 /* floating action buttons */
-.fab{position:fixed;bottom:22px;z-index:190;width:54px;height:54px;border-radius:50%;border:0;
+.fab{position:fixed;bottom:max(22px, calc(12px + env(safe-area-inset-bottom)));z-index:190;width:54px;height:54px;border-radius:50%;border:0;
 display:flex;align-items:center;justify-content:center;cursor:pointer;
-box-shadow:0 6px 24px rgba(0,0,0,.45);transition:transform .18s ease, opacity .3s ease;outline:none}
+box-shadow:0 6px 24px rgba(0,0,0,.45);transition:transform .18s ease, opacity .3s ease;outline:none;
+touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .fab:hover{transform:translateY(-3px) scale(1.06)}
 .fab svg{width:26px;height:26px}
 .fab-tg{left:22px;background:var(--rgb);background-size:200% auto;animation:rgbFlow 6s linear infinite;box-shadow:0 0 22px rgba(0,255,170,.45)}
@@ -734,6 +735,22 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
   .cvx-lb-nav.next{right:6px}
   html[dir="rtl"] .cvx-lb-nav.prev{right:6px;left:auto}
   html[dir="rtl"] .cvx-lb-nav.next{left:6px;right:auto}
+  .cvx-lb-close{
+    position:fixed !important;
+    top:max(14px, calc(6px + env(safe-area-inset-top))) !important;
+    right:max(14px, calc(6px + env(safe-area-inset-right))) !important;
+    width:44px !important;
+    height:44px !important;
+    min-width:44px !important;
+    min-height:44px !important;
+    font-size:22px !important;
+    z-index:1000002 !important;
+    background:rgba(10,15,30,.88) !important;
+    border:1.5px solid rgba(255,255,255,.3) !important;
+    backdrop-filter:blur(8px) !important;
+    -webkit-backdrop-filter:blur(8px) !important;
+  }
+  html[dir="rtl"] .cvx-lb-close{right:auto !important;left:max(14px, calc(6px + env(safe-area-inset-left))) !important}
 }
 
 /* timeline */
@@ -873,10 +890,10 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
 
 /* Chart Card */
 .nx-chart-card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(18,214,255,.06),var(--panel));border-radius:18px;padding:24px;box-shadow:0 8px 32px rgba(0,0,0,.4)}
-.nx-chart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-.nx-chart-pair{font-size:13px;font-weight:600;color:var(--muted);font-family:'JetBrains Mono',monospace}
-.nx-chart-price{font-size:26px;font-weight:800;font-family:'JetBrains Mono',monospace;color:var(--neon);display:flex;align-items:center;gap:6px}
-.nx-chart-price span{font-size:13px;color:var(--neon);padding:2px 8px;border-radius:6px;background:rgba(0,255,156,.12);border:1px solid rgba(0,255,156,.3)}
+.nx-chart-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px 14px;margin-bottom:8px}
+.nx-chart-pair{font-size:13px;font-weight:600;color:var(--muted);font-family:'JetBrains Mono',monospace;white-space:nowrap}
+.nx-chart-price{font-size:clamp(18px,4.5vw,26px);font-weight:800;font-family:'JetBrains Mono',monospace;color:var(--neon);display:inline-flex;align-items:center;gap:8px;white-space:nowrap !important;word-break:keep-all !important;flex-shrink:0}
+.nx-chart-price span{font-size:clamp(10.5px,2.6vw,13px);color:var(--neon);padding:2px 8px;border-radius:6px;background:rgba(0,255,156,.12);border:1px solid rgba(0,255,156,.3);white-space:nowrap !important;word-break:keep-all !important;flex-shrink:0;display:inline-block}
 .nx-chart-svg{width:100%;height:auto;display:block;margin:16px 0 14px}
 .nx-chart-tags{display:flex;gap:8px;flex-wrap:wrap}
 .nx-tag{font-size:11.5px;font-family:'JetBrains Mono',monospace;padding:5px 12px;border-radius:6px;border:1px solid var(--line);color:var(--muted);background:var(--bg-2)}
@@ -932,6 +949,11 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
 @media(max-width:860px){
   .nx-hero-grid{grid-template-columns:1fr}
   .nx-feat-grid,.nx-price-grid{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .nx-chart-card{padding:18px 16px}
+  .nx-chart-head{flex-direction:column;align-items:flex-start;gap:6px}
+  .nx-chart-price{white-space:nowrap !important;width:100%;justify-content:space-between}
 }
 
 /* ================= Contact Form (Cyber Trading Box Design) ================= */
@@ -1502,8 +1524,11 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
   backdrop-filter:blur(16px);
   align-items:center;
   justify-content:center;
-  padding:16px;
+  padding:max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
   overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+  cursor:pointer;
 }
 .fl-modal.open{display:flex}
 .fl-modal-content{
@@ -1516,6 +1541,7 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
   box-shadow:0 30px 80px rgba(0,0,0,.85),0 0 50px rgba(0,255,156,.12),inset 0 1px 0 rgba(255,255,255,.14);
   overflow:hidden;
   animation:flModalIn .25s cubic-bezier(.16,1,.3,1);
+  cursor:default;
 }
 @keyframes flModalIn{from{opacity:0;transform:scale(.94) translateY(14px)}to{opacity:1;transform:none}}
 .fl-modal-top{
@@ -1541,22 +1567,48 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
   animation:pulse 2s infinite;
 }
 .fl-modal-close{
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.2);
   color:var(--muted);
-  width:32px;
-  height:32px;
+  width:44px;
+  height:44px;
+  min-width:44px;
+  min-height:44px;
   border-radius:50%;
-  font-size:20px;
+  font-size:24px;
   line-height:1;
   cursor:pointer;
   display:flex;
   align-items:center;
   justify-content:center;
   transition:all .2s ease;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
 }
 .fl-modal-close:hover{color:#fff;background:#ff4757;border-color:#ff4757;transform:rotate(90deg)}
 .fl-modal-body{padding:22px 20px 26px}
+.fl-close-bottom-wrap{margin-top:14px;text-align:center}
+.fl-btn-close-bottom{
+  width:100%;
+  background:transparent;
+  border:1px dashed rgba(255,255,255,.18);
+  border-radius:10px;
+  padding:11px 16px;
+  color:var(--muted);
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  transition:all .2s ease;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+.fl-btn-close-bottom:hover{background:rgba(255,71,87,.12);border-color:#ff4757;color:#ff6b81}
 
 /* Summary Card */
 .fl-summary-card{
@@ -3467,7 +3519,7 @@ html[dir="rtl"] .mono-arrow {
       <div class="fl-modal-badge mono" id="flModalTitle">
         <span class="fl-modal-shield">🔒</span> <span id="flModalTitleText">// DIRECT VIP CHECKOUT DESK</span>
       </div>
-      <button class="fl-modal-close" onclick="closeFlashModal()" aria-label="Close modal">&times;</button>
+      <button type="button" class="fl-modal-close" onclick="closeFlashModal()" ontouchend="closeFlashModal(); event.preventDefault();" aria-label="Close modal">&times;</button>
     </div>
 
     <!-- Modal Body -->
@@ -3568,6 +3620,13 @@ html[dir="rtl"] .mono-arrow {
           <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
           <span id="flSuppBtnText">Direct VIP Support</span>
         </a>
+      </div>
+
+      <!-- Bottom Quick Close Button (Accessible for Mobile One-Handed Use) -->
+      <div class="fl-close-bottom-wrap">
+        <button type="button" class="fl-btn-close-bottom" onclick="closeFlashModal()" ontouchend="closeFlashModal(); event.preventDefault();">
+          ✕ <span id="flCloseBottomText">Close Window</span>
+        </button>
       </div>
 
     </div>
@@ -4330,6 +4389,7 @@ html[dir="rtl"] .mono-arrow {
 
       var modal = document.getElementById('flModal');
       if (modal) modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
     };
 
     window.openPlanModal = function(planName, price) {
@@ -4379,13 +4439,35 @@ html[dir="rtl"] .mono-arrow {
 
       var modal = document.getElementById('flModal');
       if (modal) modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
     };
 
     window.closeFlashModal = function() {
       var modal = document.getElementById('flModal');
       if (modal) modal.classList.remove('open');
       if (payTimerInterval) clearInterval(payTimerInterval);
+      document.body.style.overflow = '';
     };
+
+    var flModalOverlay = document.getElementById('flModal');
+    if (flModalOverlay) {
+      flModalOverlay.addEventListener('click', function(e) {
+        if (e.target === flModalOverlay) {
+          closeFlashModal();
+        }
+      });
+      flModalOverlay.addEventListener('touchend', function(e) {
+        if (e.target === flModalOverlay) {
+          e.preventDefault();
+          closeFlashModal();
+        }
+      }, { passive: false });
+    }
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeFlashModal();
+      }
+    });
 
     window.flSelectNetwork = function(net) {
       curOrder.network = net;
@@ -4942,7 +5024,8 @@ html[dir="rtl"] .mono-arrow {
         'modal_notes': '• أرسل المبلغ المحدد بدقة بعملة USDT.<br/>• تأكيد تلقائي مباشر عبر شبكة البلوكشين خلال 1-3 دقائق.',
         'modal_copy_btn': 'نسخ',
         'modal_tx_btn': '⚡ تأكيد التحويل عبر تيليجرام',
-        'modal_supp_btn': 'تواصل مباشر مع سيف الدين'
+        'modal_supp_btn': 'تواصل مباشر مع سيف الدين',
+        'modal_close_btn': 'إغلاق النافذة'
       },
       en: {
         // Header & Navigation
@@ -5293,7 +5376,8 @@ html[dir="rtl"] .mono-arrow {
         'modal_notes': '• Send exact amount in USDT.<br/>• Direct confirmation via blockchain nodes within 1-3 minutes.',
         'modal_copy_btn': 'COPY',
         'modal_tx_btn': '⚡ Confirm Payment on Telegram',
-        'modal_supp_btn': 'Direct VIP Support'
+        'modal_supp_btn': 'Direct VIP Support',
+        'modal_close_btn': 'Close Window'
       }
     };
 
@@ -5790,6 +5874,8 @@ html[dir="rtl"] .mono-arrow {
       if (mTx && t['modal_tx_btn']) mTx.textContent = t['modal_tx_btn'];
       var mSupp = document.getElementById('flSuppBtnText');
       if (mSupp && t['modal_supp_btn']) mSupp.textContent = t['modal_supp_btn'];
+      var mClose = document.getElementById('flCloseBottomText');
+      if (mClose && t['modal_close_btn']) mClose.textContent = t['modal_close_btn'];
 
       try {
         localStorage.setItem('cvx_lang', lang);
