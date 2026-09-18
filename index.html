@@ -5907,7 +5907,26 @@ body.theme-light .rev-fgroup textarea{
             text_en: r.review_text_en || r.review_text
           };
         });
-        allReviews = liveItems.concat(defaultReviews);
+        // Smart deduplication: ensure every review appears only once
+        var seen = {};
+        var uniqueList = [];
+        liveItems.forEach(function(item) {
+          var k = (item.name || '').trim().toLowerCase() + '::' + (item.text || '').trim().toLowerCase().substring(0, 25);
+          if (!seen[k]) {
+            seen[k] = true;
+            uniqueList.push(item);
+          }
+        });
+
+        defaultReviews.forEach(function(def) {
+          var k = (def.name || '').trim().toLowerCase() + '::' + (def.text || '').trim().toLowerCase().substring(0, 25);
+          if (!seen[k]) {
+            seen[k] = true;
+            uniqueList.push(def);
+          }
+        });
+
+        allReviews = uniqueList;
         window.renderReviews();
       }).catch(function(){});
     } catch(e){}
