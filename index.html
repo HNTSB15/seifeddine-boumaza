@@ -969,15 +969,17 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
 @media(max-width:768px){
   .cvx-nav{z-index:1000 !important}
   .cvx-navcta{display:none !important}
-  .cvx-nav-actions .cvx-theme-toggle{display:none !important}
+  .cvx-nav-actions{display:flex !important;align-items:center;gap:6px !important;margin-inline-start:auto}
+  .cvx-nav-actions .cvx-theme-toggle{display:inline-flex !important;padding:6px 9px !important;min-width:36px !important;height:38px !important;justify-content:center;align-items:center;border-radius:9px !important}
+  .cvx-nav-actions .cvx-theme-toggle .theme-label{display:none !important}
+  .cvx-nav-actions .cvx-lang-toggle{display:inline-flex !important;padding:6px 9px !important;min-width:36px !important;height:38px !important;justify-content:center;align-items:center;border-radius:9px !important}
   .cvx-nav-actions .cvx-lang-toggle .lang-label{display:none !important}
-  .cvx-nav-actions .cvx-lang-toggle{padding:6px 10px !important;min-width:36px !important;height:38px !important;justify-content:center}
-  .cvx-nav-actions .cvx-burger{width:38px !important;height:38px !important}
+  .cvx-nav-actions .cvx-burger{width:38px !important;height:38px !important;border-radius:9px !important}
   .cvx-brand small{display:none !important}
-  .cvx-brand{max-width:calc(100% - 94px);overflow:hidden;gap:8px}
-  .cvx-brand b{font-size:13.5px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cvx-brand{max-width:calc(100% - 132px);overflow:hidden;gap:7px}
+  .cvx-brand b{font-size:13px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .cvx-brand .lg{width:38px;height:38px;flex:0 0 38px;padding:7px}
-  .cvx-nav .in{padding:8px 12px;gap:8px;justify-content:space-between}
+  .cvx-nav .in{padding:8px 12px;gap:6px;justify-content:space-between}
 }
 @media(max-width:540px){
   .cvx-stats{grid-template-columns:repeat(2,1fr)}
@@ -3094,6 +3096,7 @@ body.theme-light .faq-icon {
   display:flex;
   align-items:center;
   gap:14px;
+  flex-shrink:0;
 }
 .rev-big-rating{
   font-family:'Space Grotesk', system-ui, sans-serif;
@@ -3101,13 +3104,27 @@ body.theme-light .faq-icon {
   font-weight:800;
   line-height:1;
   color:#fff;
-  display:flex;
+  display:inline-flex;
   align-items:baseline;
+  gap:2px;
+  white-space:nowrap !important;
+  word-break:keep-all !important;
+  flex-shrink:0 !important;
+  letter-spacing:-0.5px;
+}
+.rev-score-val{
+  white-space:nowrap !important;
+  word-break:keep-all !important;
+  display:inline-block !important;
 }
 .rev-big-rating small{
   font-size:16px;
   color:var(--muted);
   font-weight:600;
+  white-space:nowrap !important;
+  word-break:keep-all !important;
+  display:inline !important;
+  margin-inline-start:2px;
 }
 .rev-stars-col{
   display:flex;
@@ -3566,7 +3583,23 @@ body.theme-light .rev-fgroup textarea{
   }
   .rev-trust-bar{
     flex-direction:column;
-    align-items:flex-start;
+    align-items:stretch;
+    padding:16px 18px;
+    gap:14px;
+  }
+  .rev-score-pill{
+    width:100%;
+    justify-content:flex-start;
+    gap:14px;
+    flex-wrap:nowrap;
+  }
+  .rev-badges-row{
+    width:100%;
+    gap:8px;
+  }
+  .rev-add-btn{
+    width:100%;
+    justify-content:center;
   }
   .rev-form-grid{
     grid-template-columns:1fr;
@@ -4762,7 +4795,7 @@ body.theme-light .rev-fgroup textarea{
   <!-- Trust Bar & Stats Summary -->
   <div class="rev-trust-bar">
     <div class="rev-score-pill">
-      <div class="rev-big-rating">4.9<small>/5.0</small></div>
+      <div class="rev-big-rating"><span class="rev-score-val" style="white-space:nowrap !important;word-break:keep-all !important">4.9</span><small style="white-space:nowrap !important;word-break:keep-all !important">/5.0</small></div>
       <div class="rev-stars-col">
         <div class="rev-stars">★★★★★</div>
         <span class="rev-score-lbl" id="revScoreLbl">تقييم موثوق · 100% شفافية</span>
