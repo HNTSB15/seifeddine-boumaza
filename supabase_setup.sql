@@ -35,9 +35,19 @@ CREATE TABLE IF NOT EXISTS public.client_messages (
     date_sent TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL,
     client_name TEXT NOT NULL,
     client_email TEXT NOT NULL,
+    preferred_platform TEXT DEFAULT 'Telegram',
+    client_handle TEXT,
+    direct_link TEXT,
+    inquiry_topic TEXT,
     client_message TEXT NOT NULL,
     status TEXT DEFAULT 'New Message'
 );
+
+-- Ensure columns exist if table was already created earlier
+ALTER TABLE public.client_messages ADD COLUMN IF NOT EXISTS preferred_platform TEXT DEFAULT 'Telegram';
+ALTER TABLE public.client_messages ADD COLUMN IF NOT EXISTS client_handle TEXT;
+ALTER TABLE public.client_messages ADD COLUMN IF NOT EXISTS direct_link TEXT;
+ALTER TABLE public.client_messages ADD COLUMN IF NOT EXISTS inquiry_topic TEXT;
 
 ALTER TABLE public.client_messages ENABLE ROW LEVEL SECURITY;
 
@@ -155,7 +165,12 @@ VALUES
     ('calculator_price_3days_per_1k', '50', 'USDT price for 1,000 Flash (3 Days) in the custom calculator'),
     ('calculator_price_1week_per_1k', '120', 'USDT price for 1,000 Flash (1 Week) in the custom calculator'),
     ('telegram_username', '@HNTSB15', 'Your official Telegram handle displayed across the website and payment desk'),
-    ('support_email', 'saifeddine.jskyst15@gmail.com', 'Your official contact email')
+    ('support_email', 'saifeddine.jskyst15@gmail.com', 'Your official contact email'),
+    ('whatsapp_number', '+213697114385', 'Your official WhatsApp phone number for client chat and leads'),
+    ('telegram_bot_token', '8314044654:AAH6vijP6_P89z9btSTjtXQ0WWXtLevyHVY', 'Official Telegram Bot Token (@saif_leads_bot) for real-time lead alerts'),
+    ('telegram_chat_id', '5513814495', 'Your personal Telegram Chat ID (@HNTSB15) where bot sends instant lead alerts'),
+    ('instagram_profile', 'https://www.instagram.com/oo._.saifeddine._.oo/', 'Your official Instagram profile URL'),
+    ('x_profile', 'https://x.com/seifeddin06', 'Your official X / Twitter profile URL')
 ON CONFLICT (setting_name) DO UPDATE SET
     current_value = EXCLUDED.current_value,
     what_it_does = EXCLUDED.what_it_does,

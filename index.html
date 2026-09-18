@@ -4655,6 +4655,7 @@ body.theme-light .faq-icon {
         }
         if (k === 'telegram_username' || k === 'telegram_handle') {
           var tg = val.replace(/^@/, '');
+          if (window.CVX_TELEGRAM_CONFIG) window.CVX_TELEGRAM_CONFIG.directUsername = tg;
           document.querySelectorAll('a[href*="t.me/"]').forEach(function(a){
             if (a.href.indexOf('?text=') > -1) {
               var textParam = a.href.split('?text=')[1] || '';
@@ -4663,6 +4664,21 @@ body.theme-light .faq-icon {
               a.href = 'https://t.me/' + tg;
             }
           });
+        }
+        if (k === 'whatsapp_number' || k === 'whatsapp') {
+          window.CVX_WHATSAPP = val;
+        }
+        if (k === 'telegram_bot_token') {
+          if (window.CVX_TELEGRAM_CONFIG) window.CVX_TELEGRAM_CONFIG.botToken = val;
+        }
+        if (k === 'telegram_chat_id') {
+          if (window.CVX_TELEGRAM_CONFIG) window.CVX_TELEGRAM_CONFIG.chatId = val;
+        }
+        if (k === 'instagram_profile' || k === 'instagram') {
+          window.CVX_INSTAGRAM = val;
+        }
+        if (k === 'x_profile' || k === 'x_twitter') {
+          window.CVX_X = val;
         }
       });
     }).catch(function(){});
@@ -4929,17 +4945,51 @@ body.theme-light .faq-icon {
           sdb.from('client_messages').insert([{
             client_name: name,
             client_email: email,
-            client_message: '[Topic: ' + topic + ' | ' + channel + ': ' + handle + '] ' + message
-          }]).then(function(){}).catch(function(){});
+            preferred_platform: channel,
+            client_handle: handle,
+            direct_link: directClientLink,
+            inquiry_topic: topic,
+            client_message: message
+          }]).then(function(res){
+            if (res && res.error) {
+              // Backward compatibility fallback if custom columns are not yet in Supabase schema:
+              sdb.from('client_messages').insert([{
+                client_name: name,
+                client_email: email,
+                client_message: '[Topic: ' + topic + ' | ' + channel + ': ' + handle + ' | Link: ' + directClientLink + '] ' + message
+              }]).then(function(){}).catch(function(){});
+            }
+          }).catch(function(){
+            sdb.from('client_messages').insert([{
+              client_name: name,
+              client_email: email,
+              client_message: '[Topic: ' + topic + ' | ' + channel + ': ' + handle + ' | Link: ' + directClientLink + '] ' + message
+            }]).then(function(){}).catch(function(){});
+          });
         } catch(err){}
       }
+
+      // EmailJS Lead Dispatch to Saifeddine's Email
       if (window.emailjs && typeof window.emailjs.send === 'function') {
         try {
           window.emailjs.send('service_442hyjy', 'template_31wiijb', {
             from_name: name,
             from_email: email,
-            message: 'Topic: ' + topic + '\nPlatform: ' + channel + ' (' + handle + ')\n\n' + message
-          }).catch(function(){});
+            reply_to: email,
+            client_name: name,
+            client_email: email,
+            topic: topic,
+            channel: channel,
+            handle: handle,
+            preferred_platform: channel,
+            client_handle: handle,
+            direct_link: directClientLink,
+            message: '👤 Client: ' + name + ' (' + email + ')\n' +
+              '📱 Platform: ' + channel + ' (' + (handle || 'Not provided') + ')\n' +
+              '🔗 Direct Link: ' + directClientLink + '\n' +
+              '📂 Topic: ' + topic + '\n\n' +
+              '📝 Message:\n' + message
+          }).catch(function(err){ console.warn('EmailJS dispatch notice:', err); });
         } catch(err){}
       }
 
@@ -4960,10 +5010,12 @@ body.theme-light .faq-icon {
 
       // URLs to Saifeddine's official accounts
       var directTgUser = cfg.directUsername || 'HNTSB15';
+      var rawWa = window.CVX_WHATSAPP || '+213697114385';
+      var cleanWaNum = rawWa.replace(/[^0-9]/g, '') || '213697114385';
       var tgUrl = 'https://t.me/' + directTgUser + '?text=' + encodeURIComponent(leadText);
-      var waUrl = 'https://wa.me/213697114385?text=' + encodeURIComponent(leadText);
-      var xUrl = 'https://x.com/seifeddin06';
-      var igUrl = 'https://www.instagram.com/oo._.saifeddine._.oo/';
+      var waUrl = 'https://wa.me/' + cleanWaNum + '?text=' + encodeURIComponent(leadText);
+      var xUrl = window.CVX_X || 'https://x.com/seifeddin06';
+      var igUrl = window.CVX_INSTAGRAM || 'https://www.instagram.com/oo._.saifeddine._.oo/';
       var mailUrl = 'mailto:saifeddine.jskyst15@gmail.com?subject=' + encodeURIComponent('Trading Inquiry: ' + name + ' (' + topic + ')') + '&body=' + encodeURIComponent(leadText);
 
       // Safe HTML escaping helper
