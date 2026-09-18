@@ -4506,7 +4506,7 @@ body.theme-light .rev-fgroup select option {
   --led-glow-gold: 0 0 10px #ffbe1a, 0 0 25px rgba(255, 190, 26, 0.6), 0 0 50px rgba(255, 190, 26, 0.35);
 }
 
-/* 1. Real-Time Live Financial Market Ticker (TradingView WebSocket Feeds) */
+/* 1. Real-Time Live Financial Market Ticker (TradingView Continuous WebSocket Tape) */
 .cvx-live-market-tape {
   background: #040810;
   border-bottom: 1px solid rgba(0, 255, 156, 0.28);
@@ -4515,54 +4515,14 @@ body.theme-light .rev-fgroup select option {
   position: relative;
   z-index: 65;
   height: 46px;
-  display: flex;
-  align-items: center;
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  width: 100%;
 }
 body.theme-light .cvx-live-market-tape {
   background: #090e1c;
   border-bottom-color: rgba(0, 204, 126, 0.4);
 }
-.cvx-live-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0 16px;
-  background: linear-gradient(90deg, rgba(0, 255, 156, 0.16), rgba(0, 229, 255, 0.06));
-  border-right: 1px solid rgba(0, 255, 156, 0.28);
-  height: 100%;
-  white-space: nowrap;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 800;
-  color: #00ff9c;
-  letter-spacing: 1px;
-  flex-shrink: 0;
-  text-shadow: 0 0 10px rgba(0, 255, 156, 0.55);
-}
-.cvx-live-badge .live-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #00ff9c;
-  box-shadow: 0 0 8px #00ff9c, 0 0 16px #00ff9c;
-  position: relative;
-}
-.cvx-live-badge .live-dot::after {
-  content: "";
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  border: 1.5px solid #00ff9c;
-  animation: liveBadgePing 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-@keyframes liveBadgePing {
-  0% { transform: scale(1); opacity: 0.95; }
-  100% { transform: scale(2.5); opacity: 0; }
-}
 .cvx-tv-ticker-wrap {
-  flex: 1;
-  min-width: 0;
+  width: 100%;
   height: 46px;
   overflow: hidden;
 }
@@ -4572,16 +4532,8 @@ body.theme-light .cvx-live-market-tape {
 }
 .cvx-tv-ticker-wrap iframe {
   height: 46px !important;
+  width: 100% !important;
   display: block;
-}
-@media (max-width: 680px) {
-  .cvx-live-badge {
-    padding: 0 10px;
-    font-size: 10px;
-  }
-  .cvx-live-badge .live-txt {
-    display: none;
-  }
 }
 
 /* 2. Hardware LED Indicator Diodes */
@@ -5028,12 +4980,8 @@ body.theme-light #cvxLedSpotlight {
 
 <div class="cvx" id="cvtop">
 
-<!-- ⚡ REAL-TIME LIVE FINANCIAL MARKET TICKER (TRADINGVIEW WEBSOCKET) ⚡ -->
+<!-- ⚡ REAL-TIME LIVE FINANCIAL MARKET TICKER (TRADINGVIEW CONTINUOUS WEBSOCKET TAPE) ⚡ -->
 <div class="cvx-live-market-tape" id="cvxLiveTicker">
-  <div class="cvx-live-badge" title="Live Financial Market Feeds (WebSocket)">
-    <span class="live-dot"></span>
-    <span class="live-txt">LIVE MARKET</span>
-  </div>
   <div class="cvx-tv-ticker-wrap">
     <!-- TradingView Widget BEGIN -->
     <div class="tradingview-widget-container">
@@ -5042,16 +4990,17 @@ body.theme-light #cvxLedSpotlight {
       {
         "symbols": [
           { "proName": "FOREXCOM:XAUUSD", "title": "Gold (XAU/USD)" },
-          { "proName": "FOREXCOM:DJI", "title": "US30 (Dow)" },
+          { "proName": "FOREXCOM:DJI", "title": "US30 (Dow Jones)" },
           { "proName": "FOREXCOM:NSXUSD", "title": "Nasdaq 100" },
           { "proName": "BINANCE:BTCUSDT", "title": "Bitcoin (BTC)" },
           { "proName": "BINANCE:ETHUSDT", "title": "Ethereum (ETH)" },
           { "proName": "FX_IDC:EURUSD", "title": "EUR / USD" },
-          { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500" }
+          { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500" },
+          { "proName": "TVC:USOIL", "title": "Crude Oil (WTI)" }
         ],
         "showSymbolLogo": true,
         "isTransparent": true,
-        "displayMode": "adaptive",
+        "displayMode": "regular",
         "colorTheme": "dark",
         "locale": "en"
       }
