@@ -12,6 +12,7 @@
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="alternate icon" href="favicon.ico" type="image/x-icon">
+<link rel="preload" as="image" href="SB.jpg" fetchpriority="high">
 <meta content="Professional forex and cryptocurrency trading manager. VIP trading signals, MT4/MT5 indicators, Gold (XAUUSD), US30, and disciplined risk-managed account management." name="description">
 <meta name="keywords" content="Saifeddine Boumaza, Forex Trading, Crypto Trading, Gold XAUUSD, US30 Signals, VIP Signals, MT4 MT5 Indicators, NewsX AI, Flash USDT">
 <meta name="author" content="Saifeddine Boumaza">
@@ -344,8 +345,9 @@ footer.cv-foot .mono{color:var(--neon)}
   transform:translateY(-1px) scale(1.08);
   box-shadow:0 0 28px rgba(0,255,156,.5),0 0 14px rgba(18,214,255,.4);
 }
+.cvx-brand-text{display:flex;flex-direction:column;justify-content:center;min-width:0}
 .cvx-brand b{font-size:14.5px;display:block;line-height:1.15;color:#fff;white-space:nowrap}
-.cvx-brand small{font-size:10.5px;color:var(--neon-2);font-family:'JetBrains Mono',monospace;letter-spacing:.2px;display:block;line-height:1.25;margin-top:2px;white-space:nowrap}
+.cvx-brand small{font-size:10px;color:var(--neon-2);font-family:'JetBrains Mono',monospace;letter-spacing:.2px;display:block;line-height:1.25;margin-top:2px;white-space:nowrap}
 .cvx-links{display:flex;gap:clamp(2px, 0.35vw, 4px);margin-inline:auto;align-items:center;flex-shrink:0}
 .cvx-links a{padding:clamp(5px, 0.45vw, 8px) clamp(6px, 0.55vw, 10px);border-radius:8px;font-size:clamp(12px, 0.88vw, 13.5px);color:var(--muted);transition:.18s;white-space:nowrap !important;word-break:keep-all !important;flex-shrink:0;display:inline-flex;align-items:center}
 .cvx-links a:hover{color:#fff;background:rgba(255,255,255,.06)}
@@ -971,18 +973,19 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
   .cvx-navcta{padding:7px 11px;font-size:12px}
 }
 @media(max-width:1366px){
-  .cvx-brand small{display:none !important}
+  .cvx-brand b{font-size:13.5px;line-height:1.15;display:block}
+  .cvx-brand small{display:block !important;font-size:9.5px;line-height:1.2;color:var(--neon-2);margin-top:1px;white-space:nowrap}
   .cvx-nav-actions .cvx-lang-toggle .lang-label{display:none !important}
   .cvx-nav-actions .cvx-lang-toggle{padding:7px 9px !important}
   .cvx-nav-actions{gap:6px}
 }
-@media(max-width:1220px){
+@media(max-width:1240px){
   .cvx-links{display:none !important}
   .cvx-burger{display:flex !important}
   .cvx-nav-actions{display:flex !important;align-items:center;gap:8px;margin-inline-start:auto}
   .cvx-nav .in{padding:8px 16px}
   .cvx-brand b{font-size:14px;line-height:1.15;display:block}
-  .cvx-brand small{font-size:10px;line-height:1.25;display:block;color:var(--neon-2)}
+  .cvx-brand small{font-size:10px;line-height:1.25;display:block !important;color:var(--neon-2)}
   .cvx-stats{grid-template-columns:repeat(3,1fr)}
   .cvx-grid3{grid-template-columns:repeat(2,1fr)}
   .cvx-projs{grid-template-columns:1fr}
@@ -997,17 +1000,19 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
   .cvx-nav-actions .cvx-lang-toggle{display:inline-flex !important;padding:6px 9px !important;min-width:36px !important;height:38px !important;justify-content:center;align-items:center;border-radius:9px !important}
   .cvx-nav-actions .cvx-lang-toggle .lang-label{display:none !important}
   .cvx-nav-actions .cvx-burger{width:38px !important;height:38px !important;border-radius:9px !important}
-  .cvx-brand small{display:none !important}
-  .cvx-brand{max-width:calc(100% - 132px);overflow:hidden;gap:7px}
+  .cvx-brand{max-width:calc(100% - 132px);gap:8px;align-items:center;min-width:0}
+  .cvx-brand-text{display:flex;flex-direction:column;justify-content:center;min-width:0;overflow:hidden}
   .cvx-brand b{font-size:13px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .cvx-brand .lg{width:38px;height:38px;flex:0 0 38px;padding:7px}
+  .cvx-brand small{display:block !important;font-size:9px;line-height:1.2;color:var(--neon-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+  .cvx-brand .lg{width:38px;height:38px;flex:0 0 38px;padding:0}
   .cvx-nav .in{padding:8px 12px;gap:6px;justify-content:space-between}
 }
 @media(max-width:540px){
   .cvx-stats{grid-template-columns:repeat(2,1fr)}
   .cvx-grid3{grid-template-columns:1fr}
   .cvx-2col{grid-template-columns:1fr}
-  .cvx-brand b{font-size:12.5px}
+  .cvx-brand b{font-size:12px;line-height:1.2}
+  .cvx-brand small{font-size:8px;line-height:1.2}
   .cvx-nav .in{padding:6px 10px;gap:6px}
 }
 
@@ -2877,8 +2882,13 @@ html[dir="rtl"] .cvx-links {
   margin-right: auto;
   margin-left: 0;
 }
-html[dir="rtl"] .cvx-brand b {
+html[dir="rtl"] .cvx-brand b,
+html[dir="rtl"] .cvx-brand small {
   text-align: right;
+}
+html[dir="rtl"] .cvx-brand-logo-dot {
+  right: auto;
+  left: -2px;
 }
 html[dir="rtl"] .cvx-navcta {
   margin-right: 8px;
@@ -3763,7 +3773,7 @@ body.theme-light .rev-fgroup textarea{
 <div class="cvx-badge"><span class="dot"></span>
 <span class="mono" id="cvxHeroBadgeTxt">متصل الآن · متاح لقبول محافظ جديدة للإدارة</span></div>
 <div class="cvx-avatar">
-  <img alt="Saifeddine Boumaza" src="SB.jpg">
+  <img alt="Saifeddine Boumaza" src="SB.jpg" fetchpriority="high" loading="eager" decoding="async">
   <div class="cvx-avatar-status" title="متصل الآن · Online Now">
     <span class="cvx-avatar-ping"></span>
     <span class="cvx-avatar-dot"></span>
