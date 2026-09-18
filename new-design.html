@@ -4506,72 +4506,82 @@ body.theme-light .rev-fgroup select option {
   --led-glow-gold: 0 0 10px #ffbe1a, 0 0 25px rgba(255, 190, 26, 0.6), 0 0 50px rgba(255, 190, 26, 0.35);
 }
 
-/* 1. Cyber LED Top Digital Marquee Ribbon */
-.cvx-led-marquee-bar {
+/* 1. Real-Time Live Financial Market Ticker (TradingView WebSocket Feeds) */
+.cvx-live-market-tape {
   background: #040810;
   border-bottom: 1px solid rgba(0, 255, 156, 0.28);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(0, 255, 156, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(0, 255, 156, 0.25);
   overflow: hidden;
   position: relative;
   z-index: 65;
-  height: 38px;
+  height: 46px;
   display: flex;
   align-items: center;
   font-family: 'JetBrains Mono', 'Courier New', monospace;
-  font-size: 12px;
-  letter-spacing: 0.5px;
 }
-body.theme-light .cvx-led-marquee-bar {
-  background: #0d1527;
+body.theme-light .cvx-live-market-tape {
+  background: #090e1c;
   border-bottom-color: rgba(0, 204, 126, 0.4);
 }
-.cvx-led-marquee-track {
-  display: flex;
-  width: max-content;
-  white-space: nowrap;
-  animation: ledMarqueeLoop 36s linear infinite;
-  will-change: transform;
-}
-.cvx-led-marquee-track:hover {
-  animation-play-state: paused;
-}
-@keyframes ledMarqueeLoop {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.cvx-led-item {
+.cvx-live-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 0 22px;
-  color: #9cb5d9;
+  padding: 0 16px;
+  background: linear-gradient(90deg, rgba(0, 255, 156, 0.16), rgba(0, 229, 255, 0.06));
+  border-right: 1px solid rgba(0, 255, 156, 0.28);
+  height: 100%;
+  white-space: nowrap;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 800;
+  color: #00ff9c;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+  text-shadow: 0 0 10px rgba(0, 255, 156, 0.55);
 }
-.cvx-led-item b {
-  color: #fff;
+.cvx-live-badge .live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00ff9c;
+  box-shadow: 0 0 8px #00ff9c, 0 0 16px #00ff9c;
+  position: relative;
 }
-.cvx-led-item .led-sym {
-  color: #fff;
-  font-weight: 700;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+.cvx-live-badge .live-dot::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid #00ff9c;
+  animation: liveBadgePing 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
-.cvx-led-item .led-green {
-  color: var(--led-green);
-  text-shadow: 0 0 8px var(--led-green);
-  font-weight: 700;
+@keyframes liveBadgePing {
+  0% { transform: scale(1); opacity: 0.95; }
+  100% { transform: scale(2.5); opacity: 0; }
 }
-.cvx-led-item .led-cyan {
-  color: var(--led-cyan);
-  text-shadow: 0 0 8px var(--led-cyan);
-  font-weight: 700;
+.cvx-tv-ticker-wrap {
+  flex: 1;
+  min-width: 0;
+  height: 46px;
+  overflow: hidden;
 }
-.cvx-led-item .led-gold {
-  color: var(--led-gold);
-  text-shadow: 0 0 8px var(--led-gold);
-  font-weight: 700;
+.cvx-tv-ticker-wrap .tradingview-widget-container {
+  height: 46px !important;
+  width: 100% !important;
 }
-.cvx-led-sep {
-  color: rgba(255, 255, 255, 0.22);
-  margin: 0 2px;
+.cvx-tv-ticker-wrap iframe {
+  height: 46px !important;
+  display: block;
+}
+@media (max-width: 680px) {
+  .cvx-live-badge {
+    padding: 0 10px;
+    font-size: 10px;
+  }
+  .cvx-live-badge .live-txt {
+    display: none;
+  }
 }
 
 /* 2. Hardware LED Indicator Diodes */
@@ -5018,42 +5028,36 @@ body.theme-light #cvxLedSpotlight {
 
 <div class="cvx" id="cvtop">
 
-<!-- ⚡ CYBER LED DIGITAL MARQUEE TICKER ⚡ -->
-<div class="cvx-led-marquee-bar" aria-hidden="true">
-  <div class="cvx-led-marquee-track">
-    <div class="cvx-led-item"><span class="led-diode"></span> <b>SYSTEM: ONLINE</b> <span class="mono">SB-AI 5.0</span></div>
-    <span class="cvx-led-sep">◆</span>
-    <div class="cvx-led-item"><span class="led-sym">BTC/USDT:</span> <span class="led-green">▲ $68,420.00 (+5.2%)</span></div>
-    <span class="cvx-led-sep">◆</span>
-    <div class="cvx-led-item"><span class="led-sym">XAU/USD (Gold):</span> <span class="led-green">▲ $2,586.40 (+1.85%)</span></div>
-    <span class="cvx-led-sep">◆</span>
-    <div class="cvx-led-item"><span class="led-diode cyan"></span> <b class="led-cyan">FLASH USDT DEALS:</b> <span>100% INSTANT DEPOSIT · 0% RISK</span></div>
-    <span class="cvx-led-sep">◆</span>
-    <div class="cvx-led-item"><span class="led-sym">EUR/USD:</span> <span class="led-green">▲ 1.0874 (+0.38%)</span></div>
-    <span class="cvx-led-sep">◆</span>
-    <div class="cvx-led-item"><span class="led-diode gold"></span> <b class="led-gold">HISTORICAL WIN RATE:</b> <span class="led-gold">94.8% PROFIT TRADES</span></div>
-    <span class="cvx-led-sep">◆</span>
-    <div class="cvx-led-item"><span class="led-sym">ETH/USDT:</span> <span class="led-green">▲ $2,642.10 (+3.4%)</span></div>
-    <span class="cvx-led-sep">◆</span>
-    <div class="cvx-led-item"><span class="led-diode"></span> <b class="led-green">VIP CHANNEL:</b> <span>DIRECT ADMISSION ACTIVE</span></div>
-    <span class="cvx-led-sep">◆</span>
-    <!-- Repeat duplicate for seamless infinite loop -->
-    <div class="cvx-led-item"><span class="led-diode"></span> <b>SYSTEM: ONLINE</b> <span class="mono">SB-AI 5.0</span></div>
-    <span class="cvx-led-sep">◆</span>
-    <div class="cvx-led-item"><span class="led-sym">BTC/USDT:</span> <span class="led-green">▲ $68,420.00 (+5.2%)</span></div>
-    <span class="cvx-led-sep">◆</span>
-    <div class="cvx-led-item"><span class="led-sym">XAU/USD (Gold):</span> <span class="led-green">▲ $2,586.40 (+1.85%)</span></div>
-    <span class="cvx-led-sep">◆</span>
-    <div class="cvx-led-item"><span class="led-diode cyan"></span> <b class="led-cyan">FLASH USDT DEALS:</b> <span>100% INSTANT DEPOSIT · 0% RISK</span></div>
-    <span class="cvx-led-sep">◆</span>
-    <div class="cvx-led-item"><span class="led-sym">EUR/USD:</span> <span class="led-green">▲ 1.0874 (+0.38%)</span></div>
-    <span class="cvx-led-sep">◆</span>
-    <div class="cvx-led-item"><span class="led-diode gold"></span> <b class="led-gold">HISTORICAL WIN RATE:</b> <span class="led-gold">94.8% PROFIT TRADES</span></div>
-    <span class="cvx-led-sep">◆</span>
-    <div class="cvx-led-item"><span class="led-sym">ETH/USDT:</span> <span class="led-green">▲ $2,642.10 (+3.4%)</span></div>
-    <span class="cvx-led-sep">◆</span>
-    <div class="cvx-led-item"><span class="led-diode"></span> <b class="led-green">VIP CHANNEL:</b> <span>DIRECT ADMISSION ACTIVE</span></div>
-    <span class="cvx-led-sep">◆</span>
+<!-- ⚡ REAL-TIME LIVE FINANCIAL MARKET TICKER (TRADINGVIEW WEBSOCKET) ⚡ -->
+<div class="cvx-live-market-tape" id="cvxLiveTicker">
+  <div class="cvx-live-badge" title="Live Financial Market Feeds (WebSocket)">
+    <span class="live-dot"></span>
+    <span class="live-txt">LIVE MARKET</span>
+  </div>
+  <div class="cvx-tv-ticker-wrap">
+    <!-- TradingView Widget BEGIN -->
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+      {
+        "symbols": [
+          { "proName": "FOREXCOM:XAUUSD", "title": "Gold (XAU/USD)" },
+          { "proName": "FOREXCOM:DJI", "title": "US30 (Dow)" },
+          { "proName": "FOREXCOM:NSXUSD", "title": "Nasdaq 100" },
+          { "proName": "BINANCE:BTCUSDT", "title": "Bitcoin (BTC)" },
+          { "proName": "BINANCE:ETHUSDT", "title": "Ethereum (ETH)" },
+          { "proName": "FX_IDC:EURUSD", "title": "EUR / USD" },
+          { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500" }
+        ],
+        "showSymbolLogo": true,
+        "isTransparent": true,
+        "displayMode": "adaptive",
+        "colorTheme": "dark",
+        "locale": "en"
+      }
+      </script>
+    </div>
+    <!-- TradingView Widget END -->
   </div>
 </div>
 
