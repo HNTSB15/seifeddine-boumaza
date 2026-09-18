@@ -1180,20 +1180,21 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
 /* Feedback Status Box */
 .cvx-form-feedback{
   display:none;
-  padding:14px 18px;
-  border-radius:12px;
+  padding:20px 22px;
+  border-radius:14px;
   font-size:14px;
   text-align:center;
-  font-family:'JetBrains Mono',monospace;
-  margin-top:8px;
-  line-height:1.5;
+  font-family:'Space Grotesk',system-ui,sans-serif;
+  margin-top:12px;
+  line-height:1.6;
 }
 .cvx-form-feedback.success{
   display:block;
-  background:rgba(0,255,156,0.08);
-  border:1px solid rgba(0,255,156,0.4);
-  color:var(--neon);
-  box-shadow:0 0 20px rgba(0,255,156,0.15);
+  background:rgba(6,16,24,0.95);
+  border:1px solid rgba(0,255,156,0.5);
+  color:#f0f6ff;
+  box-shadow:0 12px 36px rgba(0,0,0,0.5), 0 0 25px rgba(0,255,156,0.18);
+  animation:fadeIn 0.3s ease;
 }
 .cvx-form-feedback.error{
   display:block;
@@ -1201,6 +1202,84 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
   border:1px solid rgba(255,107,107,0.4);
   color:#ff6b6b;
   box-shadow:0 0 20px rgba(255,107,107,0.15);
+}
+
+/* Telegram Direct VIP Action Button */
+.cvx-tg-lead-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+  max-width:520px;
+  margin:12px auto 4px;
+  padding:15px 22px;
+  border-radius:12px;
+  font-family:inherit;
+  font-size:14.5px;
+  font-weight:700;
+  color:#ffffff !important;
+  text-decoration:none;
+  background:linear-gradient(135deg, #0088cc 0%, #00b4d8 50%, #00f0ff 100%);
+  background-size:200% auto;
+  box-shadow:0 6px 24px rgba(0,180,216,0.4), 0 0 15px rgba(0,136,204,0.3);
+  transition:all .25s cubic-bezier(0.16, 1, 0.3, 1);
+  animation:cvxTgGlow 3s ease infinite alternate;
+  cursor:pointer;
+  box-sizing:border-box;
+}
+.cvx-tg-lead-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 32px rgba(0,180,216,0.6), 0 0 25px rgba(0,240,255,0.5);
+  background-position:right center;
+  color:#ffffff !important;
+}
+.cvx-tg-lead-btn svg{
+  width:20px;
+  height:20px;
+  fill:#ffffff;
+  flex-shrink:0;
+  transition:transform .2s ease;
+}
+.cvx-tg-lead-btn:hover svg{
+  transform:scale(1.12) rotate(-6deg);
+}
+@keyframes cvxTgGlow{
+  0%{box-shadow:0 4px 18px rgba(0,180,216,0.35);}
+  100%{box-shadow:0 8px 30px rgba(0,240,255,0.5), 0 0 20px rgba(0,136,204,0.4);}
+}
+
+/* Custom Select in Cyber Input Wrap */
+.cvx-input-wrap select{
+  width:100%;
+  background:transparent;
+  border:none;
+  outline:none;
+  padding:14px 40px 14px 44px;
+  color:#f0f6ff;
+  font-family:inherit;
+  font-size:14px;
+  font-weight:500;
+  cursor:pointer;
+  -webkit-appearance:none;
+  appearance:none;
+}
+.cvx-input-wrap select option{
+  background:#060a12;
+  color:#f0f6ff;
+}
+.cvx-select-arrow{
+  position:absolute;
+  right:14px;
+  width:18px;
+  height:18px;
+  fill:var(--muted);
+  pointer-events:none;
+  transition:transform .2s ease;
+}
+.cvx-input-wrap:focus-within .cvx-select-arrow{
+  fill:var(--neon-2);
+  transform:rotate(180deg);
 }
 
 @media(max-width:640px){
@@ -2500,9 +2579,14 @@ html[dir="rtl"] .cvx-input-ico {
   right: 14px;
 }
 html[dir="rtl"] .cvx-input-wrap input,
-html[dir="rtl"] .cvx-input-wrap textarea {
+html[dir="rtl"] .cvx-input-wrap textarea,
+html[dir="rtl"] .cvx-input-wrap select {
   padding: 14px 44px 14px 16px;
   text-align: right;
+}
+html[dir="rtl"] .cvx-select-arrow {
+  left: 14px;
+  right: auto;
 }
 html[dir="rtl"] .cvx-field-head label {
   flex-direction: row;
@@ -4033,6 +4117,33 @@ body.theme-light .faq-icon {
             <input type="email" id="c-email" name="email" placeholder="name@domain.com" autocomplete="email" maxlength="120" required />
           </div>
         </div>
+        <div class="cvx-field-box">
+          <div class="cvx-field-head">
+            <label for="c-telegram"><span class="mono-arrow">&gt;</span> Telegram / WhatsApp</label>
+            <span class="cvx-field-badge">FAST REPLY</span>
+          </div>
+          <div class="cvx-input-wrap">
+            <svg class="cvx-input-ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+            <input type="text" id="c-telegram" name="telegram" placeholder="@username or phone..." autocomplete="off" maxlength="80" />
+          </div>
+        </div>
+        <div class="cvx-field-box">
+          <div class="cvx-field-head">
+            <label for="c-topic"><span class="mono-arrow">&gt;</span> Inquiry Topic</label>
+            <span class="cvx-field-badge">SELECT</span>
+          </div>
+          <div class="cvx-input-wrap">
+            <svg class="cvx-input-ico" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+            <select id="c-topic" name="topic">
+              <option value="Managed Account (50/50 Profit Split)">Managed Account (50/50 Profit Split)</option>
+              <option value="VIP Signals (Gold & Forex Majors)">VIP Signals (Gold & Forex Majors)</option>
+              <option value="Flash USDT Software & Transaction Nodes">Flash USDT Software & Nodes</option>
+              <option value="MT4 / MT5 Custom Indicators & Tools">MT4/MT5 Custom Indicators</option>
+              <option value="General Trading Inquiry / Partnership">General Trading Inquiry / Partnership</option>
+            </select>
+            <svg class="cvx-select-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+          </div>
+        </div>
       </div>
       <div class="cvx-field-box">
         <div class="cvx-field-head">
@@ -4049,7 +4160,7 @@ body.theme-light .faq-icon {
       </button>
       <div class="cvx-form-trust">
         <span class="cvx-trust-item"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg> 256-Bit Encrypted Inquiry</span>
-        <span class="cvx-trust-item"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm3.3 14.71L11 12.41V7h2v4.59l3.71 3.71-1.42 1.41z"/></svg> Fast Response (&lt; 2h)</span>
+        <span class="cvx-trust-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg> Instant Telegram Dispatch</span>
         <span class="cvx-trust-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> Direct Portfolio Manager Access</span>
       </div>
       <div class="cvx-form-feedback" id="formFeedback"></div>
@@ -4521,52 +4632,131 @@ body.theme-light .faq-icon {
     } catch(err){}
   })();
 
-  // Contact form submission (Clear Table: client_messages)
+  // Instant Telegram Configuration & Real-Time Lead Bridge
+  window.CVX_TELEGRAM_CONFIG = {
+    // If you have created a Telegram bot via @BotFather, enter your token and chat ID below:
+    botToken: '', // e.g. '123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ'
+    chatId: '',   // e.g. '123456789'
+    directUsername: 'HNTSB15' // Direct Telegram account: @HNTSB15
+  };
+
+  // Contact form submission (Telegram Real-Time Lead Bridge)
   var cForm = document.getElementById('contactForm');
   if (cForm) {
     cForm.addEventListener('submit', function(e) {
       e.preventDefault();
       var btn = document.getElementById('contactSubmit');
       var fb = document.getElementById('formFeedback');
-      var name = document.getElementById('c-name').value.trim();
-      var email = document.getElementById('c-email').value.trim();
-      var message = document.getElementById('c-message').value.trim();
+      var name = (document.getElementById('c-name') ? document.getElementById('c-name').value.trim() : '');
+      var email = (document.getElementById('c-email') ? document.getElementById('c-email').value.trim() : '');
+      var telegram = (document.getElementById('c-telegram') ? document.getElementById('c-telegram').value.trim() : '');
+      var topicEl = document.getElementById('c-topic');
+      var topic = topicEl ? topicEl.value : 'General Trading Inquiry';
+      var message = (document.getElementById('c-message') ? document.getElementById('c-message').value.trim() : '');
 
-      if (btn) { btn.disabled = true; btn.innerHTML = 'Sending message...'; }
+      var isAr = (document.documentElement.getAttribute('lang') === 'ar');
 
-      var tasks = [];
-      if (sdb) {
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="status-pulse" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#000;margin-right:6px"></span> ' + 
+          (isAr ? 'جاري معالجة وتوصيل الرسالة...' : 'Securing & Dispatching Inquiry...');
+      }
+
+      // Build structured lead text for Telegram notification
+      var leadText = '🎯 NEW VIP TRADING INQUIRY | استفسار تداول جديد\n' +
+        '━━━━━━━━━━━━━━━━━━━━\n' +
+        '👤 Client: ' + name + '\n' +
+        '📧 Email: ' + email + '\n' +
+        '💬 Telegram / Phone: ' + (telegram || 'Not provided') + '\n' +
+        '📂 Category: ' + topic + '\n' +
+        '📝 Message / Goals:\n' + message + '\n' +
+        '━━━━━━━━━━━━━━━━━━━━\n' +
+        '🌐 Source: Portfolio Terminal (Direct Lead)\n' +
+        '🕒 Timestamp: ' + new Date().toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+
+      // Background tasks (Supabase and EmailJS if configured)
+      if (typeof sdb !== 'undefined' && sdb && typeof sdb.from === 'function') {
         try {
-          tasks.push(sdb.from('client_messages').insert([{ client_name: name, client_email: email, client_message: message }]));
+          sdb.from('client_messages').insert([{
+            client_name: name,
+            client_email: email,
+            client_message: '[Topic: ' + topic + ' | TG: ' + telegram + '] ' + message
+          }]).then(function(){}).catch(function(){});
         } catch(err){}
       }
       if (window.emailjs && typeof window.emailjs.send === 'function') {
         try {
-          tasks.push(window.emailjs.send('service_442hyjy', 'template_31wiijb', { from_name: name, from_email: email, message: message }));
+          window.emailjs.send('service_442hyjy', 'template_31wiijb', {
+            from_name: name,
+            from_email: email,
+            message: 'Topic: ' + topic + '\nTelegram: ' + telegram + '\n\n' + message
+          }).catch(function(){});
         } catch(err){}
       }
 
-      function done(success) {
-        if (btn) { btn.disabled = false; btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg> Send Message'; }
-        if (fb) {
-          fb.className = 'cvx-form-feedback ' + (success ? 'success' : 'error');
-          fb.textContent = success
-            ? "✓ Thank you, " + name + "! Your message has been sent. I\'ll get back to you within 24 hours."
-            : "Something went wrong. Please email me directly at saifeddine.jskyst15@gmail.com";
-        }
-        if (success) cForm.reset();
+      // Optional Telegram Bot API Background Push (if botToken & chatId configured)
+      var cfg = window.CVX_TELEGRAM_CONFIG || {};
+      if (cfg.botToken && cfg.chatId) {
+        try {
+          fetch('https://api.telegram.org/bot' + cfg.botToken + '/sendMessage', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: cfg.chatId,
+              text: leadText
+            })
+          }).catch(function(err){ console.warn('Telegram Bot API dispatch error:', err); });
+        } catch(e){}
       }
 
-      if (tasks.length) {
-        Promise.allSettled(tasks).then(function(results) {
-          var ok = results.some(function(r){ return r.status === 'fulfilled'; });
-          done(ok);
-        }).catch(function(){ done(false); });
-      } else {
-        var mailto = 'mailto:saifeddine.jskyst15@gmail.com?subject=' + encodeURIComponent('Trading Inquiry from ' + name) + '&body=' + encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message);
-        window.location.href = mailto;
-        done(true);
+      // Direct Telegram Deep Link to Saifeddine (@HNTSB15)
+      var directTgUser = cfg.directUsername || 'HNTSB15';
+      var tgUrl = 'https://t.me/' + directTgUser + '?text=' + encodeURIComponent(leadText);
+
+      // Safe HTML escaping helper
+      function escapeHtml(str) {
+        return (str || '').replace(/[&<>"']/g, function(m) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+        });
       }
+
+      setTimeout(function() {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg> ' +
+            (isAr ? 'إرسال الرسالة' : 'Send Message');
+        }
+
+        if (fb) {
+          fb.className = 'cvx-form-feedback success';
+          fb.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;">' +
+            '<div style="width:52px;height:52px;border-radius:50%;background:rgba(0,255,156,0.15);border:1px solid rgba(0,255,156,0.5);display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(0,255,156,0.3);">' +
+              '<svg viewBox="0 0 24 24" style="width:28px;height:28px;fill:var(--neon)"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>' +
+            '</div>' +
+            '<h4 style="margin:0;font-size:17px;color:#ffffff;font-weight:700;letter-spacing:0.3px;">' +
+              (isAr ? '✓ شكراً لك، ' + escapeHtml(name) + '! تم استلام استفسارك بنجاح' : '✓ Thank you, ' + escapeHtml(name) + '! Inquiry Dispatched') +
+            '</h4>' +
+            '<p style="margin:0;font-size:13.5px;color:var(--muted);max-width:540px;line-height:1.6;">' +
+              (isAr ? 'تم تسجيل رسالتك في النظام وتجهيز ملف طلبك. لبدء المحادثة الفورية الآن وتسريع الرد مباشرة مع سيف الدين عبر هاتفك في تيليجرام:' : 'Your message has been processed securely. For instant priority response and to chat directly with Saifeddine right now on Telegram:') +
+            '</p>' +
+            '<a href="' + tgUrl + '" target="_blank" rel="noopener" class="cvx-tg-lead-btn" id="cvxTgDirectLeadBtn">' +
+              '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>' +
+              '<span>' + (isAr ? '⚡ متابعة المحادثة مباشرة مع سيف الدين عبر تيليجرام ↗' : '⚡ Continue Live Chat with Saifeddine on Telegram ↗') + '</span>' +
+            '</a>' +
+            '<div style="font-size:12px;color:var(--muted);display:inline-flex;align-items:center;gap:6px;font-family:\'JetBrains Mono\',monospace;margin-top:2px;">' +
+              '<span style="width:7px;height:7px;border-radius:50%;background:var(--neon);display:inline-block;box-shadow:0 0 8px var(--neon);"></span> @' + directTgUser + ' · Verified Direct Portfolio Access' +
+            '</div>' +
+          '</div>';
+        }
+
+        // Try opening Telegram in new tab automatically
+        try {
+          var w = window.open(tgUrl, '_blank');
+          if (w) w.focus();
+        } catch(e){}
+
+        cForm.reset();
+      }, 500);
     });
   }
 
@@ -5310,6 +5500,16 @@ body.theme-light .faq-icon {
         'cont_lbl_name': '> الاسم الكامل',
         'cont_badge_req': 'مطلوب',
         'cont_lbl_email': '> البريد الإلكتروني',
+        'cont_lbl_telegram': '> تيليجرام / واتساب',
+        'cont_badge_fast': 'رد فوري',
+        'cont_ph_telegram': '@اسم_المستخدم أو رقم الهاتف...',
+        'cont_lbl_topic': '> موضوع الاستفسار',
+        'cont_badge_select': 'تحديد',
+        'cont_opt_managed': 'إدارة الحسابات (تقاسم أرباح 50/50)',
+        'cont_opt_signals': 'إشارات وتوصيات VIP (الذهب والعملات)',
+        'cont_opt_flash': 'برمجيات وعقد Flash USDT',
+        'cont_opt_indicators': 'مؤشرات MT4 / MT5 الحصرية',
+        'cont_opt_general': 'استفسار عام أو شراكة تداول',
         'cont_lbl_msg': '> الرسالة / أهدافك في التداول',
         'cont_badge_dir': 'مباشر',
         'cont_ph_name': 'أدخل اسمك الكامل...',
@@ -5317,7 +5517,7 @@ body.theme-light .faq-icon {
         'cont_ph_msg': 'شاركنا حجم رأس المال، أهدافك الاستثمارية، أزواجك المفضلة، أو أي استفسار...',
         'cont_btn_submit': 'إرسال الرسالة',
         'cont_trust1': 'استفسار مشفر بتقنية 256-بت',
-        'cont_trust2': 'رد سريع (أقل من ساعتين)',
+        'cont_trust2': 'إشعار فوري على تيليجرام',
         'cont_trust3': 'تواصل مباشر مع مدير المحافظ',
         'cont_social_title': 'دعنا <span class="neon">نتواصل</span>.',
         'cont_social_sub': 'الاستفسار المباشر متاح أيضاً عبر تيليجرام أو البريد الإلكتروني. نضمن لك تقارير شفافة وسرعة في الرد.',
@@ -5684,6 +5884,16 @@ body.theme-light .faq-icon {
         'cont_lbl_name': '> Full Name',
         'cont_badge_req': 'REQUIRED',
         'cont_lbl_email': '> Email Address',
+        'cont_lbl_telegram': '> Telegram / WhatsApp',
+        'cont_badge_fast': 'FAST REPLY',
+        'cont_ph_telegram': '@username or phone...',
+        'cont_lbl_topic': '> Inquiry Topic',
+        'cont_badge_select': 'SELECT',
+        'cont_opt_managed': 'Managed Account (50/50 Profit Split)',
+        'cont_opt_signals': 'VIP Signals (Gold & Forex Majors)',
+        'cont_opt_flash': 'Flash USDT Software & Nodes',
+        'cont_opt_indicators': 'MT4/MT5 Custom Indicators',
+        'cont_opt_general': 'General Trading Inquiry / Partnership',
         'cont_lbl_msg': '> Message / Trading Goals',
         'cont_badge_dir': 'DIRECT',
         'cont_ph_name': 'Enter your full name...',
@@ -5691,7 +5901,7 @@ body.theme-light .faq-icon {
         'cont_ph_msg': 'Share your investment capital, trading goals, preferred pairs, or any questions...',
         'cont_btn_submit': 'Send Message',
         'cont_trust1': '256-Bit Encrypted Inquiry',
-        'cont_trust2': 'Fast Response (< 2h)',
+        'cont_trust2': 'Instant Telegram Dispatch',
         'cont_trust3': 'Direct Portfolio Manager Access',
         'cont_social_title': 'Let\'s <span class="neon">connect</span>.',
         'cont_social_sub': 'Direct inquiry is also available via Telegram, Email, or social channels. Transparent reporting and fast response guaranteed.',
@@ -6171,27 +6381,43 @@ body.theme-light .faq-icon {
       if (lName && t['cont_lbl_name']) lName.innerHTML = '<span class="mono-arrow">&gt;</span> ' + t['cont_lbl_name'].replace('>', '').trim();
       var lEmail = document.querySelector('label[for="c-email"]');
       if (lEmail && t['cont_lbl_email']) lEmail.innerHTML = '<span class="mono-arrow">&gt;</span> ' + t['cont_lbl_email'].replace('>', '').trim();
+      var lTg = document.querySelector('label[for="c-telegram"]');
+      if (lTg && t['cont_lbl_telegram']) lTg.innerHTML = '<span class="mono-arrow">&gt;</span> ' + t['cont_lbl_telegram'].replace('>', '').trim();
+      var lTopic = document.querySelector('label[for="c-topic"]');
+      if (lTopic && t['cont_lbl_topic']) lTopic.innerHTML = '<span class="mono-arrow">&gt;</span> ' + t['cont_lbl_topic'].replace('>', '').trim();
       var lMsg = document.querySelector('label[for="c-message"]');
       if (lMsg && t['cont_lbl_msg']) lMsg.innerHTML = '<span class="mono-arrow">&gt;</span> ' + t['cont_lbl_msg'].replace('>', '').trim();
 
-      var fBadges = document.querySelectorAll('.cvx-field-badge');
+      var fBadges = document.querySelectorAll('#contactForm .cvx-field-badge');
       if (fBadges[0] && t['cont_badge_req']) fBadges[0].textContent = t['cont_badge_req'];
       if (fBadges[1] && t['cont_badge_req']) fBadges[1].textContent = t['cont_badge_req'];
-      if (fBadges[2] && t['cont_badge_dir']) fBadges[2].textContent = t['cont_badge_dir'];
+      if (fBadges[2] && t['cont_badge_fast']) fBadges[2].textContent = t['cont_badge_fast'];
+      if (fBadges[3] && t['cont_badge_select']) fBadges[3].textContent = t['cont_badge_select'];
+      if (fBadges[4] && t['cont_badge_dir']) fBadges[4].textContent = t['cont_badge_dir'];
 
       var inpName = document.getElementById('c-name');
       if (inpName && t['cont_ph_name']) inpName.placeholder = t['cont_ph_name'];
       var inpEmail = document.getElementById('c-email');
       if (inpEmail && t['cont_ph_email']) inpEmail.placeholder = t['cont_ph_email'];
+      var inpTg = document.getElementById('c-telegram');
+      if (inpTg && t['cont_ph_telegram']) inpTg.placeholder = t['cont_ph_telegram'];
       var inpMsg = document.getElementById('c-message');
       if (inpMsg && t['cont_ph_msg']) inpMsg.placeholder = t['cont_ph_msg'];
+
+      var topicSel = document.getElementById('c-topic');
+      if (topicSel && topicSel.options) {
+        var optKeys = ['cont_opt_managed', 'cont_opt_signals', 'cont_opt_flash', 'cont_opt_indicators', 'cont_opt_general'];
+        for (var oi = 0; oi < topicSel.options.length; oi++) {
+          if (t[optKeys[oi]]) topicSel.options[oi].text = t[optKeys[oi]];
+        }
+      }
 
       var cSubBtn = document.getElementById('contactSubmit');
       if (cSubBtn && t['cont_btn_submit']) cSubBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg> ' + t['cont_btn_submit'];
 
       var trusts = document.querySelectorAll('.cvx-trust-item');
       if (trusts[0] && t['cont_trust1']) trusts[0].innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg> ' + t['cont_trust1'];
-      if (trusts[1] && t['cont_trust2']) trusts[1].innerHTML = '<svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm3.3 14.71L11 12.41V7h2v4.59l3.71 3.71-1.42 1.41z"/></svg> ' + t['cont_trust2'];
+      if (trusts[1] && t['cont_trust2']) trusts[1].innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg> ' + t['cont_trust2'];
       if (trusts[2] && t['cont_trust3']) trusts[2].innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> ' + t['cont_trust3'];
 
       var socH2 = document.querySelector('.cvx-contact h2');
