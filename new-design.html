@@ -4463,10 +4463,183 @@ body.theme-light .rev-fgroup select option {
 }
 
 /* ==========================================================================
-   ✨ ULTRA-LUXURY ANIMATION ENGINE (Sandbox Design v2)
+   ⚡ 100% CYBER LED & NEON ANIMATION ENGINE (Sandbox Design v3)
    ========================================================================== */
 
-/* 1. Magic Border Beam Animation */
+:root {
+  --led-green: #00ff9c;
+  --led-cyan: #00e5ff;
+  --led-gold: #ffbe1a;
+  --led-red: #ff3366;
+  --led-purple: #c042ff;
+  --led-glow-green: 0 0 10px #00ff9c, 0 0 25px rgba(0, 255, 156, 0.6), 0 0 50px rgba(0, 255, 156, 0.35);
+  --led-glow-cyan: 0 0 10px #00e5ff, 0 0 25px rgba(0, 229, 255, 0.6), 0 0 50px rgba(0, 229, 255, 0.35);
+  --led-glow-gold: 0 0 10px #ffbe1a, 0 0 25px rgba(255, 190, 26, 0.6), 0 0 50px rgba(255, 190, 26, 0.35);
+}
+
+/* 1. Cyber LED Top Digital Marquee Ribbon */
+.cvx-led-marquee-bar {
+  background: #040810;
+  border-bottom: 1px solid rgba(0, 255, 156, 0.28);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(0, 255, 156, 0.3);
+  overflow: hidden;
+  position: relative;
+  z-index: 65;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+body.theme-light .cvx-led-marquee-bar {
+  background: #0d1527;
+  border-bottom-color: rgba(0, 204, 126, 0.4);
+}
+.cvx-led-marquee-track {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  animation: ledMarqueeLoop 36s linear infinite;
+  will-change: transform;
+}
+.cvx-led-marquee-track:hover {
+  animation-play-state: paused;
+}
+@keyframes ledMarqueeLoop {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.cvx-led-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 22px;
+  color: #9cb5d9;
+}
+.cvx-led-item b {
+  color: #fff;
+}
+.cvx-led-item .led-sym {
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+.cvx-led-item .led-green {
+  color: var(--led-green);
+  text-shadow: 0 0 8px var(--led-green);
+  font-weight: 700;
+}
+.cvx-led-item .led-cyan {
+  color: var(--led-cyan);
+  text-shadow: 0 0 8px var(--led-cyan);
+  font-weight: 700;
+}
+.cvx-led-item .led-gold {
+  color: var(--led-gold);
+  text-shadow: 0 0 8px var(--led-gold);
+  font-weight: 700;
+}
+.cvx-led-sep {
+  color: rgba(255, 255, 255, 0.22);
+  margin: 0 2px;
+}
+
+/* 2. Hardware LED Indicator Diodes */
+.led-diode {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--led-green);
+  box-shadow: 0 0 8px var(--led-green), 0 0 16px var(--led-green);
+  position: relative;
+  flex-shrink: 0;
+}
+.led-diode::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid var(--led-green);
+  opacity: 0.7;
+  animation: ledDiodePing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.led-diode.cyan {
+  background: var(--led-cyan);
+  box-shadow: 0 0 8px var(--led-cyan), 0 0 16px var(--led-cyan);
+}
+.led-diode.cyan::after {
+  border-color: var(--led-cyan);
+}
+.led-diode.gold {
+  background: var(--led-gold);
+  box-shadow: 0 0 8px var(--led-gold), 0 0 16px var(--led-gold);
+}
+.led-diode.gold::after {
+  border-color: var(--led-gold);
+}
+.led-diode.red {
+  background: var(--led-red);
+  box-shadow: 0 0 8px var(--led-red), 0 0 16px var(--led-red);
+}
+.led-diode.red::after {
+  border-color: var(--led-red);
+}
+@keyframes ledDiodePing {
+  0% { transform: scale(1); opacity: 0.95; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* 3. Real ARGB LED Border Tracer for Cards & Containers */
+.cvx-led-border {
+  position: relative !important;
+  overflow: hidden !important;
+  border: none !important;
+}
+.cvx-led-border::before {
+  content: "";
+  position: absolute;
+  top: -60%;
+  left: -60%;
+  width: 220%;
+  height: 220%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 280deg,
+    #00ff9c 315deg,
+    #ffffff 338deg,
+    #00e5ff 355deg,
+    transparent 360deg
+  );
+  animation: ledTracerSpin 3.6s linear infinite;
+  z-index: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 0 10px #00ff9c) drop-shadow(0 0 22px #00e5ff);
+}
+.cvx-led-border::after {
+  content: "";
+  position: absolute;
+  inset: 1.5px;
+  background: #080e1e;
+  border-radius: inherit;
+  z-index: 1;
+  pointer-events: none;
+}
+body.theme-light .cvx-led-border::after {
+  background: #ffffff;
+}
+.cvx-led-border > * {
+  position: relative;
+  z-index: 2;
+}
+@keyframes ledTracerSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 4. Glowing Magic Beam (Preserved & Enhanced) */
 .cvx-magic-beam {
   position: relative !important;
   overflow: hidden !important;
@@ -4479,19 +4652,23 @@ body.theme-light .rev-fgroup select option {
   width: 200%;
   height: 200%;
   background: conic-gradient(from 0deg, transparent 0% 70%, var(--neon) 82%, var(--neon-2) 92%, transparent 100%);
-  animation: cvxBeamRotate 5s linear infinite;
+  animation: cvxBeamRotate 4.5s linear infinite;
   z-index: 0;
   pointer-events: none;
   opacity: 0.95;
+  filter: drop-shadow(0 0 12px var(--neon));
 }
 .cvx-magic-beam::after {
   content: "";
   position: absolute;
   inset: 1.5px;
-  background: inherit;
+  background: #080e1e;
   border-radius: inherit;
   z-index: 1;
   pointer-events: none;
+}
+body.theme-light .cvx-magic-beam::after {
+  background: #ffffff;
 }
 .cvx-magic-beam > * {
   position: relative;
@@ -4502,7 +4679,7 @@ body.theme-light .rev-fgroup select option {
   to { transform: rotate(360deg); }
 }
 
-/* 2. 3D Tilt Card Container & Specular Shine */
+/* 5. 3D Tilt Card & Specular Reflection */
 .cvx-tilt-card {
   transform-style: preserve-3d;
   will-change: transform;
@@ -4517,13 +4694,34 @@ body.theme-light .rev-fgroup select option {
   z-index: 5;
   opacity: 0;
   transition: opacity 0.25s ease;
-  background: radial-gradient(circle 320px at var(--shine-x, 50%) var(--shine-y, 50%), rgba(255, 255, 255, 0.14), transparent 75%);
+  background: radial-gradient(circle 320px at var(--shine-x, 50%) var(--shine-y, 50%), rgba(255, 255, 255, 0.18), transparent 75%);
 }
 .cvx-tilt-card:hover .cvx-tilt-shine {
   opacity: 1;
 }
 
-/* 3. Text Shimmer Wave on Profit & Numbers */
+/* 6. LED Underglow on Cards */
+.cvx-card, .cvx-proj, .fl-deal-card, .fl-pack-card, .nx-feat, .nx-price-card, .cvx-stat, .rev-card, .cvx-x-feed-box {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.3s ease !important;
+}
+.cvx-card:hover, .cvx-proj:hover, .fl-deal-card:hover, .fl-pack-card:hover, .nx-feat:hover, .nx-price-card:hover, .cvx-stat:hover, .rev-card:hover, .cvx-x-feed-box:hover {
+  box-shadow:
+    0 0 24px rgba(0, 255, 156, 0.38),
+    0 18px 45px -10px rgba(0, 229, 255, 0.25),
+    inset 0 0 15px rgba(0, 255, 156, 0.14) !important;
+  border-color: rgba(0, 255, 156, 0.65) !important;
+}
+
+/* 7. Neon LED Tube Headings & Text Shimmer */
+.cvx-hero h1 {
+  text-shadow: 0 0 10px rgba(0, 255, 156, 0.6), 0 0 25px rgba(0, 255, 156, 0.3), 0 0 50px rgba(0, 229, 255, 0.2);
+  animation: ledHeaderPulse 3.8s ease-in-out infinite alternate;
+}
+@keyframes ledHeaderPulse {
+  0% { text-shadow: 0 0 8px rgba(0, 255, 156, 0.5), 0 0 20px rgba(0, 255, 156, 0.2); }
+  100% { text-shadow: 0 0 16px rgba(0, 255, 156, 0.9), 0 0 38px rgba(0, 229, 255, 0.5), 0 0 75px rgba(0, 255, 156, 0.35); }
+}
+
 @keyframes cvxTextShimmer {
   0% { background-position: -200% center; }
   100% { background-position: 200% center; }
@@ -4534,8 +4732,9 @@ body.theme-light .rev-fgroup select option {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: cvxTextShimmer 4s ease-in-out infinite;
+  animation: cvxTextShimmer 3.8s ease-in-out infinite;
   display: inline-block;
+  font-weight: 800;
 }
 .cvx-shimmer-gold {
   background: linear-gradient(90deg, #ffcf4a 0%, #ffffff 45%, #ffd978 60%, #ffcf4a 100%);
@@ -4543,11 +4742,12 @@ body.theme-light .rev-fgroup select option {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: cvxTextShimmer 4.5s ease-in-out infinite;
+  animation: cvxTextShimmer 4.2s ease-in-out infinite;
   display: inline-block;
+  font-weight: 800;
 }
 
-/* 4. Staggered Spring Reveal Animations */
+/* 8. Staggered Spring Reveal Animations */
 .cvx-spring-reveal {
   opacity: 0;
   transform: translateY(32px) scale(0.97);
@@ -4558,13 +4758,12 @@ body.theme-light .rev-fgroup select option {
   opacity: 1;
   transform: translateY(0) scale(1);
 }
-
 .cvx-delay-1 { transition-delay: 60ms !important; }
 .cvx-delay-2 { transition-delay: 130ms !important; }
 .cvx-delay-3 { transition-delay: 200ms !important; }
 .cvx-delay-4 { transition-delay: 270ms !important; }
 
-/* 5. Smooth Floating Breathing Badges */
+/* 9. Floating Breathing Badges */
 @keyframes cvxFloatGently {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
   50% { transform: translateY(-7px) rotate(0.6deg); }
@@ -4573,7 +4772,7 @@ body.theme-light .rev-fgroup select option {
   animation: cvxFloatGently 4.2s ease-in-out infinite;
 }
 
-/* 6. Magnetic Glowing CTA Button */
+/* 10. Magnetic Glowing CTA Button */
 .cvx-magnetic-btn {
   position: relative;
   overflow: hidden;
@@ -4584,7 +4783,7 @@ body.theme-light .rev-fgroup select option {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(circle 90px at var(--btn-x, 50%) var(--btn-y, 50%), rgba(255, 255, 255, 0.3), transparent 80%);
+  background: radial-gradient(circle 90px at var(--btn-x, 50%) var(--btn-y, 50%), rgba(255, 255, 255, 0.35), transparent 80%);
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -4593,13 +4792,199 @@ body.theme-light .rev-fgroup select option {
   opacity: 1;
 }
 
-/* 7. Enhanced Glowing Ambient Mesh */
+/* 11. Cyber LED Equalizer Hardware Console (Hero Section) */
+.cvx-led-console {
+  margin: 34px auto 0;
+  max-width: 840px;
+  background: rgba(6, 11, 24, 0.88);
+  border: 1px solid rgba(0, 255, 156, 0.35);
+  border-radius: 18px;
+  padding: 16px 22px;
+  box-shadow: 0 0 35px rgba(0, 255, 156, 0.2), inset 0 0 25px rgba(0, 229, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  position: relative;
+  overflow: hidden;
+}
+body.theme-light .cvx-led-console {
+  background: rgba(245, 248, 255, 0.94);
+  border-color: rgba(0, 204, 126, 0.45);
+  box-shadow: 0 10px 35px rgba(0, 204, 126, 0.18);
+}
+.cvx-led-console-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+body.theme-light .cvx-led-console-top {
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+.cvx-led-console-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+body.theme-light .cvx-led-console-title {
+  color: #0f172a;
+}
+.cvx-led-console-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #7b93b8;
+  font-size: 11px;
+}
+.cvx-led-bars-grid {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 4px;
+  height: 68px;
+  padding: 4px 2px;
+}
+.cvx-led-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 3px;
+  height: 100%;
+  justify-content: flex-start;
+}
+.cvx-led-seg {
+  height: 5px;
+  border-radius: 1.5px;
+  background: rgba(255, 255, 255, 0.06);
+  transition: background 0.12s ease, box-shadow 0.12s ease;
+}
+body.theme-light .cvx-led-seg {
+  background: rgba(0, 0, 0, 0.06);
+}
+.cvx-led-seg.lit.lv-green {
+  background: #00ff9c !important;
+  box-shadow: 0 0 6px #00ff9c, 0 0 12px rgba(0, 255, 156, 0.75) !important;
+}
+.cvx-led-seg.lit.lv-amber {
+  background: #ffcf4a !important;
+  box-shadow: 0 0 6px #ffcf4a, 0 0 12px rgba(255, 207, 74, 0.75) !important;
+}
+.cvx-led-seg.lit.lv-cyan {
+  background: #00e5ff !important;
+  box-shadow: 0 0 8px #00e5ff, 0 0 14px rgba(0, 229, 255, 0.85) !important;
+}
+.cvx-led-seg.lit.lv-red {
+  background: #ff3366 !important;
+  box-shadow: 0 0 8px #ff3366, 0 0 14px rgba(255, 51, 102, 0.85) !important;
+}
+.cvx-led-console-bot {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #7b93b8;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+body.theme-light .cvx-led-console-bot {
+  border-top-color: rgba(0, 0, 0, 0.08);
+}
+.cvx-led-stat-badge {
+  color: #fff;
+  font-weight: 700;
+}
+body.theme-light .cvx-led-stat-badge {
+  color: #04140c;
+}
+
+/* 12. Interactive Ambient LED Mouse Spotlight */
+#cvxLedSpotlight {
+  position: fixed;
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(0, 255, 156, 0.12) 0%, rgba(0, 229, 255, 0.06) 40%, transparent 70%);
+  filter: blur(25px);
+  z-index: 3;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+  will-change: left, top;
+}
+body.theme-light #cvxLedSpotlight {
+  background: radial-gradient(circle, rgba(0, 204, 126, 0.08) 0%, rgba(18, 214, 255, 0.04) 40%, transparent 70%);
+}
+
+/* 13. Click LED Spark Diode Explosions */
+.cvx-led-spark {
+  position: fixed;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  box-shadow: 0 0 8px currentColor, 0 0 16px currentColor;
+}
+
+/* 14. Enhanced Glowing Ambient Mesh */
 #matrix {
-  opacity: 0.28 !important;
+  opacity: 0.35 !important;
   transition: opacity 0.3s ease;
 }
 </style>
+
 <div class="cvx" id="cvtop">
+
+<!-- ⚡ CYBER LED DIGITAL MARQUEE TICKER ⚡ -->
+<div class="cvx-led-marquee-bar" aria-hidden="true">
+  <div class="cvx-led-marquee-track">
+    <div class="cvx-led-item"><span class="led-diode"></span> <b>SYSTEM: ONLINE</b> <span class="mono">SB-AI 5.0</span></div>
+    <span class="cvx-led-sep">◆</span>
+    <div class="cvx-led-item"><span class="led-sym">BTC/USDT:</span> <span class="led-green">▲ $68,420.00 (+5.2%)</span></div>
+    <span class="cvx-led-sep">◆</span>
+    <div class="cvx-led-item"><span class="led-sym">XAU/USD (Gold):</span> <span class="led-green">▲ $2,586.40 (+1.85%)</span></div>
+    <span class="cvx-led-sep">◆</span>
+    <div class="cvx-led-item"><span class="led-diode cyan"></span> <b class="led-cyan">FLASH USDT DEALS:</b> <span>100% INSTANT DEPOSIT · 0% RISK</span></div>
+    <span class="cvx-led-sep">◆</span>
+    <div class="cvx-led-item"><span class="led-sym">EUR/USD:</span> <span class="led-green">▲ 1.0874 (+0.38%)</span></div>
+    <span class="cvx-led-sep">◆</span>
+    <div class="cvx-led-item"><span class="led-diode gold"></span> <b class="led-gold">HISTORICAL WIN RATE:</b> <span class="led-gold">94.8% PROFIT TRADES</span></div>
+    <span class="cvx-led-sep">◆</span>
+    <div class="cvx-led-item"><span class="led-sym">ETH/USDT:</span> <span class="led-green">▲ $2,642.10 (+3.4%)</span></div>
+    <span class="cvx-led-sep">◆</span>
+    <div class="cvx-led-item"><span class="led-diode"></span> <b class="led-green">VIP CHANNEL:</b> <span>DIRECT ADMISSION ACTIVE</span></div>
+    <span class="cvx-led-sep">◆</span>
+    <!-- Repeat duplicate for seamless infinite loop -->
+    <div class="cvx-led-item"><span class="led-diode"></span> <b>SYSTEM: ONLINE</b> <span class="mono">SB-AI 5.0</span></div>
+    <span class="cvx-led-sep">◆</span>
+    <div class="cvx-led-item"><span class="led-sym">BTC/USDT:</span> <span class="led-green">▲ $68,420.00 (+5.2%)</span></div>
+    <span class="cvx-led-sep">◆</span>
+    <div class="cvx-led-item"><span class="led-sym">XAU/USD (Gold):</span> <span class="led-green">▲ $2,586.40 (+1.85%)</span></div>
+    <span class="cvx-led-sep">◆</span>
+    <div class="cvx-led-item"><span class="led-diode cyan"></span> <b class="led-cyan">FLASH USDT DEALS:</b> <span>100% INSTANT DEPOSIT · 0% RISK</span></div>
+    <span class="cvx-led-sep">◆</span>
+    <div class="cvx-led-item"><span class="led-sym">EUR/USD:</span> <span class="led-green">▲ 1.0874 (+0.38%)</span></div>
+    <span class="cvx-led-sep">◆</span>
+    <div class="cvx-led-item"><span class="led-diode gold"></span> <b class="led-gold">HISTORICAL WIN RATE:</b> <span class="led-gold">94.8% PROFIT TRADES</span></div>
+    <span class="cvx-led-sep">◆</span>
+    <div class="cvx-led-item"><span class="led-sym">ETH/USDT:</span> <span class="led-green">▲ $2,642.10 (+3.4%)</span></div>
+    <span class="cvx-led-sep">◆</span>
+    <div class="cvx-led-item"><span class="led-diode"></span> <b class="led-green">VIP CHANNEL:</b> <span>DIRECT ADMISSION ACTIVE</span></div>
+    <span class="cvx-led-sep">◆</span>
+  </div>
+</div>
+
 <nav class="cvx-nav">
 <div class="in">
 <a class="cvx-brand" href="#cvtop">
@@ -4748,6 +5133,29 @@ body.theme-light .rev-fgroup select option {
 <span class="cvx-chip"><b>MT4 / MT5</b> Indicator Systems</span>
 <a class="cvx-chip" href="#newsx" style="text-decoration:none;border-color:rgba(18,214,255,0.45);background:rgba(18,214,255,0.08);color:var(--neon-2)">⚡ <b>NewsX AI</b> Live Bias</a>
 <a class="cvx-chip" href="#flash" style="text-decoration:none;border-color:rgba(0,255,156,0.45);background:rgba(0,255,156,0.08);color:var(--neon)">⚡ <b>Flash USDT</b> Offers</a>
+</div>
+
+<!-- ⚡ CYBER LED HARDWARE EQUALIZER CONSOLE ⚡ -->
+<div class="cvx-led-console cvx-spring-reveal" id="cvxLedEqualizer">
+  <div class="cvx-led-console-top">
+    <div class="cvx-led-console-title">
+      <span class="led-diode"></span>
+      <span>REAL-TIME MARKET VOLATILITY SPECTRUM</span>
+    </div>
+    <div class="cvx-led-console-meta">
+      <span>AI-CORE: <b class="cvx-shimmer-val">240Hz FAST-LOCK</b></span>
+      <span>LATENCY: <b style="color:var(--led-cyan)">1.2ms</b></span>
+      <span>STATUS: <b style="color:var(--led-green)">● OPTIMAL</b></span>
+    </div>
+  </div>
+  <div class="cvx-led-bars-grid" id="cvxLedBarsGrid" title="Interactive LED Volatility Equalizer (Move mouse to interact)">
+    <!-- 24 Dynamic LED Columns will be injected and animated here -->
+  </div>
+  <div class="cvx-led-console-bot">
+    <span>CHANNEL: <span class="cvx-led-stat-badge">XAU/USD · BTC/USDT · EUR/USD</span></span>
+    <span>EXECUTION: <span class="cvx-led-stat-badge" style="color:var(--led-gold)">ALGO-TRADING ACTIVE</span></span>
+    <span>STABILITY: <span class="cvx-led-stat-badge" style="color:var(--led-green)">99.98%</span></span>
+  </div>
 </div>
 </div>
 </header>
@@ -9367,8 +9775,7 @@ body.theme-light .rev-fgroup select option {
 <script type="text/javascript">
 //<![CDATA[
   // ==========================================================================
-  // ✨ INTERACTIVE CONSTELLATION & AURORA CANVAS (Sandbox v2)
-  // Replaces matrix text with high-end interactive financial node network
+  // ⚡ CYBER LED & CIRCUIT LASER CANVAS ENGINE (Sandbox v3)
   // ==========================================================================
   (function(){
     var canvas = document.getElementById('matrix');
@@ -9378,11 +9785,13 @@ body.theme-light .rev-fgroup select option {
 
     var width, height;
     var particles = [];
-    var mouse = { x: -1000, y: -1000, radius: 130 };
+    var circuitPackets = [];
+    var mouse = { x: -1000, y: -1000, radius: 140 };
 
     function resize(){
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
+      initCircuits();
     }
     resize();
     window.addEventListener('resize', resize);
@@ -9397,7 +9806,6 @@ body.theme-light .rev-fgroup select option {
       mouse.y = -1000;
     });
 
-    // Touch support for mobile devices
     window.addEventListener('touchmove', function(e){
       if (e.touches && e.touches[0]) {
         mouse.x = e.touches[0].clientX;
@@ -9410,7 +9818,7 @@ body.theme-light .rev-fgroup select option {
       mouse.y = -1000;
     });
 
-    var count = Math.min(Math.floor(window.innerWidth / 22), 60);
+    var count = Math.min(Math.floor(window.innerWidth / 20), 55);
     for (var i = 0; i < count; i++) {
       particles.push({
         x: Math.random() * width,
@@ -9418,9 +9826,26 @@ body.theme-light .rev-fgroup select option {
         vx: (Math.random() - 0.5) * 0.45,
         vy: (Math.random() - 0.5) * 0.45,
         radius: Math.random() * 1.8 + 0.9,
-        color: Math.random() > 0.45 ? '#00ff9c' : '#12d6ff'
+        color: Math.random() > 0.45 ? '#00ff9c' : '#00e5ff'
       });
     }
+
+    function initCircuits() {
+      circuitPackets = [];
+      var numPackets = 9;
+      for (var k = 0; k < numPackets; k++) {
+        var isHoriz = Math.random() > 0.5;
+        circuitPackets.push({
+          isHoriz: isHoriz,
+          pos: isHoriz ? Math.random() * width : Math.random() * height,
+          lane: isHoriz ? Math.random() * height : Math.random() * width,
+          speed: (Math.random() * 1.8 + 1.2) * (Math.random() > 0.5 ? 1 : -1),
+          len: Math.random() * 55 + 35,
+          color: Math.random() > 0.5 ? '#00ff9c' : '#00e5ff'
+        });
+      }
+    }
+    initCircuits();
 
     var lastFrame = 0;
     function render(time) {
@@ -9430,8 +9855,59 @@ body.theme-light .rev-fgroup select option {
 
         var isLight = document.body && document.body.classList.contains('theme-light');
         var lineBaseAlpha = isLight ? 0.08 : 0.22;
-        var pAlpha = isLight ? 0.35 : 0.65;
+        var pAlpha = isLight ? 0.35 : 0.7;
 
+        // 1. Draw Laser Circuit Data Packets
+        for (var c = 0; c < circuitPackets.length; c++) {
+          var cp = circuitPackets[c];
+          cp.pos += cp.speed;
+
+          if (cp.isHoriz) {
+            if (cp.pos > width + 80) cp.pos = -80;
+            else if (cp.pos < -80) cp.pos = width + 80;
+
+            var grad = ctx.createLinearGradient(cp.pos - cp.len, cp.lane, cp.pos, cp.lane);
+            grad.addColorStop(0, 'transparent');
+            grad.addColorStop(0.7, cp.color);
+            grad.addColorStop(1, '#ffffff');
+
+            ctx.beginPath();
+            ctx.moveTo(cp.pos - cp.len, cp.lane);
+            ctx.lineTo(cp.pos, cp.lane);
+            ctx.strokeStyle = grad;
+            ctx.lineWidth = 1.6;
+            ctx.stroke();
+
+            // Leading LED Dot
+            ctx.beginPath();
+            ctx.arc(cp.pos, cp.lane, 2.2, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+          } else {
+            if (cp.pos > height + 80) cp.pos = -80;
+            else if (cp.pos < -80) cp.pos = height + 80;
+
+            var vgrad = ctx.createLinearGradient(cp.lane, cp.pos - cp.len, cp.lane, cp.pos);
+            vgrad.addColorStop(0, 'transparent');
+            vgrad.addColorStop(0.7, cp.color);
+            vgrad.addColorStop(1, '#ffffff');
+
+            ctx.beginPath();
+            ctx.moveTo(cp.lane, cp.pos - cp.len);
+            ctx.lineTo(cp.lane, cp.pos);
+            ctx.strokeStyle = vgrad;
+            ctx.lineWidth = 1.6;
+            ctx.stroke();
+
+            // Leading LED Dot
+            ctx.beginPath();
+            ctx.arc(cp.lane, cp.pos, 2.2, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+          }
+        }
+
+        // 2. Draw Constellation Laser Mesh
         for (var i = 0; i < particles.length; i++) {
           var p = particles[i];
           p.x += p.vx;
@@ -9482,12 +9958,12 @@ body.theme-light .rev-fgroup select option {
   })();
 
   // ==========================================================================
-  // 🎮 3D TILT WITH SPECULAR SHINE & SPRING REVEAL ENGINE
+  // 🎮 100% CYBER LED & INTERACTIVE UI SYSTEM
   // ==========================================================================
   (function initAdvancedUI() {
     function setupTiltEffect() {
       var cards = document.querySelectorAll(
-        '.cvx-card, .cvx-proj, .fl-deal-card, .fl-pack-card, .nx-feat, .nx-price-card, .cvx-x-slide, .cvx-stat'
+        '.cvx-card, .cvx-proj, .fl-deal-card, .fl-pack-card, .nx-feat, .nx-price-card, .cvx-x-slide, .cvx-stat, .cvx-led-console'
       );
 
       cards.forEach(function(card) {
@@ -9512,8 +9988,8 @@ body.theme-light .rev-fgroup select option {
           var y = e.clientY - bounds.top;
           var centerX = bounds.width / 2;
           var centerY = bounds.height / 2;
-          var rotateX = ((y - centerY) / centerY) * -6.5;
-          var rotateY = ((x - centerX) / centerX) * 6.5;
+          var rotateX = ((y - centerY) / centerY) * -6;
+          var rotateY = ((x - centerX) / centerX) * 6;
 
           card.style.transform = 'perspective(1000px) rotateX(' + rotateX.toFixed(2) + 'deg) rotateY(' + rotateY.toFixed(2) + 'deg) scale3d(1.018, 1.018, 1.018)';
           card.style.setProperty('--shine-x', x + 'px');
@@ -9535,7 +10011,7 @@ body.theme-light .rev-fgroup select option {
 
     function setupSpringReveals() {
       var revealTargets = document.querySelectorAll(
-        '.cvx-card, .cvx-proj, .cvx-stat, .fl-deal-card, .fl-pack-card, .nx-feat, .nx-price-card, .cvx-head, .cvx-x-feed-box, .cvx-faq-item, .rev-card'
+        '.cvx-card, .cvx-proj, .cvx-stat, .fl-deal-card, .fl-pack-card, .nx-feat, .nx-price-card, .cvx-head, .cvx-x-feed-box, .cvx-faq-item, .rev-card, .cvx-led-console'
       );
 
       revealTargets.forEach(function(el, i) {
@@ -9637,10 +10113,160 @@ body.theme-light .rev-fgroup select option {
       });
     }
 
+    // ⚡ 24-CHANNEL HARDWARE LED EQUALIZER SYSTEM
+    function setupLedEqualizer() {
+      var grid = document.getElementById('cvxLedBarsGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      var cols = [];
+      var numCols = window.innerWidth < 640 ? 14 : 24;
+      var numSegs = 8;
+
+      for (var i = 0; i < numCols; i++) {
+        var col = document.createElement('div');
+        col.className = 'cvx-led-col';
+        var segs = [];
+        for (var s = 0; s < numSegs; s++) {
+          var seg = document.createElement('div');
+          seg.className = 'cvx-led-seg';
+          if (s < 4) seg.classList.add('lv-green');
+          else if (s < 6) seg.classList.add('lv-amber');
+          else if (s < 7) seg.classList.add('lv-cyan');
+          else seg.classList.add('lv-red');
+          col.appendChild(seg);
+          segs.push(seg);
+        }
+        grid.appendChild(col);
+        cols.push({ el: col, segs: segs, offset: Math.random() * 10 });
+      }
+
+      var mouseXRatio = -1;
+      grid.addEventListener('mousemove', function(e) {
+        var rect = grid.getBoundingClientRect();
+        mouseXRatio = (e.clientX - rect.left) / rect.width;
+      });
+      grid.addEventListener('mouseleave', function() {
+        mouseXRatio = -1;
+      });
+
+      function animateEq(time) {
+        for (var c = 0; c < cols.length; c++) {
+          var item = cols[c];
+          var colRatio = c / cols.length;
+          var wave = Math.sin(time * 0.0035 + c * 0.42 + item.offset) * 2.2 +
+                     Math.cos(time * 0.0055 + c * 0.25) * 1.5 + 4.2;
+
+          // Interactive mouse boost
+          if (mouseXRatio >= 0) {
+            var dist = Math.abs(colRatio - mouseXRatio);
+            if (dist < 0.22) {
+              wave += (1 - dist / 0.22) * 2.8;
+            }
+          }
+
+          var activeHeight = Math.min(numSegs, Math.max(1, Math.round(wave)));
+
+          for (var s = 0; s < numSegs; s++) {
+            if (s < activeHeight) {
+              item.segs[s].classList.add('lit');
+            } else {
+              item.segs[s].classList.remove('lit');
+            }
+          }
+        }
+        requestAnimationFrame(animateEq);
+      }
+      requestAnimationFrame(animateEq);
+    }
+
+    // ⚡ INTERACTIVE AMBIENT LED SPOTLIGHT & CLICK DIODE PARTICLES
+    function setupLedSpotlightAndSparks() {
+      var spotlight = document.getElementById('cvxLedSpotlight');
+      if (!spotlight) {
+        spotlight = document.createElement('div');
+        spotlight.id = 'cvxLedSpotlight';
+        document.body.appendChild(spotlight);
+      }
+
+      var curX = -500, curY = -500;
+      var targetX = -500, targetY = -500;
+
+      window.addEventListener('mousemove', function(e) {
+        targetX = e.clientX;
+        targetY = e.clientY;
+      });
+
+      function loopSpotlight() {
+        curX += (targetX - curX) * 0.15;
+        curY += (targetY - curY) * 0.15;
+        spotlight.style.left = curX.toFixed(1) + 'px';
+        spotlight.style.top = curY.toFixed(1) + 'px';
+        requestAnimationFrame(loopSpotlight);
+      }
+      requestAnimationFrame(loopSpotlight);
+
+      // Click Sparks Generator
+      var sparkColors = ['#00ff9c', '#00e5ff', '#ffbe1a', '#ff3366', '#ffffff'];
+      document.addEventListener('click', function(e) {
+        var count = 12;
+        for (var i = 0; i < count; i++) {
+          var spark = document.createElement('div');
+          spark.className = 'cvx-led-spark';
+          var color = sparkColors[Math.floor(Math.random() * sparkColors.length)];
+          spark.style.backgroundColor = color;
+          spark.style.color = color;
+          spark.style.left = e.clientX + 'px';
+          spark.style.top = e.clientY + 'px';
+
+          var angle = Math.random() * Math.PI * 2;
+          var speed = Math.random() * 4.5 + 2;
+          var vx = Math.cos(angle) * speed;
+          var vy = Math.sin(angle) * speed;
+
+          document.body.appendChild(spark);
+          animateSpark(spark, e.clientX, e.clientY, vx, vy, 1);
+        }
+      });
+
+      function animateSpark(el, x, y, vx, vy, opacity) {
+        var start = performance.now();
+        var duration = 550;
+
+        function step(now) {
+          var elapsed = now - start;
+          var p = elapsed / duration;
+          if (p >= 1) {
+            if (el.parentNode) el.parentNode.removeChild(el);
+            return;
+          }
+          x += vx;
+          y += vy + 0.12; // mild gravity
+          vx *= 0.95;
+          vy *= 0.95;
+          var op = (1 - p);
+          el.style.left = x.toFixed(1) + 'px';
+          el.style.top = y.toFixed(1) + 'px';
+          el.style.opacity = op.toFixed(2);
+          el.style.transform = 'scale(' + (1 - p * 0.4).toFixed(2) + ')';
+          requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+    }
+
     function applyVisualEnhancements() {
+      // Real ARGB LED Border Tracers on key cards
+      var ledCards = document.querySelectorAll(
+        '.cvx-avatar, .fl-deal-card, .fl-pack-card, .nx-price-card, .cvx-stat, .cvx-proj, .cvx-led-console'
+      );
+      ledCards.forEach(function(el) {
+        el.classList.add('cvx-led-border');
+      });
+
       // Magic rotating beam on featured hero/offers
       var beamTargets = document.querySelectorAll(
-        '.cvx-avatar, .fl-deal-card:first-child, .fl-pack-card.featured, .nx-price-card.popular'
+        '.fl-deal-card:first-child, .fl-pack-card.featured, .nx-price-card.popular'
       );
       beamTargets.forEach(function(el) {
         el.classList.add('cvx-magic-beam');
@@ -9664,6 +10290,8 @@ body.theme-light .rev-fgroup select option {
       setupSpringReveals();
       setupNumberCounters();
       setupMagneticButtons();
+      setupLedEqualizer();
+      setupLedSpotlightAndSparks();
       applyVisualEnhancements();
     }
 
