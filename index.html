@@ -1249,6 +1249,70 @@ html[dir="rtl"] .cvx-lb-close{right:auto;left:0}
   100%{box-shadow:0 8px 30px rgba(0,240,255,0.5), 0 0 20px rgba(0,136,204,0.4);}
 }
 
+/* Alternative VIP Channels */
+.cvx-alt-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:8px 14px;
+  border-radius:10px;
+  font-size:12px;
+  font-weight:600;
+  text-decoration:none;
+  color:#dbe8fa !important;
+  background:rgba(10,18,30,0.85);
+  border:1px solid rgba(34,53,82,0.8);
+  transition:all .2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing:border-box;
+}
+.cvx-alt-btn svg{
+  width:15px;
+  height:15px;
+  fill:currentColor;
+  flex-shrink:0;
+  transition:transform .2s ease;
+}
+.cvx-alt-btn:hover{
+  transform:translateY(-2px);
+  color:#ffffff !important;
+}
+.cvx-alt-btn:hover svg{
+  transform:scale(1.15);
+}
+.cvx-alt-btn.cvx-alt-wa:hover{
+  border-color:#25d366;
+  background:rgba(37,211,102,0.12);
+  box-shadow:0 0 16px rgba(37,211,102,0.3);
+  color:#25d366 !important;
+}
+.cvx-alt-btn.cvx-alt-wa:hover svg{
+  fill:#25d366;
+}
+.cvx-alt-btn.cvx-alt-x:hover{
+  border-color:#ffffff;
+  background:rgba(255,255,255,0.1);
+  box-shadow:0 0 16px rgba(255,255,255,0.25);
+  color:#ffffff !important;
+}
+.cvx-alt-btn.cvx-alt-ig:hover{
+  border-color:#e1306c;
+  background:rgba(225,48,108,0.12);
+  box-shadow:0 0 16px rgba(225,48,108,0.3);
+  color:#ff5f9e !important;
+}
+.cvx-alt-btn.cvx-alt-ig:hover svg{
+  fill:#ff5f9e;
+}
+.cvx-alt-btn.cvx-alt-mail:hover{
+  border-color:var(--neon-2);
+  background:rgba(18,214,255,0.12);
+  box-shadow:0 0 16px rgba(18,214,255,0.3);
+  color:var(--neon-2) !important;
+}
+.cvx-alt-btn.cvx-alt-mail:hover svg{
+  fill:var(--neon-2);
+}
+
 /* Custom Select in Cyber Input Wrap */
 .cvx-input-wrap select{
   width:100%;
@@ -4174,6 +4238,7 @@ body.theme-light .faq-icon {
 <div class="cvx-socials">
 <a class="cvx-soc" href="mailto:saifeddine.jskyst15@gmail.com"><svg viewBox="0 0 24 24"><path d="M12 13.065 2.4 6.6V18h19.2V6.6L12 13.065ZM12 10.5 21.6 4H2.4L12 10.5Z"></path></svg> Email</a>
 <a class="cvx-soc" href="https://t.me/HNTSB15" rel="noopener" target="_blank"><svg viewBox="0 0 24 24"><path d="M21.9 4.3 18.7 19c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.7 13 1.9 11.5c-1-.3-1-1 .2-1.5l18.4-7.1c.9-.3 1.6.2 1.4 1.4Z"></path></svg> Telegram</a>
+<a class="cvx-soc" href="https://wa.me/213697114385" rel="noopener" target="_blank"><svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.53c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.24-.75-.67-1.25-1.49-1.4-1.74-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.17-.48-.29z"/></svg> WhatsApp</a>
 <a class="cvx-soc" href="https://github.com/HNTSB15" rel="noopener" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 1a11 11 0 0 0-3.5 21.4c.6.1.8-.2.8-.5v-2c-3 .7-3.7-1.3-3.7-1.3-.5-1.3-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.4-.3-5-1.2-5-5.4 0-1.2.4-2.2 1.1-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.4 10.4 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.1 1.8 1.1 3 0 4.2-2.6 5.1-5 5.4.4.3.8 1 .8 2.1v3c0 .3.2.6.8.5A11 11 0 0 0 12 1Z"></path></svg> GitHub</a>
 <a class="cvx-soc" href="https://x.com/seifeddin06" rel="noopener" target="_blank"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg> X (Twitter)</a>
 <a class="cvx-soc" href="https://www.instagram.com/oo._.saifeddine._.oo/" rel="noopener" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg> Instagram</a>
@@ -4711,6 +4776,10 @@ body.theme-light .faq-icon {
       // Direct Telegram Deep Link to Saifeddine (@HNTSB15)
       var directTgUser = cfg.directUsername || 'HNTSB15';
       var tgUrl = 'https://t.me/' + directTgUser + '?text=' + encodeURIComponent(leadText);
+      var waUrl = 'https://wa.me/213697114385?text=' + encodeURIComponent(leadText);
+      var xUrl = 'https://x.com/seifeddin06';
+      var igUrl = 'https://www.instagram.com/oo._.saifeddine._.oo/';
+      var mailUrl = 'mailto:saifeddine.jskyst15@gmail.com?subject=' + encodeURIComponent('Trading Inquiry: ' + name + ' (' + topic + ')') + '&body=' + encodeURIComponent(leadText);
 
       // Safe HTML escaping helper
       function escapeHtml(str) {
@@ -4736,13 +4805,34 @@ body.theme-light .faq-icon {
               (isAr ? '✓ شكراً لك، ' + escapeHtml(name) + '! تم استلام استفسارك بنجاح' : '✓ Thank you, ' + escapeHtml(name) + '! Inquiry Dispatched') +
             '</h4>' +
             '<p style="margin:0;font-size:13.5px;color:var(--muted);max-width:540px;line-height:1.6;">' +
-              (isAr ? 'تم تسجيل رسالتك في النظام وتجهيز ملف طلبك. لبدء المحادثة الفورية الآن وتسريع الرد مباشرة مع سيف الدين عبر هاتفك في تيليجرام:' : 'Your message has been processed securely. For instant priority response and to chat directly with Saifeddine right now on Telegram:') +
+              (isAr ? 'تم تسجيل رسالتك وإشعار سيف الدين في هاتفه فوراً. لمتابعة المحادثة السريعة الآن، اختر منصتك المفضلة للتواصل:' : 'Your message has been logged and Saifeddine was notified instantly on his phone. To continue the conversation now, choose your preferred VIP channel:') +
             '</p>' +
             '<a href="' + tgUrl + '" target="_blank" rel="noopener" class="cvx-tg-lead-btn" id="cvxTgDirectLeadBtn">' +
               '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>' +
               '<span>' + (isAr ? '⚡ متابعة المحادثة مباشرة مع سيف الدين عبر تيليجرام ↗' : '⚡ Continue Live Chat with Saifeddine on Telegram ↗') + '</span>' +
             '</a>' +
-            '<div style="font-size:12px;color:var(--muted);display:inline-flex;align-items:center;gap:6px;font-family:\'JetBrains Mono\',monospace;margin-top:2px;">' +
+            '<div class="cvx-fb-alt-channels" style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:8px;width:100%;max-width:540px;">' +
+              '<span style="font-size:11.5px;color:var(--muted);font-family:\'JetBrains Mono\',monospace;width:100%;display:block;margin-bottom:2px;">' +
+                (isAr ? '// أو تابع المحادثة مباشرة عبر منصتك المفضلة:' : '// Or connect directly via your preferred platform:') +
+              '</span>' +
+              '<a href="' + waUrl + '" target="_blank" rel="noopener" class="cvx-alt-btn cvx-alt-wa">' +
+                '<svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.53c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.24-.75-.67-1.25-1.49-1.4-1.74-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.17-.48-.29z"/></svg>' +
+                '<span>WhatsApp</span>' +
+              '</a>' +
+              '<a href="' + xUrl + '" target="_blank" rel="noopener" class="cvx-alt-btn cvx-alt-x">' +
+                '<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>' +
+                '<span>X (Twitter)</span>' +
+              '</a>' +
+              '<a href="' + igUrl + '" target="_blank" rel="noopener" class="cvx-alt-btn cvx-alt-ig">' +
+                '<svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>' +
+                '<span>Instagram</span>' +
+              '</a>' +
+              '<a href="' + mailUrl + '" class="cvx-alt-btn cvx-alt-mail">' +
+                '<svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>' +
+                '<span>Email</span>' +
+              '</a>' +
+            '</div>' +
+            '<div style="font-size:12px;color:var(--muted);display:inline-flex;align-items:center;gap:6px;font-family:\'JetBrains Mono\',monospace;margin-top:6px;">' +
               '<span style="width:7px;height:7px;border-radius:50%;background:var(--neon);display:inline-block;box-shadow:0 0 8px var(--neon);"></span> @' + directTgUser + ' · Verified Direct Portfolio Access' +
             '</div>' +
           '</div>';
