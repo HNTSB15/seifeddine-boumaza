@@ -4689,17 +4689,18 @@ body.theme-light .cvx-stat::after {
     inset 0 0 15px rgba(0, 229, 255, 0.15) !important;
 }
 
-/* 2. ARGB NeoPixel LED Ring for Avatar (.cvx-avatar) */
+/* 2. ARGB NeoPixel LED Ring for Avatar (.cvx-avatar) - Razor-thin line */
 .cvx-avatar {
+  padding: 1.5px !important;
   position: relative !important;
-  box-shadow: 0 0 35px rgba(0, 255, 156, 0.45), 0 0 70px rgba(0, 229, 255, 0.25) !important;
+  box-shadow: 0 0 24px rgba(0, 255, 156, 0.35), 0 0 45px rgba(0, 229, 255, 0.18) !important;
   transition: box-shadow 0.35s ease, transform 0.3s ease !important;
 }
 
 .cvx-avatar::before {
   content: "" !important;
   position: absolute !important;
-  inset: -3.5px !important;
+  inset: 0 !important;
   border-radius: 50% !important;
   background: conic-gradient(
     from 0deg,
@@ -4713,19 +4714,28 @@ body.theme-light .cvx-stat::after {
   ) !important;
   animation: cvxLedStreamSpin 3s linear infinite !important;
   z-index: 0 !important;
-  filter: drop-shadow(0 0 12px #00ff9c) drop-shadow(0 0 25px #00e5ff) !important;
+  filter: drop-shadow(0 0 5px #00ff9c) drop-shadow(0 0 10px rgba(0, 229, 255, 0.7)) !important;
   transition: filter 0.3s ease !important;
   will-change: transform;
 }
 
+.cvx-avatar img {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50% !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+}
+
 .cvx-avatar:hover {
-  transform: scale(1.04);
-  box-shadow: 0 0 50px rgba(0, 255, 156, 0.8), 0 0 95px rgba(0, 229, 255, 0.5) !important;
+  transform: scale(1.03);
+  box-shadow: 0 0 35px rgba(0, 255, 156, 0.6), 0 0 65px rgba(0, 229, 255, 0.35) !important;
 }
 
 .cvx-avatar:hover::before {
   animation-duration: 1.8s !important;
-  filter: drop-shadow(0 0 20px #00ff9c) drop-shadow(0 0 42px #00e5ff) brightness(1.35) !important;
+  filter: drop-shadow(0 0 8px #00ff9c) drop-shadow(0 0 18px #00e5ff) brightness(1.25) !important;
 }
 </style>
 <div class="cvx" id="cvtop">

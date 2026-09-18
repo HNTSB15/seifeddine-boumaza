@@ -4966,10 +4966,53 @@ body.theme-light #cvxLedSpotlight {
   box-shadow: 0 0 8px currentColor, 0 0 16px currentColor;
 }
 
-/* 14. Enhanced Glowing Ambient Mesh */
-#matrix {
-  opacity: 0.35 !important;
-  transition: opacity 0.3s ease;
+/* 15. ARGB NeoPixel LED Ring for Avatar (.cvx-avatar) - Razor-thin line */
+.cvx-avatar {
+  padding: 1.5px !important;
+  position: relative !important;
+  box-shadow: 0 0 24px rgba(0, 255, 156, 0.35), 0 0 45px rgba(0, 229, 255, 0.18) !important;
+  transition: box-shadow 0.35s ease, transform 0.3s ease !important;
+}
+
+.cvx-avatar::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: 50% !important;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 260deg,
+    #00ff9c 305deg,
+    #ffffff 330deg,
+    #00e5ff 350deg,
+    #c042ff 358deg,
+    transparent 360deg
+  ) !important;
+  animation: cvxLedStreamSpin 3s linear infinite !important;
+  z-index: 0 !important;
+  filter: drop-shadow(0 0 5px #00ff9c) drop-shadow(0 0 10px rgba(0, 229, 255, 0.7)) !important;
+  transition: filter 0.3s ease !important;
+  will-change: transform;
+}
+
+.cvx-avatar img {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50% !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+}
+
+.cvx-avatar:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 35px rgba(0, 255, 156, 0.6), 0 0 65px rgba(0, 229, 255, 0.35) !important;
+}
+
+.cvx-avatar:hover::before {
+  animation-duration: 1.8s !important;
+  filter: drop-shadow(0 0 8px #00ff9c) drop-shadow(0 0 18px #00e5ff) brightness(1.25) !important;
 }
 </style>
 
