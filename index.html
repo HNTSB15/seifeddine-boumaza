@@ -7751,6 +7751,42 @@ body.theme-light .payouts-more-btn.active {
 
   window.renderPayouts('all');
 
+  // Load Dynamic Payouts from Supabase (Table: payout_records)
+  function loadLivePayouts() {
+    if (!sdb || typeof sdb.from !== 'function') return;
+    try {
+      sdb.from('payout_records').select('*').eq('is_active', true).order('display_order', { ascending: true }).order('id', { ascending: false }).then(function(res) {
+        var list = (res && res.data && res.data.length) ? res.data : [];
+        if (!list.length) return;
+        var dynamicPayouts = list.map(function(p) {
+          return {
+            id: p.id,
+            type: p.type || 'double',
+            amount: p.amount,
+            date: p.date,
+            dateAr: p.date_ar || p.date,
+            account: p.account || 'Exness Real',
+            invoice: p.invoice || '',
+            binanceOrder: p.binance_order || '',
+            binanceTime: p.binance_time || '',
+            speed: p.speed || '~1-2 Min',
+            speedAr: p.speed_ar || 'فوري',
+            exnessImg: p.exness_img || '',
+            binanceImg: p.binance_img || ''
+          };
+        });
+        var seenInvoices = {};
+        dynamicPayouts.forEach(function(p) { if (p.invoice) seenInvoices[p.invoice] = true; });
+        var remaining = cvxPayoutsData.filter(function(p) { return !p.invoice || !seenInvoices[p.invoice]; });
+        cvxPayoutsData = dynamicPayouts.concat(remaining);
+        if (typeof window.renderPayouts === 'function') {
+          window.renderPayouts();
+        }
+      }).catch(function(){});
+    } catch(err){}
+  }
+  loadLivePayouts();
+
   // ==========================================================================
   // ⭐ CLIENT REVIEWS & TESTIMONIALS CONTROLLER (Supabase + Telegram Bot Bridge)
   // ==========================================================================
