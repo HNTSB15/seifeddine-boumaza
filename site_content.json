@@ -47,37 +47,76 @@
     },
     "flash_deals": {
       "deal_1": {
-        "title": "Limited-Time Mega Deal",
         "amount": 80000,
         "price": 100,
-        "discount_badge": "80% OFF",
-        "validity": "24H VALIDITY",
-        "countdown": "71:12:44"
+        "discount_badge": "80% OFF"
       },
       "deal_2": {
-        "title": "Starter Flash Package",
         "amount": 8000,
         "price": 30,
-        "discount_badge": "30% OFF",
-        "validity": "24H VALIDITY",
-        "countdown": "71:12:44"
+        "discount_badge": "30% OFF"
       }
     },
     "flash_packages": {
       "tier_24h": [
-        { "id": "pack_24h_1k", "amount": 1000, "price": 15, "duration": "24h" },
-        { "id": "pack_24h_100k", "amount": 100000, "price": 120, "duration": "24h" },
-        { "id": "pack_24h_1m", "amount": 1000000, "price": 650, "duration": "24h" }
+        {
+          "id": "pack_24h_1k",
+          "amount": 1000,
+          "price": 15,
+          "duration": "24h"
+        },
+        {
+          "id": "pack_24h_100k",
+          "amount": 100000,
+          "price": 120,
+          "duration": "24h"
+        },
+        {
+          "id": "pack_24h_1m",
+          "amount": 1000000,
+          "price": 650,
+          "duration": "24h"
+        }
       ],
       "tier_3d": [
-        { "id": "pack_3d_1k", "amount": 1000, "price": 25, "duration": "3d" },
-        { "id": "pack_3d_100k", "amount": 100000, "price": 180, "duration": "3d" },
-        { "id": "pack_3d_1m", "amount": 1000000, "price": 950, "duration": "3d" }
+        {
+          "id": "pack_3d_1k",
+          "amount": 1000,
+          "price": 25,
+          "duration": "3d"
+        },
+        {
+          "id": "pack_3d_100k",
+          "amount": 100000,
+          "price": 180,
+          "duration": "3d"
+        },
+        {
+          "id": "pack_3d_1m",
+          "amount": 1000000,
+          "price": 950,
+          "duration": "3d"
+        }
       ],
       "tier_1w": [
-        { "id": "pack_1w_1k", "amount": 1000, "price": 45, "duration": "1w" },
-        { "id": "pack_1w_100k", "amount": 100000, "price": 280, "duration": "1w" },
-        { "id": "pack_1w_1m", "amount": 1000000, "price": 1400, "duration": "1w" }
+        {
+          "id": "pack_1w_1k",
+          "amount": 1000,
+          "price": 45,
+          "duration": "1w"
+        },
+        {
+          "id": "pack_1w_100k",
+          "amount": 100000,
+          "price": 280,
+          "duration": "1w"
+        },
+        {
+          "id": "pack_1w_1m",
+          "amount": 1000000,
+          "price": 1400,
+          "duration": "1w"
+        }
       ]
     }
   },
@@ -91,7 +130,13 @@
       "split": "50/50",
       "date": "Sep 18, 2026",
       "desc": "Live verified MT5 video trade execution on Gold (XAUUSD). Deposit: $68 -> Net Profit: +$6,300. Profit split: 50/50.",
-      "tags": ["#Forex", "#XAUUSD", "#Gold", "#Trading", "#ManagedAccount"],
+      "tags": [
+        "#Forex",
+        "#XAUUSD",
+        "#Gold",
+        "#Trading",
+        "#ManagedAccount"
+      ],
       "tweet_url": "https://x.com/seifeddin06/status/2100985355927179755",
       "badge": "LIVE VIDEO PROOF 🎬"
     },
@@ -104,7 +149,12 @@
       "split": "100% Client",
       "date": "Sep 16, 2026",
       "desc": "Precision breakout entries sent to VIP signal subscribers. Complete take-profit hit with zero drawdown.",
-      "tags": ["#Signals", "#ForexSignals", "#AUDJPY", "#VIPChannel"],
+      "tags": [
+        "#Signals",
+        "#ForexSignals",
+        "#AUDJPY",
+        "#VIPChannel"
+      ],
       "tweet_url": "https://x.com/seifeddin06/status/2100553514652983364",
       "badge": "VIP SIGNALS TP HIT 🎯"
     },
@@ -117,7 +167,12 @@
       "split": "50/50",
       "date": "Sep 12, 2026",
       "desc": "Full weekly statement recap across 14 managed accounts. Audited investor withdrawals processed via USDT.",
-      "tags": ["#PnL", "#StatementProof", "#Withdrawal", "#Exness"],
+      "tags": [
+        "#PnL",
+        "#StatementProof",
+        "#Withdrawal",
+        "#Exness"
+      ],
       "tweet_url": "https://x.com/seifeddin06",
       "badge": "VERIFIED STATEMENT 📊"
     }
@@ -224,9 +279,8 @@
   ],
   "announcement": {
     "enabled": false,
+    "badge": "NEWS",
     "text_ar": "🟢 جلسة التداول مباشرة: تم فتح 5 مقاعد جديدة لإدارة المحافظ لشهر سبتمبر. تواصل عبر تيليجرام.",
-    "text_en": "🟢 Live Trading Session: 5 new managed account slots opened for September. Contact via Telegram.",
-    "badge": "NEWS"
+    "text_en": "🟢 Live Trading Session: 5 new managed account slots opened for September. Contact via Telegram."
   }
 }
-
