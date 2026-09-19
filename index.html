@@ -6364,26 +6364,26 @@ body.theme-light .payouts-more-btn.active {
   <div class="cvx-head">
     <div class="kick" id="payoutKick" style="color:var(--neon)">// AUDITED BROKER LIQUIDITY &amp; CASHOUTS</div>
     <h2><span id="payoutTitle"># Verified <span class="h">Exness Cash Payouts</span></span></h2>
-    <p id="payoutSub">Realized cash withdrawals processed from Exness Real trading accounts and settled to BinancePay, cross-verified with official timestamped Binance credit receipts.</p>
+    <p id="payoutSub">A selected sample of periodic verified cash withdrawals from managed Exness Real accounts to BinancePay, demonstrating transparent profit distributions.</p>
   </div>
 
   <!-- Trust Bar & Institutional Metrics -->
   <div class="payouts-trust-bar">
     <div class="payout-metric-box">
-      <div class="payout-metric-val" id="payoutStatTotVal">+$16,000+</div>
-      <div class="payout-metric-lbl" id="payoutStatTot">Total Realized Payouts</div>
+      <div class="payout-metric-val" id="payoutStatTotVal">$500 – $5,000+</div>
+      <div class="payout-metric-lbl" id="payoutStatTot">Typical Withdrawal Range</div>
     </div>
     <div class="payout-metric-box gold">
-      <div class="payout-metric-val">100%</div>
-      <div class="payout-metric-lbl" id="payoutStatRate">Instant Settlement Rate</div>
+      <div class="payout-metric-val" id="payoutStatRateVal">50% / 50%</div>
+      <div class="payout-metric-lbl" id="payoutStatRate">Profit Split Model</div>
     </div>
     <div class="payout-metric-box cyan">
-      <div class="payout-metric-val">6 Accounts</div>
-      <div class="payout-metric-lbl" id="payoutStatAccs">Multi-Portfolio Extractions</div>
+      <div class="payout-metric-val" id="payoutStatAccsVal">Periodic</div>
+      <div class="payout-metric-lbl" id="payoutStatAccs">Profit Distributions</div>
     </div>
     <div class="payout-metric-box">
-      <div class="payout-metric-val">~1-2 Min</div>
-      <div class="payout-metric-lbl" id="payoutStatSpeed">Exness ➔ Binance Delivery</div>
+      <div class="payout-metric-val" id="payoutStatSpeedVal">BinancePay</div>
+      <div class="payout-metric-lbl" id="payoutStatSpeed">Settlement Channel (USDT)</div>
     </div>
   </div>
 
@@ -9240,11 +9240,15 @@ body.theme-light .payouts-more-btn.active {
         // Payouts & Performance Section
         'payout_kick': '// التدقيق والسيولة النقدية الحقيقية',
         'payout_title': '# سحوبات الأرباح <span class="h">الموثقة من Exness</span>',
-        'payout_sub': 'سحوبات نقدية حقيقية تم سحبها من محافظ وحسابات التداول المدارة لدى Exness إلى BinancePay، مطابقة بالدقيقة والثانية مع إيميلات الاستلام الرسمية من بينانس.',
-        'payout_stat_tot': 'إجمالي السحوبات الموثقة',
-        'payout_stat_rate': 'نسبة نجاح التسوية الفورية',
-        'payout_stat_accs': 'حسابات تداول مدارة',
-        'payout_stat_speed': 'سرعة التحويل لـ Binance',
+        'payout_sub': 'عينة مختارة من السحوبات الدورية الموثقة من حسابات تداول حقيقية في Exness إلى BinancePay لإثبات الشفافية وتوزيع الأرباح بنظام إدارة المحافظ.',
+        'payout_stat_tot_val': '$500 – $5,000+',
+        'payout_stat_tot': 'نطاق مبالغ السحب الدورية',
+        'payout_stat_rate_val': '50% / 50%',
+        'payout_stat_rate': 'نظام تقاسم الأرباح',
+        'payout_stat_accs_val': 'سحب دوري',
+        'payout_stat_accs': 'توزيع الأرباح بانتظام',
+        'payout_stat_speed_val': 'BinancePay',
+        'payout_stat_speed': 'وسيلة الاستلام المعتمدة (USDT)',
         'payout_filter_all': 'جميع السحوبات (10)',
         'payout_filter_double': '⚡ توثيق مزدوج (Exness + إيميل بينانس) (6)',
         'payout_filter_ledger': '💼 سجل Exness المباشر (4)',
@@ -9648,11 +9652,15 @@ body.theme-light .payouts-more-btn.active {
         // Payouts & Performance Section
         'payout_kick': '// AUDITED BROKER LIQUIDITY & CASHOUTS',
         'payout_title': '# Verified <span class="h">Exness Cash Payouts</span>',
-        'payout_sub': 'Realized cash withdrawals processed from Exness Real trading accounts and settled to BinancePay, cross-verified with official timestamped Binance credit receipts.',
-        'payout_stat_tot': 'Total Realized Payouts',
-        'payout_stat_rate': 'Instant Settlement Rate',
-        'payout_stat_accs': 'Multi-Portfolio Extractions',
-        'payout_stat_speed': 'Exness ➔ Binance Delivery',
+        'payout_sub': 'A selected sample of periodic verified cash withdrawals from managed Exness Real accounts to BinancePay, demonstrating transparent profit distributions.',
+        'payout_stat_tot_val': '$500 – $5,000+',
+        'payout_stat_tot': 'Typical Withdrawal Range',
+        'payout_stat_rate_val': '50% / 50%',
+        'payout_stat_rate': 'Profit Split Model',
+        'payout_stat_accs_val': 'Periodic',
+        'payout_stat_accs': 'Profit Distributions',
+        'payout_stat_speed_val': 'BinancePay',
+        'payout_stat_speed': 'Settlement Channel (USDT)',
         'payout_filter_all': 'All Payouts (10)',
         'payout_filter_double': '⚡ Double-Verified (Exness + Binance Email) (6)',
         'payout_filter_ledger': '💼 Exness Direct Ledger (4)',
@@ -10251,12 +10259,20 @@ body.theme-light .payouts-more-btn.active {
       if (pTitle && t['payout_title']) pTitle.innerHTML = t['payout_title'];
       var pSub = document.getElementById('payoutSub');
       if (pSub && t['payout_sub']) pSub.textContent = t['payout_sub'];
+      var pTotVal = document.getElementById('payoutStatTotVal');
+      if (pTotVal && t['payout_stat_tot_val']) pTotVal.textContent = t['payout_stat_tot_val'];
       var pTot = document.getElementById('payoutStatTot');
       if (pTot && t['payout_stat_tot']) pTot.textContent = t['payout_stat_tot'];
+      var pRateVal = document.getElementById('payoutStatRateVal');
+      if (pRateVal && t['payout_stat_rate_val']) pRateVal.textContent = t['payout_stat_rate_val'];
       var pRate = document.getElementById('payoutStatRate');
       if (pRate && t['payout_stat_rate']) pRate.textContent = t['payout_stat_rate'];
+      var pAccsVal = document.getElementById('payoutStatAccsVal');
+      if (pAccsVal && t['payout_stat_accs_val']) pAccsVal.textContent = t['payout_stat_accs_val'];
       var pAccs = document.getElementById('payoutStatAccs');
       if (pAccs && t['payout_stat_accs']) pAccs.textContent = t['payout_stat_accs'];
+      var pSpeedVal = document.getElementById('payoutStatSpeedVal');
+      if (pSpeedVal && t['payout_stat_speed_val']) pSpeedVal.textContent = t['payout_stat_speed_val'];
       var pSpeed = document.getElementById('payoutStatSpeed');
       if (pSpeed && t['payout_stat_speed']) pSpeed.textContent = t['payout_stat_speed'];
       var pFAll = document.getElementById('payoutFilterAll');
