@@ -122,6 +122,20 @@
   },
   "trades": [
     {
+      "id": "trade-1789834366155",
+      "title": "MANAGING A NEW ACCOUNT — Live Execution",
+      "pair": "XAUUSD (Gold)",
+      "deposit": "$500",
+      "profit": "+$3,200",
+      "split": "50/50",
+      "date": "Sep 19, 2026",
+      "desc": "Live verified MT5 breakout execution on Gold. Take profit hit perfectly.",
+      "tweet_url": "https://x.com/Leooweb3/status/2101239579093176596?s=20",
+      "badge": "LIVE TRADE PROOF 🎬",
+      "images": [],
+      "video_url": "https://x.com/Leooweb3/status/2101239579093176596?s=20"
+    },
+    {
       "id": "trade-1",
       "title": "MANAGING A NEW ACCOUNT — Live Video Execution",
       "pair": "XAUUSD (Gold)",
