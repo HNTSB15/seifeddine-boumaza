@@ -5520,6 +5520,67 @@ body.theme-light .payout-match-banner {
   color: #0f172a;
 }
 
+/* Payouts Load More Button */
+.payouts-more-wrap {
+  text-align: center;
+  margin-top: 32px;
+  position: relative;
+  z-index: 2;
+}
+.payouts-more-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(0, 255, 156, 0.06);
+  border: 1px solid rgba(0, 255, 156, 0.35);
+  color: var(--neon);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 13px 34px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(0, 255, 156, 0.12);
+}
+.payouts-more-btn:hover {
+  background: rgba(0, 255, 156, 0.16);
+  border-color: var(--neon);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 255, 156, 0.25);
+}
+.payouts-more-btn .more-icon {
+  font-size: 14px;
+  transition: transform 0.25s ease;
+}
+.payouts-more-btn.active {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--muted);
+  box-shadow: none;
+}
+.payouts-more-btn.active:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+body.theme-light .payouts-more-btn {
+  background: #e6f9f0;
+  border-color: #a7f3d0;
+  color: #00995c;
+  box-shadow: 0 4px 16px rgba(0, 153, 92, 0.1);
+}
+body.theme-light .payouts-more-btn:hover {
+  background: #d1fae5;
+  border-color: #00995c;
+}
+body.theme-light .payouts-more-btn.active {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #64748b;
+}
+
 /* Responsive */
 @media(max-width: 980px) {
   .payouts-trust-bar {
@@ -6273,6 +6334,9 @@ body.theme-light .payout-match-banner {
 
   <!-- Payouts Grid (Rendered dynamically by JavaScript) -->
   <div class="payouts-grid" id="payoutsContainer"></div>
+
+  <!-- Sleek Load More Button Container -->
+  <div class="payouts-more-wrap" id="payoutsMoreWrap" style="display:none"></div>
 </div>
 </section>
 
@@ -7284,6 +7348,9 @@ body.theme-light .payout-match-banner {
 
   // ==========================================================================
   // 💵 VERIFIED EXNESS PAYOUTS & PERFORMANCE CONTROLLER
+  // 💡 لإضافة إثبات سحب جديد مستقبلاً / HOW TO ADD A NEW PAYOUT PROOF:
+  //    أضف دائماً أي إثبات سحب جديد في بداية هذه المصفوفة (في الأعلى عند Index 0)
+  //    بحيث يظهر تلقائياً كأول سحب معتمد في الموقع وفي قائمة الـ Top 6!
   // ==========================================================================
   var cvxPayoutsData = [
     {
@@ -7438,15 +7505,44 @@ body.theme-light .payout-match-banner {
     }
   ];
 
+  var payoutsExpanded = false;
+  var currentPayoutFilter = 'all';
+
+  window.togglePayoutsExpand = function() {
+    payoutsExpanded = !payoutsExpanded;
+    window.renderPayouts(currentPayoutFilter);
+    if (!payoutsExpanded) {
+      var payoutsEl = document.getElementById('payouts');
+      if (payoutsEl) {
+        var top = payoutsEl.getBoundingClientRect().top + window.pageYOffset - 80;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    }
+  };
+
   window.renderPayouts = function(filter) {
     var grid = document.getElementById('payoutsContainer');
     if (!grid) return;
-    filter = filter || 'all';
+    filter = filter || currentPayoutFilter || 'all';
+    currentPayoutFilter = filter;
     var isAr = (document.documentElement.getAttribute('lang') === 'ar');
 
+    // Filter items preserving original index
+    var filtered = [];
+    cvxPayoutsData.forEach(function(item, origIdx) {
+      if (filter === 'all' || item.type === filter) {
+        filtered.push({ item: item, origIdx: origIdx });
+      }
+    });
+
+    var initialLimit = 6;
+    var totalCount = filtered.length;
+    var itemsToShow = payoutsExpanded ? filtered : filtered.slice(0, initialLimit);
+
     var html = '';
-    cvxPayoutsData.forEach(function(item, idx) {
-      if (filter !== 'all' && item.type !== filter) return;
+    itemsToShow.forEach(function(entry) {
+      var item = entry.item;
+      var idx = entry.origIdx;
 
       var isDouble = (item.type === 'double');
       var badgeClass = isDouble ? 'payout-card featured-card' : 'payout-card';
@@ -7493,6 +7589,29 @@ body.theme-light .payout-match-banner {
       '</div>';
     });
     grid.innerHTML = html;
+
+    // Load More Button handling
+    var moreWrap = document.getElementById('payoutsMoreWrap');
+    if (moreWrap) {
+      if (totalCount > initialLimit) {
+        moreWrap.style.display = 'block';
+        var remaining = totalCount - initialLimit;
+        if (!payoutsExpanded) {
+          moreWrap.innerHTML = '<button type="button" class="payouts-more-btn" onclick="togglePayoutsExpand()">' +
+            '<span class="more-icon">↓</span>' +
+            '<span class="more-txt">' + (isAr ? ('عرض باقي السحوبات المعتمدة (+' + remaining + ')') : ('Show All Audited Payouts (+' + remaining + ')')) + '</span>' +
+          '</button>';
+        } else {
+          moreWrap.innerHTML = '<button type="button" class="payouts-more-btn active" onclick="togglePayoutsExpand()">' +
+            '<span class="more-icon">↑</span>' +
+            '<span class="more-txt">' + (isAr ? 'عرض أقل' : 'Show Less') + '</span>' +
+          '</button>';
+        }
+      } else {
+        moreWrap.style.display = 'none';
+        moreWrap.innerHTML = '';
+      }
+    }
   };
 
   window.filterPayouts = function(filter, btn) {
@@ -7500,7 +7619,9 @@ body.theme-light .payout-match-banner {
       b.classList.remove('active');
     });
     if (btn) btn.classList.add('active');
-    window.renderPayouts(filter);
+    currentPayoutFilter = filter || 'all';
+    payoutsExpanded = false;
+    window.renderPayouts(currentPayoutFilter);
   };
 
   window.openPayoutProof = function(idx) {
