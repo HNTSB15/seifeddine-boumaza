@@ -1202,15 +1202,22 @@
     var url = "https://api.github.com/repos/" + repo + "/contents/" + filePath;
 
     // 1. Get current file SHA
+    var authHeader = token.startsWith("ghp_") ? ("token " + token) : ("Bearer " + token);
     fetch(url + "?ref=" + branch, {
       headers: {
-        "Authorization": "token " + token,
+        "Authorization": authHeader,
         "Accept": "application/vnd.github.v3+json"
       }
     })
     .then(function(res){
       if (res.status === 404) return { sha: null };
-      if (!res.ok) throw new Error("فشل الاتصال بـ GitHub: تأكد من صحة الرمز (Status: " + res.status + ")");
+      if (!res.ok) {
+        return res.json().then(function(err){
+          throw new Error(err.message || ("Status: " + res.status));
+        }).catch(function(e){
+          throw new Error(e.message || ("Status: " + res.status));
+        });
+      }
       return res.json();
     })
     .then(function(fileInfo){
@@ -1234,7 +1241,7 @@
       return fetch(url, {
         method: "PUT",
         headers: {
-          "Authorization": "token " + token,
+          "Authorization": authHeader,
           "Accept": "application/vnd.github.v3+json",
           "Content-Type": "application/json"
         },
@@ -1242,7 +1249,17 @@
       });
     })
     .then(function(putRes){
-      if (!putRes.ok) throw new Error("خطأ أثناء حفظ الملف: " + putRes.status);
+      if (!putRes.ok) {
+        return putRes.json().then(function(errData){
+          var errMsg = (errData && errData.message) ? errData.message : ("HTTP " + putRes.status);
+          if (putRes.status === 403) {
+            errMsg += " (الرمز لا يمتلك صلاحية الكتابة repo write - تأكد من تفعيل صلاحية repo أو Contents: Read and write)";
+          }
+          throw new Error(errMsg);
+        }).catch(function(e){
+          throw new Error(e.message || ("خطأ " + putRes.status));
+        });
+      }
       return putRes.json();
     })
     .then(function(success){
@@ -1253,7 +1270,7 @@
     .catch(function(err){
       btn.disabled = false;
       btn.innerHTML = origText;
-      alert("حدث خطأ أثناء النشر: " + err.message);
+      alert("حدث خطأ أثناء النشر:\n" + err.message);
     });
   }
 
