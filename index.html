@@ -140,7 +140,8 @@ h1 .grad{background:var(--rgb);background-size:200% auto;-webkit-background-clip
 .btn-ghost{border:1px solid var(--line);color:var(--text);background:rgba(13,20,32,.5)}
 .btn-ghost:hover{border-color:var(--neon);box-shadow:var(--glow)}
 .scroll-hint{margin-top:56px;color:var(--muted);font-size:12px;letter-spacing:2px;text-transform:uppercase;animation:floaty 2.2s ease-in-out infinite}
-section{padding:70px 0;position:relative;z-index:1;scroll-margin-top:78px}
+section{padding:70px 0;position:relative;z-index:1;scroll-margin-top:80px}
+section, .cvx-sec, .cvx-form-card, #contact, #contactCard, #contactForm {scroll-margin-top:85px !important}
 /* ===== sticky nav ===== */
 .nav{position:sticky;top:0;z-index:150;background:rgba(5,7,13,.72);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .nav-in{max-width:1100px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;gap:14px}
@@ -5118,7 +5119,7 @@ body.theme-light .cvx-market-console-title {
 <a href="#experience">Experience</a>
 <a href="#reviews" id="navReviewsLink" style="color:var(--gold);font-weight:700">Reviews ⭐</a>
 <a href="#faq" id="navFaqLink">FAQ</a>
-<a href="#contact">Contact</a>
+<a href="#contactCard">Contact</a>
 </div>
 <div class="cvx-nav-actions">
   <button class="cvx-lang-toggle" id="langToggleBtn" type="button" aria-label="Toggle language" onclick="toggleSiteLanguage()" title="تبديل اللغة · Switch Language">
@@ -5157,18 +5158,18 @@ body.theme-light .cvx-market-console-title {
       </div>
     </div>
     <div class="cvx-mob-links">
-      <a href="#cvtop" onclick="closeMobileMenu()"><span class="mono">// 00</span> Home / Top</a>
-      <a href="#about" onclick="closeMobileMenu()"><span class="mono">// 01</span> About Me</a>
-      <a href="#expertise" onclick="closeMobileMenu()"><span class="mono">// 02</span> Expertise</a>
-      <a href="#skills" onclick="closeMobileMenu()"><span class="mono">// 03</span> Skills &amp; Pairs</a>
-      <a href="#projects" onclick="closeMobileMenu()"><span class="mono">// 04</span> Trading Records</a>
-      <a href="#results" onclick="closeMobileMenu()" style="color:var(--gold)"><span class="mono">// 05</span> Live Results (X) <span class="mob-badge gold">LIVE</span></a>
-      <a href="#newsx" onclick="closeMobileMenu()" class="mob-hl-newsx"><span class="mono">// 06</span> NewsX AI Platform <span class="mob-badge">AI LIVE</span></a>
-      <a href="#flash" onclick="closeMobileMenu()" class="mob-hl-flash"><span class="mono">// 07</span> Flash USDT Offers <span class="mob-badge gold">OFFERS</span></a>
-      <a href="#experience" onclick="closeMobileMenu()"><span class="mono">// 08</span> Experience Timeline</a>
-      <a href="#reviews" onclick="closeMobileMenu()" style="color:var(--gold)"><span class="mono">// 09</span> <span id="cvxMobRevTxt">Client Reviews</span> <span class="mob-badge gold">5.0 ★</span></a>
-      <a href="#faq" onclick="closeMobileMenu()"><span class="mono">// 10</span> <span id="cvxMobFaqTxt">FAQ &amp; Safety</span></a>
-      <a href="#contact" onclick="closeMobileMenu()"><span class="mono">// 11</span> Direct Contact &amp; Inquiry</a>
+      <a href="#cvtop" onclick="cvxMobileNav('#cvtop', event)"><span class="mono">// 00</span> Home / Top</a>
+      <a href="#about" onclick="cvxMobileNav('#about', event)"><span class="mono">// 01</span> About Me</a>
+      <a href="#expertise" onclick="cvxMobileNav('#expertise', event)"><span class="mono">// 02</span> Expertise</a>
+      <a href="#skills" onclick="cvxMobileNav('#skills', event)"><span class="mono">// 03</span> Skills &amp; Pairs</a>
+      <a href="#projects" onclick="cvxMobileNav('#projects', event)"><span class="mono">// 04</span> Trading Records</a>
+      <a href="#results" onclick="cvxMobileNav('#results', event)" style="color:var(--gold)"><span class="mono">// 05</span> Live Results (X) <span class="mob-badge gold">LIVE</span></a>
+      <a href="#newsx" onclick="cvxMobileNav('#newsx', event)" class="mob-hl-newsx"><span class="mono">// 06</span> NewsX AI Platform <span class="mob-badge">AI LIVE</span></a>
+      <a href="#flash" onclick="cvxMobileNav('#flash', event)" class="mob-hl-flash"><span class="mono">// 07</span> Flash USDT Offers <span class="mob-badge gold">OFFERS</span></a>
+      <a href="#experience" onclick="cvxMobileNav('#experience', event)"><span class="mono">// 08</span> Experience Timeline</a>
+      <a href="#reviews" onclick="cvxMobileNav('#reviews', event)" style="color:var(--gold)"><span class="mono">// 09</span> <span id="cvxMobRevTxt">Client Reviews</span> <span class="mob-badge gold">5.0 ★</span></a>
+      <a href="#faq" onclick="cvxMobileNav('#faq', event)"><span class="mono">// 10</span> <span id="cvxMobFaqTxt">FAQ &amp; Safety</span></a>
+      <a href="#contactCard" onclick="cvxMobileNav('#contactCard', event)"><span class="mono">// 11</span> Direct Contact &amp; Inquiry</a>
       <a href="javascript:void(0)" onclick="closeMobileMenu();dl();" style="color:var(--neon);border-color:rgba(0,255,156,0.35);background:rgba(0,255,156,0.08);margin-top:4px">
         <span class="mono">// 12</span> <span id="cvxMobDlLinkTxt">تحميل ملف التداول ⇩</span>
         <span class="mob-badge" style="background:rgba(0,255,156,0.22);border-color:var(--neon);color:var(--neon)">PDF</span>
@@ -6582,7 +6583,7 @@ body.theme-light .cvx-market-console-title {
 
 <div class="cvx-head"><div class="kick">// direct inquiry</div><h2>Ready to <span class="h">Discuss Trading?</span></h2><p>Interested in managed account information, VIP trading signals, or learning more about my risk-managed trading process? Send a direct inquiry below.</p></div>
 
-<div class="cvx-form-card">
+<div class="cvx-form-card" id="contactCard">
   <div class="cvx-form-top">
     <div class="cvx-form-dots">
       <span class="d-red"></span>
@@ -6851,9 +6852,34 @@ body.theme-light .cvx-market-console-title {
     });
   }
 
-  // smooth scroll for in-page links
+  // smooth scroll for in-page links with navbar offset
   root.querySelectorAll('a[href^="#"]').forEach(function(a){
-    a.addEventListener('click',function(ev){var id=a.getAttribute('href');if(id.length>1){var t=document.querySelector(id);if(t){ev.preventDefault();t.scrollIntoView({behavior:'smooth'});}}});
+    a.addEventListener('click',function(ev){
+      var id = a.getAttribute('href');
+      if (id && id.length > 1 && id !== '#') {
+        var targetEl = document.querySelector(id);
+        if (targetEl) {
+          ev.preventDefault();
+          if (typeof closeMobileMenu === 'function') closeMobileMenu();
+
+          setTimeout(function() {
+            var revealParent = targetEl.closest ? targetEl.closest('.cvx-reveal') : null;
+            if (revealParent) revealParent.classList.add('in');
+            if (targetEl.classList && targetEl.classList.contains('cvx-reveal')) targetEl.classList.add('in');
+
+            var nav = document.querySelector('.cvx-nav');
+            var navH = nav ? nav.offsetHeight : 70;
+            var rect = targetEl.getBoundingClientRect();
+            var topPos = window.pageYOffset + rect.top - navH - 12;
+
+            window.scrollTo({
+              top: Math.max(0, topPos),
+              behavior: 'smooth'
+            });
+          }, 100);
+        }
+      }
+    });
   });
 
   // back to top
@@ -8286,6 +8312,56 @@ body.theme-light .cvx-market-console-title {
       if (b) b.classList.remove('open');
     };
 
+    window.cvxMobileNav = function(target, e) {
+      if (e && e.preventDefault) e.preventDefault();
+      closeMobileMenu();
+
+      setTimeout(function() {
+        var el = null;
+        if (typeof target === 'string') {
+          if (target.startsWith('#')) {
+            el = document.getElementById(target.substring(1));
+          } else {
+            el = document.querySelector(target);
+          }
+        } else if (target && target.nodeType) {
+          el = target;
+        }
+
+        if (!el) return;
+
+        // Force .in on any .cvx-reveal element so height and visibility are locked
+        var revealParent = (el.closest) ? el.closest('.cvx-reveal') : null;
+        if (revealParent) revealParent.classList.add('in');
+        if (el.classList && el.classList.contains('cvx-reveal')) el.classList.add('in');
+        var innerReveals = (el.querySelectorAll) ? el.querySelectorAll('.cvx-reveal') : [];
+        innerReveals.forEach(function(r) { r.classList.add('in'); });
+
+        // Calculate sticky navbar height
+        var nav = document.querySelector('.cvx-nav');
+        var navH = nav ? nav.offsetHeight : 70;
+
+        // Calculate exact scroll position
+        var rect = el.getBoundingClientRect();
+        var topPos = window.pageYOffset + rect.top - navH - 12;
+
+        window.scrollTo({
+          top: Math.max(0, topPos),
+          behavior: 'smooth'
+        });
+
+        // Gently focus first field if navigating to contact card
+        if (el.id === 'contactCard' || el.id === 'contactForm' || el.id === 'contact') {
+          setTimeout(function() {
+            var firstInp = document.getElementById('c-name') || document.getElementById('c-msg');
+            if (firstInp && window.innerWidth > 768) {
+              firstInp.focus({ preventScroll: true });
+            }
+          }, 450);
+        }
+      }, 120);
+    };
+
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeMobileMenu();
     });
@@ -8369,7 +8445,7 @@ body.theme-light .cvx-market-console-title {
         'mob_exp': '<span class="mono">// 08</span> المسيرة المهنية',
         'mob_reviews': '<span class="mono">// 09</span> آراء وتقييمات العملاء <span class="mob-badge gold">5.0 ★</span>',
         'mob_faq': '<span class="mono">// 10</span> الأسئلة الشائعة والأمان',
-        'mob_contact': '<span class="mono">// 11</span> التواصل المباشر والاستفسار',
+        'mob_contact': '<span class="mono">// 11</span> إرسال رسالة وتواصل مباشر',
         'mob_dl': '⇩ تحميل ملف التداول (PDF)',
         'mob_dl_link': 'تحميل ملف التداول ⇩',
 
@@ -8801,7 +8877,7 @@ body.theme-light .cvx-market-console-title {
         'mob_exp': '<span class="mono">// 08</span> Experience Timeline',
         'mob_reviews': '<span class="mono">// 09</span> Client Testimonials <span class="mob-badge gold">5.0 ★</span>',
         'mob_faq': '<span class="mono">// 10</span> FAQ & Safety',
-        'mob_contact': '<span class="mono">// 11</span> Direct Contact & Inquiry',
+        'mob_contact': '<span class="mono">// 11</span> Direct Contact & Send Message',
         'mob_dl': '⇩ Download Trading Profile (PDF)',
         'mob_dl_link': 'Download Trading Profile ⇩',
 
@@ -9256,7 +9332,7 @@ body.theme-light .cvx-market-console-title {
         ['a[href="#experience"]', 'nav_experience'],
         ['a[href="#reviews"]', 'nav_reviews'],
         ['a[href="#faq"]', 'nav_faq'],
-        ['a[href="#contact"]', 'nav_contact']
+        ['a[href="#contact"], a[href="#contactCard"]', 'nav_contact']
       ];
       nMap.forEach(function(pair) {
         document.querySelectorAll('.cvx-links ' + pair[0]).forEach(function(el){
