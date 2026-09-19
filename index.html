@@ -5593,8 +5593,8 @@ body.theme-light .payout-match-banner {
 <a href="#skills">Skills</a>
 <a href="#projects">Projects</a>
 <a href="#results" style="color:var(--gold);font-weight:700">Results 📊</a>
-<a href="#newsx" style="color:var(--neon-2);font-weight:700">NewsX AI ⚡</a>
 <a href="#payouts" id="navPayoutsLink" style="color:var(--neon);font-weight:700">Payouts 🛡️</a>
+<a href="#newsx" style="color:var(--neon-2);font-weight:700">NewsX AI ⚡</a>
 <a href="#experience">Experience</a>
 <a href="#reviews" id="navReviewsLink" style="color:var(--gold);font-weight:700">Reviews ⭐</a>
 <a href="#faq" id="navFaqLink">FAQ</a>
@@ -5643,8 +5643,8 @@ body.theme-light .payout-match-banner {
       <a href="#skills" onclick="cvxMobileNav('#skills', event)"><span class="mono">// 03</span> Skills &amp; Pairs</a>
       <a href="#projects" onclick="cvxMobileNav('#projects', event)"><span class="mono">// 04</span> Trading Records</a>
       <a href="#results" onclick="cvxMobileNav('#results', event)" style="color:var(--gold)"><span class="mono">// 05</span> Live Results (X) <span class="mob-badge gold">LIVE</span></a>
-      <a href="#newsx" onclick="cvxMobileNav('#newsx', event)" class="mob-hl-newsx"><span class="mono">// 06</span> NewsX AI Platform <span class="mob-badge">AI LIVE</span></a>
-      <a href="#payouts" onclick="cvxMobileNav('#payouts', event)" style="color:var(--neon)"><span class="mono">// 07</span> <span id="cvxMobPayoutsTxt">Verified Payouts</span> <span class="mob-badge green">AUDITED</span></a>
+      <a href="#payouts" onclick="cvxMobileNav('#payouts', event)" style="color:var(--neon)"><span class="mono">// 06</span> <span id="cvxMobPayoutsTxt">Verified Payouts</span> <span class="mob-badge green">AUDITED</span></a>
+      <a href="#newsx" onclick="cvxMobileNav('#newsx', event)" class="mob-hl-newsx"><span class="mono">// 07</span> NewsX AI Platform <span class="mob-badge">AI LIVE</span></a>
       <a href="#experience" onclick="cvxMobileNav('#experience', event)"><span class="mono">// 08</span> Experience Timeline</a>
       <a href="#reviews" onclick="cvxMobileNav('#reviews', event)" style="color:var(--gold)"><span class="mono">// 09</span> <span id="cvxMobRevTxt">Client Reviews</span> <span class="mob-badge gold">5.0 ★</span></a>
       <a href="#faq" onclick="cvxMobileNav('#faq', event)"><span class="mono">// 10</span> <span id="cvxMobFaqTxt">FAQ &amp; Safety</span></a>
@@ -6233,6 +6233,65 @@ body.theme-light .payout-match-banner {
 
 </div>
 </section>
+<!-- ==========================================================================
+     💵 SECTION: AUDITED EXNESS CASHOUTS & VERIFIED PAYOUTS (سحوبات Exness الموثقة)
+     ========================================================================== -->
+<section class="cvx-sec" id="payouts">
+<div class="cvx-wrap cvx-reveal">
+  <div class="cvx-head">
+    <div class="kick" id="payoutKick" style="color:var(--neon)">// AUDITED BROKER LIQUIDITY &amp; CASHOUTS</div>
+    <h2><span id="payoutTitle"># Verified <span class="h">Exness Cash Payouts</span></span></h2>
+    <p id="payoutSub">Realized cash withdrawals processed from Exness Real trading accounts and settled to BinancePay, cross-verified with official timestamped Binance credit receipts.</p>
+  </div>
+
+  <!-- Trust Bar & Institutional Metrics -->
+  <div class="payouts-trust-bar">
+    <div class="payout-metric-box">
+      <div class="payout-metric-val" id="payoutStatTotVal">+$16,000+</div>
+      <div class="payout-metric-lbl" id="payoutStatTot">Total Realized Payouts</div>
+    </div>
+    <div class="payout-metric-box gold">
+      <div class="payout-metric-val">100%</div>
+      <div class="payout-metric-lbl" id="payoutStatRate">Instant Settlement Rate</div>
+    </div>
+    <div class="payout-metric-box cyan">
+      <div class="payout-metric-val">6 Accounts</div>
+      <div class="payout-metric-lbl" id="payoutStatAccs">Multi-Portfolio Extractions</div>
+    </div>
+    <div class="payout-metric-box">
+      <div class="payout-metric-val">~1-2 Min</div>
+      <div class="payout-metric-lbl" id="payoutStatSpeed">Exness ➔ Binance Delivery</div>
+    </div>
+  </div>
+
+  <!-- Filter Pills -->
+  <div class="payouts-filters" id="payoutFilters">
+    <button type="button" class="payout-filter-btn active" data-filter="all" onclick="filterPayouts('all', this)" id="payoutFilterAll">All Payouts (10)</button>
+    <button type="button" class="payout-filter-btn" data-filter="double" onclick="filterPayouts('double', this)" id="payoutFilterDouble">⚡ Double-Verified (Exness + Binance Email) (6)</button>
+    <button type="button" class="payout-filter-btn" data-filter="ledger" onclick="filterPayouts('ledger', this)" id="payoutFilterLedger">💼 Exness Direct Ledger (4)</button>
+  </div>
+
+  <!-- Payouts Grid (Rendered dynamically by JavaScript) -->
+  <div class="payouts-grid" id="payoutsContainer"></div>
+</div>
+</section>
+
+<!-- Lightbox Modal for Payout Audit -->
+<div class="payout-modal-backdrop" id="payoutModal" onclick="if(event.target===this)closePayoutProof()">
+  <div class="payout-modal-box">
+    <div class="payout-modal-head">
+      <div class="payout-modal-title">
+        <span style="color:var(--neon)">🛡️</span>
+        <span id="payoutModalTitleTxt">Official Broker Payout Audit</span>
+      </div>
+      <button type="button" class="payout-modal-close" onclick="closePayoutProof()" aria-label="Close">✕</button>
+    </div>
+    <div class="payout-modal-body" id="payoutModalContent">
+      <!-- Dynamic Audit Content injected by JavaScript -->
+    </div>
+  </div>
+</div>
+
 <section class="cvx-sec" id="newsx">
 <div class="cvx-wrap cvx-reveal">
 <div class="cvx-head"><div class="kick" style="color:var(--neon-2)">// automated market intelligence</div><h2># NewsX <span class="h">AI</span></h2><p>AI-powered economic news &amp; predictive market analysis platform. Tracks every high-impact USD release to forecast market direction before the data hits.</p></div>
@@ -6486,65 +6545,6 @@ body.theme-light .payout-match-banner {
 <div id="flToast" class="fl-toast">
   <span class="fl-toast-icon">✓</span>
   <span class="fl-toast-msg" id="flToastMsg">Deposit wallet address copied to clipboard!</span>
-</div>
-
-<!-- ==========================================================================
-     💵 SECTION: AUDITED EXNESS CASHOUTS & VERIFIED PAYOUTS (سحوبات Exness الموثقة)
-     ========================================================================== -->
-<section class="cvx-sec" id="payouts">
-<div class="cvx-wrap cvx-reveal">
-  <div class="cvx-head">
-    <div class="kick" id="payoutKick" style="color:var(--neon)">// AUDITED BROKER LIQUIDITY &amp; CASHOUTS</div>
-    <h2><span id="payoutTitle"># Verified <span class="h">Exness Cash Payouts</span></span></h2>
-    <p id="payoutSub">Realized cash withdrawals processed from Exness Real trading accounts and settled to BinancePay, cross-verified with official timestamped Binance credit receipts.</p>
-  </div>
-
-  <!-- Trust Bar & Institutional Metrics -->
-  <div class="payouts-trust-bar">
-    <div class="payout-metric-box">
-      <div class="payout-metric-val" id="payoutStatTotVal">+$16,000+</div>
-      <div class="payout-metric-lbl" id="payoutStatTot">Total Realized Payouts</div>
-    </div>
-    <div class="payout-metric-box gold">
-      <div class="payout-metric-val">100%</div>
-      <div class="payout-metric-lbl" id="payoutStatRate">Instant Settlement Rate</div>
-    </div>
-    <div class="payout-metric-box cyan">
-      <div class="payout-metric-val">6 Accounts</div>
-      <div class="payout-metric-lbl" id="payoutStatAccs">Multi-Portfolio Extractions</div>
-    </div>
-    <div class="payout-metric-box">
-      <div class="payout-metric-val">~1-2 Min</div>
-      <div class="payout-metric-lbl" id="payoutStatSpeed">Exness ➔ Binance Delivery</div>
-    </div>
-  </div>
-
-  <!-- Filter Pills -->
-  <div class="payouts-filters" id="payoutFilters">
-    <button type="button" class="payout-filter-btn active" data-filter="all" onclick="filterPayouts('all', this)" id="payoutFilterAll">All Payouts (10)</button>
-    <button type="button" class="payout-filter-btn" data-filter="double" onclick="filterPayouts('double', this)" id="payoutFilterDouble">⚡ Double-Verified (Exness + Binance Email) (6)</button>
-    <button type="button" class="payout-filter-btn" data-filter="ledger" onclick="filterPayouts('ledger', this)" id="payoutFilterLedger">💼 Exness Direct Ledger (4)</button>
-  </div>
-
-  <!-- Payouts Grid (Rendered dynamically by JavaScript) -->
-  <div class="payouts-grid" id="payoutsContainer"></div>
-</div>
-</section>
-
-<!-- Lightbox Modal for Payout Audit -->
-<div class="payout-modal-backdrop" id="payoutModal" onclick="if(event.target===this)closePayoutProof()">
-  <div class="payout-modal-box">
-    <div class="payout-modal-head">
-      <div class="payout-modal-title">
-        <span style="color:var(--neon)">🛡️</span>
-        <span id="payoutModalTitleTxt">Official Broker Payout Audit</span>
-      </div>
-      <button type="button" class="payout-modal-close" onclick="closePayoutProof()" aria-label="Close">✕</button>
-    </div>
-    <div class="payout-modal-body" id="payoutModalContent">
-      <!-- Dynamic Audit Content injected by JavaScript -->
-    </div>
-  </div>
 </div>
 
 <section class="cvx-sec" id="experience">
@@ -8805,8 +8805,8 @@ body.theme-light .payout-match-banner {
         'mob_skills': '<span class="mono">// 03</span> المهارات والأزواج',
         'mob_projects': '<span class="mono">// 04</span> سجل الصفقات والمشاريع',
         'mob_results': '<span class="mono">// 05</span> سجل النتائج الحية <span class="mob-badge gold">تويتر X</span>',
-        'mob_newsx': '<span class="mono">// 06</span> منصة NewsX AI <span class="mob-badge">AI LIVE</span>',
-        'mob_payouts': '<span class="mono">// 07</span> السحوبات الموثقة <span class="mob-badge green">موثق</span>',
+        'mob_payouts': '<span class="mono">// 06</span> السحوبات الموثقة <span class="mob-badge green">موثق</span>',
+        'mob_newsx': '<span class="mono">// 07</span> منصة NewsX AI <span class="mob-badge">AI LIVE</span>',
         'mob_exp': '<span class="mono">// 08</span> المسيرة المهنية',
         'mob_reviews': '<span class="mono">// 09</span> آراء وتقييمات العملاء <span class="mob-badge gold">5.0 ★</span>',
         'mob_faq': '<span class="mono">// 10</span> الأسئلة الشائعة والأمان',
@@ -9212,8 +9212,8 @@ body.theme-light .payout-match-banner {
         'mob_skills': '<span class="mono">// 03</span> Skills & Pairs',
         'mob_projects': '<span class="mono">// 04</span> Trading Records',
         'mob_results': '<span class="mono">// 05</span> Live Results & Trades <span class="mob-badge gold">LIVE X</span>',
-        'mob_newsx': '<span class="mono">// 06</span> NewsX AI Platform <span class="mob-badge">AI LIVE</span>',
-        'mob_payouts': '<span class="mono">// 07</span> Verified Payouts <span class="mob-badge green">AUDITED</span>',
+        'mob_payouts': '<span class="mono">// 06</span> Verified Payouts <span class="mob-badge green">AUDITED</span>',
+        'mob_newsx': '<span class="mono">// 07</span> NewsX AI Platform <span class="mob-badge">AI LIVE</span>',
         'mob_exp': '<span class="mono">// 08</span> Experience Timeline',
         'mob_reviews': '<span class="mono">// 09</span> Client Testimonials <span class="mob-badge gold">5.0 ★</span>',
         'mob_faq': '<span class="mono">// 10</span> FAQ & Safety',
@@ -9642,8 +9642,8 @@ body.theme-light .payout-match-banner {
         ['a[href="#skills"]', 'nav_skills'],
         ['a[href="#projects"]', 'nav_projects'],
         ['a[href="#results"]', 'nav_results'],
-        ['a[href="#newsx"]', 'nav_newsx'],
         ['a[href="#payouts"]', 'nav_payouts'],
+        ['a[href="#newsx"]', 'nav_newsx'],
         ['a[href="#experience"]', 'nav_experience'],
         ['a[href="#reviews"]', 'nav_reviews'],
         ['a[href="#faq"]', 'nav_faq'],
@@ -9659,7 +9659,7 @@ body.theme-light .payout-match-banner {
       if (dlBtn && t['nav_cta']) dlBtn.textContent = t['nav_cta'];
 
       var mobLinks = document.querySelectorAll('.cvx-mob-links a');
-      var mKeys = ['mob_home', 'mob_about', 'mob_expertise', 'mob_skills', 'mob_projects', 'mob_results', 'mob_newsx', 'mob_payouts', 'mob_exp', 'mob_reviews', 'mob_faq', 'mob_contact'];
+      var mKeys = ['mob_home', 'mob_about', 'mob_expertise', 'mob_skills', 'mob_projects', 'mob_results', 'mob_payouts', 'mob_newsx', 'mob_exp', 'mob_reviews', 'mob_faq', 'mob_contact'];
       mobLinks.forEach(function(link, idx) {
         if (mKeys[idx] && t[mKeys[idx]]) link.innerHTML = t[mKeys[idx]];
       });
