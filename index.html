@@ -4352,6 +4352,67 @@ body.theme-light .faq-icon {
   fill:currentColor;
 }
 
+/* Reviews Load More Button */
+.rev-more-wrap {
+  text-align: center;
+  margin-top: 32px;
+  position: relative;
+  z-index: 2;
+}
+.rev-more-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(255, 207, 74, 0.08);
+  border: 1px solid rgba(255, 207, 74, 0.35);
+  color: var(--gold, #ffcf4a);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 13px 34px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(255, 207, 74, 0.12);
+}
+.rev-more-btn:hover {
+  background: rgba(255, 207, 74, 0.18);
+  border-color: var(--gold, #ffcf4a);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(255, 207, 74, 0.25);
+}
+.rev-more-btn .more-icon {
+  font-size: 14px;
+  transition: transform 0.25s ease;
+}
+.rev-more-btn.active {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--muted);
+  box-shadow: none;
+}
+.rev-more-btn.active:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+body.theme-light .rev-more-btn {
+  background: #fffbeb;
+  border-color: #fde68a;
+  color: #d97706;
+  box-shadow: 0 4px 16px rgba(217, 119, 6, 0.1);
+}
+body.theme-light .rev-more-btn:hover {
+  background: #fef3c7;
+  border-color: #d97706;
+}
+body.theme-light .rev-more-btn.active {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #64748b;
+}
+
 /* Review Modal */
 .rev-modal-backdrop{
   position:fixed;
@@ -6693,6 +6754,9 @@ body.theme-light .payouts-more-btn.active {
   <div class="rev-grid" id="reviewsContainer">
     <!-- Rendered dynamically by JavaScript -->
   </div>
+
+  <!-- Sleek Reviews Load More Button Container -->
+  <div class="rev-more-wrap" id="reviewsMoreWrap" style="display:none"></div>
 </div>
 </section>
 
@@ -7761,6 +7825,19 @@ body.theme-light .payouts-more-btn.active {
 
   var allReviews = defaultReviews.slice();
   var activeReviewFilter = 'all';
+  var reviewsExpanded = false;
+
+  window.toggleReviewsExpand = function() {
+    reviewsExpanded = !reviewsExpanded;
+    window.renderReviews();
+    if (!reviewsExpanded) {
+      var revEl = document.getElementById('reviews');
+      if (revEl) {
+        var top = revEl.getBoundingClientRect().top + window.pageYOffset - 80;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    }
+  };
 
   var revServiceLabels = {
     managed:    { ar: '💼 إدارة المحافظ', en: '💼 Managed Account', cls: 'managed' },
@@ -7795,15 +7872,25 @@ body.theme-light .payouts-more-btn.active {
       return (r.service === activeReviewFilter);
     });
 
+    var moreWrap = document.getElementById('reviewsMoreWrap');
+
     if (!filtered.length) {
       container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--muted);font-family:\'JetBrains Mono\',monospace;">' +
         (isAr ? '// لا توجد تقييمات في هذا التصنيف حالياً' : '// No reviews currently in this category') +
         '</div>';
+      if (moreWrap) {
+        moreWrap.style.display = 'none';
+        moreWrap.innerHTML = '';
+      }
       return;
     }
 
+    var initialLimit = 3;
+    var totalCount = filtered.length;
+    var itemsToShow = reviewsExpanded ? filtered : filtered.slice(0, initialLimit);
+
     var html = '';
-    filtered.forEach(function(r) {
+    itemsToShow.forEach(function(r) {
       var sMeta = revServiceLabels[r.service] || revServiceLabels.managed;
       var sLabel = isAr ? sMeta.ar : sMeta.en;
       var country = isAr ? (r.country || r.country_en || '') : (r.country_en || r.country || '');
@@ -7842,10 +7929,33 @@ body.theme-light .payouts-more-btn.active {
     });
 
     container.innerHTML = html;
+
+    // Load More Button handling
+    if (moreWrap) {
+      if (totalCount > initialLimit) {
+        moreWrap.style.display = 'block';
+        var remaining = totalCount - initialLimit;
+        if (!reviewsExpanded) {
+          moreWrap.innerHTML = '<button type="button" class="rev-more-btn" onclick="toggleReviewsExpand()">' +
+            '<span class="more-icon">↓</span>' +
+            '<span class="more-txt">' + (isAr ? ('عرض باقي آراء وتقييمات العملاء (+' + remaining + ')') : ('Show All Client Reviews (+' + remaining + ')')) + '</span>' +
+          '</button>';
+        } else {
+          moreWrap.innerHTML = '<button type="button" class="rev-more-btn active" onclick="toggleReviewsExpand()">' +
+            '<span class="more-icon">↑</span>' +
+            '<span class="more-txt">' + (isAr ? 'عرض أقل' : 'Show Less') + '</span>' +
+          '</button>';
+        }
+      } else {
+        moreWrap.style.display = 'none';
+        moreWrap.innerHTML = '';
+      }
+    }
   };
 
   window.filterReviews = function(category, btn) {
     activeReviewFilter = category || 'all';
+    reviewsExpanded = false;
     document.querySelectorAll('.rev-filter-btn').forEach(function(b) {
       b.classList.remove('active');
     });
