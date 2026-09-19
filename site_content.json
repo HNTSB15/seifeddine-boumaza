@@ -1,6 +1,6 @@
 {
   "profile": {
-    "name": "Seifeddine Boumaza",
+    "name": "BOUMAZA SEIFEDDINE",
     "title": "Forex & Crypto Trading Manager",
     "handle": "@seifeddin06",
     "badge_text": "Trading Manager & Quant Specialist",
@@ -178,6 +178,17 @@
     }
   ],
   "reviews": [
+    {
+      "id": "rev-1789832476157",
+      "name": "aymen",
+      "country": "USA",
+      "rating": 5,
+      "service": "managed",
+      "stat": "+88% أرباح",
+      "text": "تجربة تداول ممتازة وانضباط عالي في إدارة المخاطر.",
+      "text_en": "Excellent trading experience and outstanding risk management discipline.",
+      "verified": true
+    },
     {
       "id": "rev-1",
       "name": "Tariq B.",
