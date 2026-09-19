@@ -141,7 +141,7 @@ h1 .grad{background:var(--rgb);background-size:200% auto;-webkit-background-clip
 .btn-ghost:hover{border-color:var(--neon);box-shadow:var(--glow)}
 .scroll-hint{margin-top:56px;color:var(--muted);font-size:12px;letter-spacing:2px;text-transform:uppercase;animation:floaty 2.2s ease-in-out infinite}
 section{padding:70px 0;position:relative;z-index:1;scroll-margin-top:80px}
-section, .cvx-sec, .cvx-form-card, #contact, #contactCard, #contactForm {scroll-margin-top:85px !important}
+section, .cvx-sec, .cvx-form-card, #reviews, #contact, #contactCard, #contactForm, #faq, #experience, #results, #newsx, #flash, #about, #expertise, #skills, #projects {scroll-margin-top:85px !important}
 /* ===== sticky nav ===== */
 .nav{position:sticky;top:0;z-index:150;background:rgba(5,7,13,.72);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .nav-in{max-width:1100px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;gap:14px}
@@ -5058,14 +5058,6 @@ body.theme-light .cvx-market-console-title {
   .cvx-stat {
     transform: translateZ(0);
   }
-
-  /* 5. Skip off-screen rendering of deep sections for instant mobile responsiveness */
-  #reviews,
-  #faq,
-  #experience {
-    content-visibility: auto;
-    contain-intrinsic-size: 1px 600px;
-  }
 }
 </style>
 <div class="cvx" id="cvtop">
@@ -6852,8 +6844,8 @@ body.theme-light .cvx-market-console-title {
     });
   }
 
-  // smooth scroll for in-page links with navbar offset
-  root.querySelectorAll('a[href^="#"]').forEach(function(a){
+  // smooth scroll for in-page links with navbar offset (excluding mobile drawer links handled by cvxMobileNav)
+  root.querySelectorAll('.cvx-links a[href^="#"], .cvx-cta a[href^="#"], .plink[href^="#"], a.cvx-chip[href^="#"]').forEach(function(a){
     a.addEventListener('click',function(ev){
       var id = a.getAttribute('href');
       if (id && id.length > 1 && id !== '#') {
@@ -6867,16 +6859,19 @@ body.theme-light .cvx-market-console-title {
             if (revealParent) revealParent.classList.add('in');
             if (targetEl.classList && targetEl.classList.contains('cvx-reveal')) targetEl.classList.add('in');
 
-            var nav = document.querySelector('.cvx-nav');
-            var navH = nav ? nav.offsetHeight : 70;
-            var rect = targetEl.getBoundingClientRect();
-            var topPos = window.pageYOffset + rect.top - navH - 12;
-
-            window.scrollTo({
-              top: Math.max(0, topPos),
-              behavior: 'smooth'
-            });
-          }, 100);
+            if (typeof targetEl.scrollIntoView === 'function') {
+              targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+              var nav = document.querySelector('.cvx-nav');
+              var navH = nav ? nav.offsetHeight : 70;
+              var rect = targetEl.getBoundingClientRect();
+              var topPos = (window.pageYOffset || document.documentElement.scrollTop || 0) + rect.top - navH - 12;
+              window.scrollTo({
+                top: Math.max(0, topPos),
+                behavior: 'smooth'
+              });
+            }
+          }, 50);
         }
       }
     });
@@ -8313,42 +8308,52 @@ body.theme-light .cvx-market-console-title {
     };
 
     window.cvxMobileNav = function(target, e) {
-      if (e && e.preventDefault) e.preventDefault();
+      if (e) {
+        if (e.preventDefault) e.preventDefault();
+        if (e.stopPropagation) e.stopPropagation();
+        if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      }
       closeMobileMenu();
 
-      setTimeout(function() {
-        var el = null;
-        if (typeof target === 'string') {
-          if (target.startsWith('#')) {
-            el = document.getElementById(target.substring(1));
-          } else {
-            el = document.querySelector(target);
-          }
-        } else if (target && target.nodeType) {
-          el = target;
+      var el = null;
+      if (typeof target === 'string') {
+        if (target.startsWith('#')) {
+          el = document.getElementById(target.substring(1));
+        } else {
+          el = document.querySelector(target);
         }
+      } else if (target && target.nodeType) {
+        el = target;
+      }
 
-        if (!el) return;
+      if (!el) return;
 
-        // Force .in on any .cvx-reveal element so height and visibility are locked
-        var revealParent = (el.closest) ? el.closest('.cvx-reveal') : null;
-        if (revealParent) revealParent.classList.add('in');
-        if (el.classList && el.classList.contains('cvx-reveal')) el.classList.add('in');
-        var innerReveals = (el.querySelectorAll) ? el.querySelectorAll('.cvx-reveal') : [];
-        innerReveals.forEach(function(r) { r.classList.add('in'); });
+      // Immediately activate reveal classes across document so heights and transforms are stable
+      var allReveals = document.querySelectorAll('.cvx-reveal');
+      allReveals.forEach(function(r) {
+        r.classList.add('in');
+      });
 
-        // Calculate sticky navbar height
-        var nav = document.querySelector('.cvx-nav');
-        var navH = nav ? nav.offsetHeight : 70;
+      // Update URL hash without causing page jump
+      try {
+        if (history.pushState && el.id) {
+          history.pushState(null, '', '#' + el.id);
+        }
+      } catch(err){}
 
-        // Calculate exact scroll position
-        var rect = el.getBoundingClientRect();
-        var topPos = window.pageYOffset + rect.top - navH - 12;
-
-        window.scrollTo({
-          top: Math.max(0, topPos),
-          behavior: 'smooth'
-        });
+      setTimeout(function() {
+        if (typeof el.scrollIntoView === 'function') {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          var nav = document.querySelector('.cvx-nav');
+          var navH = nav ? nav.offsetHeight : 70;
+          var rect = el.getBoundingClientRect();
+          var topPos = (window.pageYOffset || document.documentElement.scrollTop || 0) + rect.top - navH - 12;
+          window.scrollTo({
+            top: Math.max(0, topPos),
+            behavior: 'smooth'
+          });
+        }
 
         // Gently focus first field if navigating to contact card
         if (el.id === 'contactCard' || el.id === 'contactForm' || el.id === 'contact') {
@@ -8357,9 +8362,9 @@ body.theme-light .cvx-market-console-title {
             if (firstInp && window.innerWidth > 768) {
               firstInp.focus({ preventScroll: true });
             }
-          }, 450);
+          }, 600);
         }
-      }, 120);
+      }, 50);
     };
 
     document.addEventListener('keydown', function(e) {
