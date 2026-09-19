@@ -468,6 +468,10 @@ footer.cv-foot .mono{color:var(--neon)}
   cursor:pointer;
   border:0;
   font-family:inherit;
+  text-decoration:none !important;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
   transition:transform .2s ease,box-shadow .2s ease;
 }
 .cvx-navcta:hover{
@@ -5123,7 +5127,7 @@ body.theme-light .cvx-market-console-title {
     <span class="theme-icon sun-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" fill="none"/></svg></span>
     <span class="theme-label mono">Dark</span>
   </button>
-  <button class="cvx-navcta" id="cvxDl" type="button">⇩ Trading Profile</button>
+  <a class="cvx-navcta" id="cvxDl" href="Saifeddine_Boumaza_Trading_Profile.pdf" download="Saifeddine_Boumaza_Trading_Profile.pdf" target="_blank" rel="noopener noreferrer">⇩ Trading Profile</a>
   <button class="cvx-burger" id="cvxBurger" aria-label="Toggle navigation menu" type="button" onclick="toggleMobileMenu(event)" title="القائمة · Menu">
     <span class="b-line b-top"></span>
     <span class="b-line b-mid"></span>
@@ -5162,16 +5166,16 @@ body.theme-light .cvx-market-console-title {
       <a href="#reviews" onclick="cvxMobileNav('#reviews', event)" style="color:var(--gold)"><span class="mono">// 09</span> <span id="cvxMobRevTxt">Client Reviews</span> <span class="mob-badge gold">5.0 ★</span></a>
       <a href="#faq" onclick="cvxMobileNav('#faq', event)"><span class="mono">// 10</span> <span id="cvxMobFaqTxt">FAQ &amp; Safety</span></a>
       <a href="#contactCard" onclick="cvxMobileNav('#contactCard', event)"><span class="mono">// 11</span> Direct Contact &amp; Inquiry</a>
-      <a href="javascript:void(0)" onclick="closeMobileMenu();dl();" style="color:var(--neon);border-color:rgba(0,255,156,0.35);background:rgba(0,255,156,0.08);margin-top:4px">
+      <a href="Saifeddine_Boumaza_Trading_Profile.pdf" download="Saifeddine_Boumaza_Trading_Profile.pdf" target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu();" style="color:var(--neon);border-color:rgba(0,255,156,0.35);background:rgba(0,255,156,0.08);margin-top:4px">
         <span class="mono">// 12</span> <span id="cvxMobDlLinkTxt">تحميل ملف التداول ⇩</span>
         <span class="mob-badge" style="background:rgba(0,255,156,0.22);border-color:var(--neon);color:var(--neon)">PDF</span>
       </a>
     </div>
     <div class="cvx-mob-actions">
-      <button class="cvx-mob-dl-btn" id="cvxMobDlBtn" type="button" onclick="closeMobileMenu();dl();">
+      <a class="cvx-mob-dl-btn" id="cvxMobDlBtn" href="Saifeddine_Boumaza_Trading_Profile.pdf" download="Saifeddine_Boumaza_Trading_Profile.pdf" target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu();">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="flex-shrink:0"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
         <span id="cvxMobDlTxt">⇩ تحميل ملف التداول (PDF)</span>
-      </button>
+      </a>
       <a class="cvx-mob-tg" href="https://t.me/HNTSB15" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M21.9 4.3 18.7 19c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.7 13 1.9 11.5c-1-.3-1-1 .2-1.5l18.4-7.1c.9-.3 1.6.2 1.4 1.4Z"/></svg> Direct Telegram: @HNTSB15
       </a>
@@ -6884,10 +6888,24 @@ body.theme-light .cvx-market-console-title {
     window.addEventListener('scroll',function(){ if(window.pageYOffset>500)top.classList.add('show'); else top.classList.remove('show'); },{passive:true});
   }
 
-  // download CV (print) — prints the dedicated dark cyber resume (.cvx-print)
-  function dl(){ window.print(); }
+  // Download Trading Profile PDF (universally supported on Mobile Android/iOS and PC)
+  window.dl = function(ev){
+    if (ev && ev.preventDefault) ev.preventDefault();
+    var pdfUrl = 'Saifeddine_Boumaza_Trading_Profile.pdf';
+    var a = document.createElement('a');
+    a.href = pdfUrl;
+    a.download = 'Saifeddine_Boumaza_Trading_Profile.pdf';
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function(){
+      if (a && a.parentNode) a.parentNode.removeChild(a);
+    }, 150);
+  };
   var d1=document.getElementById('cvxDl'), d2=document.getElementById('cvxDl2');
-  if(d1)d1.addEventListener('click',dl); if(d2)d2.addEventListener('click',dl);
+  if(d1) d1.addEventListener('click', window.dl);
+  if(d2) d2.addEventListener('click', window.dl);
 
   // Supabase Configuration
   var SUPABASE_URL = 'https://kbioxkoifvyivhkzbxke.supabase.co';
