@@ -7047,7 +7047,7 @@ body.theme-light .cvx-market-console-title {
         }
         if (k === 'telegram_username' || k === 'telegram_handle') {
           var tg = val.replace(/^@/, '');
-          if (window.CVX_TELEGRAM_CONFIG) window.CVX_TELEGRAM_CONFIG.directUsername = tg;
+          window.CVX_DIRECT_TG = tg;
           document.querySelectorAll('a[href*="t.me/"]').forEach(function(a){
             if (a.href.indexOf('?text=') > -1) {
               var textParam = a.href.split('?text=')[1] || '';
@@ -7059,12 +7059,6 @@ body.theme-light .cvx-market-console-title {
         }
         if (k === 'whatsapp_number' || k === 'whatsapp') {
           window.CVX_WHATSAPP = val;
-        }
-        if (k === 'telegram_bot_token') {
-          if (window.CVX_TELEGRAM_CONFIG) window.CVX_TELEGRAM_CONFIG.botToken = val;
-        }
-        if (k === 'telegram_chat_id') {
-          if (window.CVX_TELEGRAM_CONFIG) window.CVX_TELEGRAM_CONFIG.chatId = val;
         }
         if (k === 'instagram_profile' || k === 'instagram') {
           window.CVX_INSTAGRAM = val;
@@ -7318,32 +7312,7 @@ body.theme-light .cvx-market-console-title {
       } catch(err){}
     }
 
-    // 2. Instant Telegram Bot Alert to Saifeddine's Phone
-    var cfg = window.CVX_TELEGRAM_CONFIG || {};
-    if (cfg.botToken && cfg.chatId) {
-      try {
-        var starsStr = '★★★★★'.substring(0, rating) + '☆☆☆☆☆'.substring(0, Math.max(0, 5 - rating));
-        var tgMsg = '⭐ NEW CLIENT REVIEW SUBMITTED! | تقييم عميل جديد\n' +
-          '━━━━━━━━━━━━━━━━━━━━\n' +
-          '👤 Name: ' + name + '\n' +
-          '📍 Location: ' + country + '\n' +
-          '⭐ Rating: ' + rating + '/5 (' + starsStr + ')\n' +
-          '💼 Service: ' + service + '\n' +
-          '📊 Achievement: ' + (stat || 'None provided') + '\n' +
-          '📝 Review:\n' + comment + '\n' +
-          '━━━━━━━━━━━━━━━━━━━━\n' +
-          '🌐 Source: Portfolio Reviews Terminal\n' +
-          '🕒 Timestamp: ' + new Date().toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
-
-        fetch('https://api.telegram.org/bot' + cfg.botToken + '/sendMessage', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ chat_id: cfg.chatId, text: tgMsg })
-        }).catch(function(err){ console.warn('TG dispatch error:', err); });
-      } catch(e){}
-    }
-
-    // 3. Prepend to local reviews list immediately so client sees it live on screen
+    // 2. Prepend to local reviews list immediately so client sees it live on screen
     var newRev = {
       name: name,
       country: country,
@@ -7669,14 +7638,7 @@ body.theme-light .cvx-market-console-title {
     window.cvxSyncChannelField();
   }
 
-  // Instant Telegram Configuration & Real-Time Lead Bridge
-  window.CVX_TELEGRAM_CONFIG = {
-    botToken: '8314044654:AAH6vijP6_P89z9btSTjtXQ0WWXtLevyHVY',
-    chatId: '5513814495', // Saifeddine (@HNTSB15) Verified Telegram Chat ID
-    directUsername: 'HNTSB15' // Direct Telegram account: @HNTSB15
-  };
-
-  // Contact form submission (Telegram Real-Time Lead Bridge)
+  // Contact form submission
   var cForm = document.getElementById('contactForm');
   if (cForm) {
     cForm.addEventListener('submit', function(e) {
@@ -7787,23 +7749,8 @@ body.theme-light .cvx-market-console-title {
         } catch(err){}
       }
 
-      // Instant Telegram Bot Push to Saifeddine's Phone (@saif_leads_bot)
-      var cfg = window.CVX_TELEGRAM_CONFIG || {};
-      if (cfg.botToken && cfg.chatId) {
-        try {
-          fetch('https://api.telegram.org/bot' + cfg.botToken + '/sendMessage', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              chat_id: cfg.chatId,
-              text: leadText
-            })
-          }).catch(function(err){ console.warn('Telegram Bot API dispatch error:', err); });
-        } catch(e){}
-      }
-
       // URLs to Saifeddine's official accounts
-      var directTgUser = cfg.directUsername || 'HNTSB15';
+      var directTgUser = window.CVX_DIRECT_TG || 'HNTSB15';
       var rawWa = window.CVX_WHATSAPP || '+213697114385';
       var cleanWaNum = rawWa.replace(/[^0-9]/g, '') || '213697114385';
       var tgUrl = 'https://t.me/' + directTgUser + '?text=' + encodeURIComponent(leadText);

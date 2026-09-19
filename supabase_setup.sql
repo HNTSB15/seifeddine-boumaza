@@ -167,8 +167,6 @@ VALUES
     ('telegram_username', '@HNTSB15', 'Your official Telegram handle displayed across the website and payment desk'),
     ('support_email', 'saifeddine.jskyst15@gmail.com', 'Your official contact email'),
     ('whatsapp_number', '+213697114385', 'Your official WhatsApp phone number for client chat and leads'),
-    ('telegram_bot_token', '8314044654:AAH6vijP6_P89z9btSTjtXQ0WWXtLevyHVY', 'Official Telegram Bot Token (@saif_leads_bot) for real-time lead alerts'),
-    ('telegram_chat_id', '5513814495', 'Your personal Telegram Chat ID (@HNTSB15) where bot sends instant lead alerts'),
     ('instagram_profile', 'https://www.instagram.com/oo._.saifeddine._.oo/', 'Your official Instagram profile URL'),
     ('x_profile', 'https://x.com/seifeddin06', 'Your official X / Twitter profile URL')
 ON CONFLICT (setting_name) DO UPDATE SET
