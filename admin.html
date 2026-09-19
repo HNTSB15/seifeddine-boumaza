@@ -789,7 +789,15 @@
 
 <script>
   // Global Data Store
-  var siteData = null;
+  var siteData = {
+    profile: {},
+    metrics: {},
+    pricing: {},
+    trades: [],
+    reviews: [],
+    faqs: [],
+    announcement: {}
+  };
   var DEFAULT_PIN = "1520";
 
   // Check PIN Authentication on load
@@ -846,20 +854,38 @@
     setTimeout(function(){ t.classList.remove("show"); }, 3500);
   }
 
-  // Load site_content.json on Start
+  // Load site_content.json on Start (with localStorage fallback for file:// and offline)
   function loadData() {
-    // Also load saved github token
     var savedToken = localStorage.getItem("sb_gh_token");
     if (savedToken) document.getElementById("gh_token").value = savedToken;
 
+    // 1. Try instant localStorage cache so fields and trades populate immediately
+    try {
+      var cached = localStorage.getItem("sb_site_content");
+      if (cached) {
+        var parsed = JSON.parse(cached);
+        if (parsed && typeof parsed === "object") {
+          siteData = parsed;
+          populateForm(siteData);
+        }
+      }
+    } catch(e){}
+
+    // 2. Fetch latest site_content.json with cache buster
     fetch("site_content.json?v=" + Date.now())
-      .then(function(r){ return r.json(); })
+      .then(function(r){
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
       .then(function(data){
-        siteData = data;
-        populateForm(data);
+        if (data) {
+          siteData = data;
+          populateForm(data);
+        }
       })
       .catch(function(err){
-        console.warn("Could not fetch site_content.json", err);
+        console.warn("Using cached site_content.json", err);
+        populateForm(siteData);
       });
   }
 
@@ -965,39 +991,39 @@
         <div class="form-grid">
           <div class="form-group">
             <label>الأصل المتداول (Pair / Title)</label>
-            <input type="text" value="${t.pair || ''}" placeholder="مثال: XAUUSD (Gold)" oninput="updateTradeField(${idx}, 'pair', this.value)" onchange="updateTradeField(${idx}, 'pair', this.value)">
+            <input type="text" class="trade-in-pair" value="${t.pair || ''}" placeholder="مثال: XAUUSD (Gold)" oninput="updateTradeField(${idx}, 'pair', this.value)" onchange="updateTradeField(${idx}, 'pair', this.value)">
           </div>
           <div class="form-group">
             <label>مبلغ الإيداع (Deposit)</label>
-            <input type="text" value="${t.deposit || ''}" placeholder="مثال: $500" oninput="updateTradeField(${idx}, 'deposit', this.value)" onchange="updateTradeField(${idx}, 'deposit', this.value)">
+            <input type="text" class="trade-in-deposit" value="${t.deposit || ''}" placeholder="مثال: $500" oninput="updateTradeField(${idx}, 'deposit', this.value)" onchange="updateTradeField(${idx}, 'deposit', this.value)">
           </div>
           <div class="form-group">
             <label>صافي الربح (Net Profit)</label>
-            <input type="text" value="${t.profit || ''}" placeholder="مثال: +$3,200" style="color:var(--neon);font-weight:bold;" oninput="updateTradeField(${idx}, 'profit', this.value)" onchange="updateTradeField(${idx}, 'profit', this.value)">
+            <input type="text" class="trade-in-profit" value="${t.profit || ''}" placeholder="مثال: +$3,200" style="color:var(--neon);font-weight:bold;" oninput="updateTradeField(${idx}, 'profit', this.value)" onchange="updateTradeField(${idx}, 'profit', this.value)">
           </div>
           <div class="form-group">
             <label>تاريخ الصفقة (Date)</label>
-            <input type="text" value="${t.date || ''}" placeholder="مثال: Sep 18, 2026" oninput="updateTradeField(${idx}, 'date', this.value)" onchange="updateTradeField(${idx}, 'date', this.value)">
+            <input type="text" class="trade-in-date" value="${t.date || ''}" placeholder="مثال: Sep 18, 2026" oninput="updateTradeField(${idx}, 'date', this.value)" onchange="updateTradeField(${idx}, 'date', this.value)">
           </div>
           <div class="form-group">
             <label>نسبة التقاسم (Profit Split)</label>
-            <input type="text" value="${t.split || '50/50'}" oninput="updateTradeField(${idx}, 'split', this.value)" onchange="updateTradeField(${idx}, 'split', this.value)">
+            <input type="text" class="trade-in-split" value="${t.split || '50/50'}" oninput="updateTradeField(${idx}, 'split', this.value)" onchange="updateTradeField(${idx}, 'split', this.value)">
           </div>
           <div class="form-group">
             <label>الشارة (Badge)</label>
-            <input type="text" value="${t.badge || 'VERIFIED RESULT 📊'}" oninput="updateTradeField(${idx}, 'badge', this.value)" onchange="updateTradeField(${idx}, 'badge', this.value)">
+            <input type="text" class="trade-in-badge" value="${t.badge || 'VERIFIED RESULT 📊'}" oninput="updateTradeField(${idx}, 'badge', this.value)" onchange="updateTradeField(${idx}, 'badge', this.value)">
           </div>
           <div class="form-group full">
             <label>وصف الصفقة (Description)</label>
-            <input type="text" value="${t.desc || t.title || ''}" placeholder="شرح تفاصيل التنفيذ والهدف..." oninput="updateTradeField(${idx}, 'desc', this.value)" onchange="updateTradeField(${idx}, 'desc', this.value)">
+            <input type="text" class="trade-in-desc" value="${t.desc || t.title || ''}" placeholder="شرح تفاصيل التنفيذ والهدف..." oninput="updateTradeField(${idx}, 'desc', this.value)" onchange="updateTradeField(${idx}, 'desc', this.value)">
           </div>
           <div class="form-group">
             <label>رابط التغريدة على X أو الشارت (Tweet / Proof URL)</label>
-            <input type="text" value="${t.tweet_url || ''}" placeholder="https://x.com/seifeddin06/..." oninput="updateTradeField(${idx}, 'tweet_url', this.value)" onchange="updateTradeField(${idx}, 'tweet_url', this.value)">
+            <input type="text" class="trade-in-tweet" value="${t.tweet_url || ''}" placeholder="https://x.com/seifeddin06/..." oninput="updateTradeField(${idx}, 'tweet_url', this.value)" onchange="updateTradeField(${idx}, 'tweet_url', this.value)">
           </div>
           <div class="form-group">
             <label>رابط فيديو التنفيذ المباشر (اختياري - Video URL)</label>
-            <input type="text" value="${t.video_url || ''}" placeholder="https://...mp4" oninput="updateTradeField(${idx}, 'video_url', this.value)" onchange="updateTradeField(${idx}, 'video_url', this.value)">
+            <input type="text" class="trade-in-video" value="${t.video_url || ''}" placeholder="https://...mp4" oninput="updateTradeField(${idx}, 'video_url', this.value)" onchange="updateTradeField(${idx}, 'video_url', this.value)">
           </div>
 
           <!-- Trade Images Upload Zone -->
@@ -1146,8 +1172,10 @@
   }
 
   function addTradeRow() {
-    if (!siteData.trades) siteData.trades = [];
-    siteData.trades.unshift({
+    if (!siteData) siteData = {};
+    if (!Array.isArray(siteData.trades)) siteData.trades = [];
+    
+    var newTrade = {
       id: "trade-" + Date.now(),
       title: "MANAGING A NEW ACCOUNT — Live Execution",
       pair: "XAUUSD (Gold)",
@@ -1160,12 +1188,22 @@
       badge: "LIVE TRADE PROOF 🎬",
       images: [],
       video_url: ""
-    });
+    };
+    siteData.trades.unshift(newTrade);
     renderTradesList(siteData.trades);
     try {
       localStorage.setItem("sb_site_content", JSON.stringify(siteData));
     } catch(e){}
-    showToast("تمت إضافة صفقة جديدة! يمكنك الآن رفع صورها ثم الضغط على حفظ.");
+    showToast("✓ تمت إضافة صفقة جديدة في الأعلى! قم بتعديل تفاصيلها ثم اضغط حفظ.");
+
+    setTimeout(function(){
+      var firstBox = document.querySelector("#tradesList .item-box");
+      if (firstBox) {
+        firstBox.scrollIntoView({ behavior: "smooth", block: "center" });
+        var firstIn = firstBox.querySelector("input");
+        if (firstIn) firstIn.focus();
+      }
+    }, 50);
   }
 
   function deleteTrade(idx) {
@@ -1402,6 +1440,41 @@
       text_ar: document.getElementById("ann_text_ar").value.trim(),
       text_en: document.getElementById("ann_text_en").value.trim()
     };
+
+    // Gather Trades directly from DOM to ensure 100% of user edits are captured
+    var tradeBoxes = document.querySelectorAll("#tradesList .item-box");
+    if (tradeBoxes.length > 0) {
+      var domTrades = [];
+      tradeBoxes.forEach(function(box, bIdx) {
+        var existing = (siteData.trades && siteData.trades[bIdx]) ? siteData.trades[bIdx] : {};
+        var pairIn = box.querySelector(".trade-in-pair");
+        var depIn = box.querySelector(".trade-in-deposit");
+        var profIn = box.querySelector(".trade-in-profit");
+        var dateIn = box.querySelector(".trade-in-date");
+        var splitIn = box.querySelector(".trade-in-split");
+        var badgeIn = box.querySelector(".trade-in-badge");
+        var descIn = box.querySelector(".trade-in-desc");
+        var tweetIn = box.querySelector(".trade-in-tweet");
+        var videoIn = box.querySelector(".trade-in-video");
+
+        domTrades.push({
+          id: existing.id || ("trade-" + (Date.now() + bIdx)),
+          title: existing.title || (pairIn ? pairIn.value.trim() : "Trading Execution"),
+          pair: pairIn ? pairIn.value.trim() : (existing.pair || ""),
+          deposit: depIn ? depIn.value.trim() : (existing.deposit || ""),
+          profit: profIn ? profIn.value.trim() : (existing.profit || ""),
+          date: dateIn ? dateIn.value.trim() : (existing.date || ""),
+          split: splitIn ? splitIn.value.trim() : (existing.split || "50/50"),
+          badge: badgeIn ? badgeIn.value.trim() : (existing.badge || "VERIFIED RESULT 📊"),
+          desc: descIn ? descIn.value.trim() : (existing.desc || ""),
+          tweet_url: tweetIn ? tweetIn.value.trim() : (existing.tweet_url || ""),
+          video_url: videoIn ? videoIn.value.trim() : (existing.video_url || ""),
+          images: Array.isArray(existing.images) ? existing.images : (existing.image_url ? [existing.image_url] : []),
+          tags: existing.tags || ["#Forex", "#XAUUSD", "#Trading", "#ManagedAccount"]
+        });
+      });
+      siteData.trades = domTrades;
+    }
 
     return siteData;
   }

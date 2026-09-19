@@ -6868,9 +6868,186 @@ body.theme-light .cvx-market-console-title {
   // ==========================================================================
   // ⚡ CENTRAL SITE CONTENT HYDRATOR (Powered by site_content.json — No Supabase)
   // ==========================================================================
-  // ⚡ CENTRAL SITE CONTENT HYDRATOR (Powered by site_content.json - No Supabase)
-  // ==========================================================================
   window.siteData = null;
+  window.cvxGalleries = [];
+
+  window.cvxInitCarousel = function(){
+    var stream = document.getElementById('cvxXStream');
+    var counter = document.getElementById('cvxTlCounter');
+    var prevBtn = document.getElementById('cvxTlPrev');
+    var nextBtn = document.getElementById('cvxTlNext');
+    var streamPrev = document.getElementById('cvxStreamPrev');
+    var streamNext = document.getElementById('cvxStreamNext');
+    var slides = document.querySelectorAll('.cvx-x-slide');
+    if(!stream || !slides.length) return;
+
+    var total = slides.length;
+    var currentIndex = 0;
+    var isManualScrolling = false;
+    var scrollTimeout = null;
+
+    function updateActiveState(idx) {
+      if(idx < 0) idx = 0;
+      if(idx >= total) idx = total - 1;
+      currentIndex = idx;
+      if(counter) counter.textContent = (idx + 1) + ' / ' + total;
+
+      slides.forEach(function(s, i){
+        if(i === idx) s.classList.add('active-slide');
+        else s.classList.remove('active-slide');
+      });
+    }
+
+    function scrollToSlide(idx) {
+      if(idx < 0) idx = 0;
+      if(idx >= total) idx = total - 1;
+      isManualScrolling = true;
+      updateActiveState(idx);
+
+      slides[idx].scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center'
+      });
+
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(function(){
+        isManualScrolling = false;
+      }, 600);
+    }
+
+    if(prevBtn) {
+      prevBtn.onclick = function(){ scrollToSlide(currentIndex - 1); };
+    }
+    if(nextBtn) {
+      nextBtn.onclick = function(){ scrollToSlide(currentIndex + 1); };
+    }
+    if(streamPrev) {
+      streamPrev.onclick = function(){ scrollToSlide(currentIndex - 1); };
+    }
+    if(streamNext) {
+      streamNext.onclick = function(){ scrollToSlide(currentIndex + 1); };
+    }
+
+    stream.onscroll = function(){
+      if(isManualScrolling) return;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(function(){
+        var streamRect = stream.getBoundingClientRect();
+        var streamCenter = streamRect.left + streamRect.width / 2;
+        var closestIdx = 0;
+        var minDistance = Infinity;
+
+        slides.forEach(function(slide, i){
+          var slideRect = slide.getBoundingClientRect();
+          var slideCenter = slideRect.left + slideRect.width / 2;
+          var dist = Math.abs(streamCenter - slideCenter);
+          if(dist < minDistance) {
+            minDistance = dist;
+            closestIdx = i;
+          }
+        });
+
+        updateActiveState(closestIdx);
+      }, 100);
+    };
+
+    updateActiveState(0);
+  };
+
+  window.renderTradeStream = function(trades) {
+    var stream = document.getElementById('cvxXStream');
+    if (!stream || !Array.isArray(trades) || trades.length === 0) return;
+
+    window.cvxGalleries = [];
+    stream.innerHTML = '';
+
+    trades.forEach(function(tr, slideIdx) {
+      var imgs = Array.isArray(tr.images) ? tr.images : (tr.image_url ? [tr.image_url] : []);
+
+      var galEntries = [];
+      if (tr.video_url) {
+        galEntries.push({ src: tr.video_url, cap: tr.desc || tr.title || 'Live Video Proof' });
+      } else if (imgs.length > 0) {
+        imgs.forEach(function(imgSrc, i) {
+          galEntries.push({ src: imgSrc, cap: (tr.desc || tr.title || 'Proof') + (imgs.length > 1 ? (' (Photo ' + (i+1) + ')') : '') });
+        });
+      }
+      window.cvxGalleries.push(galEntries);
+
+      var galleryHtml = '';
+      if (tr.video_url) {
+        var thumb = imgs[0] || 'https://pbs.twimg.com/amplify_video_thumb/2100985203426480128/img/cUD8bgVpD7goSl9s?format=webp&name=medium';
+        galleryHtml = `
+          <div class="cvx-gallery-grid grid-1">
+            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(${slideIdx}, 0)" style="cursor:pointer;">
+              <img src="${thumb}" alt="Trade Proof Video" loading="lazy">
+              <div class="cvx-play-overlay">
+                <div class="cvx-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+              </div>
+              <span class="cvx-zoom-hint" style="opacity:1;transform:none;">▶ تشغيل الفيديو (Watch Video)</span>
+            </div>
+          </div>
+        `;
+      } else if (imgs.length > 0) {
+        var gridClass = 'grid-' + Math.min(imgs.length, 4);
+        var itemsHtml = '';
+        imgs.forEach(function(imgSrc, imgIdx) {
+          itemsHtml += `
+            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(${slideIdx}, ${imgIdx})">
+              <img src="${imgSrc}" alt="Trade Execution Proof ${imgIdx + 1}" loading="lazy">
+              <span class="cvx-zoom-hint">🔍 Zoom</span>
+            </div>
+          `;
+        });
+        galleryHtml = `<div class="cvx-gallery-grid ${gridClass}">${itemsHtml}</div>`;
+      }
+
+      var tagsHtml = '';
+      if (Array.isArray(tr.tags)) {
+        tr.tags.forEach(function(tg){ tagsHtml += '<span>' + tg + '</span>'; });
+      } else {
+        tagsHtml = '<span>#Forex</span><span>#XAUUSD</span><span>#Trading</span><span>#ManagedAccount</span>';
+      }
+
+      var article = document.createElement('article');
+      article.className = 'cvx-x-slide' + (slideIdx === 0 ? ' active-slide' : '');
+      article.setAttribute('data-slide', slideIdx);
+      article.innerHTML = `
+        <div class="cvx-slide-head">
+          <div class="cvx-slide-author">
+            <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-slide-avatar">
+            <div class="cvx-slide-author-info">
+              <b>Saifeddine Boumaza</b>
+              <small>@seifeddin06 · ${tr.date || 'Live'}</small>
+            </div>
+          </div>
+          <div class="cvx-slide-head-right">
+            <span class="cvx-slide-badge neon">${tr.badge || 'VERIFIED RESULT 📊'}</span>
+            ${tr.tweet_url ? `<a href="${tr.tweet_url}" target="_blank" rel="noopener" title="View on X"><svg class="cvx-slide-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>` : ''}
+          </div>
+        </div>
+        <div class="cvx-slide-body">
+          <div class="cvx-slide-profit-row">
+            <span class="dep">Deposit: <b>${tr.deposit || '$100'}</b></span>
+            <span class="pft">${tr.profit || '+$1,000'}</span>
+          </div>
+          <p class="cvx-slide-desc">${tr.desc || tr.title || 'Live verified trading execution on MT5.'}</p>
+          <div class="cvx-slide-tags">${tagsHtml}</div>
+          ${galleryHtml}
+        </div>
+        <div class="cvx-slide-foot">
+          <span class="cvx-slide-split">Profit Split: ${tr.split || '50/50'}</span>
+          ${tr.tweet_url ? `<a href="${tr.tweet_url}" target="_blank" rel="noopener" class="cvx-slide-link">View Proof on X ↗</a>` : `<span class="cvx-slide-link" style="color:var(--neon)">Verified MT5 Execution ✓</span>`}
+        </div>
+      `;
+      stream.appendChild(article);
+    });
+
+    if (typeof window.cvxInitCarousel === 'function') {
+      window.cvxInitCarousel();
+    }
+  };
 
   window.applyDynamicSiteOverrides = function() {
     var data = window.siteData;
@@ -10025,183 +10202,10 @@ body.theme-light .cvx-market-console-title {
       { src: 'https://pbs.twimg.com/media/HSLx32HXcAELU5b?format=jpg&name=large', cap: 'Trading Account Management Tiers & Terms #2' }
     ]
   ];
-  window.renderTradeStream = function(trades) {
-    var stream = document.getElementById('cvxXStream');
-    if (!stream || !Array.isArray(trades) || trades.length === 0) return;
 
-    window.cvxGalleries = [];
-    stream.innerHTML = '';
-
-    trades.forEach(function(tr, slideIdx) {
-      var imgs = Array.isArray(tr.images) ? tr.images : (tr.image_url ? [tr.image_url] : []);
-
-      var galEntries = [];
-      if (tr.video_url) {
-        galEntries.push({ src: tr.video_url, cap: tr.desc || tr.title || 'Live Video Proof' });
-      } else if (imgs.length > 0) {
-        imgs.forEach(function(imgSrc, i) {
-          galEntries.push({ src: imgSrc, cap: (tr.desc || tr.title || 'Proof') + (imgs.length > 1 ? (' (Photo ' + (i+1) + ')') : '') });
-        });
-      }
-      window.cvxGalleries.push(galEntries);
-
-      var galleryHtml = '';
-      if (tr.video_url) {
-        var thumb = imgs[0] || 'https://pbs.twimg.com/amplify_video_thumb/2100985203426480128/img/cUD8bgVpD7goSl9s?format=webp&name=medium';
-        galleryHtml = `
-          <div class="cvx-gallery-grid grid-1">
-            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(${slideIdx}, 0)" style="cursor:pointer;">
-              <img src="${thumb}" alt="Trade Proof Video" loading="lazy">
-              <div class="cvx-play-overlay">
-                <div class="cvx-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-              </div>
-              <span class="cvx-zoom-hint" style="opacity:1;transform:none;">▶ تشغيل الفيديو (Watch Video)</span>
-            </div>
-          </div>
-        `;
-      } else if (imgs.length > 0) {
-        var gridClass = 'grid-' + Math.min(imgs.length, 4);
-        var itemsHtml = '';
-        imgs.forEach(function(imgSrc, imgIdx) {
-          itemsHtml += `
-            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(${slideIdx}, ${imgIdx})">
-              <img src="${imgSrc}" alt="Trade Execution Proof ${imgIdx + 1}" loading="lazy">
-              <span class="cvx-zoom-hint">🔍 Zoom</span>
-            </div>
-          `;
-        });
-        galleryHtml = `<div class="cvx-gallery-grid ${gridClass}">${itemsHtml}</div>`;
-      }
-
-      var tagsHtml = '';
-      if (Array.isArray(tr.tags)) {
-        tr.tags.forEach(function(tg){ tagsHtml += '<span>' + tg + '</span>'; });
-      } else {
-        tagsHtml = '<span>#Forex</span><span>#XAUUSD</span><span>#Trading</span><span>#ManagedAccount</span>';
-      }
-
-      var article = document.createElement('article');
-      article.className = 'cvx-x-slide' + (slideIdx === 0 ? ' active-slide' : '');
-      article.setAttribute('data-slide', slideIdx);
-      article.innerHTML = `
-        <div class="cvx-slide-head">
-          <div class="cvx-slide-author">
-            <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-slide-avatar">
-            <div class="cvx-slide-author-info">
-              <b>Saifeddine Boumaza</b>
-              <small>@seifeddin06 · ${tr.date || 'Live'}</small>
-            </div>
-          </div>
-          <div class="cvx-slide-head-right">
-            <span class="cvx-slide-badge neon">${tr.badge || 'VERIFIED RESULT 📊'}</span>
-            ${tr.tweet_url ? `<a href="${tr.tweet_url}" target="_blank" rel="noopener" title="View on X"><svg class="cvx-slide-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>` : ''}
-          </div>
-        </div>
-        <div class="cvx-slide-body">
-          <div class="cvx-slide-profit-row">
-            <span class="dep">Deposit: <b>${tr.deposit || '$100'}</b></span>
-            <span class="pft">${tr.profit || '+$1,000'}</span>
-          </div>
-          <p class="cvx-slide-desc">${tr.desc || tr.title || 'Live verified trading execution on MT5.'}</p>
-          <div class="cvx-slide-tags">${tagsHtml}</div>
-          ${galleryHtml}
-        </div>
-        <div class="cvx-slide-foot">
-          <span class="cvx-slide-split">Profit Split: ${tr.split || '50/50'}</span>
-          ${tr.tweet_url ? `<a href="${tr.tweet_url}" target="_blank" rel="noopener" class="cvx-slide-link">View Proof on X ↗</a>` : `<span class="cvx-slide-link" style="color:var(--neon)">Verified MT5 Execution ✓</span>`}
-        </div>
-      `;
-      stream.appendChild(article);
-    });
-
-    if (typeof window.cvxInitCarousel === 'function') {
-      window.cvxInitCarousel();
-    }
-  };
-
-  window.cvxInitCarousel = function(){
-    var stream = document.getElementById('cvxXStream');
-    var counter = document.getElementById('cvxTlCounter');
-    var prevBtn = document.getElementById('cvxTlPrev');
-    var nextBtn = document.getElementById('cvxTlNext');
-    var streamPrev = document.getElementById('cvxStreamPrev');
-    var streamNext = document.getElementById('cvxStreamNext');
-    var slides = document.querySelectorAll('.cvx-x-slide');
-    if(!stream || !slides.length) return;
-
-    var total = slides.length;
-    var currentIndex = 0;
-    var isManualScrolling = false;
-    var scrollTimeout = null;
-
-    function updateActiveState(idx) {
-      if(idx < 0) idx = 0;
-      if(idx >= total) idx = total - 1;
-      currentIndex = idx;
-      if(counter) counter.textContent = (idx + 1) + ' / ' + total;
-
-      slides.forEach(function(s, i){
-        if(i === idx) s.classList.add('active-slide');
-        else s.classList.remove('active-slide');
-      });
-    }
-
-    function scrollToSlide(idx) {
-      if(idx < 0) idx = 0;
-      if(idx >= total) idx = total - 1;
-      isManualScrolling = true;
-      updateActiveState(idx);
-
-      slides[idx].scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-        inline: 'center'
-      });
-
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(function(){
-        isManualScrolling = false;
-      }, 600);
-    }
-
-    if(prevBtn) {
-      prevBtn.onclick = function(){ scrollToSlide(currentIndex - 1); };
-    }
-    if(nextBtn) {
-      nextBtn.onclick = function(){ scrollToSlide(currentIndex + 1); };
-    }
-    if(streamPrev) {
-      streamPrev.onclick = function(){ scrollToSlide(currentIndex - 1); };
-    }
-    if(streamNext) {
-      streamNext.onclick = function(){ scrollToSlide(currentIndex + 1); };
-    }
-
-    stream.onscroll = function(){
-      if(isManualScrolling) return;
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(function(){
-        var streamRect = stream.getBoundingClientRect();
-        var streamCenter = streamRect.left + streamRect.width / 2;
-        var closestIdx = 0;
-        var minDistance = Infinity;
-
-        slides.forEach(function(slide, i){
-          var slideRect = slide.getBoundingClientRect();
-          var slideCenter = slideRect.left + slideRect.width / 2;
-          var dist = Math.abs(streamCenter - slideCenter);
-          if(dist < minDistance) {
-            minDistance = dist;
-            closestIdx = i;
-          }
-        });
-
-        updateActiveState(closestIdx);
-      }, 100);
-    };
-
-    updateActiveState(0);
-  };
+  if (!window.cvxGalleries || !window.cvxGalleries.length) {
+    window.cvxGalleries = cvxGalleries;
+  }
 
   var tradesToRender = (window.siteData && window.siteData.trades && window.siteData.trades.length) ? window.siteData.trades : null;
   if (!tradesToRender) {
@@ -10246,6 +10250,10 @@ body.theme-light .cvx-market-console-title {
   var curPost = 0;
   var curImg = 0;
 
+  function getActiveGalleries() {
+    return (window.cvxGalleries && window.cvxGalleries.length) ? window.cvxGalleries : cvxGalleries;
+  }
+
   function renderLb() {
     var lb = document.getElementById('cvxLightbox');
     var img = document.getElementById('cvxLbImg');
@@ -10256,7 +10264,8 @@ body.theme-light .cvx-market-console-title {
     var nextBtn = document.getElementById('cvxLbNext');
     if(!lb) return;
 
-    var post = cvxGalleries[curPost];
+    var activeGalleries = getActiveGalleries();
+    var post = activeGalleries[curPost];
     if(!post || !post.length) return;
     if(curImg < 0) curImg = 0;
     if(curImg >= post.length) curImg = post.length - 1;
@@ -10335,7 +10344,8 @@ body.theme-light .cvx-market-console-title {
   };
 
   window.cvxLbStep = function(dir) {
-    var post = cvxGalleries[curPost];
+    var activeGalleries = getActiveGalleries();
+    var post = activeGalleries[curPost];
     if(!post || post.length <= 1) return;
     var newIdx = curImg + dir;
     if(newIdx < 0) {
