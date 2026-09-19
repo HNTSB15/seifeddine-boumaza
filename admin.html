@@ -225,6 +225,80 @@
     }
     .item-title { font-weight: 800; font-size: 15px; color: var(--neon); }
 
+    /* Trade Image Upload Zone & Previews */
+    .trade-img-upload-zone {
+      background: rgba(0, 255, 156, 0.03);
+      border: 2px dashed rgba(0, 255, 156, 0.3);
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 6px;
+      transition: all 0.2s ease;
+    }
+    .trade-img-upload-zone:hover {
+      border-color: var(--neon);
+      background: rgba(0, 255, 156, 0.06);
+    }
+    .trade-img-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .trade-img-thumb {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      aspect-ratio: 16/10;
+      background: #000;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+    }
+    .trade-img-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.2s;
+    }
+    .trade-img-thumb:hover img {
+      transform: scale(1.05);
+    }
+    .trade-img-delete {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: rgba(255, 71, 87, 0.92);
+      color: #fff;
+      border: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+      transition: all 0.15s ease;
+      z-index: 2;
+    }
+    .trade-img-delete:hover {
+      background: #ff2238;
+      transform: scale(1.15);
+    }
+    .trade-img-count {
+      position: absolute;
+      bottom: 5px;
+      left: 5px;
+      background: rgba(0,0,0,0.75);
+      color: var(--neon);
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
     /* Notifications & Modals */
     .toast {
       position: fixed;
@@ -878,32 +952,35 @@
     var c = document.getElementById("tradesList");
     c.innerHTML = "";
     trades.forEach(function(t, idx){
+      if (!Array.isArray(t.images)) {
+        t.images = t.image_url ? [t.image_url] : [];
+      }
       var box = document.createElement("div");
       box.className = "item-box";
       box.innerHTML = `
         <div class="item-box-head">
-          <span class="item-title">صفقة #${idx + 1}: ${t.pair || "صفقة جديدة"}</span>
-          <button type="button" class="btn btn-danger" onclick="deleteTrade(${idx})" style="padding:4px 10px;font-size:12px;">حذف</button>
+          <span class="item-title">صفقة #${idx + 1}: ${t.pair || t.title || "صفقة جديدة"}</span>
+          <button type="button" class="btn btn-danger" onclick="deleteTrade(${idx})" style="padding:4px 10px;font-size:12px;">حذف الصفقة</button>
         </div>
         <div class="form-grid">
           <div class="form-group">
-            <label>الأصل المتداول (Pair)</label>
-            <input type="text" value="${t.pair || ''}" oninput="updateTradeField(${idx}, 'pair', this.value)" onchange="updateTradeField(${idx}, 'pair', this.value)">
+            <label>الأصل المتداول (Pair / Title)</label>
+            <input type="text" value="${t.pair || ''}" placeholder="مثال: XAUUSD (Gold)" oninput="updateTradeField(${idx}, 'pair', this.value)" onchange="updateTradeField(${idx}, 'pair', this.value)">
           </div>
           <div class="form-group">
             <label>مبلغ الإيداع (Deposit)</label>
-            <input type="text" value="${t.deposit || ''}" oninput="updateTradeField(${idx}, 'deposit', this.value)" onchange="updateTradeField(${idx}, 'deposit', this.value)">
+            <input type="text" value="${t.deposit || ''}" placeholder="مثال: $500" oninput="updateTradeField(${idx}, 'deposit', this.value)" onchange="updateTradeField(${idx}, 'deposit', this.value)">
           </div>
           <div class="form-group">
             <label>صافي الربح (Net Profit)</label>
-            <input type="text" value="${t.profit || ''}" style="color:var(--neon);font-weight:bold;" oninput="updateTradeField(${idx}, 'profit', this.value)" onchange="updateTradeField(${idx}, 'profit', this.value)">
+            <input type="text" value="${t.profit || ''}" placeholder="مثال: +$3,200" style="color:var(--neon);font-weight:bold;" oninput="updateTradeField(${idx}, 'profit', this.value)" onchange="updateTradeField(${idx}, 'profit', this.value)">
           </div>
           <div class="form-group">
             <label>تاريخ الصفقة (Date)</label>
-            <input type="text" value="${t.date || ''}" oninput="updateTradeField(${idx}, 'date', this.value)" onchange="updateTradeField(${idx}, 'date', this.value)">
+            <input type="text" value="${t.date || ''}" placeholder="مثال: Sep 18, 2026" oninput="updateTradeField(${idx}, 'date', this.value)" onchange="updateTradeField(${idx}, 'date', this.value)">
           </div>
           <div class="form-group">
-            <label>نسبة التقاسم (Split)</label>
+            <label>نسبة التقاسم (Profit Split)</label>
             <input type="text" value="${t.split || '50/50'}" oninput="updateTradeField(${idx}, 'split', this.value)" onchange="updateTradeField(${idx}, 'split', this.value)">
           </div>
           <div class="form-group">
@@ -912,11 +989,40 @@
           </div>
           <div class="form-group full">
             <label>وصف الصفقة (Description)</label>
-            <input type="text" value="${t.desc || ''}" oninput="updateTradeField(${idx}, 'desc', this.value)" onchange="updateTradeField(${idx}, 'desc', this.value)">
+            <input type="text" value="${t.desc || t.title || ''}" placeholder="شرح تفاصيل التنفيذ والهدف..." oninput="updateTradeField(${idx}, 'desc', this.value)" onchange="updateTradeField(${idx}, 'desc', this.value)">
           </div>
-          <div class="form-group full">
-            <label>رابط الإثبات على X أو الشارت (Tweet / Proof URL)</label>
-            <input type="text" value="${t.tweet_url || ''}" oninput="updateTradeField(${idx}, 'tweet_url', this.value)" onchange="updateTradeField(${idx}, 'tweet_url', this.value)">
+          <div class="form-group">
+            <label>رابط التغريدة على X أو الشارت (Tweet / Proof URL)</label>
+            <input type="text" value="${t.tweet_url || ''}" placeholder="https://x.com/seifeddin06/..." oninput="updateTradeField(${idx}, 'tweet_url', this.value)" onchange="updateTradeField(${idx}, 'tweet_url', this.value)">
+          </div>
+          <div class="form-group">
+            <label>رابط فيديو التنفيذ المباشر (اختياري - Video URL)</label>
+            <input type="text" value="${t.video_url || ''}" placeholder="https://...mp4" oninput="updateTradeField(${idx}, 'video_url', this.value)" onchange="updateTradeField(${idx}, 'video_url', this.value)">
+          </div>
+
+          <!-- Trade Images Upload Zone -->
+          <div class="form-group full" style="margin-top: 6px;">
+            <label style="color:var(--neon);font-size:13.5px;font-weight:800;">
+              📷 صور ولقطات شاشة الصفقة (Trade Proof Screenshots)
+            </label>
+            <div class="trade-img-upload-zone">
+              <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
+                <label class="btn btn-primary" style="cursor:pointer;margin:0;font-size:13px;padding:9px 18px;">
+                  <span>📷 اختر صورة أو أكثر من الهاتف / الحاسوب</span>
+                  <input type="file" accept="image/*" multiple style="display:none" onchange="handleTradeImageFiles(event, ${idx})">
+                </label>
+                <span style="color:var(--muted);font-size:12px;">أو</span>
+                <button type="button" class="btn btn-secondary" style="font-size:12px;padding:8px 14px;" onclick="promptTradeImageUrl(${idx})">
+                  🔗 إضافة رابط صورة مباشر
+                </button>
+              </div>
+              <p style="color:var(--muted);font-size:11.5px;text-align:center;margin-top:10px;">
+                💡 يتم ضغط الصور تلقائياً للحفاظ على سرعة تصفح فائقة. يمكنك رفع لقطة أرباح MT5 وشارت التحليل معاً.
+              </p>
+              <div id="trade_imgs_${idx}" class="trade-img-grid">
+                ${renderTradeThumbs(t.images || [], idx)}
+              </div>
+            </div>
           </div>
         </div>
       `;
@@ -924,10 +1030,126 @@
     });
   }
 
+  function renderTradeThumbs(images, tradeIdx) {
+    if (!images || !images.length) {
+      return '<div style="grid-column:1/-1;color:var(--muted);font-size:12px;padding:8px 0;text-align:center;">لا توجد صور مضافة بعد. اضغط الزر الأخضر أعلاه لرفع لقطات الشاشة.</div>';
+    }
+    return images.map(function(imgSrc, imgIdx){
+      return `
+        <div class="trade-img-thumb" title="صورة رقم ${imgIdx + 1}">
+          <img src="${imgSrc}" alt="Trade Proof ${imgIdx + 1}">
+          <span class="trade-img-count">#${imgIdx + 1}</span>
+          <button type="button" class="trade-img-delete" onclick="removeTradeImage(${tradeIdx}, ${imgIdx})" title="حذف هذه الصورة">✕</button>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function removeTradeImage(tradeIdx, imgIdx) {
+    if (siteData.trades && siteData.trades[tradeIdx] && Array.isArray(siteData.trades[tradeIdx].images)) {
+      siteData.trades[tradeIdx].images.splice(imgIdx, 1);
+      var container = document.getElementById("trade_imgs_" + tradeIdx);
+      if (container) {
+        container.innerHTML = renderTradeThumbs(siteData.trades[tradeIdx].images, tradeIdx);
+      }
+      try {
+        localStorage.setItem("sb_site_content", JSON.stringify(siteData));
+      } catch(e){}
+      showToast("تم حذف الصورة من الصفقة.");
+    }
+  }
+
+  function promptTradeImageUrl(tradeIdx) {
+    var url = prompt("أدخل رابط الصورة المباشر (Direct Image URL):");
+    if (url && url.trim()) {
+      if (!siteData.trades[tradeIdx]) return;
+      if (!Array.isArray(siteData.trades[tradeIdx].images)) {
+        siteData.trades[tradeIdx].images = [];
+      }
+      siteData.trades[tradeIdx].images.push(url.trim());
+      var container = document.getElementById("trade_imgs_" + tradeIdx);
+      if (container) {
+        container.innerHTML = renderTradeThumbs(siteData.trades[tradeIdx].images, tradeIdx);
+      }
+      try {
+        localStorage.setItem("sb_site_content", JSON.stringify(siteData));
+      } catch(e){}
+      showToast("✓ تم إضافة رابط الصورة بنجاح!");
+    }
+  }
+
+  function compressImage(file, maxWidth, maxHeight, quality) {
+    return new Promise(function(resolve, reject) {
+      var reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = function(e) {
+        var img = new Image();
+        img.onerror = reject;
+        img.onload = function() {
+          var w = img.width;
+          var h = img.height;
+          var maxW = maxWidth || 1280;
+          var maxH = maxHeight || 1280;
+          if (w > maxW || h > maxH) {
+            if (w / h > maxW / maxH) {
+              h = Math.round((h * maxW) / w);
+              w = maxW;
+            } else {
+              w = Math.round((w * maxH) / h);
+              h = maxH;
+            }
+          }
+          var canvas = document.createElement("canvas");
+          canvas.width = w;
+          canvas.height = h;
+          var ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, w, h);
+          var mime = (file.type === "image/png" && file.size < 400000) ? "image/png" : "image/jpeg";
+          var q = quality || 0.82;
+          var dataUrl = canvas.toDataURL(mime, q);
+          resolve(dataUrl);
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function handleTradeImageFiles(evt, idx) {
+    var files = evt.target.files;
+    if (!files || !files.length) return;
+    if (!siteData.trades || !siteData.trades[idx]) return;
+    if (!Array.isArray(siteData.trades[idx].images)) {
+      siteData.trades[idx].images = siteData.trades[idx].image_url ? [siteData.trades[idx].image_url] : [];
+    }
+
+    showToast("⏳ جاري تجهيز وضغط " + files.length + " صورة...");
+    var promises = [];
+    for (var i = 0; i < files.length; i++) {
+      promises.push(compressImage(files[i]));
+    }
+    Promise.all(promises).then(function(compressedList){
+      compressedList.forEach(function(base64){
+        siteData.trades[idx].images.push(base64);
+      });
+      var container = document.getElementById("trade_imgs_" + idx);
+      if (container) {
+        container.innerHTML = renderTradeThumbs(siteData.trades[idx].images, idx);
+      }
+      try {
+        localStorage.setItem("sb_site_content", JSON.stringify(siteData));
+      } catch(e){}
+      showToast("✓ تمت إضافة الصور! اضغط 'نشر التعديلات فوراً' لحفظها على الموقع.");
+    }).catch(function(err){
+      alert("تعذر قراءة الصور: " + (err.message || err));
+    });
+  }
+
   function addTradeRow() {
     if (!siteData.trades) siteData.trades = [];
     siteData.trades.unshift({
       id: "trade-" + Date.now(),
+      title: "MANAGING A NEW ACCOUNT — Live Execution",
       pair: "XAUUSD (Gold)",
       deposit: "$500",
       profit: "+$3,200",
@@ -935,16 +1157,24 @@
       date: new Date().toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric'}),
       desc: "Live verified MT5 breakout execution on Gold. Take profit hit perfectly.",
       tweet_url: "https://x.com/seifeddin06",
-      badge: "LIVE TRADE PROOF 🎬"
+      badge: "LIVE TRADE PROOF 🎬",
+      images: [],
+      video_url: ""
     });
     renderTradesList(siteData.trades);
-    showToast("تمت إضافة صفقة جديدة! قم بتعديل تفاصيلها ثم اضغط حفظ.");
+    try {
+      localStorage.setItem("sb_site_content", JSON.stringify(siteData));
+    } catch(e){}
+    showToast("تمت إضافة صفقة جديدة! يمكنك الآن رفع صورها ثم الضغط على حفظ.");
   }
 
   function deleteTrade(idx) {
     if (confirm("هل أنت متأكد من حذف هذه الصفقة؟")) {
       siteData.trades.splice(idx, 1);
       renderTradesList(siteData.trades);
+      try {
+        localStorage.setItem("sb_site_content", JSON.stringify(siteData));
+      } catch(e){}
     }
   }
 
@@ -1176,7 +1406,7 @@
     return siteData;
   }
 
-  // Publish to GitHub via GitHub REST API
+  // Publish to GitHub via GitHub REST API (including trade images)
   function publishChanges() {
     var token = document.getElementById("gh_token").value.trim();
     if (!token) {
@@ -1190,41 +1420,57 @@
     localStorage.setItem("sb_gh_token", token);
 
     var updated = gatherFormData();
-    var jsonString = JSON.stringify(updated, null, 2);
-    try {
-      localStorage.setItem("sb_site_content", jsonString);
-    } catch(e){}
+    var repo = document.getElementById("gh_repo").value.trim() || "HNTSB15/seifeddine-boumaza";
+    var branch = document.getElementById("gh_branch").value.trim() || "main";
+    var authHeader = token.startsWith("ghp_") ? ("token " + token) : ("Bearer " + token);
 
     var btn = document.getElementById("publishBtn");
     var origText = btn.innerHTML;
     btn.disabled = true;
-    btn.innerHTML = "<span>⏳ جاري النشر على GitHub...</span>";
 
-    var repo = document.getElementById("gh_repo").value.trim() || "HNTSB15/seifeddine-boumaza";
-    var branch = document.getElementById("gh_branch").value.trim() || "main";
-    var filePath = "site_content.json";
-    var url = "https://api.github.com/repos/" + repo + "/contents/" + filePath;
-
-    // 1. Get current file SHA with cache buster
-    var authHeader = token.startsWith("ghp_") ? ("token " + token) : ("Bearer " + token);
-
-    // Convert utf-8 string to base64 safely
-    var utf8Bytes = new TextEncoder().encode(jsonString);
-    var binary = "";
-    for (var i = 0; i < utf8Bytes.byteLength; i++) {
-      binary += String.fromCharCode(utf8Bytes[i]);
+    // 1. Detect any un-uploaded base64 images from trades
+    var imagesToUpload = [];
+    if (updated.trades && Array.isArray(updated.trades)) {
+      updated.trades.forEach(function(tr, tIdx) {
+        if (tr.images && Array.isArray(tr.images)) {
+          tr.images.forEach(function(imgSrc, iIdx) {
+            if (typeof imgSrc === 'string' && imgSrc.startsWith('data:image/')) {
+              imagesToUpload.push({
+                tIdx: tIdx,
+                iIdx: iIdx,
+                dataUrl: imgSrc
+              });
+            }
+          });
+        }
+      });
     }
-    var b64Content = btoa(binary);
 
-    function doCommit(freshSha) {
+    function uploadAllImages(index, onComplete, onError) {
+      if (index >= imagesToUpload.length) {
+        onComplete();
+        return;
+      }
+      var item = imagesToUpload[index];
+      btn.innerHTML = "<span>⏳ جاري رفع الصور (" + (index + 1) + "/" + imagesToUpload.length + ")...</span>";
+
+      var parts = item.dataUrl.split(',');
+      var mimeMatch = parts[0].match(/:(.*?);/);
+      var mime = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+      var ext = mime.indexOf('png') > -1 ? 'png' : 'jpg';
+      var rawBase64 = parts[1];
+
+      var fileName = "trade_" + Date.now() + "_" + item.tIdx + "_" + item.iIdx + "." + ext;
+      var filePath = "uploads/trades/" + fileName;
+      var uploadUrl = "https://api.github.com/repos/" + repo + "/contents/" + filePath;
+
       var payload = {
-        message: "Update site content via SB Admin Studio [skip ci]",
-        content: b64Content,
+        message: "Upload trade proof image " + fileName + " [skip ci]",
+        content: rawBase64,
         branch: branch
       };
-      if (freshSha) payload.sha = freshSha;
 
-      return fetch(url, {
+      fetch(uploadUrl, {
         method: "PUT",
         headers: {
           "Authorization": authHeader,
@@ -1232,70 +1478,142 @@
           "Content-Type": "application/json"
         },
         body: JSON.stringify(payload)
-      });
-    }
-
-    function getLatestSha() {
-      return fetch(url + "?ref=" + branch + "&_cb=" + Date.now(), {
-        cache: "no-store",
-        headers: {
-          "Authorization": authHeader,
-          "Accept": "application/vnd.github.v3+json"
-        }
       })
       .then(function(res){
-        if (res.status === 404) return null;
         if (!res.ok) {
-          return res.json().then(function(err){
-            throw new Error(err.message || ("Status: " + res.status));
+          return res.json().then(function(e){
+            throw new Error(e.message || ("Upload error " + res.status));
           }).catch(function(e){
-            throw new Error(e.message || ("Status: " + res.status));
+            throw new Error(e.message || ("Upload error " + res.status));
           });
         }
         return res.json();
       })
-      .then(function(data){
-        return data ? data.sha : null;
+      .then(function(){
+        // Replace base64 with uploaded relative path
+        updated.trades[item.tIdx].images[item.iIdx] = filePath;
+        if (siteData && siteData.trades && siteData.trades[item.tIdx] && siteData.trades[item.tIdx].images) {
+          siteData.trades[item.tIdx].images[item.iIdx] = filePath;
+        }
+        uploadAllImages(index + 1, onComplete, onError);
+      })
+      .catch(function(err){
+        onError(err);
       });
     }
 
-    getLatestSha()
-    .then(function(sha){
-      return doCommit(sha);
-    })
-    .then(function(putRes){
-      if (putRes.status === 409) {
-        // SHA mismatch conflict: auto-retry once with freshly fetched SHA
-        return getLatestSha().then(function(newSha){
-          return doCommit(newSha);
+    function commitSiteContent() {
+      btn.innerHTML = "<span>⏳ جاري حفظ ونشر site_content.json...</span>";
+      var jsonString = JSON.stringify(updated, null, 2);
+      try {
+        localStorage.setItem("sb_site_content", jsonString);
+      } catch(e){}
+
+      var filePath = "site_content.json";
+      var url = "https://api.github.com/repos/" + repo + "/contents/" + filePath;
+
+      var utf8Bytes = new TextEncoder().encode(jsonString);
+      var binary = "";
+      for (var i = 0; i < utf8Bytes.byteLength; i++) {
+        binary += String.fromCharCode(utf8Bytes[i]);
+      }
+      var b64Content = btoa(binary);
+
+      function doCommit(freshSha) {
+        var payload = {
+          message: "Update site content and trades via SB Admin Studio [skip ci]",
+          content: b64Content,
+          branch: branch
+        };
+        if (freshSha) payload.sha = freshSha;
+
+        return fetch(url, {
+          method: "PUT",
+          headers: {
+            "Authorization": authHeader,
+            "Accept": "application/vnd.github.v3+json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
         });
       }
-      return putRes;
-    })
-    .then(function(finalRes){
-      if (!finalRes.ok) {
-        return finalRes.json().then(function(errData){
-          var errMsg = (errData && errData.message) ? errData.message : ("HTTP " + finalRes.status);
-          if (finalRes.status === 403) {
-            errMsg += " (الرمز لا يمتلك صلاحية الكتابة repo write)";
+
+      function getLatestSha() {
+        return fetch(url + "?ref=" + branch + "&_cb=" + Date.now(), {
+          cache: "no-store",
+          headers: {
+            "Authorization": authHeader,
+            "Accept": "application/vnd.github.v3+json"
           }
-          throw new Error(errMsg);
-        }).catch(function(e){
-          throw new Error(e.message || ("خطأ " + finalRes.status));
+        })
+        .then(function(res){
+          if (res.status === 404) return null;
+          if (!res.ok) {
+            return res.json().then(function(err){
+              throw new Error(err.message || ("Status: " + res.status));
+            }).catch(function(e){
+              throw new Error(e.message || ("Status: " + res.status));
+            });
+          }
+          return res.json();
+        })
+        .then(function(data){
+          return data ? data.sha : null;
         });
       }
-      return finalRes.json();
-    })
-    .then(function(success){
-      btn.disabled = false;
-      btn.innerHTML = origText;
-      showToast("🚀 تم الحفظ والنشر بنجاح! التعديلات مباشرة الآن على موقعك.");
-    })
-    .catch(function(err){
-      btn.disabled = false;
-      btn.innerHTML = origText;
-      alert("حدث خطأ أثناء النشر:\n" + err.message);
-    });
+
+      getLatestSha()
+      .then(function(sha){
+        return doCommit(sha);
+      })
+      .then(function(putRes){
+        if (putRes.status === 409) {
+          return getLatestSha().then(function(newSha){
+            return doCommit(newSha);
+          });
+        }
+        return putRes;
+      })
+      .then(function(finalRes){
+        if (!finalRes.ok) {
+          return finalRes.json().then(function(errData){
+            var errMsg = (errData && errData.message) ? errData.message : ("HTTP " + finalRes.status);
+            if (finalRes.status === 403) {
+              errMsg += " (الرمز لا يمتلك صلاحية الكتابة repo write)";
+            }
+            throw new Error(errMsg);
+          }).catch(function(e){
+            throw new Error(e.message || ("خطأ " + finalRes.status));
+          });
+        }
+        return finalRes.json();
+      })
+      .then(function(success){
+        btn.disabled = false;
+        btn.innerHTML = origText;
+        if (siteData && siteData.trades) {
+          renderTradesList(siteData.trades);
+        }
+        showToast("🚀 تم الحفظ ورفع الصور بنجاح! التعديلات مباشرة الآن على موقعك.");
+      })
+      .catch(function(err){
+        btn.disabled = false;
+        btn.innerHTML = origText;
+        alert("حدث خطأ أثناء النشر:\n" + err.message);
+      });
+    }
+
+    if (imagesToUpload.length > 0) {
+      uploadAllImages(0, function(){
+        commitSiteContent();
+      }, function(err){
+        btn.disabled = false;
+        btn.innerHTML = origText;
+        alert("حدث خطأ أثناء رفع الصور إلى GitHub:\n" + err.message);
+      });
+    } else {
+      commitSiteContent();
+    }
   }
 
   // Backup & Restore

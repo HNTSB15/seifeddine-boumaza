@@ -129,7 +129,7 @@
       "profit": "+$6,300",
       "split": "50/50",
       "date": "Sep 18, 2026",
-      "desc": "Live verified MT5 video trade execution on Gold (XAUUSD). Deposit: $68 -> Net Profit: +$6,300. Profit split: 50/50.",
+      "desc": "Live verified MT5 video trade execution on Gold (XAUUSD). Deposit: $68 ➡️ Net Profit: +$6,300. Profit split: 50/50.",
       "tags": [
         "#Forex",
         "#XAUUSD",
@@ -138,43 +138,103 @@
         "#ManagedAccount"
       ],
       "tweet_url": "https://x.com/seifeddin06/status/2100985355927179755",
-      "badge": "LIVE VIDEO PROOF 🎬"
+      "badge": "LIVE VIDEO PROOF 🎬",
+      "images": [
+        "https://pbs.twimg.com/amplify_video_thumb/2100985203426480128/img/cUD8bgVpD7goSl9s?format=webp&name=medium"
+      ],
+      "video_url": "https://video.twimg.com/amplify_video/2100985203426480128/vid/avc1/720x1558/oU3DXtjduk3443mN.mp4?tag=14"
     },
     {
       "id": "trade-2",
-      "title": "VIP SIGNALS BREAKOUT & AUDJPY MOMENTUM",
-      "pair": "AUDJPY & XAUUSD",
-      "deposit": "$500",
-      "profit": "+$4,820",
-      "split": "100% Client",
+      "title": "MANAGING A NEW ACCOUNT — Record Profit & Drawdown Control",
+      "pair": "Gold & Forex",
+      "deposit": "$430",
+      "profit": "+$16,000",
+      "split": "50/50",
       "date": "Sep 16, 2026",
-      "desc": "Precision breakout entries sent to VIP signal subscribers. Complete take-profit hit with zero drawdown.",
+      "desc": "Live verified trading execution with disciplined drawdown control on Gold & Forex. Deposit: $430 ➡️ Net Profit: +$16,000.",
       "tags": [
-        "#Signals",
-        "#ForexSignals",
-        "#AUDJPY",
-        "#VIPChannel"
+        "#Gold",
+        "#XAUUSD",
+        "#Forex",
+        "#ManagedAccount"
       ],
       "tweet_url": "https://x.com/seifeddin06/status/2100553514652983364",
-      "badge": "VIP SIGNALS TP HIT 🎯"
+      "badge": "RECORD PROFIT ⚡",
+      "images": [
+        "https://pbs.twimg.com/media/HSaqRvdXsAE_gBX?format=jpg&name=medium",
+        "https://pbs.twimg.com/media/HSaqRvrXsAACCxJ?format=jpg&name=medium",
+        "https://pbs.twimg.com/media/HSaqRveXAAAOcYp?format=jpg&name=medium",
+        "https://pbs.twimg.com/media/HSaqRvcWYAEduzN?format=jpg&name=medium"
+      ]
     },
     {
       "id": "trade-3",
-      "title": "WEEKLY PNL STATEMENT & WITHDRAWAL PROOF",
-      "pair": "Portfolio Summary",
-      "deposit": "Multi-Account",
-      "profit": "+$18,940",
+      "title": "MANAGING A NEW ACCOUNT — 11X Account Growth",
+      "pair": "XAUUSD (Gold)",
+      "deposit": "$500",
+      "profit": "+$5,700",
       "split": "50/50",
-      "date": "Sep 12, 2026",
-      "desc": "Full weekly statement recap across 14 managed accounts. Audited investor withdrawals processed via USDT.",
+      "date": "Sep 15, 2026",
+      "desc": "Account growth from $500 to +$5,700 net profit through strict risk management and momentum trading on Gold (XAUUSD).",
       "tags": [
-        "#PnL",
-        "#StatementProof",
-        "#Withdrawal",
-        "#Exness"
+        "#Forex",
+        "#XAUUSD",
+        "#Trading",
+        "#Profits"
       ],
-      "tweet_url": "https://x.com/seifeddin06",
-      "badge": "VERIFIED STATEMENT 📊"
+      "tweet_url": "https://x.com/seifeddin06/status/2100186065541685374",
+      "badge": "11X RETURN 🎯",
+      "images": [
+        "https://pbs.twimg.com/media/HSVcFq1W0AAWx0G?format=jpg&name=medium",
+        "https://pbs.twimg.com/media/HSVcFqzWAAAxI20?format=jpg&name=medium"
+      ]
+    },
+    {
+      "id": "trade-4",
+      "title": "MANAGING A NEW ACCOUNT — Small Account Scalability",
+      "pair": "XAUUSD (Gold)",
+      "deposit": "$100",
+      "profit": "+$1,500",
+      "split": "50/50",
+      "date": "Sep 14, 2026",
+      "desc": "Small account scalability proof: $100 starting deposit grown to +$1,500 net profit with strict stop-loss rules on Gold (XAUUSD).",
+      "tags": [
+        "#Gold",
+        "#XAUUSD",
+        "#ForexSignals",
+        "#Growth"
+      ],
+      "tweet_url": "https://x.com/seifeddin06/status/2099978339200962981",
+      "badge": "15X RETURN 🚀",
+      "images": [
+        "https://pbs.twimg.com/media/HSSe1-HWkAAavQ2?format=jpg&name=medium",
+        "https://pbs.twimg.com/media/HSSe1-tXwAEBFsL?format=jpg&name=medium",
+        "https://pbs.twimg.com/media/HSSe17SWQAA1R6u?format=jpg&name=medium",
+        "https://pbs.twimg.com/media/HSSe17ZW8AAqO1h?format=jpg&name=medium"
+      ]
+    },
+    {
+      "id": "trade-5",
+      "title": "TRADING ACCOUNT MANAGEMENT TIERS",
+      "pair": "Gold (XAUUSD)",
+      "deposit": "$500+",
+      "profit": "+$8,700",
+      "split": "50/50",
+      "date": "Sep 13, 2026",
+      "desc": "TRADING ACCOUNT MANAGEMENT TIERS: Available for $500, $1K, $3K, $5K, $10K+. Dedicated risk management on Gold (XAUUSD).",
+      "tags": [
+        "#Forex",
+        "#Trading",
+        "#Gold",
+        "#AccountManagement"
+      ],
+      "tweet_url": "https://x.com/seifeddin06/status/2099508672397275183",
+      "badge": "TIERS OPEN 💼",
+      "images": [
+        "https://pbs.twimg.com/media/HSLx32aa8AEPunw?format=jpg&name=medium",
+        "https://pbs.twimg.com/media/HSLx32HXcAELU5b?format=jpg&name=medium"
+      ]
     }
   ],
   "reviews": [

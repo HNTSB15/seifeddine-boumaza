@@ -7014,22 +7014,8 @@ body.theme-light .cvx-market-console-title {
     }
 
     // 6. Track Record / Trades Hydration
-    if (data.trades && Array.isArray(data.trades)) {
-      var slides = document.querySelectorAll('.cvx-x-slide');
-      data.trades.forEach(function(tr, idx) {
-        if (slides[idx]) {
-          var depEl = slides[idx].querySelector('.cvx-slide-profit-row .dep b');
-          if (depEl && tr.deposit) depEl.textContent = tr.deposit;
-          var pftEl = slides[idx].querySelector('.cvx-slide-profit-row .pft');
-          if (pftEl && tr.profit) pftEl.textContent = tr.profit;
-          var descEl = slides[idx].querySelector('.cvx-slide-desc');
-          if (descEl && tr.desc) descEl.textContent = tr.desc;
-          var splitEl = slides[idx].querySelector('.cvx-slide-split');
-          if (splitEl && tr.split) splitEl.textContent = 'Profit Split: ' + tr.split;
-          var badgeEl = slides[idx].querySelector('.cvx-slide-badge');
-          if (badgeEl && tr.badge) badgeEl.textContent = tr.badge;
-        }
-      });
+    if (data.trades && Array.isArray(data.trades) && typeof window.renderTradeStream === 'function') {
+      window.renderTradeStream(data.trades);
     }
 
     // 7. FAQs Hydration
@@ -10039,6 +10025,99 @@ body.theme-light .cvx-market-console-title {
       { src: 'https://pbs.twimg.com/media/HSLx32HXcAELU5b?format=jpg&name=large', cap: 'Trading Account Management Tiers & Terms #2' }
     ]
   ];
+  window.renderTradeStream = function(trades) {
+    var stream = document.getElementById('cvxXStream');
+    if (!stream || !Array.isArray(trades) || trades.length === 0) return;
+
+    window.cvxGalleries = [];
+    stream.innerHTML = '';
+
+    trades.forEach(function(tr, slideIdx) {
+      var imgs = Array.isArray(tr.images) ? tr.images : (tr.image_url ? [tr.image_url] : []);
+
+      var galEntries = [];
+      if (tr.video_url) {
+        galEntries.push({ src: tr.video_url, cap: tr.desc || tr.title || 'Live Video Proof' });
+      } else if (imgs.length > 0) {
+        imgs.forEach(function(imgSrc, i) {
+          galEntries.push({ src: imgSrc, cap: (tr.desc || tr.title || 'Proof') + (imgs.length > 1 ? (' (Photo ' + (i+1) + ')') : '') });
+        });
+      }
+      window.cvxGalleries.push(galEntries);
+
+      var galleryHtml = '';
+      if (tr.video_url) {
+        var thumb = imgs[0] || 'https://pbs.twimg.com/amplify_video_thumb/2100985203426480128/img/cUD8bgVpD7goSl9s?format=webp&name=medium';
+        galleryHtml = `
+          <div class="cvx-gallery-grid grid-1">
+            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(${slideIdx}, 0)" style="cursor:pointer;">
+              <img src="${thumb}" alt="Trade Proof Video" loading="lazy">
+              <div class="cvx-play-overlay">
+                <div class="cvx-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+              </div>
+              <span class="cvx-zoom-hint" style="opacity:1;transform:none;">▶ تشغيل الفيديو (Watch Video)</span>
+            </div>
+          </div>
+        `;
+      } else if (imgs.length > 0) {
+        var gridClass = 'grid-' + Math.min(imgs.length, 4);
+        var itemsHtml = '';
+        imgs.forEach(function(imgSrc, imgIdx) {
+          itemsHtml += `
+            <div class="cvx-gallery-item" onclick="cvxOpenLightbox(${slideIdx}, ${imgIdx})">
+              <img src="${imgSrc}" alt="Trade Execution Proof ${imgIdx + 1}" loading="lazy">
+              <span class="cvx-zoom-hint">🔍 Zoom</span>
+            </div>
+          `;
+        });
+        galleryHtml = `<div class="cvx-gallery-grid ${gridClass}">${itemsHtml}</div>`;
+      }
+
+      var tagsHtml = '';
+      if (Array.isArray(tr.tags)) {
+        tr.tags.forEach(function(tg){ tagsHtml += '<span>' + tg + '</span>'; });
+      } else {
+        tagsHtml = '<span>#Forex</span><span>#XAUUSD</span><span>#Trading</span><span>#ManagedAccount</span>';
+      }
+
+      var article = document.createElement('article');
+      article.className = 'cvx-x-slide' + (slideIdx === 0 ? ' active-slide' : '');
+      article.setAttribute('data-slide', slideIdx);
+      article.innerHTML = `
+        <div class="cvx-slide-head">
+          <div class="cvx-slide-author">
+            <img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-slide-avatar">
+            <div class="cvx-slide-author-info">
+              <b>Saifeddine Boumaza</b>
+              <small>@seifeddin06 · ${tr.date || 'Live'}</small>
+            </div>
+          </div>
+          <div class="cvx-slide-head-right">
+            <span class="cvx-slide-badge neon">${tr.badge || 'VERIFIED RESULT 📊'}</span>
+            ${tr.tweet_url ? `<a href="${tr.tweet_url}" target="_blank" rel="noopener" title="View on X"><svg class="cvx-slide-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>` : ''}
+          </div>
+        </div>
+        <div class="cvx-slide-body">
+          <div class="cvx-slide-profit-row">
+            <span class="dep">Deposit: <b>${tr.deposit || '$100'}</b></span>
+            <span class="pft">${tr.profit || '+$1,000'}</span>
+          </div>
+          <p class="cvx-slide-desc">${tr.desc || tr.title || 'Live verified trading execution on MT5.'}</p>
+          <div class="cvx-slide-tags">${tagsHtml}</div>
+          ${galleryHtml}
+        </div>
+        <div class="cvx-slide-foot">
+          <span class="cvx-slide-split">Profit Split: ${tr.split || '50/50'}</span>
+          ${tr.tweet_url ? `<a href="${tr.tweet_url}" target="_blank" rel="noopener" class="cvx-slide-link">View Proof on X ↗</a>` : `<span class="cvx-slide-link" style="color:var(--neon)">Verified MT5 Execution ✓</span>`}
+        </div>
+      `;
+      stream.appendChild(article);
+    });
+
+    if (typeof window.cvxInitCarousel === 'function') {
+      window.cvxInitCarousel();
+    }
+  };
 
   window.cvxInitCarousel = function(){
     var stream = document.getElementById('cvxXStream');
@@ -10123,6 +10202,24 @@ body.theme-light .cvx-market-console-title {
 
     updateActiveState(0);
   };
+
+  var tradesToRender = (window.siteData && window.siteData.trades && window.siteData.trades.length) ? window.siteData.trades : null;
+  if (!tradesToRender) {
+    try {
+      var cached = localStorage.getItem('sb_site_content');
+      if (cached) {
+        var parsed = JSON.parse(cached);
+        if (parsed && Array.isArray(parsed.trades) && parsed.trades.length) {
+          tradesToRender = parsed.trades;
+        }
+      }
+    } catch(e){}
+  }
+  if (tradesToRender && typeof window.renderTradeStream === 'function') {
+    window.renderTradeStream(tradesToRender);
+  } else {
+    window.cvxInitCarousel();
+  }
 
   // Keyboard navigation for Carousel
   document.addEventListener('keydown', function(e){
