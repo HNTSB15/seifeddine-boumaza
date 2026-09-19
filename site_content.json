@@ -278,7 +278,7 @@
     }
   ],
   "announcement": {
-    "enabled": false,
+    "enabled": true,
     "badge": "NEWS",
     "text_ar": "🟢 جلسة التداول مباشرة: تم فتح 5 مقاعد جديدة لإدارة المحافظ لشهر سبتمبر. تواصل عبر تيليجرام.",
     "text_en": "🟢 Live Trading Session: 5 new managed account slots opened for September. Contact via Telegram."
