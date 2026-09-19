@@ -28,19 +28,19 @@
     "newsx": {
       "starter": {
         "name": "NewsX AI Starter",
-        "price": 49,
+        "price": 30,
         "period": "month",
         "desc": "Essential predictive news analytics for active retail traders."
       },
       "pro": {
         "name": "NewsX AI Pro Trader",
-        "price": 99,
+        "price": 50,
         "period": "month",
         "desc": "Advanced multi-asset volatility alerts with instant Telegram webhooks."
       },
       "ultimate": {
         "name": "NewsX AI Institutional",
-        "price": 199,
+        "price": 99,
         "period": "month",
         "desc": "Full API integration with automated execution and priority quantitative support."
       }
