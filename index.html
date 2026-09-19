@@ -5524,7 +5524,7 @@ body.theme-light .cvx-market-console-title {
           <!-- Video Proof Player / Thumbnail -->
           <div class="cvx-gallery-grid grid-1">
             <div class="cvx-gallery-item" onclick="cvxOpenLightbox(0, 0)" style="cursor:pointer;">
-              <img src="https://pbs.twimg.com/amplify_video_thumb/2100985203426480128/img/cUD8bgVpD7goSl9s?format=webp&amp;name=medium" alt="Live Account Management Video Proof" loading="lazy">
+              <img src="video-proof-thumb-1.webp" alt="Live Account Management Video Proof" loading="lazy">
               <div class="cvx-play-overlay">
                 <div class="cvx-play-btn">
                   <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -5759,7 +5759,7 @@ body.theme-light .cvx-market-console-title {
     <button type="button" class="cvx-lb-close" onclick="cvxCloseLightbox()" title="Close (Esc)">✕</button>
     <button type="button" class="cvx-lb-nav prev" id="cvxLbPrev" onclick="cvxLbStep(-1)" title="Previous photo (‹)">‹</button>
     <img id="cvxLbImg" class="cvx-lb-img" src="" alt="Enlarged Trade Proof">
-    <video id="cvxLbVideo" class="cvx-lb-img" controls playsinline style="display:none; max-height:82vh; max-width:92vw; border-radius:12px; background:#000;"></video>
+    <video id="cvxLbVideo" class="cvx-lb-img" controls playsinline webkit-playsinline preload="auto" style="display:none; max-height:82vh; max-width:92vw; border-radius:12px; background:#000;"></video>
     <button type="button" class="cvx-lb-nav next" id="cvxLbNext" onclick="cvxLbStep(1)" title="Next photo (›)">›</button>
     <div id="cvxLbBar" class="cvx-lb-bar">
       <span id="cvxLbCaption" class="cvx-lb-caption"></span>
@@ -10095,7 +10095,7 @@ body.theme-light .cvx-market-console-title {
   var cvxGalleries = [
     // Default Static Galleries (Fallback)
     [
-      { src: 'https://video.twimg.com/amplify_video/2100985203426480128/vid/avc1/720x1558/oU3DXtjduk3443mN.mp4?tag=14', cap: 'Live Video Proof: Managing New Account ($68 ➡️ +$6,300 Profit on Gold)' }
+      { src: 'video-proof-1.mp4', cap: 'Live Video Proof: Managing New Account ($68 ➡️ +$6,300 Profit on Gold)' }
     ],
     [
       { src: 'https://pbs.twimg.com/media/HSaqRvdXsAE_gBX?format=jpg&name=large', cap: 'Account Management Execution Proof #1 ($430 ➡️ +$16,000)' },
@@ -10250,14 +10250,26 @@ body.theme-light .cvx-market-console-title {
       if(img) img.style.display = 'none';
       if(vid) {
         vid.style.display = 'block';
-        vid.src = item.src;
-        vid.play().catch(function(){});
+        if (!vid.src || !vid.src.endsWith(item.src)) {
+          vid.src = item.src;
+          vid.load();
+        }
+        vid.currentTime = 0;
+        var p = vid.play();
+        if (p !== undefined) {
+          p.catch(function(err) {
+            // Autoplay with sound restricted by browser; mute and retry playback
+            vid.muted = true;
+            vid.play().catch(function(){});
+          });
+        }
       }
     } else {
       if(vid) {
         vid.style.display = 'none';
         vid.pause();
-        vid.src = '';
+        vid.removeAttribute('src');
+        vid.load();
       }
       if(img) {
         img.style.display = 'block';
@@ -10288,11 +10300,21 @@ body.theme-light .cvx-market-console-title {
         if(img) img.style.display = 'none';
         if(vid) {
           vid.style.display = 'block';
-          vid.src = postIdx;
-          vid.play().catch(function(){});
+          if (!vid.src || !vid.src.endsWith(postIdx)) {
+            vid.src = postIdx;
+            vid.load();
+          }
+          vid.currentTime = 0;
+          var p = vid.play();
+          if (p !== undefined) {
+            p.catch(function() {
+              vid.muted = true;
+              vid.play().catch(function(){});
+            });
+          }
         }
       } else {
-        if(vid) { vid.style.display = 'none'; vid.pause(); vid.src = ''; }
+        if(vid) { vid.style.display = 'none'; vid.pause(); vid.removeAttribute('src'); vid.load(); }
         if(img) { img.style.display = 'block'; img.src = postIdx; }
       }
       if(cap) cap.textContent = imgIdx || '';
@@ -10340,7 +10362,11 @@ body.theme-light .cvx-market-console-title {
       var img = document.getElementById('cvxLbImg');
       if(img) img.src = '';
       var vid = document.getElementById('cvxLbVideo');
-      if(vid) { vid.pause(); vid.src = ''; }
+      if(vid) {
+        vid.pause();
+        vid.removeAttribute('src');
+        vid.load();
+      }
     }
   };
 
