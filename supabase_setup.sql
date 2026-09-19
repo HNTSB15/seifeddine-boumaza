@@ -6,11 +6,16 @@
 -- ==============================================================================
 
 -- ------------------------------------------------------------------------------
--- 🧹 STEP 1: CLEAN UP OBSOLETE LEGACY TABLES & PREVIOUS CONFLICTS
+-- 🧹 STEP 1: CLEAN UP ALL OBSOLETE LEGACY TABLES & OLD FLASH DATA
+-- (Drops old tables so your dashboard has ONLY clean trading data with zero legacy rows)
 -- ------------------------------------------------------------------------------
 DROP TABLE IF EXISTS public.messages CASCADE;
 DROP TABLE IF EXISTS public.settings CASCADE;
 DROP TABLE IF EXISTS public.offers CASCADE;
+DROP TABLE IF EXISTS public.website_prices CASCADE;
+DROP TABLE IF EXISTS public.website_settings CASCADE;
+DROP TABLE IF EXISTS public.client_reviews CASCADE;
+DROP TABLE IF EXISTS public.payout_records CASCADE;
 
 
 -- ------------------------------------------------------------------------------
@@ -103,10 +108,10 @@ INSERT INTO public.client_reviews (client_name, client_country, rating, service_
 VALUES
     ('Tariq B.', 'الجزائر 🇩🇿', 5, 'managed', 'بدأت مع سيف الدين بمحفظة تجريبية ثم قمت برفع رأس المال. الالتزام بإدارة المخاطر ووقف الخسارة لا مثيل له، لا مغامرات ولا عشوائية، تقارير أسبوعية تفصيلية واحترافية عالية جداً.', 'Started with Saifeddine on a test portfolio then scaled my capital. The risk management and stop-loss discipline are second to none—zero reckless gambling. Detailed weekly reports and immense professionalism.', '+42.8% ROI (5 أشهر)', true, true),
     ('Faisal Al-Otaibi', 'السعودية 🇸🇦', 5, 'signals', 'أفضل قناة توصيات دخلت فيها من 3 سنوات. نقاط الدخول دقيقة جداً مع وقف خسارة صغير وأهداف محددة. قناة سيف الدين أنقذت حسابي من الخسائر المتراكمة وعوضت رأس مالي.', 'Hands down the best signal channel I have joined in 3 years. Precision entry points, tight stop-losses, and well-defined targets. Saifeddine VIP channel turned my losses into consistent profits.', 'Winrate 86% على الذهب XAUUSD', true, true),
+    ('Karim Mansouri', 'فرنسا 🇫🇷', 5, 'newsx', 'منصة NewsX AI رائعة جداً في وقت صدور أخبار الـ CPI والـ NFP. الترجيح المسبق لاتجاه الذهب وفر علي ساعات من التحليل وساعدني في تحقيق صفقات موفقة جداً.', 'The NewsX AI platform is exceptional during high-impact CPI and NFP news releases. Pre-release directional bias on Gold saved me hours of analysis and led to outstanding trade executions.', 'اشتراك NewsX AI · ترجيح دقيق', true, true),
     ('Omar Al-Shammari', 'الإمارات 🇦🇪', 5, 'managed', 'الشفافية هي الرقم 1 عند الأخ سيف الدين. حسابي في Exness مربوط مباشرة وأرى كل صفقة تفتح وتغلق في نفس اللحظة مع الالتزام الصارم بنسبة 1-2% ريسك لكل صفقة.', 'Transparency is unmatched with brother Saifeddine. My Exness account is linked directly; I watch every trade open and close in real-time with strict 1-2% risk discipline per trade.', 'سحب أرباح شهري منتظم', true, true),
     ('David Henderson', 'بريطانيا 🇬🇧', 5, 'indicators', 'مؤشر MT5 المخصص لكسر التقلبات يعمل بكفاءة استثنائية وبدون أي إعادة رسم (Zero Repaint). تعليمات التثبيت واضحة والتسليم فوري على نظام ويندوز.', 'The custom MT5 volatility break indicator works flawlessly without repainting. Clean setup instructions and instant delivery on Windows. Excellent quantitative coding.', 'MT5 Indicator · 0 Repaint', true, true),
-    ('Youssef Benali', 'المغرب 🇲🇦', 5, 'managed', 'تعامل راقٍ وسرعة استجابة على الواتساب. إدارة احترافية ومتابعة مستمرة للصفقات دون توتر، أسبوعياً أستلم تقرير المحفظة وسحب الأرباح كان سلساً وسريعاً عبر BinancePay.', 'Classy communication and rapid response on WhatsApp. Professional portfolio management and calm execution. I receive weekly reports and profit withdrawals to BinancePay are seamless.', 'إدارة محفظة نشطة · سحب USDT', true, true),
-    ('Karim Mansouri', 'فرنسا 🇫🇷', 5, 'signals', 'التزام غير عادي بأوقات الأخبار والافتتاح لجلسات لندن ونيويورك. الصفقات لا تتعدى هدفين ووقف خسارة منطقي، استفدت كثيراً من توجيهاته اليومية وتحليلات الذهب.', 'Unmatched discipline around major London and NY news events. Trades feature clear targets and rational stop losses. Gained tremendous value from his daily Gold analyses.', 'VIP Signals · انضباط يومي', true, true)
+    ('Youssef Benali', 'المغرب 🇲🇦', 5, 'newsx', 'تطبيق NewsX AI سريع وخفيف على الهاتف، إشعارات الأخبار تصل قبل حركة السوق بثوانٍ حاسمة. احترافية عالية ودعم فني متواصل من الأخ سيف الدين.', 'The NewsX AI app is lightning fast on mobile. Push alerts arrive right before explosive market volatility. True quantitative edge and continuous support from Saifeddine.', 'ترجيح الذهب XAUUSD · تنبيهات', true, true)
 ON CONFLICT DO NOTHING;
 
 
