@@ -4,6 +4,36 @@
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
 <meta content="#05070d" name="theme-color">
+<!-- Always start fresh at Home (Top) on page refresh/reload across PC & Mobile -->
+<script type="text/javascript">//<![CDATA[
+(function(){
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  try {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  } catch(e) {
+    window.scrollTo(0, 0);
+  }
+  if (window.location.hash) {
+    try {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    } catch(e){}
+  }
+  window.addEventListener('beforeunload', function(){
+    try { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); } catch(e){ window.scrollTo(0, 0); }
+  });
+  window.addEventListener('pageshow', function(){
+    try { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); } catch(e){ window.scrollTo(0, 0); }
+  });
+  window.addEventListener('DOMContentLoaded', function(){
+    try { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); } catch(e){ window.scrollTo(0, 0); }
+  });
+  window.addEventListener('load', function(){
+    try { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); } catch(e){ window.scrollTo(0, 0); }
+  });
+})();
+//]]></script>
 <!-- redirect short/bare paths to their real /p/*.html pages -->
 <script type="text/javascript">//<![CDATA[
 (function(){var p=location.pathname.replace(/\/+$/,'');var R={'/p/mystore':'/p/mystore.html','/mystore':'/p/mystore.html','/p/koraplusprivacy':'/p/koraplusprivacy.html','/koraplusprivacy':'/p/koraplusprivacy.html','/koraplusprivacy.html':'/p/koraplusprivacy.html','/p/mycashprivacy':'/p/mycashprivacy.html','/mycashprivacy':'/p/mycashprivacy.html','/mycashprivacy.html':'/p/mycashprivacy.html','/p/muslim-appprivacy':'/p/muslim-appprivacy.html','/muslim-appprivacy':'/p/muslim-appprivacy.html','/muslim-appprivacy.html':'/p/muslim-appprivacy.html'};if(R[p]){location.replace(R[p]+location.search+location.hash);}})();
