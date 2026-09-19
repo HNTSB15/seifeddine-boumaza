@@ -1201,43 +1201,25 @@
     var filePath = "site_content.json";
     var url = "https://api.github.com/repos/" + repo + "/contents/" + filePath;
 
-    // 1. Get current file SHA
+    // 1. Get current file SHA with cache buster
     var authHeader = token.startsWith("ghp_") ? ("token " + token) : ("Bearer " + token);
-    fetch(url + "?ref=" + branch, {
-      headers: {
-        "Authorization": authHeader,
-        "Accept": "application/vnd.github.v3+json"
-      }
-    })
-    .then(function(res){
-      if (res.status === 404) return { sha: null };
-      if (!res.ok) {
-        return res.json().then(function(err){
-          throw new Error(err.message || ("Status: " + res.status));
-        }).catch(function(e){
-          throw new Error(e.message || ("Status: " + res.status));
-        });
-      }
-      return res.json();
-    })
-    .then(function(fileInfo){
-      var sha = fileInfo.sha;
-      // Convert utf-8 string to base64 safely
-      var utf8Bytes = new TextEncoder().encode(jsonString);
-      var binary = "";
-      for (var i = 0; i < utf8Bytes.byteLength; i++) {
-        binary += String.fromCharCode(utf8Bytes[i]);
-      }
-      var b64Content = btoa(binary);
 
+    // Convert utf-8 string to base64 safely
+    var utf8Bytes = new TextEncoder().encode(jsonString);
+    var binary = "";
+    for (var i = 0; i < utf8Bytes.byteLength; i++) {
+      binary += String.fromCharCode(utf8Bytes[i]);
+    }
+    var b64Content = btoa(binary);
+
+    function doCommit(freshSha) {
       var payload = {
         message: "Update site content via SB Admin Studio [skip ci]",
         content: b64Content,
         branch: branch
       };
-      if (sha) payload.sha = sha;
+      if (freshSha) payload.sha = freshSha;
 
-      // 2. Put / Commit file to GitHub
       return fetch(url, {
         method: "PUT",
         headers: {
@@ -1247,20 +1229,58 @@
         },
         body: JSON.stringify(payload)
       });
+    }
+
+    function getLatestSha() {
+      return fetch(url + "?ref=" + branch + "&_cb=" + Date.now(), {
+        cache: "no-store",
+        headers: {
+          "Authorization": authHeader,
+          "Accept": "application/vnd.github.v3+json"
+        }
+      })
+      .then(function(res){
+        if (res.status === 404) return null;
+        if (!res.ok) {
+          return res.json().then(function(err){
+            throw new Error(err.message || ("Status: " + res.status));
+          }).catch(function(e){
+            throw new Error(e.message || ("Status: " + res.status));
+          });
+        }
+        return res.json();
+      })
+      .then(function(data){
+        return data ? data.sha : null;
+      });
+    }
+
+    getLatestSha()
+    .then(function(sha){
+      return doCommit(sha);
     })
     .then(function(putRes){
-      if (!putRes.ok) {
-        return putRes.json().then(function(errData){
-          var errMsg = (errData && errData.message) ? errData.message : ("HTTP " + putRes.status);
-          if (putRes.status === 403) {
-            errMsg += " (الرمز لا يمتلك صلاحية الكتابة repo write - تأكد من تفعيل صلاحية repo أو Contents: Read and write)";
+      if (putRes.status === 409) {
+        // SHA mismatch conflict: auto-retry once with freshly fetched SHA
+        return getLatestSha().then(function(newSha){
+          return doCommit(newSha);
+        });
+      }
+      return putRes;
+    })
+    .then(function(finalRes){
+      if (!finalRes.ok) {
+        return finalRes.json().then(function(errData){
+          var errMsg = (errData && errData.message) ? errData.message : ("HTTP " + finalRes.status);
+          if (finalRes.status === 403) {
+            errMsg += " (الرمز لا يمتلك صلاحية الكتابة repo write)";
           }
           throw new Error(errMsg);
         }).catch(function(e){
-          throw new Error(e.message || ("خطأ " + putRes.status));
+          throw new Error(e.message || ("خطأ " + finalRes.status));
         });
       }
-      return putRes.json();
+      return finalRes.json();
     })
     .then(function(success){
       btn.disabled = false;
