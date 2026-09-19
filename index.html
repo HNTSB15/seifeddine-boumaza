@@ -6868,10 +6868,210 @@ body.theme-light .cvx-market-console-title {
   // ==========================================================================
   // ⚡ CENTRAL SITE CONTENT HYDRATOR (Powered by site_content.json — No Supabase)
   // ==========================================================================
+  // ⚡ CENTRAL SITE CONTENT HYDRATOR (Powered by site_content.json - No Supabase)
+  // ==========================================================================
   window.siteData = null;
 
+  window.applyDynamicSiteOverrides = function() {
+    var data = window.siteData;
+    if (!data) return;
+    var isAr = (document.documentElement.getAttribute('lang') === 'ar');
+
+    // 1. Profile & Names
+    if (data.profile) {
+      var p = data.profile;
+
+      // Update Top Nav Brand Name & Sub
+      var nameEl = document.getElementById('cvxBrandName');
+      if (nameEl && p.name) nameEl.textContent = p.name;
+      var titleEl = document.getElementById('cvxBrandSub');
+      if (titleEl && p.title) titleEl.textContent = p.title;
+
+      // Update Hero H1 (The Big Name)
+      var heroH1 = document.querySelector('.cvx-hero h1');
+      if (heroH1 && p.name) {
+        var parts = p.name.trim().split(/\s+/);
+        if (parts.length > 1) {
+          var last = parts.pop();
+          heroH1.innerHTML = parts.join(' ') + ' <span class="grad">' + last + '</span>';
+        } else {
+          heroH1.textContent = p.name;
+        }
+      }
+
+      // Update Hero Role
+      var roleEl = document.getElementById('cvxRole');
+      if (roleEl && p.title) roleEl.innerHTML = p.title + '<span class="cur">&nbsp;</span>';
+
+      // Update Hero Badge
+      var badgeEl = document.getElementById('cvxHeroBadgeTxt') || document.querySelector('.cvx-badge .mono');
+      if (badgeEl && p.badge_text) badgeEl.textContent = p.badge_text;
+
+      // Update Hero Bio / Tagline
+      var tagEl = document.querySelector('.cvx-hero .cvx-tag');
+      if (tagEl) {
+        var bio = isAr ? (p.bio_ar || p.bio_en) : (p.bio_en || p.bio_ar);
+        if (bio) tagEl.textContent = bio;
+      }
+
+      // Update Social Links
+      if (p.socials) {
+        if (p.socials.telegram) {
+          document.querySelectorAll('a[href*="t.me/"]').forEach(function(a){ a.href = p.socials.telegram; });
+        }
+        if (p.socials.twitter) {
+          document.querySelectorAll('a[href*="x.com/"], a[href*="twitter.com/"]').forEach(function(a){ a.href = p.socials.twitter; });
+        }
+        if (p.socials.whatsapp) {
+          document.querySelectorAll('a[href*="wa.me/"]').forEach(function(a){ a.href = p.socials.whatsapp; });
+        }
+      }
+    }
+
+    // 2. Performance Metrics
+    if (data.metrics) {
+      var m = data.metrics;
+      var m1 = document.querySelector('.cvx-res-metrics .cvx-res-metric:nth-child(1) .m-val');
+      if (m1 && m.target_monthly_roi) m1.textContent = m.target_monthly_roi;
+      var m2 = document.querySelector('.cvx-res-metrics .cvx-res-metric:nth-child(2) .m-val');
+      if (m2 && m.max_drawdown) m2.textContent = m.max_drawdown;
+      var m3 = document.querySelector('.cvx-res-metrics .cvx-res-metric:nth-child(3) .m-val');
+      if (m3 && m.transparent_verified) m3.textContent = m.transparent_verified;
+      var m4 = document.querySelector('.cvx-res-metrics .cvx-res-metric:nth-child(4) .m-val');
+      if (m4 && m.primary_assets) m4.textContent = m.primary_assets;
+
+      // Also Hero Chips
+      var c1 = document.querySelector('.cvx-chips .cvx-chip:nth-child(1) b');
+      if (c1 && m.target_monthly_roi) c1.textContent = m.target_monthly_roi;
+      var c2 = document.querySelector('.cvx-chips .cvx-chip:nth-child(2) b');
+      if (c2 && m.experience_years) c2.textContent = m.experience_years;
+      var c3 = document.querySelector('.cvx-chips .cvx-chip:nth-child(3) b');
+      if (c3 && m.active_accounts) c3.textContent = m.active_accounts;
+    }
+
+    // 3. NewsX AI Pricing
+    if (data.pricing && data.pricing.newsx) {
+      var nx = data.pricing.newsx;
+      if (nx.starter) {
+        var sp = document.getElementById('nxPlanStdPrice'), sb = document.getElementById('nxPlanStdBtn');
+        if (sp && nx.starter.price) sp.innerHTML = '$' + nx.starter.price + '<span>/month</span>';
+        if (sb && nx.starter.price) sb.setAttribute('onclick', "openPlanModal('" + (nx.starter.name || 'NewsX AI Starter') + "', " + nx.starter.price + ")");
+      }
+      if (nx.pro) {
+        var pp = document.getElementById('nxPlanProPrice'), pb = document.getElementById('nxPlanProBtn');
+        if (pp && nx.pro.price) pp.innerHTML = '$' + nx.pro.price + '<span>/month</span>';
+        if (pb && nx.pro.price) pb.setAttribute('onclick', "openPlanModal('" + (nx.pro.name || 'NewsX AI Pro') + "', " + nx.pro.price + ")");
+      }
+      if (nx.ultimate) {
+        var up = document.getElementById('nxPlanUltPrice'), ub = document.getElementById('nxPlanUltBtn');
+        if (up && nx.ultimate.price) up.innerHTML = '$' + nx.ultimate.price + '<span>/month</span>';
+        if (ub && nx.ultimate.price) ub.setAttribute('onclick', "openPlanModal('" + (nx.ultimate.name || 'NewsX AI Institutional') + "', " + nx.ultimate.price + ")");
+      }
+    }
+
+    // 4. Flash Deals & Packages
+    if (data.pricing && data.pricing.flash_deals) {
+      var fd = data.pricing.flash_deals;
+      if (fd.deal_1) {
+        var d1 = fd.deal_1;
+        var pEl = document.getElementById('flDeal1Price'), bEl = document.getElementById('flDeal1Badge'), aEl = document.getElementById('flDeal1Amount'), btn = document.getElementById('flDeal1Btn');
+        if (pEl && d1.price) pEl.innerHTML = d1.price + ' <small>USDT</small>';
+        if (bEl && d1.discount_badge) bEl.textContent = d1.discount_badge;
+        if (aEl && d1.amount) aEl.innerHTML = Number(d1.amount).toLocaleString() + ' FLASH <span>USDT</span>';
+        if (btn && d1.price) btn.setAttribute('onclick', "openFlashModal(" + (d1.amount || 80000) + ", " + d1.price + ", '24h')");
+      }
+      if (fd.deal_2) {
+        var d2 = fd.deal_2;
+        var pEl2 = document.getElementById('flDeal2Price'), bEl2 = document.getElementById('flDeal2Badge'), aEl2 = document.getElementById('flDeal2Amount'), btn2 = document.getElementById('flDeal2Btn');
+        if (pEl2 && d2.price) pEl2.innerHTML = d2.price + ' <small>USDT</small>';
+        if (bEl2 && d2.discount_badge) bEl2.textContent = d2.discount_badge;
+        if (aEl2 && d2.amount) aEl2.innerHTML = Number(d2.amount).toLocaleString() + ' FLASH <span>USDT</span>';
+        if (btn2 && d2.price) btn2.setAttribute('onclick', "openFlashModal(" + (d2.amount || 8000) + ", " + d2.price + ", '24h')");
+      }
+    }
+
+    if (data.pricing && data.pricing.flash_packages) {
+      var fp = data.pricing.flash_packages;
+      ['tier_24h', 'tier_3d', 'tier_1w'].forEach(function(tierKey) {
+        if (fp[tierKey] && Array.isArray(fp[tierKey])) {
+          fp[tierKey].forEach(function(item) {
+            var c = document.getElementById(item.id + '_cost'), b = document.getElementById(item.id + '_btn');
+            if (c && item.price) c.innerHTML = item.price + ' <small>USDT</small>';
+            if (b && item.price) b.setAttribute('onclick', "openFlashModal(" + (item.amount || 1000) + ", " + item.price + ", '" + (item.duration || '24h') + "')");
+          });
+        }
+      });
+    }
+
+    // 5. Reviews Sync
+    if (data.reviews && Array.isArray(data.reviews) && data.reviews.length > 0) {
+      if (typeof allReviews !== 'undefined') {
+        allReviews = data.reviews.slice();
+        if (typeof window.renderReviews === 'function') {
+          window.renderReviews();
+        }
+      }
+    }
+
+    // 6. Track Record / Trades Hydration
+    if (data.trades && Array.isArray(data.trades)) {
+      var slides = document.querySelectorAll('.cvx-x-slide');
+      data.trades.forEach(function(tr, idx) {
+        if (slides[idx]) {
+          var depEl = slides[idx].querySelector('.cvx-slide-profit-row .dep b');
+          if (depEl && tr.deposit) depEl.textContent = tr.deposit;
+          var pftEl = slides[idx].querySelector('.cvx-slide-profit-row .pft');
+          if (pftEl && tr.profit) pftEl.textContent = tr.profit;
+          var descEl = slides[idx].querySelector('.cvx-slide-desc');
+          if (descEl && tr.desc) descEl.textContent = tr.desc;
+          var splitEl = slides[idx].querySelector('.cvx-slide-split');
+          if (splitEl && tr.split) splitEl.textContent = 'Profit Split: ' + tr.split;
+          var badgeEl = slides[idx].querySelector('.cvx-slide-badge');
+          if (badgeEl && tr.badge) badgeEl.textContent = tr.badge;
+        }
+      });
+    }
+
+    // 7. FAQs Hydration
+    if (data.faqs && Array.isArray(data.faqs)) {
+      data.faqs.forEach(function(f, idx) {
+        var num = idx + 1;
+        var qEl = document.getElementById('faqQ' + num);
+        var aEl = document.getElementById('faqA' + num);
+        if (qEl) qEl.textContent = isAr ? (f.q_ar || f.q_en) : (f.q_en || f.q_ar);
+        if (aEl) aEl.textContent = isAr ? (f.a_ar || f.a_en) : (f.a_en || f.a_ar);
+      });
+    }
+
+    // 8. Announcement Banner
+    if (data.announcement && data.announcement.enabled) {
+      var existing = document.getElementById('cvxLiveAnnouncement');
+      if (existing) existing.remove();
+      var text = (isAr && data.announcement.text_ar) ? data.announcement.text_ar : (data.announcement.text_en || data.announcement.text_ar);
+      if (text) {
+        var bar = document.createElement('div');
+        bar.id = 'cvxLiveAnnouncement';
+        bar.style.cssText = 'background:linear-gradient(90deg,#0a1c12,#091628);border-bottom:1px solid #00ff9c;padding:9px 16px;text-align:center;font-size:13px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;z-index:9999;position:relative;box-shadow:0 0 15px rgba(0,255,156,0.25);';
+        bar.innerHTML = '<span style="background:rgba(0,255,156,0.18);color:#00ff9c;border:1px solid #00ff9c;border-radius:6px;padding:2px 8px;font-size:11px;font-family:\'JetBrains Mono\',monospace;">' + (data.announcement.badge || 'NEWS') + '</span> <span>' + text + '</span>';
+        var top = document.getElementById('cvtop');
+        if (top) top.parentNode.insertBefore(bar, top);
+      }
+    } else {
+      var existingBar = document.getElementById('cvxLiveAnnouncement');
+      if (existingBar) existingBar.remove();
+    }
+  };
+
   function hydrateSiteContent() {
-    fetch('site_content.json?v=' + Date.now())
+    try {
+      var localCached = localStorage.getItem('sb_site_content');
+      if (localCached) {
+        window.siteData = JSON.parse(localCached);
+        window.applyDynamicSiteOverrides();
+      }
+    } catch(e){}
+
+    fetch('site_content.json?v=' + Date.now(), { cache: 'no-store' })
       .then(function(res) {
         if (!res.ok) throw new Error('Network error');
         return res.json();
@@ -6879,154 +7079,7 @@ body.theme-light .cvx-market-console-title {
       .then(function(data) {
         if (!data) return;
         window.siteData = data;
-
-        // 1. Profile & Socials
-        if (data.profile) {
-          var p = data.profile;
-          var nameEl = document.getElementById('cvxBrandName');
-          if (nameEl && p.name) nameEl.textContent = p.name;
-          var titleEl = document.getElementById('cvxBrandSub');
-          if (titleEl && p.title) titleEl.textContent = p.title;
-
-          if (p.socials) {
-            if (p.socials.telegram) {
-              var tg = p.socials.telegram;
-              document.querySelectorAll('a[href*="t.me/"]').forEach(function(a){ a.href = tg; });
-            }
-            if (p.socials.twitter) {
-              var tw = p.socials.twitter;
-              document.querySelectorAll('a[href*="x.com/"], a[href*="twitter.com/"]').forEach(function(a){ a.href = tw; });
-            }
-            if (p.socials.whatsapp) {
-              var wa = p.socials.whatsapp;
-              document.querySelectorAll('a[href*="wa.me/"]').forEach(function(a){ a.href = wa; });
-            }
-          }
-        }
-
-        // 2. Performance Metrics
-        if (data.metrics) {
-          var m = data.metrics;
-          var m1 = document.querySelector('.cvx-res-metrics .cvx-res-metric:nth-child(1) .m-val');
-          if (m1 && m.target_monthly_roi) m1.textContent = m.target_monthly_roi;
-          var m2 = document.querySelector('.cvx-res-metrics .cvx-res-metric:nth-child(2) .m-val');
-          if (m2 && m.max_drawdown) m2.textContent = m.max_drawdown;
-          var m3 = document.querySelector('.cvx-res-metrics .cvx-res-metric:nth-child(3) .m-val');
-          if (m3 && m.transparent_verified) m3.textContent = m.transparent_verified;
-          var m4 = document.querySelector('.cvx-res-metrics .cvx-res-metric:nth-child(4) .m-val');
-          if (m4 && m.primary_assets) m4.textContent = m.primary_assets;
-        }
-
-        // 3. NewsX AI Pricing
-        if (data.pricing && data.pricing.newsx) {
-          var nx = data.pricing.newsx;
-          if (nx.starter) {
-            var sp = document.getElementById('nxPlanStdPrice'), sb = document.getElementById('nxPlanStdBtn');
-            if (sp && nx.starter.price) sp.innerHTML = '$' + nx.starter.price + '<span>/month</span>';
-            if (sb && nx.starter.price) sb.setAttribute('onclick', "openPlanModal('" + (nx.starter.name || 'NewsX AI Starter') + "', " + nx.starter.price + ")");
-          }
-          if (nx.pro) {
-            var pp = document.getElementById('nxPlanProPrice'), pb = document.getElementById('nxPlanProBtn');
-            if (pp && nx.pro.price) pp.innerHTML = '$' + nx.pro.price + '<span>/month</span>';
-            if (pb && nx.pro.price) pb.setAttribute('onclick', "openPlanModal('" + (nx.pro.name || 'NewsX AI Pro') + "', " + nx.pro.price + ")");
-          }
-          if (nx.ultimate) {
-            var up = document.getElementById('nxPlanUltPrice'), ub = document.getElementById('nxPlanUltBtn');
-            if (up && nx.ultimate.price) up.innerHTML = '$' + nx.ultimate.price + '<span>/month</span>';
-            if (ub && nx.ultimate.price) ub.setAttribute('onclick', "openPlanModal('" + (nx.ultimate.name || 'NewsX AI Institutional') + "', " + nx.ultimate.price + ")");
-          }
-        }
-
-        // 4. Flash Deals & Packages
-        if (data.pricing && data.pricing.flash_deals) {
-          var fd = data.pricing.flash_deals;
-          if (fd.deal_1) {
-            var d1 = fd.deal_1;
-            var pEl = document.getElementById('flDeal1Price'), bEl = document.getElementById('flDeal1Badge'), aEl = document.getElementById('flDeal1Amount'), btn = document.getElementById('flDeal1Btn');
-            if (pEl && d1.price) pEl.innerHTML = d1.price + ' <small>USDT</small>';
-            if (bEl && d1.discount_badge) bEl.textContent = d1.discount_badge;
-            if (aEl && d1.amount) aEl.innerHTML = Number(d1.amount).toLocaleString() + ' FLASH <span>USDT</span>';
-            if (btn && d1.price) btn.setAttribute('onclick', "openFlashModal(" + (d1.amount || 80000) + ", " + d1.price + ", '24h')");
-          }
-          if (fd.deal_2) {
-            var d2 = fd.deal_2;
-            var pEl2 = document.getElementById('flDeal2Price'), bEl2 = document.getElementById('flDeal2Badge'), aEl2 = document.getElementById('flDeal2Amount'), btn2 = document.getElementById('flDeal2Btn');
-            if (pEl2 && d2.price) pEl2.innerHTML = d2.price + ' <small>USDT</small>';
-            if (bEl2 && d2.discount_badge) bEl2.textContent = d2.discount_badge;
-            if (aEl2 && d2.amount) aEl2.innerHTML = Number(d2.amount).toLocaleString() + ' FLASH <span>USDT</span>';
-            if (btn2 && d2.price) btn2.setAttribute('onclick', "openFlashModal(" + (d2.amount || 8000) + ", " + d2.price + ", '24h')");
-          }
-        }
-
-        if (data.pricing && data.pricing.flash_packages) {
-          var fp = data.pricing.flash_packages;
-          ['tier_24h', 'tier_3d', 'tier_1w'].forEach(function(tierKey) {
-            if (fp[tierKey] && Array.isArray(fp[tierKey])) {
-              fp[tierKey].forEach(function(item) {
-                var c = document.getElementById(item.id + '_cost'), b = document.getElementById(item.id + '_btn');
-                if (c && item.price) c.innerHTML = item.price + ' <small>USDT</small>';
-                if (b && item.price) b.setAttribute('onclick', "openFlashModal(" + (item.amount || 1000) + ", " + item.price + ", '" + (item.duration || '24h') + "')");
-              });
-            }
-          });
-        }
-
-        // 5. Reviews Sync
-        if (data.reviews && Array.isArray(data.reviews) && data.reviews.length > 0) {
-          if (typeof allReviews !== 'undefined') {
-            allReviews = data.reviews.slice();
-            if (typeof window.renderReviews === 'function') {
-              window.renderReviews();
-            }
-          }
-        }
-
-        // 6. Track Record / Trades Hydration
-        if (data.trades && Array.isArray(data.trades)) {
-          var slides = document.querySelectorAll('.cvx-x-slide');
-          data.trades.forEach(function(tr, idx) {
-            if (slides[idx]) {
-              var depEl = slides[idx].querySelector('.cvx-slide-profit-row .dep b');
-              if (depEl && tr.deposit) depEl.textContent = tr.deposit;
-              var pftEl = slides[idx].querySelector('.cvx-slide-profit-row .pft');
-              if (pftEl && tr.profit) pftEl.textContent = tr.profit;
-              var descEl = slides[idx].querySelector('.cvx-slide-desc');
-              if (descEl && tr.desc) descEl.textContent = tr.desc;
-              var splitEl = slides[idx].querySelector('.cvx-slide-split');
-              if (splitEl && tr.split) splitEl.textContent = 'Profit Split: ' + tr.split;
-              var badgeEl = slides[idx].querySelector('.cvx-slide-badge');
-              if (badgeEl && tr.badge) badgeEl.textContent = tr.badge;
-            }
-          });
-        }
-
-        // 7. FAQs Hydration
-        if (data.faqs && Array.isArray(data.faqs)) {
-          var isArLang = (document.documentElement.getAttribute('lang') === 'ar');
-          data.faqs.forEach(function(f, idx) {
-            var num = idx + 1;
-            var qEl = document.getElementById('faqQ' + num);
-            var aEl = document.getElementById('faqA' + num);
-            if (qEl) qEl.textContent = isArLang ? (f.q_ar || f.q_en) : (f.q_en || f.q_ar);
-            if (aEl) aEl.textContent = isArLang ? (f.a_ar || f.a_en) : (f.a_en || f.a_ar);
-          });
-        }
-
-        // 8. Announcement Banner
-        if (data.announcement && data.announcement.enabled) {
-          var existing = document.getElementById('cvxLiveAnnouncement');
-          if (existing) existing.remove();
-          var isAr = (document.documentElement.getAttribute('lang') === 'ar');
-          var text = (isAr && data.announcement.text_ar) ? data.announcement.text_ar : (data.announcement.text_en || data.announcement.text_ar);
-          if (text) {
-            var bar = document.createElement('div');
-            bar.id = 'cvxLiveAnnouncement';
-            bar.style.cssText = 'background:linear-gradient(90deg,#0a1c12,#091628);border-bottom:1px solid #00ff9c;padding:9px 16px;text-align:center;font-size:13px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;z-index:9999;position:relative;box-shadow:0 0 15px rgba(0,255,156,0.25);';
-            bar.innerHTML = '<span style="background:rgba(0,255,156,0.18);color:#00ff9c;border:1px solid #00ff9c;border-radius:6px;padding:2px 8px;font-size:11px;font-family:\'JetBrains Mono\',monospace;">' + (data.announcement.badge || 'NEWS') + '</span> <span>' + text + '</span>';
-            var top = document.getElementById('cvtop');
-            if (top) top.parentNode.insertBefore(bar, top);
-          }
-        }
+        window.applyDynamicSiteOverrides();
       })
       .catch(function(err){
         console.log('Using static content', err);
@@ -9708,6 +9761,9 @@ body.theme-light .cvx-market-console-title {
 
       if (window.updateOnlineStatusSchedule) {
         window.updateOnlineStatusSchedule(lang);
+      }
+      if (typeof window.applyDynamicSiteOverrides === 'function') {
+        window.applyDynamicSiteOverrides();
       }
     };
 
