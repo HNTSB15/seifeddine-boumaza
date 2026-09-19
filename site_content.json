@@ -1,0 +1,322 @@
+{
+  "profile": {
+    "name": "Saifeddine Boumaza",
+    "title": "Forex & Crypto Trading Manager",
+    "handle": "@seifeddin06",
+    "badge_text": "Trading Manager & Quant Specialist",
+    "bio_ar": "مدير محافظ وصناديق تداول فوركس وعملات رقمية محترف، متخصص في إدارة المخاطر الصارمة، والتداول الخوارزمي المتقدم، وتحقيق العوائد المستدامة للعملاء حول العالم.",
+    "bio_en": "Professional Forex & Crypto fund manager specializing in quantitative risk management, high-probability algorithmic trading, and consistent alpha generation for private investors worldwide.",
+    "socials": {
+      "telegram": "https://t.me/seifeddine_boumaza",
+      "twitter": "https://x.com/seifeddin06",
+      "whatsapp": "https://wa.me/213555000000",
+      "email": "contact@saifeddine-boumaza.com",
+      "tradingview": "https://www.tradingview.com/u/seifeddin06"
+    }
+  },
+  "metrics": {
+    "target_monthly_roi": "15% - 35%",
+    "max_drawdown": "< 8.5%",
+    "transparent_verified": "100%",
+    "primary_assets": "XAUUSD / FX",
+    "win_rate": "86.4%",
+    "total_pips": "+18,450",
+    "active_accounts": "140+",
+    "experience_years": "8+ Years"
+  },
+  "pricing": {
+    "newsx": {
+      "starter": {
+        "name": "NewsX AI Starter",
+        "price": 49,
+        "period": "month",
+        "desc": "Essential predictive news analytics for active retail traders."
+      },
+      "pro": {
+        "name": "NewsX AI Pro Trader",
+        "price": 99,
+        "period": "month",
+        "desc": "Advanced multi-asset volatility alerts with instant Telegram webhooks."
+      },
+      "ultimate": {
+        "name": "NewsX AI Institutional",
+        "price": 199,
+        "period": "month",
+        "desc": "Full API integration with automated execution and priority quantitative support."
+      }
+    },
+    "flash_deals": {
+      "deal_1": {
+        "title": "Limited-Time Mega Deal",
+        "amount": 80000,
+        "price": 100,
+        "discount_badge": "80% OFF",
+        "validity": "24H VALIDITY",
+        "countdown": "71:12:44"
+      },
+      "deal_2": {
+        "title": "Starter Flash Package",
+        "amount": 8000,
+        "price": 30,
+        "discount_badge": "30% OFF",
+        "validity": "24H VALIDITY",
+        "countdown": "71:12:44"
+      }
+    },
+    "flash_packages": {
+      "tier_24h": [
+        {
+          "id": "pack_24h_1k",
+          "amount": 1000,
+          "price": 15,
+          "duration": "24h"
+        },
+        {
+          "id": "pack_24h_100k",
+          "amount": 100000,
+          "price": 120,
+          "duration": "24h"
+        },
+        {
+          "id": "pack_24h_1m",
+          "amount": 1000000,
+          "price": 650,
+          "duration": "24h"
+        }
+      ],
+      "tier_3d": [
+        {
+          "id": "pack_3d_1k",
+          "amount": 1000,
+          "price": 25,
+          "duration": "3d"
+        },
+        {
+          "id": "pack_3d_100k",
+          "amount": 100000,
+          "price": 180,
+          "duration": "3d"
+        },
+        {
+          "id": "pack_3d_1m",
+          "amount": 1000000,
+          "price": 950,
+          "duration": "3d"
+        }
+      ],
+      "tier_1w": [
+        {
+          "id": "pack_1w_1k",
+          "amount": 1000,
+          "price": 45,
+          "duration": "1w"
+        },
+        {
+          "id": "pack_1w_100k",
+          "amount": 100000,
+          "price": 280,
+          "duration": "1w"
+        },
+        {
+          "id": "pack_1w_1m",
+          "amount": 1000000,
+          "price": 1400,
+          "duration": "1w"
+        }
+      ]
+    }
+  },
+  "trades": [
+    {
+      "id": "trade-1",
+      "title": "MANAGING A NEW ACCOUNT — Live Video Execution",
+      "pair": "XAUUSD (Gold)",
+      "deposit": "$68",
+      "profit": "+$6,300",
+      "split": "50/50",
+      "date": "Sep 18, 2026",
+      "desc": "Live verified MT5 video trade execution on Gold (XAUUSD). Deposit: $68 -> Net Profit: +$6,300. Profit split: 50/50.",
+      "tags": [
+        "#Forex",
+        "#XAUUSD",
+        "#Gold",
+        "#Trading",
+        "#ManagedAccount"
+      ],
+      "tweet_url": "https://x.com/seifeddin06/status/2100985355927179755",
+      "badge": "LIVE VIDEO PROOF 🎬"
+    },
+    {
+      "id": "trade-2",
+      "title": "VIP SIGNALS BREAKOUT & AUDJPY MOMENTUM",
+      "pair": "AUDJPY & XAUUSD",
+      "deposit": "$500",
+      "profit": "+$4,820",
+      "split": "100% Client",
+      "date": "Sep 16, 2026",
+      "desc": "Precision breakout entries sent to VIP signal subscribers. Complete take-profit hit with zero drawdown.",
+      "tags": [
+        "#Signals",
+        "#ForexSignals",
+        "#AUDJPY",
+        "#VIPChannel"
+      ],
+      "tweet_url": "https://x.com/seifeddin06/status/2100553514652983364",
+      "badge": "VIP SIGNALS TP HIT 🎯"
+    },
+    {
+      "id": "trade-3",
+      "title": "WEEKLY PNL STATEMENT & WITHDRAWAL PROOF",
+      "pair": "Portfolio Summary",
+      "deposit": "Multi-Account",
+      "profit": "+$18,940",
+      "split": "50/50",
+      "date": "Sep 12, 2026",
+      "desc": "Full weekly statement recap across 14 managed accounts. Audited investor withdrawals processed via USDT.",
+      "tags": [
+        "#PnL",
+        "#StatementProof",
+        "#Withdrawal",
+        "#Exness"
+      ],
+      "tweet_url": "https://x.com/seifeddin06",
+      "badge": "VERIFIED STATEMENT 📊"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev-1",
+      "name": "Tariq B.",
+      "country": "الجزائر 🇩🇿",
+      "country_en": "Algeria 🇩🇿",
+      "rating": 5,
+      "service": "managed",
+      "stat": "+42.8% ROI (5 أشهر)",
+      "stat_en": "+42.8% ROI (5 Months)",
+      "text": "بدأت مع سيف الدين بمحفظة تجريبية ثم قمت برفع رأس المال. الالتزام بإدارة المخاطر ووقف الخسارة لا مثيل له، لا مغامرات ولا عشوائية، تقارير أسبوعية تفصيلية واحترافية عالية جداً.",
+      "text_en": "Started with Saifeddine on a test portfolio then scaled my capital. The risk management and stop-loss discipline are second to none—zero reckless gambling. Detailed weekly reports and immense professionalism.",
+      "verified": true
+    },
+    {
+      "id": "rev-2",
+      "name": "Faisal Al-Otaibi",
+      "country": "السعودية 🇸🇦",
+      "country_en": "Saudi Arabia 🇸🇦",
+      "rating": 5,
+      "service": "signals",
+      "stat": "دقة 86% على الذهب XAUUSD",
+      "stat_en": "86% Winrate on Gold XAUUSD",
+      "text": "أفضل قناة توصيات دخلت فيها من 3 سنوات. نقاط الدخول دقيقة جداً مع وقف خسارة صغير وأهداف محددة. قناة سيف الدين أنقذت حسابي من الخسائر المتراكمة وعوضت رأس مالي.",
+      "text_en": "Hands down the best signal channel I have joined in 3 years. Precision entry points, tight stop-losses, and well-defined targets. Saifeddine VIP channel turned my losses into consistent profits.",
+      "verified": true
+    },
+    {
+      "id": "rev-3",
+      "name": "Karim Mansouri",
+      "country": "فرنسا 🇫🇷",
+      "country_en": "France 🇫🇷",
+      "rating": 5,
+      "service": "flash",
+      "stat": "80K Flash USDT · 3 دقائق",
+      "stat_en": "80K Flash USDT · 3 Mins",
+      "text": "خدمة فائقة السرعة ودعم استثنائي عبر التيليجرام. تم تأكيد المعاملة على نود خاص في أقل من 3 دقائق. رقي واحترافية غير مسبوقة، أنصح بالتعامل معه بشدة!",
+      "text_en": "Super fast service and exceptional support on Telegram. Transaction confirmed on a private blockchain node in under 3 minutes. Truly elite professionalism, highly recommended!",
+      "verified": true
+    },
+    {
+      "id": "rev-4",
+      "name": "Omar Al-Shammari",
+      "country": "الإمارات 🇦🇪",
+      "country_en": "UAE 🇦🇪",
+      "rating": 5,
+      "service": "managed",
+      "stat": "سحب أرباح شهري منتظم",
+      "stat_en": "Regular Monthly Withdrawals",
+      "text": "الشفافية هي الرقم 1 عند الأخ سيف الدين. حسابي في Exness مربوط مباشرة وأرى كل صفقة تفتح وتغلق في نفس اللحظة مع الالتزام الصارم بنسبة 1-2% ريسك لكل صفقة.",
+      "text_en": "Transparency is unmatched with brother Saifeddine. My Exness account is linked directly; I watch every trade open and close in real-time with strict 1-2% risk discipline per trade.",
+      "verified": true
+    },
+    {
+      "id": "rev-5",
+      "name": "David Henderson",
+      "country": "بريطانيا 🇬🇧",
+      "country_en": "United Kingdom 🇬🇧",
+      "rating": 5,
+      "service": "indicators",
+      "stat": "مؤشر MT5 · 0 Repaint",
+      "stat_en": "MT5 Indicator · 0 Repaint",
+      "text": "مؤشر MT5 المخصص لكسر التقلبات يعمل بكفاءة استثنائية وبدون أي إعادة رسم (Zero Repaint). تعليمات التثبيت واضحة والتسليم فوري على نظام ويندوز.",
+      "text_en": "The custom MT5 volatility break indicator works flawlessly without repainting. Clean setup instructions and instant delivery on Windows. Excellent quantitative coding.",
+      "verified": true
+    },
+    {
+      "id": "rev-6",
+      "name": "Youssef Benali",
+      "country": "المغرب 🇲🇦",
+      "country_en": "Morocco 🇲🇦",
+      "rating": 5,
+      "service": "flash",
+      "stat": "باقة 100K · دعم مستمر",
+      "stat_en": "100K Package · 24/7 Support",
+      "text": "تعامل راقٍ وسرعة استجابة على الواتساب. الباقة وصلت كاملة ومطابقة للمواصفات والشرح كان واضحاً خطوة بخطوة. استمر يا سيف الدين أنت فخر للشباب العربي.",
+      "text_en": "Classy communication and rapid response on WhatsApp. The package was delivered completely as described with clear step-by-step guidance. True professional.",
+      "verified": true
+    }
+  ],
+  "faqs": [
+    {
+      "q_ar": "كيف يعمل نظام تقاسم الأرباح 50/50 ومتى يتم سحب الأرباح؟",
+      "q_en": "How does the 50/50 Profit Split work, and when are withdrawals processed?",
+      "a_ar": "تعمل إدارة المحافظ لدينا بنموذج تقاسم الأرباح 50/50. نقوم بالاتصال بحساب تداول MT4/MT5 الخاص بك عبر بيانات التداول فقط (Investor/Trading Password). في نهاية كل دورة تسوية (أسبوعية أو كل أسبوعين)، تقوم بسحب أرباحك مباشرة من لوحة تحكم وسيطك الشخصي لحسابك البنكي أو محفظتك، ثم تحول لنا نسبة 50% عبر USDT. لا توجد أي رسوم مسبقة.",
+      "a_en": "Our account management operates on a disciplined 50/50 Profit Share model. We connect to your MT4/MT5 trading account via trading-only credentials. At the end of each trading settlement cycle, you execute the withdrawal directly from your broker's personal dashboard, and transfer our 50% performance fee via USDT. Zero upfront fees."
+    },
+    {
+      "q_ar": "هل تمتلكون صلاحية سحب أموالي من الحساب؟ (أمان المحفظة والسيولة)",
+      "q_en": "Do you have access to withdraw my funds? (Custodial Security)",
+      "a_ar": "مستحيل تماماً. 100% من رأس مالك يبقى في عهدتك الشخصية. حسابات التداول تخضع لقوانين مالية دولية صارمة: الإيداع والسحب يتم فقط لحسابات مصرفية أو محافظ بنفس اسم صاحب الحساب الموثق بجواز السفر. نحن نتداول بكلمة سر التداول فقط ولا نملك أي حق في طلب سحب.",
+      "a_en": "Never. 100% of your capital remains in your custody. Brokerage accounts operate under strict banking regulations: deposits and withdrawals can only be approved under the verified credentials of the account owner. We trade strictly using your Trading Password."
+    },
+    {
+      "q_ar": "ما هو الحد الأدنى لرأس المال المطلوب، وكيف يتم التحكم في التراجع (Drawdown)؟",
+      "q_en": "What is the minimum capital required, and how is drawdown controlled?",
+      "a_ar": "تبدأ إدارة الحسابات من 100$ كبداية تجريبية حية، وحتى المحافظ المؤسسية من 1,000$ إلى 10,000$+. نطبق إدارة مخاطر حديدية: لوت دقيق بنسبة 1% إلى 2% كحد أقصى لكل صفقة، ووقف خسارة إلزامي (Stop Loss) على كل مركز، وتوقف فوري للتداول في حال حدوث تقلبات استثنائية.",
+      "a_en": "Account management starts from + for initial live verification, up to institutional portfolio tiers (,000 to ,000+). We apply rigorous risk parameters: maximum 1% to 2% capital risk per trade, hard stop losses, and drawdown containment."
+    },
+    {
+      "q_ar": "ما هو الفرق بين شبكتي BEP20 و TRC20 في فلاش USDT؟",
+      "q_en": "What is the difference between BEP20 and TRC20 networks for Flash USDT?",
+      "a_ar": "كلا البروتوكولين يوفران نفس التحقق الفوري عبر المحافظ الكبرى (Trust Wallet, Binance, OKX, Metamask): BEP20 (Binance Smart Chain) تتميز برسوم شبكة منخفضة جداً (~0.29 USDT)، بينما TRC20 (Tron Network) هي المعيار العالمي الأكثر استخداماً وسرعة تأكيد للتحويلات.",
+      "a_en": "Both network protocols deliver identical software utility with instant hash validation across major wallets (Trust Wallet, Binance, OKX, Metamask): BEP20 offers minimal transfer fees, while TRC20 is the global standard for high-speed confirmation."
+    },
+    {
+      "q_ar": "كيف أبدأ إدارة حسابي أو الاشتراك في توصيات VIP اليوم؟",
+      "q_en": "How do I start account management or subscribe to VIP signals today?",
+      "a_ar": "البدء يستغرق أقل من 5 دقائق: تواصل مع سيف الدين مباشرة عبر تيليجرام @HNTSB15، أو أرسل رسالتك عبر نموذج التواصل أسفل الصفحة. سنقوم بمراجعة وسيطك المفضل وإعداد خطة إدارة المخاطر وتفعيل الربط فوراً.",
+      "a_en": "Getting started takes less than 5 minutes: send a direct inquiry via the Contact Terminal below, or contact Saifeddine directly on Telegram: @HNTSB15. We will review your broker, establish your risk profile, and activate your terminal access immediately."
+    },
+    {
+      "q_ar": "ما هي شركات الوساطة (Brokers) المدعومة لإدارة المحافظ؟",
+      "q_en": "Which forex and crypto brokers can I use for account management?",
+      "a_ar": "ندعم جميع شركات الوساطة المرخصة التي تدعم منصات MetaTrader 4 (MT4) و MetaTrader 5 (MT5) عالمياً مثل: Exness, IC Markets, XM, Pepperstone, FXTM أو أي وسيط مرخص من اختيارك. ونوصي دائماً بحسابات ECN / Raw Spread للحصول على أقل سبريد وأعلى سرعة تنفيذ.",
+      "a_en": "We support all regulated MetaTrader 4 (MT4) and MetaTrader 5 (MT5) brokers worldwide, including Exness, IC Markets, XM, Pepperstone, FXTM, or any licensed broker of your choice."
+    },
+    {
+      "q_ar": "ما هي العوائد الشهرية المتوقعة والأهداف الاستثمارية الواقعية؟",
+      "q_en": "What are the expected monthly returns and performance targets?",
+      "a_ar": "أهدافنا تستهدف نمواً تراكمياً واقعياً بين 30% إلى 50%+ سنوياً (حوالي 3% إلى 8% شهرياً) مع الحفاظ على التراجع المؤسسي دون 8.5%. هدفنا الأساسي هو الاستمرارية وحماية رأس المال الأساسي للمستثمر.",
+      "a_en": "Our track record targets a realistic 30% to 50%+ annual growth (~3% to 8% monthly) with institutional drawdown containment below 8.5%. Our primary objective is steady compounding and long-term portfolio growth."
+    },
+    {
+      "q_ar": "كيف يتم إرسال توصيات VIP وما هي الأدوات المالية المغطاة؟",
+      "q_en": "How are VIP Trading Signals delivered, and which pairs are covered?",
+      "a_ar": "تُبث التوصيات فورياً إلى هاتفك عبر قناة VIP الخاصة على تيليجرام ومنصة NewsX AI. تتضمن كل إشارة سعر الدخول الدقيق، وقف الخسارة (SL)، وأهداف أخذ الربح (TP1, TP2, TP3). التركيز الأكبر يكون على الذهب (XAUUSD)، داو جونز (US30)، وناسداك، وأزواج العملات الرئيسية.",
+      "a_en": "Signals are broadcast in real time directly to your smartphone through our private VIP Telegram channel and the NewsX AI platform. Coverage centers heavily on Gold (XAUUSD), US30, Nasdaq, and major FX pairs."
+    }
+  ],
+  "announcement": {
+    "enabled": false,
+    "text_ar": "🟢 جلسة التداول مباشرة: تم فتح 5 مقاعد جديدة لإدارة المحافظ لشهر سبتمبر. تواصل عبر تيليجرام.",
+    "text_en": "🟢 Live Trading Session: 5 new managed account slots opened for September. Contact via Telegram.",
+    "badge": "NEWS"
+  }
+}

@@ -40,7 +40,6 @@
 <meta name="twitter:image" content="https://saifeddine-boumaza.com/og-image.png">
 <meta name="twitter:image:alt" content="Saifeddine Boumaza — Forex &amp; Crypto Trading Manager">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=Tajawal:wght@400;500;700;800;900&amp;display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <script>if(window.emailjs&&window.emailjs.init)window.emailjs.init('RlQp_bILdnIDbvhv_');</script>
@@ -6708,9 +6707,7 @@ body.theme-light .cvx-market-console-title {
 </div>
 <p id="cvxDisclP1"><strong>High-Risk Investment Disclosure:</strong> Trading foreign exchange (Forex), cryptocurrencies, digital assets, CFDs, and leveraged financial products involves a substantial degree of risk of capital loss and is not suitable for every investor. High leverage can amplify losses as well as profits. You should never trade or invest funds you cannot afford to completely lose. Before engaging in trading, thoroughly evaluate your investment objectives, financial situation, trading experience, and risk appetite.</p>
 <p id="cvxDisclP2"><strong>No Financial Advice &amp; Software Utility Notice:</strong> All historical statistics, past performance metrics, signal accuracy rates, and automated trading algorithms presented on this website are for analytical, educational, and simulation purposes only. Past performance does not guarantee or predict future results. "Flash USDT" software solutions, testnet tools, and MT4/MT5 indicators are distributed strictly as technical and developer software utilities. Saifeddine Boumaza does not provide registered financial advisory, brokerage, or custodial services. All trade executions and financial decisions remain solely at your own independent discretion and liability.</p>
-</div>
-<div class="cvx-foot-copy"><span class="mono">© Saifeddine Boumaza — Forex &amp; Crypto Trading Manager</span> — All rights reserved</div>
-</div>
+<div class="cvx-foot-copy"><span class="mono">© Saifeddine Boumaza — Forex &amp; Crypto Trading Manager</span> — All rights reserved <a href="admin.html" target="_blank" rel="noopener" title="لوحة تحكم الموقع · Admin Studio" style="color:var(--muted);opacity:0.35;margin-inline-start:10px;text-decoration:none;transition:opacity .2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.35'">🔒 Admin Studio</a></div>
 </footer>
 <a class="cvx-fab tg" href="https://t.me/HNTSB15" rel="noopener" target="_blank" title="Message me on Telegram"><svg viewBox="0 0 24 24"><path d="M21.9 4.3 18.7 19c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.7 13 1.9 11.5c-1-.3-1-1 .2-1.5l18.4-7.1c.9-.3 1.6.2 1.4 1.4Z"></path></svg></a>
 <button class="cvx-fab top" id="cvxTop" title="Back to top" type="button"><svg viewBox="0 0 24 24"><path d="M12 5l7 7-1.4 1.4L13 8.8V20h-2V8.8L6.4 13.4 5 12z"></path></svg></button>
@@ -6868,182 +6865,177 @@ body.theme-light .cvx-market-console-title {
   var d1=document.getElementById('cvxDl'), d2=document.getElementById('cvxDl2');
   if(d1)d1.addEventListener('click',dl); if(d2)d2.addEventListener('click',dl);
 
-  // Supabase Configuration
-  var SUPABASE_URL = 'https://kbioxkoifvyivhkzbxke.supabase.co';
-  var SUPABASE_KEY = 'sb_publishable_TXezItY2oN4gFgCxDLqZPw_B_ormkoG';
-  var sdb = null;
-  if (window.supabase && typeof window.supabase.createClient === 'function') {
-    try {
-      sdb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    } catch(err){}
-  }
+  // ==========================================================================
+  // ⚡ CENTRAL SITE CONTENT HYDRATOR (Powered by site_content.json — No Supabase)
+  // ==========================================================================
+  window.siteData = null;
 
-  // Load Live Offers and Packages from Supabase (Clear Table: website_prices)
-  function loadLiveOffers() {
-    if (!sdb) return;
-    var tbl = sdb.from('website_prices');
-    tbl.select('*').eq('is_active', true).then(function(res) {
-      var list = (res && res.data && res.data.length) ? res.data : [];
-      if (!list.length) return;
-      list.forEach(function(o) {
-        var price = o.current_price !== undefined ? o.current_price : o.price_usdt;
-        var tag = o.discount_tag || o.discount_badge || '';
-        var amt = o.flash_usdt_amount !== undefined ? o.flash_usdt_amount : o.amount;
-        var key = o.item_key || o.id;
+  function hydrateSiteContent() {
+    fetch('site_content.json?v=' + Date.now())
+      .then(function(res) {
+        if (!res.ok) throw new Error('Network error');
+        return res.json();
+      })
+      .then(function(data) {
+        if (!data) return;
+        window.siteData = data;
 
-        // Deals
-        if (key === 'flash_deal_1') {
-          var pEl = document.getElementById('flDeal1Price'), bEl = document.getElementById('flDeal1Badge'), aEl = document.getElementById('flDeal1Amount'), btn = document.getElementById('flDeal1Btn');
-          if (pEl) pEl.innerHTML = price + ' <small>USDT</small>';
-          if (bEl && tag) bEl.textContent = tag;
-          if (aEl && amt) aEl.innerHTML = Number(amt).toLocaleString() + ' FLASH <span>USDT</span>';
-          if (btn) btn.setAttribute('onclick', "openFlashModal(" + (amt || 80000) + ", " + price + ", '24h')");
-        } else if (key === 'flash_deal_2') {
-          var pEl2 = document.getElementById('flDeal2Price'), bEl2 = document.getElementById('flDeal2Badge'), aEl2 = document.getElementById('flDeal2Amount'), btn2 = document.getElementById('flDeal2Btn');
-          if (pEl2) pEl2.innerHTML = price + ' <small>USDT</small>';
-          if (bEl2 && tag) bEl2.textContent = tag;
-          if (aEl2 && amt) aEl2.innerHTML = Number(amt).toLocaleString() + ' FLASH <span>USDT</span>';
-          if (btn2) btn2.setAttribute('onclick', "openFlashModal(" + (amt || 8000) + ", " + price + ", '24h')");
-        }
-        // 24 Hours Packages
-        else if (key === 'package_24h_1k' || key === 'pack_24h_1k') {
-          var c = document.getElementById('pack_24h_1k_cost'), b = document.getElementById('pack_24h_1k_btn');
-          if (c) c.innerHTML = price + ' <small>USDT</small>';
-          if (b) b.setAttribute('onclick', "openFlashModal(" + (amt || 1000) + ", " + price + ", '24h')");
-        } else if (key === 'package_24h_100k' || key === 'pack_24h_100k') {
-          var c = document.getElementById('pack_24h_100k_cost'), b = document.getElementById('pack_24h_100k_btn');
-          if (c) c.innerHTML = price + ' <small>USDT</small>';
-          if (b) b.setAttribute('onclick', "openFlashModal(" + (amt || 100000) + ", " + price + ", '24h')");
-        } else if (key === 'package_24h_1m' || key === 'pack_24h_1m') {
-          var c = document.getElementById('pack_24h_1m_cost'), b = document.getElementById('pack_24h_1m_btn');
-          if (c) c.innerHTML = price + ' <small>USDT</small>';
-          if (b) b.setAttribute('onclick', "openFlashModal(" + (amt || 1000000) + ", " + price + ", '24h')");
-        }
-        // 3 Days Packages
-        else if (key === 'package_3days_1k' || key === 'pack_3d_1k') {
-          var c = document.getElementById('pack_3d_1k_cost'), b = document.getElementById('pack_3d_1k_btn');
-          if (c) c.innerHTML = price + ' <small>USDT</small>';
-          if (b) b.setAttribute('onclick', "openFlashModal(" + (amt || 1000) + ", " + price + ", '3d')");
-        } else if (key === 'package_3days_100k' || key === 'pack_3d_100k') {
-          var c = document.getElementById('pack_3d_100k_cost'), b = document.getElementById('pack_3d_100k_btn');
-          if (c) c.innerHTML = price + ' <small>USDT</small>';
-          if (b) b.setAttribute('onclick', "openFlashModal(" + (amt || 100000) + ", " + price + ", '3d')");
-        } else if (key === 'package_3days_1m' || key === 'pack_3d_1m') {
-          var c = document.getElementById('pack_3d_1m_cost'), b = document.getElementById('pack_3d_1m_btn');
-          if (c) c.innerHTML = price + ' <small>USDT</small>';
-          if (b) b.setAttribute('onclick', "openFlashModal(" + (amt || 1000000) + ", " + price + ", '3d')");
-        }
-        // 1 Week Packages
-        else if (key === 'package_1week_1k' || key === 'pack_1w_1k') {
-          var c = document.getElementById('pack_1w_1k_cost'), b = document.getElementById('pack_1w_1k_btn');
-          if (c) c.innerHTML = price + ' <small>USDT</small>';
-          if (b) b.setAttribute('onclick', "openFlashModal(" + (amt || 1000) + ", " + price + ", '1w')");
-        } else if (key === 'package_1week_100k' || key === 'pack_1w_100k') {
-          var c = document.getElementById('pack_1w_100k_cost'), b = document.getElementById('pack_1w_100k_btn');
-          if (c) c.innerHTML = price + ' <small>USDT</small>';
-          if (b) b.setAttribute('onclick', "openFlashModal(" + (amt || 100000) + ", " + price + ", '1w')");
-        } else if (key === 'package_1week_1m' || key === 'pack_1w_1m') {
-          var c = document.getElementById('pack_1w_1m_cost'), b = document.getElementById('pack_1w_1m_btn');
-          if (c) c.innerHTML = price + ' <small>USDT</small>';
-          if (b) b.setAttribute('onclick', "openFlashModal(" + (amt || 1000000) + ", " + price + ", '1w')");
-        }
-        // NewsX Plans
-        else if (key === 'newsx_standard') {
-          var sp = document.getElementById('nxPlanStdPrice'), sb = document.getElementById('nxPlanStdBtn');
-          if (sp) sp.innerHTML = '$' + price + '<span>/month</span>';
-          if (sb) sb.setAttribute('onclick', "openPlanModal('NewsX AI Standard', " + price + ")");
-        } else if (key === 'newsx_pro') {
-          var pp = document.getElementById('nxPlanProPrice'), pb = document.getElementById('nxPlanProBtn');
-          if (pp) pp.innerHTML = '$' + price + '<span>/month</span>';
-          if (pb) pb.setAttribute('onclick', "openPlanModal('NewsX AI Pro', " + price + ")");
-        } else if (key === 'newsx_ultimate') {
-          var up = document.getElementById('nxPlanUltPrice'), ub = document.getElementById('nxPlanUltBtn');
-          if (up) up.innerHTML = '$' + price + '<span>/month</span>';
-          if (ub) ub.setAttribute('onclick', "openPlanModal('NewsX AI Ultimate', " + price + ")");
-        }
-      });
-    }).catch(function(){});
-  }
-  loadLiveOffers();
+        // 1. Profile & Socials
+        if (data.profile) {
+          var p = data.profile;
+          var nameEl = document.getElementById('cvxBrandName');
+          if (nameEl && p.name) nameEl.textContent = p.name;
+          var titleEl = document.getElementById('cvxBrandSub');
+          if (titleEl && p.title) titleEl.textContent = p.title;
 
-  // Load Live Settings (Clear Table: website_settings)
-  function loadLiveSettings() {
-    if (!sdb) return;
-    sdb.from('website_settings').select('*').then(function(res) {
-      var list = (res && res.data && res.data.length) ? res.data : [];
-      if (!list.length) return;
-      list.forEach(function(s) {
-        var k = s.setting_name || s.key;
-        var val = s.current_value || s.value;
-        if (!k || !val) return;
+          if (p.socials) {
+            if (p.socials.telegram) {
+              var tg = p.socials.telegram;
+              document.querySelectorAll('a[href*="t.me/"]').forEach(function(a){ a.href = tg; });
+            }
+            if (p.socials.twitter) {
+              var tw = p.socials.twitter;
+              document.querySelectorAll('a[href*="x.com/"], a[href*="twitter.com/"]').forEach(function(a){ a.href = tw; });
+            }
+            if (p.socials.whatsapp) {
+              var wa = p.socials.whatsapp;
+              document.querySelectorAll('a[href*="wa.me/"]').forEach(function(a){ a.href = wa; });
+            }
+          }
+        }
 
-        if (k === 'bep20_deposit_wallet' || k === 'wallet_bep20') {
-          if (window.cvxWallets) window.cvxWallets['BEP20'] = val;
-          var wInp = document.getElementById('flDepositWallet');
-          var netEl = document.getElementById('flModalNet');
-          if (wInp && netEl && netEl.textContent === 'BEP20') wInp.value = val;
+        // 2. Performance Metrics
+        if (data.metrics) {
+          var m = data.metrics;
+          var m1 = document.querySelector('.cvx-res-metrics .cvx-res-metric:nth-child(1) .m-val');
+          if (m1 && m.target_monthly_roi) m1.textContent = m.target_monthly_roi;
+          var m2 = document.querySelector('.cvx-res-metrics .cvx-res-metric:nth-child(2) .m-val');
+          if (m2 && m.max_drawdown) m2.textContent = m.max_drawdown;
+          var m3 = document.querySelector('.cvx-res-metrics .cvx-res-metric:nth-child(3) .m-val');
+          if (m3 && m.transparent_verified) m3.textContent = m.transparent_verified;
+          var m4 = document.querySelector('.cvx-res-metrics .cvx-res-metric:nth-child(4) .m-val');
+          if (m4 && m.primary_assets) m4.textContent = m.primary_assets;
         }
-        if (k === 'trc20_deposit_wallet' || k === 'wallet_trc20') {
-          if (window.cvxWallets) window.cvxWallets['TRC20'] = val;
-          var wInp = document.getElementById('flDepositWallet');
-          var netEl = document.getElementById('flModalNet');
-          if (wInp && netEl && netEl.textContent === 'TRC20') wInp.value = val;
+
+        // 3. NewsX AI Pricing
+        if (data.pricing && data.pricing.newsx) {
+          var nx = data.pricing.newsx;
+          if (nx.starter) {
+            var sp = document.getElementById('nxPlanStdPrice'), sb = document.getElementById('nxPlanStdBtn');
+            if (sp && nx.starter.price) sp.innerHTML = '$' + nx.starter.price + '<span>/month</span>';
+            if (sb && nx.starter.price) sb.setAttribute('onclick', "openPlanModal('" + (nx.starter.name || 'NewsX AI Starter') + "', " + nx.starter.price + ")");
+          }
+          if (nx.pro) {
+            var pp = document.getElementById('nxPlanProPrice'), pb = document.getElementById('nxPlanProBtn');
+            if (pp && nx.pro.price) pp.innerHTML = '$' + nx.pro.price + '<span>/month</span>';
+            if (pb && nx.pro.price) pb.setAttribute('onclick', "openPlanModal('" + (nx.pro.name || 'NewsX AI Pro') + "', " + nx.pro.price + ")");
+          }
+          if (nx.ultimate) {
+            var up = document.getElementById('nxPlanUltPrice'), ub = document.getElementById('nxPlanUltBtn');
+            if (up && nx.ultimate.price) up.innerHTML = '$' + nx.ultimate.price + '<span>/month</span>';
+            if (ub && nx.ultimate.price) ub.setAttribute('onclick', "openPlanModal('" + (nx.ultimate.name || 'NewsX AI Institutional') + "', " + nx.ultimate.price + ")");
+          }
         }
-        if (k === 'calculator_price_24h_per_1k' || k === 'calc_rate_24h') {
-          var num = parseFloat(val);
-          if (window.cvxRates) window.cvxRates['24h'] = { rate: num / 1000, label: 'Rate: 1K = ' + num + ' USDT' };
-          var opt = document.getElementById('flCalcOpt24h');
-          if (opt) opt.textContent = '24 Hours (1,000 Flash = ' + num + ' USDT)';
-          if (window.updateFlashCalc) window.updateFlashCalc();
+
+        // 4. Flash Deals & Packages
+        if (data.pricing && data.pricing.flash_deals) {
+          var fd = data.pricing.flash_deals;
+          if (fd.deal_1) {
+            var d1 = fd.deal_1;
+            var pEl = document.getElementById('flDeal1Price'), bEl = document.getElementById('flDeal1Badge'), aEl = document.getElementById('flDeal1Amount'), btn = document.getElementById('flDeal1Btn');
+            if (pEl && d1.price) pEl.innerHTML = d1.price + ' <small>USDT</small>';
+            if (bEl && d1.discount_badge) bEl.textContent = d1.discount_badge;
+            if (aEl && d1.amount) aEl.innerHTML = Number(d1.amount).toLocaleString() + ' FLASH <span>USDT</span>';
+            if (btn && d1.price) btn.setAttribute('onclick', "openFlashModal(" + (d1.amount || 80000) + ", " + d1.price + ", '24h')");
+          }
+          if (fd.deal_2) {
+            var d2 = fd.deal_2;
+            var pEl2 = document.getElementById('flDeal2Price'), bEl2 = document.getElementById('flDeal2Badge'), aEl2 = document.getElementById('flDeal2Amount'), btn2 = document.getElementById('flDeal2Btn');
+            if (pEl2 && d2.price) pEl2.innerHTML = d2.price + ' <small>USDT</small>';
+            if (bEl2 && d2.discount_badge) bEl2.textContent = d2.discount_badge;
+            if (aEl2 && d2.amount) aEl2.innerHTML = Number(d2.amount).toLocaleString() + ' FLASH <span>USDT</span>';
+            if (btn2 && d2.price) btn2.setAttribute('onclick', "openFlashModal(" + (d2.amount || 8000) + ", " + d2.price + ", '24h')");
+          }
         }
-        if (k === 'calculator_price_3days_per_1k' || k === 'calc_rate_3d') {
-          var num = parseFloat(val);
-          if (window.cvxRates) window.cvxRates['3d'] = { rate: num / 1000, label: 'Rate: 1K = ' + num + ' USDT' };
-          var opt = document.getElementById('flCalcOpt3d');
-          if (opt) opt.textContent = '3 Days (1,000 Flash = ' + num + ' USDT)';
-          if (window.updateFlashCalc) window.updateFlashCalc();
-        }
-        if (k === 'calculator_price_1week_per_1k' || k === 'calc_rate_1w') {
-          var num = parseFloat(val);
-          if (window.cvxRates) window.cvxRates['1w'] = { rate: num / 1000, label: 'Rate: 1K = ' + num + ' USDT' };
-          var opt = document.getElementById('flCalcOpt1w');
-          if (opt) opt.textContent = '1 Week (1,000 Flash = ' + num + ' USDT)';
-          if (window.updateFlashCalc) window.updateFlashCalc();
-        }
-        if (k === 'telegram_username' || k === 'telegram_handle') {
-          var tg = val.replace(/^@/, '');
-          if (window.CVX_TELEGRAM_CONFIG) window.CVX_TELEGRAM_CONFIG.directUsername = tg;
-          document.querySelectorAll('a[href*="t.me/"]').forEach(function(a){
-            if (a.href.indexOf('?text=') > -1) {
-              var textParam = a.href.split('?text=')[1] || '';
-              a.href = 'https://t.me/' + tg + (textParam ? ('?text=' + textParam) : '');
-            } else {
-              a.href = 'https://t.me/' + tg;
+
+        if (data.pricing && data.pricing.flash_packages) {
+          var fp = data.pricing.flash_packages;
+          ['tier_24h', 'tier_3d', 'tier_1w'].forEach(function(tierKey) {
+            if (fp[tierKey] && Array.isArray(fp[tierKey])) {
+              fp[tierKey].forEach(function(item) {
+                var c = document.getElementById(item.id + '_cost'), b = document.getElementById(item.id + '_btn');
+                if (c && item.price) c.innerHTML = item.price + ' <small>USDT</small>';
+                if (b && item.price) b.setAttribute('onclick', "openFlashModal(" + (item.amount || 1000) + ", " + item.price + ", '" + (item.duration || '24h') + "')");
+              });
             }
           });
         }
-        if (k === 'whatsapp_number' || k === 'whatsapp') {
-          window.CVX_WHATSAPP = val;
+
+        // 5. Reviews Sync
+        if (data.reviews && Array.isArray(data.reviews) && data.reviews.length > 0) {
+          if (typeof allReviews !== 'undefined') {
+            allReviews = data.reviews.slice();
+            if (typeof window.renderReviews === 'function') {
+              window.renderReviews();
+            }
+          }
         }
-        if (k === 'telegram_bot_token') {
-          if (window.CVX_TELEGRAM_CONFIG) window.CVX_TELEGRAM_CONFIG.botToken = val;
+
+        // 6. Track Record / Trades Hydration
+        if (data.trades && Array.isArray(data.trades)) {
+          var slides = document.querySelectorAll('.cvx-x-slide');
+          data.trades.forEach(function(tr, idx) {
+            if (slides[idx]) {
+              var depEl = slides[idx].querySelector('.cvx-slide-profit-row .dep b');
+              if (depEl && tr.deposit) depEl.textContent = tr.deposit;
+              var pftEl = slides[idx].querySelector('.cvx-slide-profit-row .pft');
+              if (pftEl && tr.profit) pftEl.textContent = tr.profit;
+              var descEl = slides[idx].querySelector('.cvx-slide-desc');
+              if (descEl && tr.desc) descEl.textContent = tr.desc;
+              var splitEl = slides[idx].querySelector('.cvx-slide-split');
+              if (splitEl && tr.split) splitEl.textContent = 'Profit Split: ' + tr.split;
+              var badgeEl = slides[idx].querySelector('.cvx-slide-badge');
+              if (badgeEl && tr.badge) badgeEl.textContent = tr.badge;
+            }
+          });
         }
-        if (k === 'telegram_chat_id') {
-          if (window.CVX_TELEGRAM_CONFIG) window.CVX_TELEGRAM_CONFIG.chatId = val;
+
+        // 7. FAQs Hydration
+        if (data.faqs && Array.isArray(data.faqs)) {
+          var isArLang = (document.documentElement.getAttribute('lang') === 'ar');
+          data.faqs.forEach(function(f, idx) {
+            var num = idx + 1;
+            var qEl = document.getElementById('faqQ' + num);
+            var aEl = document.getElementById('faqA' + num);
+            if (qEl) qEl.textContent = isArLang ? (f.q_ar || f.q_en) : (f.q_en || f.q_ar);
+            if (aEl) aEl.textContent = isArLang ? (f.a_ar || f.a_en) : (f.a_en || f.a_ar);
+          });
         }
-        if (k === 'instagram_profile' || k === 'instagram') {
-          window.CVX_INSTAGRAM = val;
+
+        // 8. Announcement Banner
+        if (data.announcement && data.announcement.enabled) {
+          var existing = document.getElementById('cvxLiveAnnouncement');
+          if (existing) existing.remove();
+          var isAr = (document.documentElement.getAttribute('lang') === 'ar');
+          var text = (isAr && data.announcement.text_ar) ? data.announcement.text_ar : (data.announcement.text_en || data.announcement.text_ar);
+          if (text) {
+            var bar = document.createElement('div');
+            bar.id = 'cvxLiveAnnouncement';
+            bar.style.cssText = 'background:linear-gradient(90deg,#0a1c12,#091628);border-bottom:1px solid #00ff9c;padding:9px 16px;text-align:center;font-size:13px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;z-index:9999;position:relative;box-shadow:0 0 15px rgba(0,255,156,0.25);';
+            bar.innerHTML = '<span style="background:rgba(0,255,156,0.18);color:#00ff9c;border:1px solid #00ff9c;border-radius:6px;padding:2px 8px;font-size:11px;font-family:\'JetBrains Mono\',monospace;">' + (data.announcement.badge || 'NEWS') + '</span> <span>' + text + '</span>';
+            var top = document.getElementById('cvtop');
+            if (top) top.parentNode.insertBefore(bar, top);
+          }
         }
-        if (k === 'x_profile' || k === 'x_twitter') {
-          window.CVX_X = val;
-        }
+      })
+      .catch(function(err){
+        console.log('Using static content', err);
       });
-    }).catch(function(){});
   }
-  loadLiveSettings();
+  hydrateSiteContent();
 
   // ==========================================================================
-  // ⭐ CLIENT REVIEWS & TESTIMONIALS CONTROLLER (Supabase + Telegram Bot Bridge)
+  // 💬 CLIENT REVIEWS & TESTIMONIALS CONTROLLER (site_content.json + Telegram Bot Bridge)
   // ==========================================================================
   var defaultReviews = [
     {
@@ -7261,29 +7253,7 @@ body.theme-light .cvx-market-console-title {
         (isAr ? 'جاري التحقق والإرسال...' : 'Verifying & Submitting...');
     }
 
-    // 1. Send to Supabase Table: client_reviews
-    if (sdb && typeof sdb.from === 'function') {
-      try {
-        sdb.from('client_reviews').insert([{
-          client_name: name,
-          client_country: country,
-          rating: rating,
-          service_type: service,
-          review_text: comment,
-          profit_stat: stat,
-          is_verified: true,
-          is_active: true
-        }]).then(function(res){
-          if (res && res.error) {
-            console.warn('Supabase review insert error:', res.error);
-          }
-        }).catch(function(err){
-          console.warn('Supabase review error:', err);
-        });
-      } catch(err){}
-    }
-
-    // 2. Instant Telegram Bot Alert to Saifeddine's Phone
+    // 1. Instant Telegram Bot Alert to Saifeddine's Phone
     var cfg = window.CVX_TELEGRAM_CONFIG || {};
     if (cfg.botToken && cfg.chatId) {
       try {
@@ -7343,54 +7313,8 @@ body.theme-light .cvx-market-console-title {
     }, 2200);
   };
 
-  // Load Live Verified Reviews from Supabase (Table: client_reviews)
-  function loadLiveReviews() {
-    if (!sdb) return;
-    try {
-      sdb.from('client_reviews').select('*').eq('is_active', true).order('created_at', { ascending: false }).then(function(res) {
-        var list = (res && res.data && res.data.length) ? res.data : [];
-        if (!list.length) return;
-        var liveItems = list.map(function(r) {
-          return {
-            name: r.client_name,
-            country: r.client_country,
-            country_en: r.client_country,
-            rating: r.rating || 5,
-            service: r.service_type || 'managed',
-            stat: r.profit_stat || '',
-            stat_en: r.profit_stat || '',
-            text: r.review_text,
-            text_en: r.review_text_en || r.review_text
-          };
-        });
-        // Smart deduplication: ensure every review appears only once
-        var seen = {};
-        var uniqueList = [];
-        liveItems.forEach(function(item) {
-          var k = (item.name || '').trim().toLowerCase() + '::' + (item.text || '').trim().toLowerCase().substring(0, 25);
-          if (!seen[k]) {
-            seen[k] = true;
-            uniqueList.push(item);
-          }
-        });
-
-        defaultReviews.forEach(function(def) {
-          var k = (def.name || '').trim().toLowerCase() + '::' + (def.text || '').trim().toLowerCase().substring(0, 25);
-          if (!seen[k]) {
-            seen[k] = true;
-            uniqueList.push(def);
-          }
-        });
-
-        allReviews = uniqueList;
-        window.renderReviews();
-      }).catch(function(){});
-    } catch(e){}
-  }
-
-  // Initial render of reviews and live sync
+  // Initial render of reviews (populated via site_content.json in hydrateSiteContent)
   window.renderReviews();
-  loadLiveReviews();
 
   // ==========================================================================
   // 🌍 UNIQUE VISITOR TRACKER (Table: website_visitors)
@@ -7412,7 +7336,7 @@ body.theme-light .cvx-market-console-title {
         return false;
       }
 
-      // If already tracked on a prior visit, STOP right here (no network calls, no Supabase insert)
+      // If already tracked on a prior visit, STOP right here (no network calls)
       if (isAlreadyTracked()) {
         return;
       }
@@ -7493,37 +7417,6 @@ body.theme-light .cvx-market-console-title {
       function sendVisitorLog(geo) {
         // Mark as tracked immediately so subsequent attempts or reloads never re-trigger
         markAsTracked();
-
-        var info = getDeviceInfo();
-        var payload = {
-          ip_address: (geo && geo.ip) ? geo.ip : 'Direct Visitor',
-          country: (geo && geo.country) ? (geo.country + (geo.country_code ? (' (' + geo.country_code + ')') : '')) : 'Unknown Country',
-          city: (geo && geo.city) ? geo.city : 'Unknown City',
-          device_model: info.device,
-          operating_system: info.os,
-          browser: info.browser,
-          screen_size: info.screen,
-          language: info.lang,
-          source_referrer: info.ref
-        };
-
-        var postUrl = 'https://kbioxkoifvyivhkzbxke.supabase.co/rest/v1/website_visitors';
-        var postKey = 'sb_publishable_TXezItY2oN4gFgCxDLqZPw_B_ormkoG';
-
-        if (window.fetch) {
-          fetch(postUrl, {
-            method: 'POST',
-            headers: {
-              'apikey': postKey,
-              'Authorization': 'Bearer ' + postKey,
-              'Content-Type': 'application/json',
-              'Prefer': 'return=minimal,resolution=ignore-duplicates'
-            },
-            body: JSON.stringify(payload)
-          }).catch(function(){});
-        } else if (sdb && typeof sdb.from === 'function') {
-          sdb.from('website_visitors').insert([payload]).then(function(){}).catch(function(){});
-        }
       }
 
       function trackVisitor() {
@@ -7698,35 +7591,7 @@ body.theme-light .cvx-market-console-title {
         '🌐 Source: Portfolio Terminal (Direct Lead)\n' +
         '🕒 Timestamp: ' + new Date().toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
 
-      // Background tasks (Supabase and EmailJS if configured)
-      if (typeof sdb !== 'undefined' && sdb && typeof sdb.from === 'function') {
-        try {
-          sdb.from('client_messages').insert([{
-            client_name: name,
-            client_email: email,
-            preferred_platform: channel,
-            client_handle: handle,
-            direct_link: directClientLink,
-            inquiry_topic: topic,
-            client_message: message
-          }]).then(function(res){
-            if (res && res.error) {
-              // Backward compatibility fallback if custom columns are not yet in Supabase schema:
-              sdb.from('client_messages').insert([{
-                client_name: name,
-                client_email: email,
-                client_message: '[Topic: ' + topic + ' | ' + channel + ': ' + handle + ' | Link: ' + directClientLink + '] ' + message
-              }]).then(function(){}).catch(function(){});
-            }
-          }).catch(function(){
-            sdb.from('client_messages').insert([{
-              client_name: name,
-              client_email: email,
-              client_message: '[Topic: ' + topic + ' | ' + channel + ': ' + handle + ' | Link: ' + directClientLink + '] ' + message
-            }]).then(function(){}).catch(function(){});
-          });
-        } catch(err){}
-      }
+
 
       // EmailJS Lead Dispatch to Saifeddine's Email
       if (window.emailjs && typeof window.emailjs.send === 'function') {

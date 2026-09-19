@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة تحكم الموقع — سيف الدين بومعزة | Admin Studio</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Space+Grotesk:wght@600;700&family=Tajawal:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050a14;
+      --card: #091222;
+      --card-border: rgba(0, 255, 156, 0.2);
+      --card-hover: rgba(0, 255, 156, 0.35);
+      --neon: #00ff9c;
+      --neon-2: #12d6ff;
+      --gold: #f2c14e;
+      --danger: #ff4757;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --input-bg: #040812;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Tajawal', system-ui, sans-serif;
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* Top Bar */
+    .admin-bar {
+      background: rgba(8, 16, 32, 0.95);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #fff;
+    }
+    .admin-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #000;
+      border: 1px solid var(--neon);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px rgba(0, 255, 156, 0.3);
+      overflow: hidden;
+    }
+    .admin-logo img { width: 100%; height: 100%; object-fit: cover; }
+    .admin-brand h1 { font-size: 16px; font-weight: 800; }
+    .admin-brand span { font-size: 11px; color: var(--neon); font-family: 'JetBrains Mono', monospace; }
+
+    .admin-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn {
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--neon), var(--neon-2));
+      color: #04140c;
+      box-shadow: 0 0 18px rgba(0, 255, 156, 0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1.5px);
+      box-shadow: 0 0 24px rgba(0, 255, 156, 0.6);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.12); }
+    .btn-danger {
+      background: rgba(255, 71, 87, 0.15);
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+    .btn-danger:hover { background: rgba(255, 71, 87, 0.3); }
+
+    /* Layout */
+    .admin-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 16px 80px;
+    }
+
+    /* Tabs */
+    .admin-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      scrollbar-width: none;
+    }
+    .admin-tabs::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      padding: 10px 18px;
+      border-radius: 12px;
+      background: rgba(10, 20, 36, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--muted);
+      font-size: 13.5px;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover { color: #fff; border-color: var(--neon); }
+    .tab-btn.active {
+      background: rgba(0, 255, 156, 0.12);
+      border-color: var(--neon);
+      color: var(--neon);
+      box-shadow: 0 0 15px rgba(0, 255, 156, 0.2);
+    }
+
+    /* Tab Panes */
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; animation: fadeIn 0.25s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+    /* Cards */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    }
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .card-head h2 { font-size: 18px; font-weight: 800; color: #fff; }
+    .card-head p { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+
+    /* Form Grid */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+    label {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    input, textarea, select {
+      background: var(--input-bg);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--neon);
+      box-shadow: 0 0 12px rgba(0, 255, 156, 0.3);
+    }
+    textarea { resize: vertical; min-height: 80px; }
+
+    /* Repeatable Items (Trades, Reviews, FAQs) */
+    .item-box {
+      background: rgba(4, 8, 18, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 14px;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+    .item-box:hover { border-color: rgba(0, 255, 156, 0.3); }
+    .item-box-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .item-title { font-weight: 800; font-size: 15px; color: var(--neon); }
+
+    /* Notifications & Modals */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #0e1c33;
+      border: 1px solid var(--neon);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(0,255,156,0.4);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* Login Lock Modal */
+    .lock-screen {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 15, 0.96);
+      backdrop-filter: blur(25px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .lock-box {
+      background: var(--card);
+      border: 1px solid var(--neon);
+      border-radius: 24px;
+      padding: 36px 30px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 255, 156, 0.25);
+    }
+    .lock-box h2 { font-size: 22px; font-weight: 900; margin-bottom: 8px; color: #fff; }
+    .lock-box p { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+    .pin-input {
+      letter-spacing: 12px;
+      font-size: 28px;
+      text-align: center;
+      font-weight: 900;
+      width: 100%;
+      margin-bottom: 20px;
+      background: #030711;
+      border-color: rgba(0, 255, 156, 0.4);
+      color: var(--neon);
+    }
+
+    @media (max-width: 768px) {
+      .admin-bar { padding: 12px 16px; }
+      .admin-brand span { display: none; }
+      .admin-container { padding: 16px 12px 70px; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Secret PIN Lock Screen -->
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-box">
+    <div style="width:58px;height:58px;border-radius:18px;background:rgba(0,255,156,0.1);border:1px solid var(--neon);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 0 20px rgba(0,255,156,0.3);">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="var(--neon)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    </div>
+    <h2>سيف الدين بومعزة</h2>
+    <p>أدخل رمز المرور السري للدخول إلى لوحة التحكم (الرمز الافتراضي: 1520)</p>
+    <input type="password" id="pinInput" class="pin-input mono" maxlength="8" placeholder="••••" autofocus onkeydown="if(event.key==='Enter') verifyPin()">
+    <button type="button" class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;font-size:15px;" onclick="verifyPin()">
+      فتح لوحة التحكم 🔓
+    </button>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="admin-bar">
+  <a href="#" class="admin-brand">
+    <div class="admin-logo">
+      <img src="favicon.png" alt="SB" onerror="this.src='SB.jpg'">
+    </div>
+    <div>
+      <h1>لوحة التحكم الذكية</h1>
+      <span>SB LIVE STUDIO · NO SUPABASE</span>
+    </div>
+  </a>
+  <div class="admin-actions">
+    <a href="index.html" target="_blank" class="btn btn-secondary" title="عرض الموقع المباشر">
+      <span>👁️ معاينة الموقع</span>
+    </a>
+    <button type="button" class="btn btn-primary" onclick="publishChanges()" id="publishBtn">
+      <span>🚀 نشر التعديلات فوراً</span>
+    </button>
+  </div>
+</header>
+
+<!-- Main Container -->
+<main class="admin-container">
+
+  <!-- Navigation Tabs -->
+  <nav class="admin-tabs">
+    <button type="button" class="tab-btn active" onclick="switchTab('tab-profile')">👤 الملف التعريفي</button>
+    <button type="button" class="tab-btn" onclick="switchTab('tab-metrics')">📊 الإحصائيات والأرقام</button>
+    <button type="button" class="tab-btn" onclick="switchTab('tab-pricing')">💎 الأسعار والعروض</button>
+    <button type="button" class="tab-btn" onclick="switchTab('tab-trades')">📈 الصفقات والنتائج</button>
+    <button type="button" class="tab-btn" onclick="switchTab('tab-reviews')">⭐ تقييمات العملاء</button>
+    <button type="button" class="tab-btn" onclick="switchTab('tab-faqs')">❓ الأسئلة الشائعة</button>
+    <button type="button" class="tab-btn" onclick="switchTab('tab-announcement')">📢 الإعلانات والاتصال</button>
+    <button type="button" class="tab-btn" onclick="switchTab('tab-settings')">⚙️ الإعدادات والأمان</button>
+  </nav>
+
+  <!-- 1. TAB: PROFILE -->
+  <section class="tab-pane active" id="tab-profile">
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2>الملف الشخصي والبيانات العامة (Profile & Socials)</h2>
+          <p>تعديل اسمك، المسمى الوظيفي، النبذة التعريفية، وروابط قنوات التواصل والتداول الرسمية.</p>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>الاسم بالكامل (Full Name)</label>
+          <input type="text" id="prof_name" value="Saifeddine Boumaza">
+        </div>
+        <div class="form-group">
+          <label>المسمى الوظيفي (Title)</label>
+          <input type="text" id="prof_title" value="Forex & Crypto Trading Manager">
+        </div>
+        <div class="form-group">
+          <label>معرف X / تويتر الرسمي</label>
+          <input type="text" id="prof_handle" value="@seifeddin06">
+        </div>
+        <div class="form-group">
+          <label>شارة التخصص (Badge Text)</label>
+          <input type="text" id="prof_badge" value="Trading Manager & Quant Specialist">
+        </div>
+        <div class="form-group full">
+          <label>النبذة التعريفية بالعربية (Bio AR)</label>
+          <textarea id="prof_bio_ar"></textarea>
+        </div>
+        <div class="form-group full">
+          <label>النبذة التعريفية بالإنجليزية (Bio EN)</label>
+          <textarea id="prof_bio_en"></textarea>
+        </div>
+        <div class="form-group">
+          <label>رابط قناة/حساب تليجرام (Telegram Link)</label>
+          <input type="text" id="soc_telegram">
+        </div>
+        <div class="form-group">
+          <label>رابط حساب تويتر / X (Twitter Link)</label>
+          <input type="text" id="soc_twitter">
+        </div>
+        <div class="form-group">
+          <label>رابط الواتساب (WhatsApp Link)</label>
+          <input type="text" id="soc_whatsapp">
+        </div>
+        <div class="form-group">
+          <label>البريد الإلكتروني الرسمي (Email)</label>
+          <input type="text" id="soc_email">
+        </div>
+        <div class="form-group full">
+          <label>رابط منصة TradingView</label>
+          <input type="text" id="soc_tradingview">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. TAB: METRICS -->
+  <section class="tab-pane" id="tab-metrics">
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2>الإحصائيات والأرقام المعتمدة (Key Performance Metrics)</h2>
+          <p>تعديل نسب الأرباح، نسبة النجاح، التراجع، والنقاط المعروضة في شريط الأداء الرئيسي.</p>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>العائد الشهري المستهدف (Target Monthly ROI)</label>
+          <input type="text" id="met_roi" value="15% - 35%">
+        </div>
+        <div class="form-group">
+          <label>أقصى تراجع محسوب (Max Controlled Drawdown)</label>
+          <input type="text" id="met_dd" value="< 8.5%">
+        </div>
+        <div class="form-group">
+          <label>نسبة النجاح Win Rate</label>
+          <input type="text" id="met_winrate" value="86.4%">
+        </div>
+        <div class="form-group">
+          <label>إجمالي النقاط المحققة (Total Pips)</label>
+          <input type="text" id="met_pips" value="+18,450">
+        </div>
+        <div class="form-group">
+          <label>عدد المحافظ والحسابات النشطة (Active Accounts)</label>
+          <input type="text" id="met_accounts" value="140+">
+        </div>
+        <div class="form-group">
+          <label>سنوات الخبرة في الأسواق (Experience)</label>
+          <input type="text" id="met_exp" value="8+ Years">
+        </div>
+        <div class="form-group">
+          <label>الشفافية والتأكيد (Verified Track)</label>
+          <input type="text" id="met_verified" value="100%">
+        </div>
+        <div class="form-group">
+          <label>الأصول الأساسية المتداولة (Primary Assets)</label>
+          <input type="text" id="met_assets" value="XAUUSD / FX">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. TAB: PRICING -->
+  <section class="tab-pane" id="tab-pricing">
+    <!-- NewsX AI Pricing -->
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2>أسعار باقات NewsX AI (Subscription Plans)</h2>
+          <p>تعديل أسعار ووصف باقات منصة الأخبار الاقتصادية والذكاء الاصطناعي.</p>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>سعر باقة Starter ($/شهر)</label>
+          <input type="number" id="nx_starter_price" value="49">
+        </div>
+        <div class="form-group">
+          <label>سعر باقة Pro Trader ($/شهر)</label>
+          <input type="number" id="nx_pro_price" value="99">
+        </div>
+        <div class="form-group">
+          <label>سعر باقة Institutional VIP ($/شهر)</label>
+          <input type="number" id="nx_ult_price" value="199">
+        </div>
+      </div>
+    </div>
+
+    <!-- Flash Deals -->
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2>عروض وصفقات الفلاش المؤقتة (Flash Deals)</h2>
+          <p>تعديل كمية الفلاش USDT، نسبة الخصم، وسعر العرض الخاص.</p>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>الصفقة الأولى: كمية الفلاش (Amount)</label>
+          <input type="number" id="fl_deal1_amt" value="80000">
+        </div>
+        <div class="form-group">
+          <label>الصفقة الأولى: السعر بالـ USDT</label>
+          <input type="number" id="fl_deal1_price" value="100">
+        </div>
+        <div class="form-group">
+          <label>شارة الخصم (Discount Badge)</label>
+          <input type="text" id="fl_deal1_badge" value="80% OFF">
+        </div>
+
+        <div class="form-group">
+          <label>الصفقة الثانية: كمية الفلاش (Amount)</label>
+          <input type="number" id="fl_deal2_amt" value="8000">
+        </div>
+        <div class="form-group">
+          <label>الصفقة الثانية: السعر بالـ USDT</label>
+          <input type="number" id="fl_deal2_price" value="30">
+        </div>
+        <div class="form-group">
+          <label>شارة الخصم (Discount Badge)</label>
+          <input type="text" id="fl_deal2_badge" value="30% OFF">
+        </div>
+      </div>
+    </div>
+
+    <!-- Flash Regular Tiers -->
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2>أسعار باقات الفلاش العادية (Duration Tiers)</h2>
+          <p>تعديل أسعار باقات الـ 24 ساعة، 3 أيام، والأسبوع.</p>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>24 ساعة: باقة 1,000 USDT (السعر)</label>
+          <input type="number" id="fl_pack_24h_1k" value="15">
+        </div>
+        <div class="form-group">
+          <label>24 ساعة: باقة 100,000 USDT (السعر)</label>
+          <input type="number" id="fl_pack_24h_100k" value="120">
+        </div>
+        <div class="form-group">
+          <label>24 ساعة: باقة 1,000,000 USDT (السعر)</label>
+          <input type="number" id="fl_pack_24h_1m" value="650">
+        </div>
+
+        <div class="form-group">
+          <label>3 أيام: باقة 1,000 USDT (السعر)</label>
+          <input type="number" id="fl_pack_3d_1k" value="25">
+        </div>
+        <div class="form-group">
+          <label>3 أيام: باقة 100,000 USDT (السعر)</label>
+          <input type="number" id="fl_pack_3d_100k" value="180">
+        </div>
+        <div class="form-group">
+          <label>3 أيام: باقة 1,000,000 USDT (السعر)</label>
+          <input type="number" id="fl_pack_3d_1m" value="950">
+        </div>
+
+        <div class="form-group">
+          <label>أسبوع: باقة 1,000 USDT (السعر)</label>
+          <input type="number" id="fl_pack_1w_1k" value="45">
+        </div>
+        <div class="form-group">
+          <label>أسبوع: باقة 100,000 USDT (السعر)</label>
+          <input type="number" id="fl_pack_1w_100k" value="280">
+        </div>
+        <div class="form-group">
+          <label>أسبوع: باقة 1,000,000 USDT (السعر)</label>
+          <input type="number" id="fl_pack_1w_1m" value="1400">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. TAB: TRADES -->
+  <section class="tab-pane" id="tab-trades">
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2>نتائج التداول والصفقات الحية (Live Trades & Results)</h2>
+          <p>إضافة صفقات جديدة موثقة مع نسبة الربح، الإيداع، والشرح وروابط المنشورات.</p>
+        </div>
+        <button type="button" class="btn btn-secondary" onclick="addTradeRow()">➕ إضافة صفقة جديدة</button>
+      </div>
+      <div id="tradesList"></div>
+    </div>
+  </section>
+
+  <!-- 5. TAB: REVIEWS -->
+  <section class="tab-pane" id="tab-reviews">
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2>تقييمات وآراء العملاء (Client Reviews & Testimonials)</h2>
+          <p>إدارة التقييمات المعروضة في الموقع دون الحاجة لأي اتصال بقاعدة بيانات Supabase.</p>
+        </div>
+        <button type="button" class="btn btn-secondary" onclick="addReviewRow()">➕ إضافة تقييم عميل</button>
+      </div>
+      <div id="reviewsList"></div>
+    </div>
+  </section>
+
+  <!-- 6. TAB: FAQS -->
+  <section class="tab-pane" id="tab-faqs">
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2>الأسئلة الشائعة (Frequently Asked Questions)</h2>
+          <p>تعديل أو إضافة أسئلة وأجوبة جديدة لتوضيح خدماتك للمستثمرين والمتداولين.</p>
+        </div>
+        <button type="button" class="btn btn-secondary" onclick="addFaqRow()">➕ إضافة سؤال جديد</button>
+      </div>
+      <div id="faqsList"></div>
+    </div>
+  </section>
+
+  <!-- 7. TAB: ANNOUNCEMENT -->
+  <section class="tab-pane" id="tab-announcement">
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2>شريط الإعلانات العاجلة (Live Announcement Banner)</h2>
+          <p>تفعيل شريط تنبيه متحرك أعلى الموقع للإعلان عن فتح محافظ جديدة أو عروض خاصة.</p>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>حالة الشريط</label>
+          <select id="ann_enabled">
+            <option value="false">❌ معطل (مخفي)</option>
+            <option value="true">✅ مفعل (يظهر أعلى الموقع)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>شارة التنبيه (Badge)</label>
+          <input type="text" id="ann_badge" value="NEWS">
+        </div>
+        <div class="form-group full">
+          <label>نص الإعلان بالعربية</label>
+          <textarea id="ann_text_ar" placeholder="اكتب نص الإعلان الذي سيظهر للزوار..."></textarea>
+        </div>
+        <div class="form-group full">
+          <label>نص الإعلان بالإنجليزية</label>
+          <textarea id="ann_text_en" placeholder="Announcement text in English..."></textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. TAB: SETTINGS & BACKUP -->
+  <section class="tab-pane" id="tab-settings">
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2>إعدادات الربط والنشر التلقائي (GitHub API Token)</h2>
+          <p>الرمز الخاص بنشر التعديلات من هاتفك أو حاسوبك فوراً إلى موقعك بدون وسيط.</p>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>رمز الوصول الشخصي لـ GitHub (Personal Access Token):</label>
+          <input type="password" id="gh_token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxx" class="mono">
+          <small style="color:var(--muted);margin-top:4px;font-size:12px;">
+            🔒 يُحفظ الرمز مشفراً في متصفح جهازك فقط ولا يراه أي شخص آخر. إذا لم يكن لديك رمز، يمكنك توليده في ثوانٍ من:
+            <a href="https://github.com/settings/tokens/new?scopes=repo&description=SB-Admin-Studio" target="_blank" style="color:var(--neon);font-weight:bold;text-decoration:underline;">
+              صفحة توليد الـ Token على GitHub ↗
+            </a> (اختر صلاحية <b>repo</b> فقط).
+          </small>
+        </div>
+        <div class="form-group">
+          <label>مستودع الموقع (GitHub Repo)</label>
+          <input type="text" id="gh_repo" value="HNTSB15/seifeddine-boumaza" class="mono">
+        </div>
+        <div class="form-group">
+          <label>الفرع (Branch)</label>
+          <input type="text" id="gh_branch" value="main" class="mono">
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2>الأمان وتغيير رمز المرور (Change Admin PIN)</h2>
+          <p>يمكنك تعيين رمز PIN جديد للدخول إلى لوحة التحكم.</p>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>الرمز السري الجديد (PIN):</label>
+          <input type="password" id="new_pin" maxlength="8" placeholder="الرمز الجديد..." class="mono">
+        </div>
+        <div class="form-group" style="justify-content:flex-end;">
+          <button type="button" class="btn btn-secondary" onclick="updatePin()">حفظ الرمز السري الجديد</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2>النسخ الاحتياطي اليدوي (Manual Backup & Restore)</h2>
+          <p>يمكنك تنزيل نسخة من كل بيانات الموقع على جهازك أو استعادتها في أي وقت.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <button type="button" class="btn btn-secondary" onclick="downloadBackup()">
+          💾 تحميل نسخة احتياطية (site_content.json)
+        </button>
+        <label class="btn btn-secondary" style="cursor:pointer;margin:0;">
+          📥 استعادة من ملف JSON
+          <input type="file" id="importFileInput" accept=".json" style="display:none" onchange="importBackup(event)">
+        </label>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast">
+  <span id="toastIcon">✓</span>
+  <span id="toastMsg">تم الحفظ بنجاح</span>
+</div>
+
+<script>
+  // Global Data Store
+  var siteData = null;
+  var DEFAULT_PIN = "1520";
+
+  // Check PIN Authentication on load
+  function checkAuth() {
+    var isAuthed = sessionStorage.getItem("sb_admin_authed");
+    if (isAuthed === "true") {
+      document.getElementById("lockScreen").style.display = "none";
+    }
+  }
+
+  function verifyPin() {
+    var entered = document.getElementById("pinInput").value.trim();
+    var storedPin = localStorage.getItem("sb_admin_pin") || DEFAULT_PIN;
+    if (entered === storedPin) {
+      sessionStorage.setItem("sb_admin_authed", "true");
+      document.getElementById("lockScreen").style.display = "none";
+      showToast("مرحباً بك يا سيف الدين! تم فتح لوحة التحكم بنجاح.");
+    } else {
+      alert("رمز المرور غير صحيح! يرجى المحاولة مرة أخرى.");
+      document.getElementById("pinInput").value = "";
+    }
+  }
+
+  function updatePin() {
+    var np = document.getElementById("new_pin").value.trim();
+    if (np.length < 4) {
+      alert("يرجى إدخال رمز مرور مكون من 4 أرقام على الأقل.");
+      return;
+    }
+    localStorage.setItem("sb_admin_pin", np);
+    showToast("تم تحديث رمز المرور بنجاح! احفظه جيداً.");
+    document.getElementById("new_pin").value = "";
+  }
+
+  // Switch Tab
+  function switchTab(tabId) {
+    document.querySelectorAll(".tab-btn").forEach(function(b){ b.classList.remove("active"); });
+    document.querySelectorAll(".tab-pane").forEach(function(p){ p.classList.remove("active"); });
+    event.target.classList.add("active");
+    var target = document.getElementById(tabId);
+    if (target) target.classList.add("active");
+  }
+
+  // Toast
+  function showToast(msg, isError) {
+    var t = document.getElementById("toast");
+    var m = document.getElementById("toastMsg");
+    var i = document.getElementById("toastIcon");
+    m.textContent = msg;
+    i.textContent = isError ? "⚠️" : "✓";
+    t.style.borderColor = isError ? "var(--danger)" : "var(--neon)";
+    t.classList.add("show");
+    setTimeout(function(){ t.classList.remove("show"); }, 3500);
+  }
+
+  // Load site_content.json on Start
+  function loadData() {
+    // Also load saved github token
+    var savedToken = localStorage.getItem("sb_gh_token");
+    if (savedToken) document.getElementById("gh_token").value = savedToken;
+
+    fetch("site_content.json?v=" + Date.now())
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        siteData = data;
+        populateForm(data);
+      })
+      .catch(function(err){
+        console.warn("Could not fetch site_content.json", err);
+      });
+  }
+
+  // Populate Form Fields
+  function populateForm(d) {
+    if (!d) return;
+
+    // Profile
+    if (d.profile) {
+      document.getElementById("prof_name").value = d.profile.name || "";
+      document.getElementById("prof_title").value = d.profile.title || "";
+      document.getElementById("prof_handle").value = d.profile.handle || "";
+      document.getElementById("prof_badge").value = d.profile.badge_text || "";
+      document.getElementById("prof_bio_ar").value = d.profile.bio_ar || "";
+      document.getElementById("prof_bio_en").value = d.profile.bio_en || "";
+      if (d.profile.socials) {
+        document.getElementById("soc_telegram").value = d.profile.socials.telegram || "";
+        document.getElementById("soc_twitter").value = d.profile.socials.twitter || "";
+        document.getElementById("soc_whatsapp").value = d.profile.socials.whatsapp || "";
+        document.getElementById("soc_email").value = d.profile.socials.email || "";
+        document.getElementById("soc_tradingview").value = d.profile.socials.tradingview || "";
+      }
+    }
+
+    // Metrics
+    if (d.metrics) {
+      document.getElementById("met_roi").value = d.metrics.target_monthly_roi || "";
+      document.getElementById("met_dd").value = d.metrics.max_drawdown || "";
+      document.getElementById("met_winrate").value = d.metrics.win_rate || "";
+      document.getElementById("met_pips").value = d.metrics.total_pips || "";
+      document.getElementById("met_accounts").value = d.metrics.active_accounts || "";
+      document.getElementById("met_exp").value = d.metrics.experience_years || "";
+      document.getElementById("met_verified").value = d.metrics.transparent_verified || "";
+      document.getElementById("met_assets").value = d.metrics.primary_assets || "";
+    }
+
+    // Pricing
+    if (d.pricing) {
+      if (d.pricing.newsx) {
+        if (d.pricing.newsx.starter) document.getElementById("nx_starter_price").value = d.pricing.newsx.starter.price || 49;
+        if (d.pricing.newsx.pro) document.getElementById("nx_pro_price").value = d.pricing.newsx.pro.price || 99;
+        if (d.pricing.newsx.ultimate) document.getElementById("nx_ult_price").value = d.pricing.newsx.ultimate.price || 199;
+      }
+      if (d.pricing.flash_deals) {
+        if (d.pricing.flash_deals.deal_1) {
+          document.getElementById("fl_deal1_amt").value = d.pricing.flash_deals.deal_1.amount || 80000;
+          document.getElementById("fl_deal1_price").value = d.pricing.flash_deals.deal_1.price || 100;
+          document.getElementById("fl_deal1_badge").value = d.pricing.flash_deals.deal_1.discount_badge || "80% OFF";
+        }
+        if (d.pricing.flash_deals.deal_2) {
+          document.getElementById("fl_deal2_amt").value = d.pricing.flash_deals.deal_2.amount || 8000;
+          document.getElementById("fl_deal2_price").value = d.pricing.flash_deals.deal_2.price || 30;
+          document.getElementById("fl_deal2_badge").value = d.pricing.flash_deals.deal_2.discount_badge || "30% OFF";
+        }
+      }
+      if (d.pricing.flash_packages) {
+        var p24 = d.pricing.flash_packages.tier_24h || [];
+        if (p24[0]) document.getElementById("fl_pack_24h_1k").value = p24[0].price;
+        if (p24[1]) document.getElementById("fl_pack_24h_100k").value = p24[1].price;
+        if (p24[2]) document.getElementById("fl_pack_24h_1m").value = p24[2].price;
+
+        var p3d = d.pricing.flash_packages.tier_3d || [];
+        if (p3d[0]) document.getElementById("fl_pack_3d_1k").value = p3d[0].price;
+        if (p3d[1]) document.getElementById("fl_pack_3d_100k").value = p3d[1].price;
+        if (p3d[2]) document.getElementById("fl_pack_3d_1m").value = p3d[2].price;
+
+        var p1w = d.pricing.flash_packages.tier_1w || [];
+        if (p1w[0]) document.getElementById("fl_pack_1w_1k").value = p1w[0].price;
+        if (p1w[1]) document.getElementById("fl_pack_1w_100k").value = p1w[1].price;
+        if (p1w[2]) document.getElementById("fl_pack_1w_1m").value = p1w[2].price;
+      }
+    }
+
+    // Announcement
+    if (d.announcement) {
+      document.getElementById("ann_enabled").value = d.announcement.enabled ? "true" : "false";
+      document.getElementById("ann_badge").value = d.announcement.badge || "NEWS";
+      document.getElementById("ann_text_ar").value = d.announcement.text_ar || "";
+      document.getElementById("ann_text_en").value = d.announcement.text_en || "";
+    }
+
+    // Render Lists
+    renderTradesList(d.trades || []);
+    renderReviewsList(d.reviews || []);
+    renderFaqsList(d.faqs || []);
+  }
+
+  // Trades List
+  function renderTradesList(trades) {
+    var c = document.getElementById("tradesList");
+    c.innerHTML = "";
+    trades.forEach(function(t, idx){
+      var box = document.createElement("div");
+      box.className = "item-box";
+      box.innerHTML = `
+        <div class="item-box-head">
+          <span class="item-title">صفقة #${idx + 1}: ${t.pair || "صفقة جديدة"}</span>
+          <button type="button" class="btn btn-danger" onclick="deleteTrade(${idx})" style="padding:4px 10px;font-size:12px;">حذف</button>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>الأصل المتداول (Pair)</label>
+            <input type="text" value="${t.pair || ''}" oninput="updateTradeField(${idx}, 'pair', this.value)" onchange="updateTradeField(${idx}, 'pair', this.value)">
+          </div>
+          <div class="form-group">
+            <label>مبلغ الإيداع (Deposit)</label>
+            <input type="text" value="${t.deposit || ''}" oninput="updateTradeField(${idx}, 'deposit', this.value)" onchange="updateTradeField(${idx}, 'deposit', this.value)">
+          </div>
+          <div class="form-group">
+            <label>صافي الربح (Net Profit)</label>
+            <input type="text" value="${t.profit || ''}" style="color:var(--neon);font-weight:bold;" oninput="updateTradeField(${idx}, 'profit', this.value)" onchange="updateTradeField(${idx}, 'profit', this.value)">
+          </div>
+          <div class="form-group">
+            <label>تاريخ الصفقة (Date)</label>
+            <input type="text" value="${t.date || ''}" oninput="updateTradeField(${idx}, 'date', this.value)" onchange="updateTradeField(${idx}, 'date', this.value)">
+          </div>
+          <div class="form-group">
+            <label>نسبة التقاسم (Split)</label>
+            <input type="text" value="${t.split || '50/50'}" oninput="updateTradeField(${idx}, 'split', this.value)" onchange="updateTradeField(${idx}, 'split', this.value)">
+          </div>
+          <div class="form-group">
+            <label>الشارة (Badge)</label>
+            <input type="text" value="${t.badge || 'VERIFIED RESULT 📊'}" oninput="updateTradeField(${idx}, 'badge', this.value)" onchange="updateTradeField(${idx}, 'badge', this.value)">
+          </div>
+          <div class="form-group full">
+            <label>وصف الصفقة (Description)</label>
+            <input type="text" value="${t.desc || ''}" oninput="updateTradeField(${idx}, 'desc', this.value)" onchange="updateTradeField(${idx}, 'desc', this.value)">
+          </div>
+          <div class="form-group full">
+            <label>رابط الإثبات على X أو الشارت (Tweet / Proof URL)</label>
+            <input type="text" value="${t.tweet_url || ''}" oninput="updateTradeField(${idx}, 'tweet_url', this.value)" onchange="updateTradeField(${idx}, 'tweet_url', this.value)">
+          </div>
+        </div>
+      `;
+      c.appendChild(box);
+    });
+  }
+
+  function addTradeRow() {
+    if (!siteData.trades) siteData.trades = [];
+    siteData.trades.unshift({
+      id: "trade-" + Date.now(),
+      pair: "XAUUSD (Gold)",
+      deposit: "$500",
+      profit: "+$3,200",
+      split: "50/50",
+      date: new Date().toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric'}),
+      desc: "Live verified MT5 breakout execution on Gold. Take profit hit perfectly.",
+      tweet_url: "https://x.com/seifeddin06",
+      badge: "LIVE TRADE PROOF 🎬"
+    });
+    renderTradesList(siteData.trades);
+    showToast("تمت إضافة صفقة جديدة! قم بتعديل تفاصيلها ثم اضغط حفظ.");
+  }
+
+  function deleteTrade(idx) {
+    if (confirm("هل أنت متأكد من حذف هذه الصفقة؟")) {
+      siteData.trades.splice(idx, 1);
+      renderTradesList(siteData.trades);
+    }
+  }
+
+  function updateTradeField(idx, field, val) {
+    if (siteData.trades && siteData.trades[idx]) {
+      siteData.trades[idx][field] = val;
+    }
+  }
+
+  // Reviews List
+  function renderReviewsList(reviews) {
+    var c = document.getElementById("reviewsList");
+    c.innerHTML = "";
+    reviews.forEach(function(r, idx){
+      var box = document.createElement("div");
+      box.className = "item-box";
+      box.innerHTML = `
+        <div class="item-box-head">
+          <span class="item-title">تقييم #${idx + 1}: ${r.name || 'عميل'} (${r.country || ''})</span>
+          <button type="button" class="btn btn-danger" onclick="deleteReview(${idx})" style="padding:4px 10px;font-size:12px;">حذف</button>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>اسم العميل</label>
+            <input type="text" value="${r.name || ''}" oninput="updateReviewField(${idx}, 'name', this.value)" onchange="updateReviewField(${idx}, 'name', this.value)">
+          </div>
+          <div class="form-group">
+            <label>البلد (مع العلم)</label>
+            <input type="text" value="${r.country || ''}" oninput="updateReviewField(${idx}, 'country', this.value)" onchange="updateReviewField(${idx}, 'country', this.value)">
+          </div>
+          <div class="form-group">
+            <label>الخدمة</label>
+            <select onchange="updateReviewField(${idx}, 'service', this.value)">
+              <option value="managed" ${r.service === 'managed' ? 'selected' : ''}>إدارة محافظ (Managed)</option>
+              <option value="signals" ${r.service === 'signals' ? 'selected' : ''}>توصيات VIP (Signals)</option>
+              <option value="flash" ${r.service === 'flash' ? 'selected' : ''}>فلاش USDT (Flash)</option>
+              <option value="indicators" ${r.service === 'indicators' ? 'selected' : ''}>المؤشرات (Indicators)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>شارة النتيجة (Stat Highlight)</label>
+            <input type="text" value="${r.stat || ''}" oninput="updateReviewField(${idx}, 'stat', this.value)" onchange="updateReviewField(${idx}, 'stat', this.value)">
+          </div>
+          <div class="form-group full">
+            <label>نص التقييم بالعربية</label>
+            <textarea oninput="updateReviewField(${idx}, 'text', this.value)" onchange="updateReviewField(${idx}, 'text', this.value)">${r.text || ''}</textarea>
+          </div>
+          <div class="form-group full">
+            <label>نص التقييم بالإنجليزية</label>
+            <textarea oninput="updateReviewField(${idx}, 'text_en', this.value)" onchange="updateReviewField(${idx}, 'text_en', this.value)">${r.text_en || ''}</textarea>
+          </div>
+        </div>
+      `;
+      c.appendChild(box);
+    });
+  }
+
+  function addReviewRow() {
+    if (!siteData.reviews) siteData.reviews = [];
+    siteData.reviews.unshift({
+      id: "rev-" + Date.now(),
+      name: "عميل جديد",
+      country: "الجزائر 🇩🇿",
+      rating: 5,
+      service: "managed",
+      stat: "+25% أرباح",
+      text: "تجربة تداول ممتازة وانضباط عالي في إدارة المخاطر.",
+      text_en: "Excellent trading experience and outstanding risk management discipline.",
+      verified: true
+    });
+    renderReviewsList(siteData.reviews);
+    showToast("تمت إضافة تقييم جديد بنجاح!");
+  }
+
+  function deleteReview(idx) {
+    if (confirm("هل تريد بالتأكيد حذف هذا التقييم؟")) {
+      siteData.reviews.splice(idx, 1);
+      renderReviewsList(siteData.reviews);
+    }
+  }
+
+  function updateReviewField(idx, field, val) {
+    if (siteData.reviews && siteData.reviews[idx]) {
+      siteData.reviews[idx][field] = val;
+    }
+  }
+
+  // FAQs List
+  function renderFaqsList(faqs) {
+    var c = document.getElementById("faqsList");
+    c.innerHTML = "";
+    faqs.forEach(function(f, idx){
+      var box = document.createElement("div");
+      box.className = "item-box";
+      box.innerHTML = `
+        <div class="item-box-head">
+          <span class="item-title">سؤال #${idx + 1}: ${f.q_ar ? f.q_ar.substring(0, 35) + '...' : 'سؤال جديد'}</span>
+          <button type="button" class="btn btn-danger" onclick="deleteFaq(${idx})" style="padding:4px 10px;font-size:12px;">حذف</button>
+        </div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>السؤال بالعربية</label>
+            <input type="text" value="${f.q_ar || ''}" oninput="updateFaqField(${idx}, 'q_ar', this.value)" onchange="updateFaqField(${idx}, 'q_ar', this.value)">
+          </div>
+          <div class="form-group full">
+            <label>الإجابة بالعربية</label>
+            <textarea oninput="updateFaqField(${idx}, 'a_ar', this.value)" onchange="updateFaqField(${idx}, 'a_ar', this.value)">${f.a_ar || ''}</textarea>
+          </div>
+          <div class="form-group full">
+            <label>السؤال بالإنجليزية</label>
+            <input type="text" value="${f.q_en || ''}" oninput="updateFaqField(${idx}, 'q_en', this.value)" onchange="updateFaqField(${idx}, 'q_en', this.value)">
+          </div>
+          <div class="form-group full">
+            <label>الإجابة بالإنجليزية</label>
+            <textarea oninput="updateFaqField(${idx}, 'a_en', this.value)" onchange="updateFaqField(${idx}, 'a_en', this.value)">${f.a_en || ''}</textarea>
+          </div>
+        </div>
+      `;
+      c.appendChild(box);
+    });
+  }
+
+  function addFaqRow() {
+    if (!siteData.faqs) siteData.faqs = [];
+    siteData.faqs.push({
+      q_ar: "سؤال جديد؟",
+      q_en: "New Question?",
+      a_ar: "إجابة توضيحية للعملاء...",
+      a_en: "Detailed explanatory answer..."
+    });
+    renderFaqsList(siteData.faqs);
+    showToast("تمت إضافة سؤال جديد!");
+  }
+
+  function deleteFaq(idx) {
+    if (confirm("هل أنت متأكد من حذف هذا السؤال؟")) {
+      siteData.faqs.splice(idx, 1);
+      renderFaqsList(siteData.faqs);
+    }
+  }
+
+  function updateFaqField(idx, field, val) {
+    if (siteData.faqs && siteData.faqs[idx]) {
+      siteData.faqs[idx][field] = val;
+    }
+  }
+
+  // Gather Current Form Data
+  function gatherFormData() {
+    if (!siteData) siteData = {};
+
+    // Profile
+    siteData.profile = siteData.profile || {};
+    siteData.profile.name = document.getElementById("prof_name").value.trim();
+    siteData.profile.title = document.getElementById("prof_title").value.trim();
+    siteData.profile.handle = document.getElementById("prof_handle").value.trim();
+    siteData.profile.badge_text = document.getElementById("prof_badge").value.trim();
+    siteData.profile.bio_ar = document.getElementById("prof_bio_ar").value.trim();
+    siteData.profile.bio_en = document.getElementById("prof_bio_en").value.trim();
+    siteData.profile.socials = {
+      telegram: document.getElementById("soc_telegram").value.trim(),
+      twitter: document.getElementById("soc_twitter").value.trim(),
+      whatsapp: document.getElementById("soc_whatsapp").value.trim(),
+      email: document.getElementById("soc_email").value.trim(),
+      tradingview: document.getElementById("soc_tradingview").value.trim()
+    };
+
+    // Metrics
+    siteData.metrics = siteData.metrics || {};
+    siteData.metrics.target_monthly_roi = document.getElementById("met_roi").value.trim();
+    siteData.metrics.max_drawdown = document.getElementById("met_dd").value.trim();
+    siteData.metrics.win_rate = document.getElementById("met_winrate").value.trim();
+    siteData.metrics.total_pips = document.getElementById("met_pips").value.trim();
+    siteData.metrics.active_accounts = document.getElementById("met_accounts").value.trim();
+    siteData.metrics.experience_years = document.getElementById("met_exp").value.trim();
+    siteData.metrics.transparent_verified = document.getElementById("met_verified").value.trim();
+    siteData.metrics.primary_assets = document.getElementById("met_assets").value.trim();
+
+    // Pricing NewsX
+    siteData.pricing = siteData.pricing || {};
+    siteData.pricing.newsx = siteData.pricing.newsx || {};
+    siteData.pricing.newsx.starter = siteData.pricing.newsx.starter || {};
+    siteData.pricing.newsx.starter.price = Number(document.getElementById("nx_starter_price").value);
+    siteData.pricing.newsx.pro = siteData.pricing.newsx.pro || {};
+    siteData.pricing.newsx.pro.price = Number(document.getElementById("nx_pro_price").value);
+    siteData.pricing.newsx.ultimate = siteData.pricing.newsx.ultimate || {};
+    siteData.pricing.newsx.ultimate.price = Number(document.getElementById("nx_ult_price").value);
+
+    // Pricing Flash Deals
+    siteData.pricing.flash_deals = siteData.pricing.flash_deals || {};
+    siteData.pricing.flash_deals.deal_1 = {
+      amount: Number(document.getElementById("fl_deal1_amt").value),
+      price: Number(document.getElementById("fl_deal1_price").value),
+      discount_badge: document.getElementById("fl_deal1_badge").value.trim()
+    };
+    siteData.pricing.flash_deals.deal_2 = {
+      amount: Number(document.getElementById("fl_deal2_amt").value),
+      price: Number(document.getElementById("fl_deal2_price").value),
+      discount_badge: document.getElementById("fl_deal2_badge").value.trim()
+    };
+
+    // Pricing Flash Tiers
+    siteData.pricing.flash_packages = {
+      tier_24h: [
+        { id: "pack_24h_1k", amount: 1000, price: Number(document.getElementById("fl_pack_24h_1k").value), duration: "24h" },
+        { id: "pack_24h_100k", amount: 100000, price: Number(document.getElementById("fl_pack_24h_100k").value), duration: "24h" },
+        { id: "pack_24h_1m", amount: 1000000, price: Number(document.getElementById("fl_pack_24h_1m").value), duration: "24h" }
+      ],
+      tier_3d: [
+        { id: "pack_3d_1k", amount: 1000, price: Number(document.getElementById("fl_pack_3d_1k").value), duration: "3d" },
+        { id: "pack_3d_100k", amount: 100000, price: Number(document.getElementById("fl_pack_3d_100k").value), duration: "3d" },
+        { id: "pack_3d_1m", amount: 1000000, price: Number(document.getElementById("fl_pack_3d_1m").value), duration: "3d" }
+      ],
+      tier_1w: [
+        { id: "pack_1w_1k", amount: 1000, price: Number(document.getElementById("fl_pack_1w_1k").value), duration: "1w" },
+        { id: "pack_1w_100k", amount: 100000, price: Number(document.getElementById("fl_pack_1w_100k").value), duration: "1w" },
+        { id: "pack_1w_1m", amount: 1000000, price: Number(document.getElementById("fl_pack_1w_1m").value), duration: "1w" }
+      ]
+    };
+
+    // Announcement
+    siteData.announcement = {
+      enabled: (document.getElementById("ann_enabled").value === "true"),
+      badge: document.getElementById("ann_badge").value.trim(),
+      text_ar: document.getElementById("ann_text_ar").value.trim(),
+      text_en: document.getElementById("ann_text_en").value.trim()
+    };
+
+    return siteData;
+  }
+
+  // Publish to GitHub via GitHub REST API
+  function publishChanges() {
+    var token = document.getElementById("gh_token").value.trim();
+    if (!token) {
+      alert("يرجى إدخال رمز الوصول الشخصي (GitHub Personal Access Token) في تبويب 'الإعدادات والأمان' لتتمكن من النشر تلقائياً.");
+      switchTab("tab-settings");
+      document.getElementById("gh_token").focus();
+      return;
+    }
+
+    // Save token locally for convenience
+    localStorage.setItem("sb_gh_token", token);
+
+    var updated = gatherFormData();
+    var jsonString = JSON.stringify(updated, null, 2);
+
+    var btn = document.getElementById("publishBtn");
+    var origText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = "<span>⏳ جاري النشر على GitHub...</span>";
+
+    var repo = document.getElementById("gh_repo").value.trim() || "HNTSB15/seifeddine-boumaza";
+    var branch = document.getElementById("gh_branch").value.trim() || "main";
+    var filePath = "site_content.json";
+    var url = "https://api.github.com/repos/" + repo + "/contents/" + filePath;
+
+    // 1. Get current file SHA
+    fetch(url + "?ref=" + branch, {
+      headers: {
+        "Authorization": "token " + token,
+        "Accept": "application/vnd.github.v3+json"
+      }
+    })
+    .then(function(res){
+      if (res.status === 404) return { sha: null };
+      if (!res.ok) throw new Error("فشل الاتصال بـ GitHub: تأكد من صحة الرمز (Status: " + res.status + ")");
+      return res.json();
+    })
+    .then(function(fileInfo){
+      var sha = fileInfo.sha;
+      // Convert utf-8 string to base64 safely
+      var utf8Bytes = new TextEncoder().encode(jsonString);
+      var binary = "";
+      for (var i = 0; i < utf8Bytes.byteLength; i++) {
+        binary += String.fromCharCode(utf8Bytes[i]);
+      }
+      var b64Content = btoa(binary);
+
+      var payload = {
+        message: "Update site content via SB Admin Studio [skip ci]",
+        content: b64Content,
+        branch: branch
+      };
+      if (sha) payload.sha = sha;
+
+      // 2. Put / Commit file to GitHub
+      return fetch(url, {
+        method: "PUT",
+        headers: {
+          "Authorization": "token " + token,
+          "Accept": "application/vnd.github.v3+json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+    })
+    .then(function(putRes){
+      if (!putRes.ok) throw new Error("خطأ أثناء حفظ الملف: " + putRes.status);
+      return putRes.json();
+    })
+    .then(function(success){
+      btn.disabled = false;
+      btn.innerHTML = origText;
+      showToast("🚀 تم الحفظ والنشر بنجاح! التعديلات مباشرة الآن على موقعك.");
+    })
+    .catch(function(err){
+      btn.disabled = false;
+      btn.innerHTML = origText;
+      alert("حدث خطأ أثناء النشر: " + err.message);
+    });
+  }
+
+  // Backup & Restore
+  function downloadBackup() {
+    var data = gatherFormData();
+    var blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "site_content_backup_" + new Date().toISOString().substring(0, 10) + ".json";
+    a.click();
+    showToast("تم تنزيل النسخة الاحتياطية بنجاح.");
+  }
+
+  function importBackup(evt) {
+    var file = evt.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e){
+      try {
+        var parsed = JSON.parse(e.target.result);
+        siteData = parsed;
+        populateForm(parsed);
+        showToast("تم استيراد البيانات بنجاح! اضغط 'نشر التعديلات' لحفظها على الموقع.");
+      } catch(err) {
+        alert("ملف JSON غير صالح!");
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  // Init
+  checkAuth();
+  loadData();
+</script>
+
+</body>
+</html>
