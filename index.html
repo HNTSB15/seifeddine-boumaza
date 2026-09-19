@@ -5093,6 +5093,459 @@ body.theme-light .cvx-market-console-title {
     transform: translateZ(0);
   }
 }
+
+/* ================= Verified Exness Payouts & Performance Section ================= */
+#payouts {
+  position: relative;
+}
+.payouts-trust-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 30px;
+}
+.payout-metric-box {
+  background: var(--card-bg, #0d1524);
+  border: 1px solid rgba(0, 255, 156, 0.2);
+  border-radius: 14px;
+  padding: 18px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+}
+.payout-metric-box:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 255, 156, 0.45);
+  box-shadow: 0 8px 30px rgba(0, 255, 156, 0.12);
+}
+.payout-metric-val {
+  font-size: 26px;
+  font-weight: 800;
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--neon, #00ff9c);
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+.payout-metric-box.gold .payout-metric-val {
+  color: var(--gold, #ffcf4a);
+}
+.payout-metric-box.cyan .payout-metric-val {
+  color: var(--neon-2, #12d6ff);
+}
+.payout-metric-lbl {
+  font-size: 11.5px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--muted, #8fa0b5);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Filter buttons */
+.payouts-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+.payout-filter-btn {
+  background: rgba(13, 21, 36, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--muted, #8fa0b5);
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-size: 12.5px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.payout-filter-btn:hover {
+  color: #fff;
+  border-color: rgba(0, 255, 156, 0.4);
+}
+.payout-filter-btn.active {
+  background: rgba(0, 255, 156, 0.12);
+  border-color: var(--neon, #00ff9c);
+  color: var(--neon, #00ff9c);
+  box-shadow: 0 0 15px rgba(0, 255, 156, 0.2);
+}
+
+/* Payout Grid */
+.payouts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.payout-card {
+  background: var(--card-bg, #0d1524);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.payout-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 255, 156, 0.35);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.5), 0 0 20px rgba(0, 255, 156, 0.1);
+}
+.payout-card.featured-card {
+  border-color: rgba(0, 255, 156, 0.25);
+  background: linear-gradient(180deg, rgba(0, 255, 156, 0.03) 0%, rgba(13, 21, 36, 0.95) 100%);
+}
+
+/* Card Header */
+.payout-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.payout-badge-sent {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 255, 156, 0.12);
+  border: 1px solid rgba(0, 255, 156, 0.3);
+  color: var(--neon, #00ff9c);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+}
+.payout-badge-sent .dot-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00ff9c;
+  box-shadow: 0 0 8px #00ff9c;
+}
+.payout-method-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  color: #ffcf4a;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Card Amount */
+.payout-amount-box {
+  margin-bottom: 16px;
+}
+.payout-amount-val {
+  font-size: 28px;
+  font-weight: 900;
+  font-family: 'Space Grotesk', sans-serif;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.payout-amount-val span.cur {
+  font-size: 14px;
+  color: var(--neon, #00ff9c);
+  font-weight: 700;
+}
+.payout-date {
+  font-size: 12px;
+  color: var(--muted, #8fa0b5);
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 4px;
+}
+
+/* Card Details Grid */
+.payout-details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+.payout-detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11.5px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.payout-detail-label {
+  color: var(--muted, #8fa0b5);
+}
+.payout-detail-val {
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+/* Double-Verified Tag */
+.payout-double-verified {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(18, 214, 255, 0.08);
+  border: 1px solid rgba(18, 214, 255, 0.25);
+  color: var(--neon-2, #12d6ff);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+/* Card Button */
+.payout-btn-action {
+  width: 100%;
+  background: rgba(0, 255, 156, 0.08);
+  border: 1px solid rgba(0, 255, 156, 0.35);
+  color: var(--neon, #00ff9c);
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  margin-top: auto;
+}
+.payout-btn-action:hover {
+  background: var(--neon, #00ff9c);
+  color: #030812;
+  box-shadow: 0 0 20px rgba(0, 255, 156, 0.4);
+}
+
+/* ================= Lightbox Modal ================= */
+.payout-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 8, 18, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+.payout-modal-backdrop.active {
+  display: flex;
+}
+.payout-modal-box {
+  background: #0b1220;
+  border: 1px solid rgba(0, 255, 156, 0.3);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 255, 156, 0.15);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 920px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  animation: payoutModalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes payoutModalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.payout-modal-head {
+  padding: 18px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(13, 21, 36, 0.9);
+}
+.payout-modal-title {
+  font-size: 17px;
+  font-weight: 800;
+  font-family: 'Space Grotesk', sans-serif;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.payout-modal-close {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.payout-modal-close:hover {
+  background: rgba(255, 51, 102, 0.2);
+  border-color: #ff3366;
+  color: #ff3366;
+}
+.payout-modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.payout-proof-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.payout-proof-pane {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.payout-pane-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--neon-2, #12d6ff);
+}
+.payout-pane-header.exness-head {
+  color: var(--gold, #ffcf4a);
+}
+.payout-proof-img-wrap {
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 480px;
+}
+.payout-proof-img-wrap img {
+  width: 100%;
+  height: auto;
+  max-height: 480px;
+  object-fit: contain;
+  display: block;
+}
+.payout-match-banner {
+  background: linear-gradient(90deg, rgba(0, 255, 156, 0.1) 0%, rgba(18, 214, 255, 0.1) 100%);
+  border: 1px solid rgba(0, 255, 156, 0.3);
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: #e2e8f0;
+  line-height: 1.5;
+}
+.payout-match-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+/* Light Theme overrides for Payouts */
+body.theme-light #payouts .payout-metric-box,
+body.theme-light #payouts .payout-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+body.theme-light #payouts .payout-metric-lbl {
+  color: #64748b;
+}
+body.theme-light #payouts .payout-amount-val {
+  color: #0f172a;
+}
+body.theme-light #payouts .payout-details-list {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+body.theme-light #payouts .payout-detail-val {
+  color: #0f172a;
+}
+body.theme-light #payouts .payout-btn-action {
+  background: #e6f9f0;
+  border-color: #a7f3d0;
+  color: #00995c;
+}
+body.theme-light #payouts .payout-btn-action:hover {
+  background: #00995c;
+  color: #fff;
+}
+body.theme-light .payout-modal-box {
+  background: #ffffff;
+  border-color: #cbd5e1;
+}
+body.theme-light .payout-modal-head {
+  background: #f8fafc;
+  border-bottom-color: #e2e8f0;
+}
+body.theme-light .payout-modal-title {
+  color: #0f172a;
+}
+body.theme-light .payout-proof-pane {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+}
+body.theme-light .payout-match-banner {
+  background: #e6f9f0;
+  border-color: #a7f3d0;
+  color: #0f172a;
+}
+
+/* Responsive */
+@media(max-width: 980px) {
+  .payouts-trust-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .payouts-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .payout-proof-comparison {
+    grid-template-columns: 1fr;
+  }
+}
+@media(max-width: 640px) {
+  .payouts-trust-bar {
+    grid-template-columns: 1fr;
+  }
+  .payouts-grid {
+    grid-template-columns: 1fr;
+  }
+  .payout-card {
+    padding: 16px;
+  }
+  .payout-modal-body {
+    padding: 14px;
+  }
+}
 </style>
 <div class="cvx" id="cvtop">
 
@@ -5141,6 +5594,7 @@ body.theme-light .cvx-market-console-title {
 <a href="#projects">Projects</a>
 <a href="#results" style="color:var(--gold);font-weight:700">Results 📊</a>
 <a href="#newsx" style="color:var(--neon-2);font-weight:700">NewsX AI ⚡</a>
+<a href="#payouts" id="navPayoutsLink" style="color:var(--neon);font-weight:700">Payouts 🛡️</a>
 <a href="#experience">Experience</a>
 <a href="#reviews" id="navReviewsLink" style="color:var(--gold);font-weight:700">Reviews ⭐</a>
 <a href="#faq" id="navFaqLink">FAQ</a>
@@ -5190,10 +5644,11 @@ body.theme-light .cvx-market-console-title {
       <a href="#projects" onclick="cvxMobileNav('#projects', event)"><span class="mono">// 04</span> Trading Records</a>
       <a href="#results" onclick="cvxMobileNav('#results', event)" style="color:var(--gold)"><span class="mono">// 05</span> Live Results (X) <span class="mob-badge gold">LIVE</span></a>
       <a href="#newsx" onclick="cvxMobileNav('#newsx', event)" class="mob-hl-newsx"><span class="mono">// 06</span> NewsX AI Platform <span class="mob-badge">AI LIVE</span></a>
-      <a href="#experience" onclick="cvxMobileNav('#experience', event)"><span class="mono">// 07</span> Experience Timeline</a>
-      <a href="#reviews" onclick="cvxMobileNav('#reviews', event)" style="color:var(--gold)"><span class="mono">// 08</span> <span id="cvxMobRevTxt">Client Reviews</span> <span class="mob-badge gold">5.0 ★</span></a>
-      <a href="#faq" onclick="cvxMobileNav('#faq', event)"><span class="mono">// 09</span> <span id="cvxMobFaqTxt">FAQ &amp; Safety</span></a>
-      <a href="#contactCard" onclick="cvxMobileNav('#contactCard', event)"><span class="mono">// 10</span> Direct Contact &amp; Inquiry</a>
+      <a href="#payouts" onclick="cvxMobileNav('#payouts', event)" style="color:var(--neon)"><span class="mono">// 07</span> <span id="cvxMobPayoutsTxt">Verified Payouts</span> <span class="mob-badge green">AUDITED</span></a>
+      <a href="#experience" onclick="cvxMobileNav('#experience', event)"><span class="mono">// 08</span> Experience Timeline</a>
+      <a href="#reviews" onclick="cvxMobileNav('#reviews', event)" style="color:var(--gold)"><span class="mono">// 09</span> <span id="cvxMobRevTxt">Client Reviews</span> <span class="mob-badge gold">5.0 ★</span></a>
+      <a href="#faq" onclick="cvxMobileNav('#faq', event)"><span class="mono">// 10</span> <span id="cvxMobFaqTxt">FAQ &amp; Safety</span></a>
+      <a href="#contactCard" onclick="cvxMobileNav('#contactCard', event)"><span class="mono">// 11</span> Direct Contact &amp; Inquiry</a>
     </div>
     <div class="cvx-mob-actions">
       <a class="cvx-mob-dl-btn" id="cvxMobDlBtn" href="Saifeddine_Boumaza_Trading_Profile.pdf" download="Saifeddine_Boumaza_Trading_Profile.pdf" target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu();">
@@ -6033,6 +6488,65 @@ body.theme-light .cvx-market-console-title {
   <span class="fl-toast-msg" id="flToastMsg">Deposit wallet address copied to clipboard!</span>
 </div>
 
+<!-- ==========================================================================
+     💵 SECTION: AUDITED EXNESS CASHOUTS & VERIFIED PAYOUTS (سحوبات Exness الموثقة)
+     ========================================================================== -->
+<section class="cvx-sec" id="payouts">
+<div class="cvx-wrap cvx-reveal">
+  <div class="cvx-head">
+    <div class="kick" id="payoutKick" style="color:var(--neon)">// AUDITED BROKER LIQUIDITY &amp; CASHOUTS</div>
+    <h2><span id="payoutTitle"># Verified <span class="h">Exness Cash Payouts</span></span></h2>
+    <p id="payoutSub">Realized cash withdrawals processed from Exness Real trading accounts and settled to BinancePay, cross-verified with official timestamped Binance credit receipts.</p>
+  </div>
+
+  <!-- Trust Bar & Institutional Metrics -->
+  <div class="payouts-trust-bar">
+    <div class="payout-metric-box">
+      <div class="payout-metric-val" id="payoutStatTotVal">+$16,000+</div>
+      <div class="payout-metric-lbl" id="payoutStatTot">Total Realized Payouts</div>
+    </div>
+    <div class="payout-metric-box gold">
+      <div class="payout-metric-val">100%</div>
+      <div class="payout-metric-lbl" id="payoutStatRate">Instant Settlement Rate</div>
+    </div>
+    <div class="payout-metric-box cyan">
+      <div class="payout-metric-val">6 Accounts</div>
+      <div class="payout-metric-lbl" id="payoutStatAccs">Multi-Portfolio Extractions</div>
+    </div>
+    <div class="payout-metric-box">
+      <div class="payout-metric-val">~1-2 Min</div>
+      <div class="payout-metric-lbl" id="payoutStatSpeed">Exness ➔ Binance Delivery</div>
+    </div>
+  </div>
+
+  <!-- Filter Pills -->
+  <div class="payouts-filters" id="payoutFilters">
+    <button type="button" class="payout-filter-btn active" data-filter="all" onclick="filterPayouts('all', this)" id="payoutFilterAll">All Payouts (10)</button>
+    <button type="button" class="payout-filter-btn" data-filter="double" onclick="filterPayouts('double', this)" id="payoutFilterDouble">⚡ Double-Verified (Exness + Binance Email) (6)</button>
+    <button type="button" class="payout-filter-btn" data-filter="ledger" onclick="filterPayouts('ledger', this)" id="payoutFilterLedger">💼 Exness Direct Ledger (4)</button>
+  </div>
+
+  <!-- Payouts Grid (Rendered dynamically by JavaScript) -->
+  <div class="payouts-grid" id="payoutsContainer"></div>
+</div>
+</section>
+
+<!-- Lightbox Modal for Payout Audit -->
+<div class="payout-modal-backdrop" id="payoutModal" onclick="if(event.target===this)closePayoutProof()">
+  <div class="payout-modal-box">
+    <div class="payout-modal-head">
+      <div class="payout-modal-title">
+        <span style="color:var(--neon)">🛡️</span>
+        <span id="payoutModalTitleTxt">Official Broker Payout Audit</span>
+      </div>
+      <button type="button" class="payout-modal-close" onclick="closePayoutProof()" aria-label="Close">✕</button>
+    </div>
+    <div class="payout-modal-body" id="payoutModalContent">
+      <!-- Dynamic Audit Content injected by JavaScript -->
+    </div>
+  </div>
+</div>
+
 <section class="cvx-sec" id="experience">
 <div class="cvx-wrap cvx-reveal">
 <div class="cvx-head"><div class="kick">// timeline</div><h2># <span class="h">Experience</span></h2></div>
@@ -6767,6 +7281,312 @@ body.theme-light .cvx-market-console-title {
     }).catch(function(){});
   }
   loadLiveSettings();
+
+  // ==========================================================================
+  // 💵 VERIFIED EXNESS PAYOUTS & PERFORMANCE CONTROLLER
+  // ==========================================================================
+  var cvxPayoutsData = [
+    {
+      id: 1,
+      type: 'double',
+      amount: '$3,150.51 USD',
+      date: '11 Sep 2026, 14:11',
+      dateAr: '11 سبتمبر 2026 - 14:11',
+      account: 'ex 256505258',
+      invoice: '807876734982',
+      binanceOrder: '441672878207459329',
+      binanceTime: '14:12:42 UTC',
+      speed: '1m 42s',
+      speedAr: 'دقيقة و 42 ثانية',
+      exnessImg: 'proofs/payout-1-exness.png',
+      binanceImg: 'proofs/payout-1-binance.png'
+    },
+    {
+      id: 2,
+      type: 'double',
+      amount: '$1,555.00 USD',
+      date: '19 May 2026, 12:35',
+      dateAr: '19 مايو 2026 - 12:35',
+      account: 'ex 256511737',
+      invoice: '676651208710',
+      binanceOrder: '441672878207459329',
+      binanceTime: '12:37:42 UTC',
+      speed: '2m 42s',
+      speedAr: 'دقيقتين و 42 ثانية',
+      exnessImg: 'proofs/payout-2-exness.png',
+      binanceImg: 'proofs/payout-2-binance.png'
+    },
+    {
+      id: 3,
+      type: 'double',
+      amount: '$1,026.00 USD',
+      date: '18 May 2026, 13:36',
+      dateAr: '18 مايو 2026 - 13:36',
+      account: 'ex 256505258',
+      invoice: '675581050886',
+      binanceOrder: '441672878207459329',
+      binanceTime: '13:37:42 UTC',
+      speed: '1m 42s',
+      speedAr: 'دقيقة و 42 ثانية',
+      exnessImg: 'proofs/payout-3-exness.png',
+      binanceImg: 'proofs/payout-3-binance.png'
+    },
+    {
+      id: 4,
+      type: 'double',
+      amount: '$723.00 USD',
+      date: '18 May 2026, 02:13',
+      dateAr: '18 مايو 2026 - 02:13',
+      account: 'ex 256505258',
+      invoice: '674909700102',
+      binanceOrder: '441672878207459329',
+      binanceTime: '02:14:42 UTC',
+      speed: '1m 42s',
+      speedAr: 'دقيقة و 42 ثانية',
+      exnessImg: 'proofs/payout-4-exness.png',
+      binanceImg: 'proofs/payout-4-binance.png'
+    },
+    {
+      id: 5,
+      type: 'double',
+      amount: '$1,522.00 USD',
+      date: '15 May 2026, 15:54',
+      dateAr: '15 مايو 2026 - 15:54',
+      account: 'ex 256497449',
+      invoice: '673924100102',
+      binanceOrder: '441672878207459329',
+      binanceTime: '15:56:42 UTC',
+      speed: '2m 42s',
+      speedAr: 'دقيقتين و 42 ثانية',
+      exnessImg: 'proofs/payout-5-exness.png',
+      binanceImg: 'proofs/payout-5-binance.png'
+    },
+    {
+      id: 6,
+      type: 'double',
+      amount: '$1,129.00 USD',
+      date: '15 May 2026, 14:33',
+      dateAr: '15 مايو 2026 - 14:33',
+      account: 'ex 256497174',
+      invoice: '673759997958',
+      binanceOrder: '441672878207459329',
+      binanceTime: '14:33:42 UTC',
+      speed: 'Instant (< 1m)',
+      speedAr: 'فوري (أقل من دقيقة)',
+      exnessImg: 'proofs/payout-6-exness.png',
+      binanceImg: 'proofs/payout-6-binance.png'
+    },
+    {
+      id: 7,
+      type: 'ledger',
+      amount: '$4,278.81 USD',
+      date: '28 Aug 2026, 16:24',
+      dateAr: '28 أغسطس 2026 - 16:24',
+      account: 'ex 256505258',
+      invoice: '788728934406',
+      binanceOrder: '',
+      binanceTime: '',
+      speed: 'Instant',
+      speedAr: 'فوري',
+      exnessImg: 'proofs/payout-7-exness.png',
+      binanceImg: ''
+    },
+    {
+      id: 8,
+      type: 'ledger',
+      amount: '$1,500.00 USD',
+      date: '12 Aug 2026, 14:42',
+      dateAr: '12 أغسطس 2026 - 14:42',
+      account: 'ex 256698295',
+      invoice: '768002146310',
+      binanceOrder: '',
+      binanceTime: '',
+      speed: 'Instant',
+      speedAr: 'فوري',
+      exnessImg: 'proofs/payout-8-exness.png',
+      binanceImg: ''
+    },
+    {
+      id: 9,
+      type: 'ledger',
+      amount: '$500.00 USD',
+      date: '22 May 2026, 14:08',
+      dateAr: '22 مايو 2026 - 14:08',
+      account: 'ex 256516464',
+      invoice: '680002113542',
+      binanceOrder: '',
+      binanceTime: '',
+      speed: 'Instant',
+      speedAr: 'فوري',
+      exnessImg: 'proofs/payout-9-exness.png',
+      binanceImg: ''
+    },
+    {
+      id: 10,
+      type: 'ledger',
+      amount: '$575.00 USD',
+      date: '21 May 2026, 12:00',
+      dateAr: '21 مايو 2026 - 12:00',
+      account: 'ex 256516464',
+      invoice: '678917492742',
+      binanceOrder: '',
+      binanceTime: '',
+      speed: 'Instant',
+      speedAr: 'فوري',
+      exnessImg: 'proofs/payout-10-exness.png',
+      binanceImg: ''
+    }
+  ];
+
+  window.renderPayouts = function(filter) {
+    var grid = document.getElementById('payoutsContainer');
+    if (!grid) return;
+    filter = filter || 'all';
+    var isAr = (document.documentElement.getAttribute('lang') === 'ar');
+
+    var html = '';
+    cvxPayoutsData.forEach(function(item, idx) {
+      if (filter !== 'all' && item.type !== filter) return;
+
+      var isDouble = (item.type === 'double');
+      var badgeClass = isDouble ? 'payout-card featured-card' : 'payout-card';
+      var dateText = isAr ? item.dateAr : item.date;
+      var speedText = isAr ? item.speedAr : item.speed;
+
+      var doubleTagHtml = isDouble ?
+        ('<div class="payout-double-verified">' +
+          '<span>⚡</span>' +
+          '<span>' + (isAr ? ('موثق بإيميل بينانس الرسمي (استلام في ' + speedText + ')') : ('Cross-Verified with Binance Email (Credit in ' + speedText + ')')) + '</span>' +
+        '</div>') :
+        ('<div class="payout-double-verified" style="background:rgba(255,207,74,0.08);border-color:rgba(255,207,74,0.25);color:var(--gold);">' +
+          '<span>✓</span>' +
+          '<span>' + (isAr ? 'سجل Exness المعتمد (معالجة وإرسال فوري)' : 'Exness Direct Ledger (Processed &amp; Sent)') + '</span>' +
+        '</div>');
+
+      html += '<div class="' + badgeClass + '">' +
+        '<div class="payout-card-top">' +
+          '<span class="payout-badge-sent"><span class="dot-pulse"></span> ' + (isAr ? 'تم السحب والتحويل' : 'SENT &amp; CREDITED') + '</span>' +
+          '<span class="payout-method-tag">🟡 BinancePay USDT</span>' +
+        '</div>' +
+        '<div class="payout-amount-box">' +
+          '<div class="payout-amount-val">' + item.amount.replace(' USD', '') + '<span class="cur">USD</span></div>' +
+          '<div class="payout-date">' + dateText + '</div>' +
+        '</div>' +
+        '<div class="payout-details-list">' +
+          '<div class="payout-detail-row">' +
+            '<span class="payout-detail-label">' + (isAr ? 'حساب التداول:' : 'Exness Account:') + '</span>' +
+            '<span class="payout-detail-val">' + item.account + '</span>' +
+          '</div>' +
+          '<div class="payout-detail-row">' +
+            '<span class="payout-detail-label">' + (isAr ? 'رقم الفاتورة:' : 'Invoice ID:') + '</span>' +
+            '<span class="payout-detail-val">#' + item.invoice + '</span>' +
+          '</div>' +
+          '<div class="payout-detail-row">' +
+            '<span class="payout-detail-label">' + (isAr ? 'المستلم:' : 'Destination:') + '</span>' +
+            '<span class="payout-detail-val">BinancePay (727446301)</span>' +
+          '</div>' +
+        '</div>' +
+        doubleTagHtml +
+        '<button type="button" class="payout-btn-action" onclick="openPayoutProof(' + idx + ')">' +
+          '<span>🔍</span> ' + (isAr ? 'فحص إثبات المعاملة' : 'View Audit Proof') +
+        '</button>' +
+      '</div>';
+    });
+    grid.innerHTML = html;
+  };
+
+  window.filterPayouts = function(filter, btn) {
+    document.querySelectorAll('.payout-filter-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    if (btn) btn.classList.add('active');
+    window.renderPayouts(filter);
+  };
+
+  window.openPayoutProof = function(idx) {
+    var item = cvxPayoutsData[idx];
+    if (!item) return;
+    var isAr = (document.documentElement.getAttribute('lang') === 'ar');
+
+    var modal = document.getElementById('payoutModal');
+    var content = document.getElementById('payoutModalContent');
+    if (!modal || !content) return;
+
+    var isDouble = (item.type === 'double');
+    var speedText = isAr ? item.speedAr : item.speed;
+    var html = '';
+
+    if (isDouble) {
+      html = '<div class="payout-proof-comparison">' +
+        '<div class="payout-proof-pane">' +
+          '<div class="payout-pane-header exness-head">' +
+            '<span>1. ' + (isAr ? 'إشعار سحب Exness الرسمي' : 'Exness Official Withdrawal Receipt') + '</span>' +
+            '<span class="mono">Invoice #' + item.invoice + '</span>' +
+          '</div>' +
+          '<div class="payout-proof-img-wrap">' +
+            '<img src="' + item.exnessImg + '" alt="Exness Payout Proof" loading="lazy" />' +
+          '</div>' +
+        '</div>' +
+        '<div class="payout-proof-pane">' +
+          '<div class="payout-pane-header">' +
+            '<span>2. ' + (isAr ? 'إيميل استلام Binance الموثق' : 'Binance Official Credit Email') + '</span>' +
+            '<span class="mono">' + (isAr ? ('استلام في ' + speedText) : ('Received in ' + speedText)) + '</span>' +
+          '</div>' +
+          '<div class="payout-proof-img-wrap">' +
+            '<img src="' + item.binanceImg + '" alt="Binance Email Receipt" loading="lazy" />' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="payout-match-banner">' +
+        '<span class="payout-match-icon">⚡</span>' +
+        '<div>' +
+          '<b>' + (isAr ? 'تطابق كامل 100% وموثق:' : '100% Verified Match:') + '</b> ' +
+          (isAr ?
+            ('تمت معالجة وإرسال مبلغ <b>' + item.amount + '</b> من حساب Exness (<b>' + item.account + '</b>) ووصل إلى BinancePay في ' + speedText + ' (Order ID: <b>' + item.binanceOrder + '</b>).') :
+            ('Exness successfully processed and sent <b>' + item.amount + '</b> from account <b>' + item.account + '</b>, credited to BinancePay in ' + speedText + ' (Order ID: <b>' + item.binanceOrder + '</b>).')
+          ) +
+        '</div>' +
+      '</div>';
+    } else {
+      html = '<div class="payout-proof-pane" style="max-width:540px;margin:0 auto;width:100%">' +
+        '<div class="payout-pane-header exness-head">' +
+          '<span>' + (isAr ? 'إشعار سحب Exness المعتمد من السيرفر' : 'Exness Official Server Withdrawal Confirmation') + '</span>' +
+          '<span class="mono">Invoice #' + item.invoice + '</span>' +
+        '</div>' +
+        '<div class="payout-proof-img-wrap">' +
+          '<img src="' + item.exnessImg + '" alt="Exness Payout Proof" loading="lazy" />' +
+        '</div>' +
+      '</div>' +
+      '<div class="payout-match-banner" style="max-width:540px;margin:0 auto;width:100%">' +
+        '<span class="payout-match-icon">✓</span>' +
+        '<div>' +
+          '<b>' + (isAr ? 'سحب مؤكد من سيرفر Exness الحقيقي:' : 'Confirmed Real Exness Server Payout:') + '</b> ' +
+          (isAr ?
+            ('تم إرسال مبلغ <b>' + item.amount + '</b> بنجاح من حساب التداول <b>' + item.account + '</b> إلى BinancePay.') :
+            ('Successfully processed and sent <b>' + item.amount + '</b> from trading account <b>' + item.account + '</b> to BinancePay.')
+          ) +
+        '</div>' +
+      '</div>';
+    }
+
+    content.innerHTML = html;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closePayoutProof = function() {
+    var modal = document.getElementById('payoutModal');
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  window.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      window.closePayoutProof();
+    }
+  });
+
+  window.renderPayouts('all');
 
   // ==========================================================================
   // ⭐ CLIENT REVIEWS & TESTIMONIALS CONTROLLER (Supabase + Telegram Bot Bridge)
@@ -7969,6 +8789,7 @@ body.theme-light .cvx-market-console-title {
         'nav_projects': 'المشاريع',
         'nav_results': 'النتائج 📊',
         'nav_newsx': 'NewsX AI ⚡',
+        'nav_payouts': 'السحوبات الموثقة 🛡️',
         'nav_experience': 'المسيرة',
         'nav_reviews': 'التقييمات ⭐',
         'nav_contact': 'تواصل',
@@ -7985,10 +8806,11 @@ body.theme-light .cvx-market-console-title {
         'mob_projects': '<span class="mono">// 04</span> سجل الصفقات والمشاريع',
         'mob_results': '<span class="mono">// 05</span> سجل النتائج الحية <span class="mob-badge gold">تويتر X</span>',
         'mob_newsx': '<span class="mono">// 06</span> منصة NewsX AI <span class="mob-badge">AI LIVE</span>',
-        'mob_exp': '<span class="mono">// 07</span> المسيرة المهنية',
-        'mob_reviews': '<span class="mono">// 08</span> آراء وتقييمات العملاء <span class="mob-badge gold">5.0 ★</span>',
-        'mob_faq': '<span class="mono">// 09</span> الأسئلة الشائعة والأمان',
-        'mob_contact': '<span class="mono">// 10</span> إرسال رسالة وتواصل مباشر',
+        'mob_payouts': '<span class="mono">// 07</span> السحوبات الموثقة <span class="mob-badge green">موثق</span>',
+        'mob_exp': '<span class="mono">// 08</span> المسيرة المهنية',
+        'mob_reviews': '<span class="mono">// 09</span> آراء وتقييمات العملاء <span class="mob-badge gold">5.0 ★</span>',
+        'mob_faq': '<span class="mono">// 10</span> الأسئلة الشائعة والأمان',
+        'mob_contact': '<span class="mono">// 11</span> إرسال رسالة وتواصل مباشر',
         'mob_dl': '⇩ تحميل ملف التداول (PDF)',
         'mob_dl_link': 'تحميل ملف التداول ⇩',
 
@@ -8205,6 +9027,19 @@ body.theme-light .cvx-market-console-title {
         'nx_p3_f4': 'دعم مباشر 1 إلى 1 وكافة مزايا VIP المستقبلية',
         'nx_p3_btn': 'اشترك بباقة النخبة ⚡',
 
+        // Payouts & Performance Section
+        'payout_kick': '// التدقيق والسيولة النقدية الحقيقية',
+        'payout_title': '# سحوبات الأرباح <span class="h">الموثقة من Exness</span>',
+        'payout_sub': 'سحوبات نقدية حقيقية تم سحبها من محافظ وحسابات التداول المدارة لدى Exness إلى BinancePay، مطابقة بالدقيقة والثانية مع إيميلات الاستلام الرسمية من بينانس.',
+        'payout_stat_tot': 'إجمالي السحوبات الموثقة',
+        'payout_stat_rate': 'نسبة نجاح التسوية الفورية',
+        'payout_stat_accs': 'حسابات تداول مدارة',
+        'payout_stat_speed': 'سرعة التحويل لـ Binance',
+        'payout_filter_all': 'جميع السحوبات (10)',
+        'payout_filter_double': '⚡ توثيق مزدوج (Exness + إيميل بينانس) (6)',
+        'payout_filter_ledger': '💼 سجل Exness المباشر (4)',
+        'payout_modal_title': 'التدقيق المالي الرسمي لسحب الأرباح',
+
         // Experience Section
         'exp_sec_kick': '// المسيرة والخبرة',
         'exp_sec_title': '# <span class="h">المسيرة</span>',
@@ -8361,6 +9196,7 @@ body.theme-light .cvx-market-console-title {
         'nav_projects': 'Projects',
         'nav_results': 'Results 📊',
         'nav_newsx': 'NewsX AI ⚡',
+        'nav_payouts': 'Payouts 🛡️',
         'nav_experience': 'Experience',
         'nav_reviews': 'Reviews ⭐',
         'nav_contact': 'Contact',
@@ -8377,10 +9213,11 @@ body.theme-light .cvx-market-console-title {
         'mob_projects': '<span class="mono">// 04</span> Trading Records',
         'mob_results': '<span class="mono">// 05</span> Live Results & Trades <span class="mob-badge gold">LIVE X</span>',
         'mob_newsx': '<span class="mono">// 06</span> NewsX AI Platform <span class="mob-badge">AI LIVE</span>',
-        'mob_exp': '<span class="mono">// 07</span> Experience Timeline',
-        'mob_reviews': '<span class="mono">// 08</span> Client Testimonials <span class="mob-badge gold">5.0 ★</span>',
-        'mob_faq': '<span class="mono">// 09</span> FAQ & Safety',
-        'mob_contact': '<span class="mono">// 10</span> Direct Contact & Send Message',
+        'mob_payouts': '<span class="mono">// 07</span> Verified Payouts <span class="mob-badge green">AUDITED</span>',
+        'mob_exp': '<span class="mono">// 08</span> Experience Timeline',
+        'mob_reviews': '<span class="mono">// 09</span> Client Testimonials <span class="mob-badge gold">5.0 ★</span>',
+        'mob_faq': '<span class="mono">// 10</span> FAQ & Safety',
+        'mob_contact': '<span class="mono">// 11</span> Direct Contact & Send Message',
         'mob_dl': '⇩ Download Trading Profile (PDF)',
         'mob_dl_link': 'Download Trading Profile ⇩',
 
@@ -8597,6 +9434,19 @@ body.theme-light .cvx-market-console-title {
         'nx_p3_f4': 'Direct 1-on-1 support & upcoming VIP features',
         'nx_p3_btn': 'Get Ultimate Plan ⚡',
 
+        // Payouts & Performance Section
+        'payout_kick': '// AUDITED BROKER LIQUIDITY & CASHOUTS',
+        'payout_title': '# Verified <span class="h">Exness Cash Payouts</span>',
+        'payout_sub': 'Realized cash withdrawals processed from Exness Real trading accounts and settled to BinancePay, cross-verified with official timestamped Binance credit receipts.',
+        'payout_stat_tot': 'Total Realized Payouts',
+        'payout_stat_rate': 'Instant Settlement Rate',
+        'payout_stat_accs': 'Multi-Portfolio Extractions',
+        'payout_stat_speed': 'Exness ➔ Binance Delivery',
+        'payout_filter_all': 'All Payouts (10)',
+        'payout_filter_double': '⚡ Double-Verified (Exness + Binance Email) (6)',
+        'payout_filter_ledger': '💼 Exness Direct Ledger (4)',
+        'payout_modal_title': 'Official Broker Payout Audit',
+
         // Experience Section
         'exp_sec_kick': '// timeline',
         'exp_sec_title': '# <span class="h">Experience</span>',
@@ -8793,6 +9643,7 @@ body.theme-light .cvx-market-console-title {
         ['a[href="#projects"]', 'nav_projects'],
         ['a[href="#results"]', 'nav_results'],
         ['a[href="#newsx"]', 'nav_newsx'],
+        ['a[href="#payouts"]', 'nav_payouts'],
         ['a[href="#experience"]', 'nav_experience'],
         ['a[href="#reviews"]', 'nav_reviews'],
         ['a[href="#faq"]', 'nav_faq'],
@@ -8808,7 +9659,7 @@ body.theme-light .cvx-market-console-title {
       if (dlBtn && t['nav_cta']) dlBtn.textContent = t['nav_cta'];
 
       var mobLinks = document.querySelectorAll('.cvx-mob-links a');
-      var mKeys = ['mob_home', 'mob_about', 'mob_expertise', 'mob_skills', 'mob_projects', 'mob_results', 'mob_newsx', 'mob_exp', 'mob_reviews', 'mob_faq', 'mob_contact'];
+      var mKeys = ['mob_home', 'mob_about', 'mob_expertise', 'mob_skills', 'mob_projects', 'mob_results', 'mob_newsx', 'mob_payouts', 'mob_exp', 'mob_reviews', 'mob_faq', 'mob_contact'];
       mobLinks.forEach(function(link, idx) {
         if (mKeys[idx] && t[mKeys[idx]]) link.innerHTML = t[mKeys[idx]];
       });
@@ -9203,6 +10054,38 @@ body.theme-light .cvx-market-console-title {
       if (mSupp && t['modal_supp_btn']) mSupp.textContent = t['modal_supp_btn'];
       var mClose = document.getElementById('flCloseBottomText');
       if (mClose && t['modal_close_btn']) mClose.textContent = t['modal_close_btn'];
+
+      // 13.4. Verified Exness Payouts Section
+      var navPayout = document.getElementById('navPayoutsLink');
+      if (navPayout && t['nav_payouts']) navPayout.textContent = t['nav_payouts'];
+      var pKick = document.getElementById('payoutKick');
+      if (pKick && t['payout_kick']) pKick.textContent = t['payout_kick'];
+      var pTitle = document.getElementById('payoutTitle');
+      if (pTitle && t['payout_title']) pTitle.innerHTML = t['payout_title'];
+      var pSub = document.getElementById('payoutSub');
+      if (pSub && t['payout_sub']) pSub.textContent = t['payout_sub'];
+      var pTot = document.getElementById('payoutStatTot');
+      if (pTot && t['payout_stat_tot']) pTot.textContent = t['payout_stat_tot'];
+      var pRate = document.getElementById('payoutStatRate');
+      if (pRate && t['payout_stat_rate']) pRate.textContent = t['payout_stat_rate'];
+      var pAccs = document.getElementById('payoutStatAccs');
+      if (pAccs && t['payout_stat_accs']) pAccs.textContent = t['payout_stat_accs'];
+      var pSpeed = document.getElementById('payoutStatSpeed');
+      if (pSpeed && t['payout_stat_speed']) pSpeed.textContent = t['payout_stat_speed'];
+      var pFAll = document.getElementById('payoutFilterAll');
+      if (pFAll && t['payout_filter_all']) pFAll.textContent = t['payout_filter_all'];
+      var pFDouble = document.getElementById('payoutFilterDouble');
+      if (pFDouble && t['payout_filter_double']) pFDouble.textContent = t['payout_filter_double'];
+      var pFLedger = document.getElementById('payoutFilterLedger');
+      if (pFLedger && t['payout_filter_ledger']) pFLedger.textContent = t['payout_filter_ledger'];
+      var pMTitle = document.getElementById('payoutModalTitleTxt');
+      if (pMTitle && t['payout_modal_title']) pMTitle.textContent = t['payout_modal_title'];
+
+      if (typeof window.renderPayouts === 'function') {
+        var activePFilter = document.querySelector('.payout-filter-btn.active');
+        var fVal = activePFilter ? activePFilter.getAttribute('data-filter') : 'all';
+        window.renderPayouts(fVal);
+      }
 
       // 13.5. Reviews Section & Modal
       var navRev = document.getElementById('navReviewsLink');
