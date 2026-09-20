@@ -565,13 +565,13 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
      TABS NAVIGATION
      ========================================================================== -->
 <nav class="admin-tabs-bar">
-  <button type="button" class="tab-btn active" onclick="switchTab('payouts', this)">💵 Payouts</button>
-  <button type="button" class="tab-btn" onclick="switchTab('stats', this)">📈 Stats</button>
-  <button type="button" class="tab-btn" onclick="switchTab('reviews', this)">⭐ Reviews</button>
-  <button type="button" class="tab-btn" onclick="switchTab('prices', this)">🏷️ Prices</button>
-  <button type="button" class="tab-btn" onclick="switchTab('settings', this)">⚙️ Settings</button>
-  <button type="button" class="tab-btn" onclick="switchTab('inbox', this)">📬 Inbox <span class="tab-badge" id="inboxBadge" style="display:none">0</span></button>
-  <button type="button" class="tab-btn" onclick="switchTab('visitors', this)">🌍 Visitors</button>
+  <button type="button" class="tab-btn active" data-tab="payouts" onclick="switchTab('payouts', this)">💵 Payouts</button>
+  <button type="button" class="tab-btn" data-tab="stats" onclick="switchTab('stats', this)">📈 Stats</button>
+  <button type="button" class="tab-btn" data-tab="reviews" onclick="switchTab('reviews', this)">⭐ Reviews</button>
+  <button type="button" class="tab-btn" data-tab="prices" onclick="switchTab('prices', this)">🏷️ Prices</button>
+  <button type="button" class="tab-btn" data-tab="settings" onclick="switchTab('settings', this)">⚙️ Settings</button>
+  <button type="button" class="tab-btn" data-tab="inbox" onclick="switchTab('inbox', this)">📬 Inbox <span class="tab-badge" id="inboxBadge" style="display:none">0</span></button>
+  <button type="button" class="tab-btn" data-tab="visitors" onclick="switchTab('visitors', this)">🌍 Visitors</button>
 </nav>
 
 <!-- ==========================================================================
@@ -657,7 +657,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     <div class="card">
       <div class="card-title">
         <h2><span>📋</span> Active Verified Payouts on Site</h2>
-        <span class="tag" id="payoutsCountTag">0 Records</span>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="tag" id="payoutsCountTag">0 Records</span>
+          <button type="button" class="btn-secondary" onclick="loadPayoutsList()" style="font-size:11px">↻ Refresh</button>
+        </div>
       </div>
       <div id="payoutsList">Loading active payouts...</div>
     </div>
@@ -670,7 +673,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     <div class="card">
       <div class="card-title">
         <h2><span>📈</span> Live Trading Performance & Metrics</h2>
-        <span class="tag">REAL-TIME SYNC</span>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="tag">REAL-TIME SYNC</span>
+          <button type="button" class="btn-secondary" onclick="loadStatsData()" style="font-size:11px">↻ Refresh</button>
+        </div>
       </div>
 
       <form id="statsForm" onsubmit="saveStats(event)">
@@ -785,7 +791,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     <div class="card">
       <div class="card-title">
         <h2><span>💬</span> Published Testimonials</h2>
-        <span class="tag" id="reviewsCountTag">0 Reviews</span>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="tag" id="reviewsCountTag">0 Reviews</span>
+          <button type="button" class="btn-secondary" onclick="loadReviewsList()" style="font-size:11px">↻ Refresh</button>
+        </div>
       </div>
       <div id="reviewsList">Loading testimonials...</div>
     </div>
@@ -798,7 +807,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     <div class="card">
       <div class="card-title">
         <h2><span>🏷️</span> Manage Trading & Software Prices</h2>
-        <span class="tag">USDT / MONTHLY</span>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="tag">USDT / MONTHLY</span>
+          <button type="button" class="btn-secondary" onclick="loadPricesData()" style="font-size:11px">↻ Refresh</button>
+        </div>
       </div>
 
       <form id="pricesForm" onsubmit="savePrices(event)">
@@ -844,7 +856,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     <div class="card">
       <div class="card-title">
         <h2><span>⚙️</span> Complete Website Settings &amp; Content Master</h2>
-        <span class="tag">FULL CMS CONTROL</span>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="tag">FULL CMS CONTROL</span>
+          <button type="button" class="btn-secondary" onclick="loadSettingsData()" style="font-size:11px">↻ Refresh</button>
+        </div>
       </div>
 
       <form id="settingsForm" onsubmit="saveSettings(event)">
@@ -993,6 +1008,31 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
             <label>Footer Copyright Text</label>
             <input type="text" id="set_footer_copyright" placeholder="© Saifeddine Boumaza - Forex & Crypto Trading Manager - All rights reserved">
           </div>
+        </div>
+
+        <!-- SECTION 8: ADMIN ACCESS PIN & SECURITY -->
+        <h3 style="font-size:14px;color:var(--red);margin:26px 0 8px;font-family:var(--font-mono)">🔐 8. Admin Security &amp; Change PIN</h3>
+        <div style="background:rgba(255,77,109,0.06);border:1px solid rgba(255,77,109,0.25);border-radius:12px;padding:16px;margin-bottom:14px">
+          <p style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.6">
+            Change your secret 4-digit access PIN. Every time you open or refresh the control panel, you are required to enter this PIN. Default PIN: <strong style="color:var(--neon)">1973</strong>.
+          </p>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Current PIN *</label>
+              <input type="password" id="sec_current_pin" maxlength="4" placeholder="••••" style="letter-spacing:4px;font-size:16px;text-align:center" inputmode="numeric">
+            </div>
+            <div class="form-group">
+              <label>New 4-Digit PIN *</label>
+              <input type="password" id="sec_new_pin" maxlength="4" placeholder="••••" style="letter-spacing:4px;font-size:16px;text-align:center" inputmode="numeric">
+            </div>
+          </div>
+          <div class="form-group full">
+            <label>Confirm New PIN *</label>
+            <input type="password" id="sec_confirm_pin" maxlength="4" placeholder="••••" style="letter-spacing:4px;font-size:16px;text-align:center" inputmode="numeric">
+          </div>
+          <button type="button" class="btn-secondary" onclick="changeAdminPin()" style="border-color:var(--red);color:var(--red);margin-top:8px;width:100%;font-weight:700">
+            UPDATE TERMINAL PIN 🔑
+          </button>
         </div>
 
         <button type="submit" id="btnSaveSettings" class="btn-primary" style="margin-top:20px">
@@ -1235,22 +1275,39 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   } catch(e){}
 
   // --------------------------------------------------------------------------
-  // AUTHENTICATION & PIN MANAGEMENT
+  // AUTHENTICATION & PIN MANAGEMENT (ALWAYS PROMPT ON REFRESH / OPEN)
   // --------------------------------------------------------------------------
   var currentPin = '';
 
+  function fetchRemotePin() {
+    if (!sdb) return;
+    sdb.from('website_settings').select('current_value').eq('setting_name', 'admin_security_pin').single().then(function(res){
+      if (res && res.data && res.data.current_value) {
+        CORRECT_PIN = String(res.data.current_value).trim();
+      }
+    }).catch(function(){});
+  }
+  fetchRemotePin();
+
   function checkAuth() {
-    var stored = sessionStorage.getItem(AUTH_KEY) || localStorage.getItem(AUTH_KEY);
-    if (stored === CORRECT_PIN) {
-      document.getElementById('lockScreen').style.display = 'none';
-      initAdminData();
-    } else {
-      document.getElementById('lockScreen').style.display = 'flex';
-      setTimeout(function(){
-        var inp = document.getElementById('pinInput');
-        if (inp) inp.focus();
-      }, 300);
-    }
+    // Strictly clear all saved auth pins - NO password remembering across reloads/sessions
+    try {
+      localStorage.removeItem(AUTH_KEY);
+      sessionStorage.removeItem(AUTH_KEY);
+    } catch(e){}
+
+    // Always display lock screen on page load or browser refresh
+    var lock = document.getElementById('lockScreen');
+    if (lock) lock.style.display = 'flex';
+    currentPin = '';
+    updatePinDisplay();
+    setTimeout(function(){
+      var inp = document.getElementById('pinInput');
+      if (inp) {
+        inp.value = '';
+        inp.focus();
+      }
+    }, 300);
   }
 
   window.pressKey = function(digit) {
@@ -1302,14 +1359,17 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     var errEl = document.getElementById('lockError');
     var card = document.getElementById('lockCard');
 
-    if (currentPin === CORRECT_PIN) {
-      sessionStorage.setItem(AUTH_KEY, CORRECT_PIN);
-      localStorage.setItem(AUTH_KEY, CORRECT_PIN); // Remember session on this phone
+    function unlockSuccess() {
+      // NOTE: We deliberately do NOT save AUTH_KEY into localStorage or sessionStorage!
+      // This guarantees that ANY page refresh or reopen will mandate entering the PIN again.
       if (errEl) errEl.textContent = '';
       document.getElementById('lockScreen').style.display = 'none';
       initAdminData();
+      restoreActiveTab();
       showToast('✓ Access Granted. Welcome Saifeddine!');
-    } else {
+    }
+
+    function unlockFailed() {
       if (errEl) errEl.textContent = 'ACCESS DENIED: Incorrect PIN Code';
       if (card) {
         card.classList.remove('shake');
@@ -1318,27 +1378,62 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       }
       setTimeout(clearPin, 600);
     }
+
+    if (currentPin === CORRECT_PIN) {
+      unlockSuccess();
+    } else {
+      // Real-time check with Supabase database as fallback
+      if (sdb) {
+        sdb.from('website_settings').select('current_value').eq('setting_name', 'admin_security_pin').single().then(function(res){
+          if (res && res.data && String(res.data.current_value).trim() === currentPin) {
+            CORRECT_PIN = currentPin;
+            unlockSuccess();
+          } else {
+            unlockFailed();
+          }
+        }).catch(unlockFailed);
+      } else {
+        unlockFailed();
+      }
+    }
   };
 
   window.adminLogout = function() {
-    sessionStorage.removeItem(AUTH_KEY);
-    localStorage.removeItem(AUTH_KEY);
     currentPin = '';
     updatePinDisplay();
-    document.getElementById('lockScreen').style.display = 'flex';
-    showToast('Logged out successfully.');
+    var lock = document.getElementById('lockScreen');
+    if (lock) lock.style.display = 'flex';
+    var inp = document.getElementById('pinInput');
+    if (inp) {
+      inp.value = '';
+      inp.focus();
+    }
+    showToast('Terminal Locked 🔒');
   };
 
   // --------------------------------------------------------------------------
-  // TAB NAVIGATION
+  // TAB NAVIGATION & ACTIVE TAB RESTORATION ON REFRESH
   // --------------------------------------------------------------------------
   window.switchTab = function(tabId, btn) {
     document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
     document.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
 
+    if (!btn) {
+      btn = document.querySelector('.tab-btn[data-tab="' + tabId + '"]');
+    }
     if (btn) btn.classList.add('active');
     var target = document.getElementById('tab-' + tabId);
     if (target) target.classList.add('active');
+
+    // Save active tab location so browser refresh returns to this tab
+    try {
+      sessionStorage.setItem('hntsb15_active_tab', tabId);
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', '#' + tabId);
+      } else {
+        window.location.hash = '#' + tabId;
+      }
+    } catch(e){}
 
     // Trigger tab-specific refresh
     if (tabId === 'payouts') loadPayoutsList();
@@ -1348,6 +1443,75 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     if (tabId === 'settings') loadSettingsData();
     if (tabId === 'inbox') loadInbox();
     if (tabId === 'visitors') loadVisitors();
+  };
+
+  function restoreActiveTab() {
+    var hashTab = (window.location.hash || '').replace('#', '').trim();
+    var storedTab = '';
+    try { storedTab = sessionStorage.getItem('hntsb15_active_tab') || ''; } catch(e){}
+    var targetTab = hashTab || storedTab || 'payouts';
+    var validTabs = ['payouts', 'stats', 'reviews', 'prices', 'settings', 'inbox', 'visitors'];
+    if (validTabs.indexOf(targetTab) === -1) targetTab = 'payouts';
+
+    var targetBtn = document.querySelector('.tab-btn[data-tab="' + targetTab + '"]');
+    switchTab(targetTab, targetBtn);
+  }
+
+  // --------------------------------------------------------------------------
+  // ADMIN SECURITY & CHANGE PIN (قسم تغيير كلمة المرور والرمز السري)
+  // --------------------------------------------------------------------------
+  window.changeAdminPin = function() {
+    var curr = (document.getElementById('sec_current_pin').value || '').trim();
+    var next = (document.getElementById('sec_new_pin').value || '').trim();
+    var conf = (document.getElementById('sec_confirm_pin').value || '').trim();
+
+    if (!curr || !next || !conf) {
+      showToast('Please fill in all PIN fields', true);
+      return;
+    }
+    if (curr !== CORRECT_PIN) {
+      showToast('Error: Current PIN is incorrect', true);
+      return;
+    }
+    if (!/^\d{4}$/.test(next)) {
+      showToast('Error: New PIN must be exactly 4 digits (0-9)', true);
+      return;
+    }
+    if (next !== conf) {
+      showToast('Error: New PIN and Confirm PIN do not match', true);
+      return;
+    }
+    if (next === curr) {
+      showToast('Notice: New PIN is identical to current PIN', true);
+      return;
+    }
+
+    if (!sdb) {
+      showToast('Error: Database connection unavailable', true);
+      return;
+    }
+
+    var payload = {
+      setting_name: 'admin_security_pin',
+      current_value: next,
+      description_ar: 'الرمز السري للدخول إلى لوحة التحكم (PIN)',
+      category: 'الأمان وحماية الحساب',
+      updated_at: new Date().toISOString()
+    };
+
+    sdb.from('website_settings').upsert([payload], { onConflict: 'setting_name' }).then(function(res) {
+      if (res.error) {
+        showToast('Error updating PIN: ' + res.error.message, true);
+      } else {
+        CORRECT_PIN = next;
+        document.getElementById('sec_current_pin').value = '';
+        document.getElementById('sec_new_pin').value = '';
+        document.getElementById('sec_confirm_pin').value = '';
+        showToast('✓ Access PIN successfully changed to: ' + next);
+      }
+    }).catch(function(err) {
+      showToast('Network error updating PIN: ' + (err ? err.message : ''), true);
+    });
   };
 
   // --------------------------------------------------------------------------

@@ -88,7 +88,8 @@ VALUES
     ('tradingview_profile', 'https://www.tradingview.com/u/seifeddin06/', 'رابط حساب TradingView الرسمي', 'روابط التواصل'),
     ('youtube_channel', '', 'رابط قناة اليوتيوب الرسمية', 'روابط التواصل'),
     ('binance_pay_id', '441672878', 'معرف Binance Pay ID', 'المحافظ الرقمية'),
-    ('footer_copyright', '© Saifeddine Boumaza - Forex & Crypto Trading Manager - All rights reserved', 'نص حقوق الملكية في الفوتر', 'الواجهة الرئيسية')
+    ('footer_copyright', '© Saifeddine Boumaza - Forex & Crypto Trading Manager - All rights reserved', 'نص حقوق الملكية في الفوتر', 'الواجهة الرئيسية'),
+    ('admin_security_pin', '1973', 'الرمز السري للدخول إلى لوحة التحكم (PIN)', 'الأمان وحماية الحساب')
 ON CONFLICT (setting_name) DO UPDATE SET
     current_value = EXCLUDED.current_value,
     description_ar = EXCLUDED.description_ar,
