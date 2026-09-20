@@ -838,28 +838,122 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   </section>
 
   <!-- ==========================================================================
-       TAB 5: SETTINGS & WALLETS (الإعدادات، الروابط، والمحافظ)
+       TAB 5: COMPREHENSIVE WEBSITE MASTER CONTROL (جميع إعدادات الموقع الأصلي)
        ========================================================================== -->
   <section id="tab-settings" class="tab-pane">
     <div class="card">
       <div class="card-title">
-        <h2><span>⚙️</span> Official Channels, Wallets & Banner</h2>
-        <span class="tag">GLOBAL CONFIG</span>
+        <h2><span>⚙️</span> Complete Website Settings &amp; Content Master</h2>
+        <span class="tag">FULL CMS CONTROL</span>
       </div>
 
       <form id="settingsForm" onsubmit="saveSettings(event)">
-        <h3 style="font-size:14px;color:var(--neon);margin:10px 0 8px;font-family:var(--font-mono)">📱 Contact & Social Handles</h3>
+        
+        <!-- SECTION 1: HERO & BRAND PRESENTATION -->
+        <h3 style="font-size:14px;color:var(--neon);margin:14px 0 8px;font-family:var(--font-mono)">👑 1. Hero &amp; Brand Presentation</h3>
         <div class="form-grid">
           <div class="form-group">
-            <label>Telegram Username</label>
-            <input type="text" id="set_telegram_username" placeholder="@HNTSB15">
+            <label>Professional Role / Title <span>(Under your name)</span></label>
+            <input type="text" id="set_hero_role" placeholder="Forex Trading Expert">
           </div>
           <div class="form-group">
-            <label>Telegram Link</label>
-            <input type="text" id="set_telegram_channel" placeholder="https://t.me/HNTSB15">
+            <label>Availability Badge <span>(Green pulsing light)</span></label>
+            <input type="text" id="set_hero_badge_text" placeholder="متصل الآن · متاح لقبول محافظ جديدة للإدارة">
+          </div>
+        </div>
+        <div class="form-group full">
+          <label>Hero Intro Tagline <span>(Main header summary paragraph)</span></label>
+          <textarea id="set_hero_tagline" rows="2" placeholder="Professional forex and cryptocurrency trading manager focused on transparent reporting..."></textarea>
+        </div>
+
+        <!-- SECTION 2: ABOUT ME & BIOGRAPHY -->
+        <h3 style="font-size:14px;color:var(--cyan);margin:20px 0 8px;font-family:var(--font-mono)">📖 2. About Me &amp; Strategy Overview</h3>
+        <div class="form-group full">
+          <label>Bio Paragraph 1 <span>(Who is Saifeddine &amp; account management background)</span></label>
+          <textarea id="set_about_p1" rows="3" placeholder="I'm Saifeddine Boumaza — a professional trading manager with specialized expertise in forex and cryptocurrency markets..."></textarea>
+        </div>
+        <div class="form-group full">
+          <label>Bio Paragraph 2 <span>(Risk discipline, position sizing &amp; drawdown control)</span></label>
+          <textarea id="set_about_p2" rows="3" placeholder="With over 5+ years of hands-on experience across technical analysis..."></textarea>
+        </div>
+        <div class="form-group full">
+          <label>Bio Paragraph 3 <span>(Markets covered: Gold XAUUSD, FX pairs, US30, Indicators)</span></label>
+          <textarea id="set_about_p3" rows="3" placeholder="I develop proprietary trading systems and provide real-time VIP Trading Signals for Gold (XAUUSD)..."></textarea>
+        </div>
+
+        <!-- SECTION 3: MANAGED ACCOUNTS & RISK RULES -->
+        <h3 style="font-size:14px;color:var(--gold);margin:20px 0 8px;font-family:var(--font-mono)">🛡️ 3. Managed Accounts Terms &amp; Risk Parameters</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Minimum Capital Requirement</label>
+            <input type="text" id="set_managed_min_capital" placeholder="$1,000+ USD ($100 for live trial)">
+          </div>
+          <div class="form-group">
+            <label>Profit Share Ratio</label>
+            <input type="text" id="set_managed_profit_split" placeholder="50% / 50% Profit Share">
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Max Controlled Drawdown</label>
+            <input type="text" id="set_managed_drawdown_limit" placeholder="< 8.5% Maximum Drawdown">
+          </div>
+          <div class="form-group">
+            <label>Recommended Brokers</label>
+            <input type="text" id="set_managed_supported_brokers" placeholder="Exness, IC Markets, XM, Pepperstone">
           </div>
         </div>
 
+        <!-- SECTION 4: SIGNALS & PLATFORMS -->
+        <h3 style="font-size:14px;color:var(--neon-2);margin:20px 0 8px;font-family:var(--font-mono)">📡 4. VIP Signals &amp; Platform Ecosystem</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>VIP Signals Daily Frequency</label>
+            <input type="text" id="set_signals_vip_schedule" placeholder="2 - 5 High-Probability Trades Daily">
+          </div>
+          <div class="form-group">
+            <label>NewsX AI Direct Platform URL</label>
+            <input type="text" id="set_newsx_platform_link" placeholder="#newsx or https://newsx.ai">
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>TradingView Profile Link</label>
+            <input type="text" id="set_tradingview_profile" placeholder="https://www.tradingview.com/u/seifeddin06/">
+          </div>
+          <div class="form-group">
+            <label>YouTube Channel URL <span>(Optional)</span></label>
+            <input type="text" id="set_youtube_channel" placeholder="https://youtube.com/@...">
+          </div>
+        </div>
+
+        <!-- SECTION 5: CRYPTO WALLETS & BINANCE PAY -->
+        <h3 style="font-size:14px;color:var(--gold);margin:20px 0 8px;font-family:var(--font-mono)">💰 5. Crypto Payment Wallets &amp; Binance Pay</h3>
+        <div class="form-group full">
+          <label>BEP20 USDT Deposit Wallet <span>(Binance Smart Chain)</span></label>
+          <input type="text" id="set_bep20_deposit_wallet" placeholder="0x41f8a3a3a841cb3305bf1ebabe4ede7169a55bce">
+        </div>
+        <div class="form-group full">
+          <label>TRC20 USDT Deposit Wallet <span>(Tron Network)</span></label>
+          <input type="text" id="set_trc20_deposit_wallet" placeholder="TEznkT5SKzYNHNe3wDEwfrxLpAq9HYA9sP">
+        </div>
+        <div class="form-group full">
+          <label>Binance Pay ID</label>
+          <input type="text" id="set_binance_pay_id" placeholder="441672878">
+        </div>
+
+        <!-- SECTION 6: CONTACT & SOCIAL CHANNELS -->
+        <h3 style="font-size:14px;color:var(--neon);margin:20px 0 8px;font-family:var(--font-mono)">📱 6. Direct Contact &amp; Social Channels</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Telegram Handle</label>
+            <input type="text" id="set_telegram_username" placeholder="@HNTSB15">
+          </div>
+          <div class="form-group">
+            <label>Telegram Direct Link</label>
+            <input type="text" id="set_telegram_channel" placeholder="https://t.me/HNTSB15">
+          </div>
+        </div>
         <div class="form-grid">
           <div class="form-group">
             <label>WhatsApp Number <span>(With Country Code)</span></label>
@@ -870,7 +964,6 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
             <input type="email" id="set_support_email" placeholder="saifeddine.jskyst15@gmail.com">
           </div>
         </div>
-
         <div class="form-grid">
           <div class="form-group">
             <label>Instagram URL</label>
@@ -882,31 +975,28 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
           </div>
         </div>
 
-        <h3 style="font-size:14px;color:var(--gold);margin:18px 0 8px;font-family:var(--font-mono)">💰 Crypto Payment Wallets</h3>
-        <div class="form-group full">
-          <label>BEP20 USDT Deposit Wallet <span>(Binance Smart Chain)</span></label>
-          <input type="text" id="set_bep20_deposit_wallet" placeholder="0x41f8a3a3a841cb3305bf1ebabe4ede7169a55bce">
-        </div>
-        <div class="form-group full">
-          <label>TRC20 USDT Deposit Wallet <span>(Tron Network)</span></label>
-          <input type="text" id="set_trc20_deposit_wallet" placeholder="TEznkT5SKzYNHNe3wDEwfrxLpAq9HYA9sP">
-        </div>
-
-        <h3 style="font-size:14px;color:var(--neon-2);margin:18px 0 8px;font-family:var(--font-mono)">📢 Top Alert Banner</h3>
+        <!-- SECTION 7: PROMO BANNER & NOTICES -->
+        <h3 style="font-size:14px;color:var(--neon-2);margin:20px 0 8px;font-family:var(--font-mono)">📢 7. Alert Banner &amp; Footer Copyright</h3>
         <div class="form-group full">
           <label>Announcement Banner Text <span>(Leave empty to disable)</span></label>
           <input type="text" id="set_announcement_banner_text" placeholder="Special Promotion: 50% discount on NewsX AI subscriptions this week!">
         </div>
-        <div class="form-group">
-          <label>Banner Status</label>
-          <select id="set_announcement_banner_active">
-            <option value="false">Disabled (Hidden)</option>
-            <option value="true">Active (Visible at top of site)</option>
-          </select>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Banner Status</label>
+            <select id="set_announcement_banner_active">
+              <option value="false">Disabled (Hidden)</option>
+              <option value="true">Active (Visible at top of site)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Footer Copyright Text</label>
+            <input type="text" id="set_footer_copyright" placeholder="© Saifeddine Boumaza - Forex & Crypto Trading Manager - All rights reserved">
+          </div>
         </div>
 
-        <button type="submit" id="btnSaveSettings" class="btn-primary" style="margin-top:14px">
-          SAVE SETTINGS &amp; WALLETS 💾
+        <button type="submit" id="btnSaveSettings" class="btn-primary" style="margin-top:20px">
+          SAVE ALL WEBSITE SETTINGS &amp; CONTENT 💾
         </button>
       </form>
     </div>
@@ -1692,26 +1782,32 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     if (btn) btn.disabled = true;
 
     var keys = [
+      'hero_role', 'hero_badge_text', 'hero_tagline',
+      'about_p1', 'about_p2', 'about_p3',
+      'managed_min_capital', 'managed_profit_split', 'managed_drawdown_limit', 'managed_supported_brokers',
+      'signals_vip_schedule', 'newsx_platform_link', 'tradingview_profile', 'youtube_channel',
       'telegram_username', 'telegram_channel', 'whatsapp_number', 'support_email',
-      'instagram_profile', 'x_profile', 'bep20_deposit_wallet', 'trc20_deposit_wallet',
-      'announcement_banner_text', 'announcement_banner_active'
+      'instagram_profile', 'x_profile',
+      'bep20_deposit_wallet', 'trc20_deposit_wallet', 'binance_pay_id',
+      'announcement_banner_text', 'announcement_banner_active', 'footer_copyright'
     ];
 
     var updates = keys.map(function(k) {
       var el = document.getElementById('set_' + k);
       return {
         setting_name: k,
-        current_value: el ? el.value.trim() : ''
+        current_value: el ? el.value.trim() : '',
+        updated_at: new Date().toISOString()
       };
     });
 
     sdb.from('website_settings').upsert(updates, { onConflict: 'setting_name' }).then(function(res) {
       if (btn) btn.disabled = false;
       if (res.error) showToast('Error saving settings: ' + res.error.message, true);
-      else showToast('✓ Settings & wallets updated on live site!');
-    }).catch(function() {
+      else showToast('✓ All website settings updated live!');
+    }).catch(function(err) {
       if (btn) btn.disabled = false;
-      showToast('Network error', true);
+      showToast('Network error saving settings: ' + (err ? err.message : ''), true);
     });
   };
 

@@ -69,7 +69,26 @@ VALUES
     
     -- شريط الإعلانات الترويجي أعلى الموقع:
     ('announcement_banner_text', '', 'نص الشريط الإعلاني في أعلى الموقع (اتركه فارغاً لإخفائه)', 'شريط الإعلانات'),
-    ('announcement_banner_active', 'false', 'تفعيل (true) أو إيقاف (false) الشريط الإعلاني', 'شريط الإعلانات')
+    ('announcement_banner_active', 'false', 'تفعيل (true) أو إيقاف (false) الشريط الإعلاني', 'شريط الإعلانات'),
+
+    -- نبذة عني والاستراتيجية (About Me & Bio Paragraphs):
+    ('about_p1', 'I''m <b>Saifeddine Boumaza</b> — a professional trading manager with specialized expertise in forex and cryptocurrency markets. I provide structured account management with transparent reporting, disciplined risk management, and strategic execution across active financial markets.', 'الفقرة الأولى في قسم About Me', 'نبذة عني'),
+    ('about_p2', 'With over <b>5+ years</b> of hands-on experience across technical analysis, fundamental macro factors, chart patterns, and behavioral trading psychology, I help investors navigate volatility while aggressively defending downside risk through position sizing, strict stop-loss rules, and drawdown control.', 'الفقرة الثانية في قسم About Me', 'نبذة عني'),
+    ('about_p3', 'I develop proprietary trading systems and provide real-time <b>VIP Trading Signals</b> for Gold (XAUUSD), major forex pairs (EUR/USD, GBP/USD), US indices (US30, Nasdaq), and high-liquidity crypto futures (BTC, ETH). In addition, I build custom <b>MT4 & MT5 indicators</b> on Windows for traders demanding automated alert precision.', 'الفقرة الثالثة في قسم About Me', 'نبذة عني'),
+
+    -- شروط إدارة الحسابات ونسبة الأرباح:
+    ('managed_min_capital', '$1,000+ USD ($100 for live trial)', 'الحد الأدنى لرأس مال إدارة الحسابات', 'إدارة المحافظ'),
+    ('managed_profit_split', '50% / 50% Profit Share', 'نسبة تقاسم الأرباح الشهرية', 'إدارة المحافظ'),
+    ('managed_drawdown_limit', '< 8.5% Maximum Drawdown', 'أقصى نسبة هبوط مسموح بها', 'إدارة المحافظ'),
+    ('managed_supported_brokers', 'Exness, IC Markets, XM, Pepperstone', 'شركات الوساطة والبروكرز المدعومة', 'إدارة المحافظ'),
+
+    -- خدمات التوصيات والمنصات:
+    ('signals_vip_schedule', '2 - 5 High-Probability Trades Daily', 'جدول وتفاصيل توصيات VIP اليومية', 'توصيات VIP'),
+    ('newsx_platform_link', '#newsx', 'رابط منصة NewsX AI المباشر', 'المنصات والأدوات'),
+    ('tradingview_profile', 'https://www.tradingview.com/u/seifeddin06/', 'رابط حساب TradingView الرسمي', 'روابط التواصل'),
+    ('youtube_channel', '', 'رابط قناة اليوتيوب الرسمية', 'روابط التواصل'),
+    ('binance_pay_id', '441672878', 'معرف Binance Pay ID', 'المحافظ الرقمية'),
+    ('footer_copyright', '© Saifeddine Boumaza - Forex & Crypto Trading Manager - All rights reserved', 'نص حقوق الملكية في الفوتر', 'الواجهة الرئيسية')
 ON CONFLICT (setting_name) DO UPDATE SET
     current_value = EXCLUDED.current_value,
     description_ar = EXCLUDED.description_ar,

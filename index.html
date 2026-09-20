@@ -7475,6 +7475,45 @@ body.theme-light .payouts-more-btn.active {
             a.href = 'mailto:' + val;
           });
         }
+
+        // About Me & Bio Strategy Paragraphs
+        if (k === 'about_p1') {
+          var ab = document.querySelectorAll('#about .cvx-about p');
+          if (ab[0]) ab[0].innerHTML = val;
+        }
+        if (k === 'about_p2') {
+          var ab = document.querySelectorAll('#about .cvx-about p');
+          if (ab[1]) ab[1].innerHTML = val;
+        }
+        if (k === 'about_p3') {
+          var ab = document.querySelectorAll('#about .cvx-about p');
+          if (ab[2]) ab[2].innerHTML = val;
+        }
+
+        // Additional Platform & Social Links
+        if (k === 'tradingview_profile' || k === 'tradingview') {
+          document.querySelectorAll('a[href*="tradingview.com"]').forEach(function(a){ a.href = val; });
+        }
+        if (k === 'youtube_channel' || k === 'youtube') {
+          document.querySelectorAll('a[href*="youtube.com"]').forEach(function(a){ a.href = val; });
+        }
+        if (k === 'newsx_platform_link' && val && val.startsWith('http')) {
+          document.querySelectorAll('a[href="#newsx"]').forEach(function(a){
+            if (a.classList.contains('cvx-btn') || a.classList.contains('cvx-chip')) {
+              a.href = val;
+              a.target = '_blank';
+            }
+          });
+        }
+        if (k === 'binance_pay_id') {
+          window.CVX_BINANCE_PAY_ID = val;
+          var bPay = document.getElementById('binancePayIdDisplay');
+          if (bPay) bPay.textContent = val;
+        }
+        if (k === 'footer_copyright') {
+          var foot = document.querySelector('footer.cvx-foot .cvx-foot-copy') || document.querySelector('footer.cvx-foot .cvx-wrap');
+          if (foot) foot.innerHTML = '<span class="mono">' + val + '</span>';
+        }
       });
 
       // Render Announcement Banner if Active
