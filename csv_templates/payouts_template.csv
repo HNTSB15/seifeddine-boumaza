@@ -1,2 +1,0 @@
-type,amount,date,date_ar,account,invoice,speed,speed_ar,exness_img,binance_img
-double,$2450.00 USD,"21 Sep 2026, 17:30","21 سبتمبر 2026 - 17:30",ex 256505258,819203847291,1m 30s,دقيقة و 30 ثانية,proofs/payout-11-exness.png,proofs/payout-11-binance.png
