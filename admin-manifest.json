@@ -1,0 +1,28 @@
+{
+  "name": "HNTSB15 Admin Terminal",
+  "short_name": "HNTSB15",
+  "description": "Official Executive Mobile Management Terminal for Saifeddine Boumaza",
+  "start_url": "./hntsb15.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#080c10",
+  "theme_color": "#080c10",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "Logo.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
+    }
+  ]
+}
