@@ -555,7 +555,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       <div class="header-status"><span class="header-dot"></span> LIVE CONNECTED</div>
     </div>
   </div>
-  <div style="display:flex;align-items:center;gap:10px;">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <button type="button" class="btn-secondary" onclick="openPinModal()" style="border-color:rgba(255,215,0,0.5);color:var(--gold);font-size:11px;font-weight:700">🔐 CHANGE PIN</button>
     <a href="index.html" target="_blank" class="btn-secondary" style="text-decoration:none;font-size:11px">VIEW SITE ↗</a>
     <button type="button" class="btn-logout" onclick="adminLogout()">LOGOUT 🔒</button>
   </div>
@@ -1014,7 +1015,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         <h3 style="font-size:14px;color:var(--red);margin:26px 0 8px;font-family:var(--font-mono)">🔐 8. Admin Security &amp; Change PIN</h3>
         <div style="background:rgba(255,77,109,0.06);border:1px solid rgba(255,77,109,0.25);border-radius:12px;padding:16px;margin-bottom:14px">
           <p style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.6">
-            Change your secret 4-digit access PIN. Every time you open or refresh the control panel, you are required to enter this PIN. Default PIN: <strong style="color:var(--neon)">1973</strong>.
+            Change your secret 4-digit access PIN. Your session stays active for <strong>30 minutes</strong> after entering the PIN. Default PIN: <strong style="color:var(--neon)">1973</strong>. You can also click the <strong>🔐 CHANGE PIN</strong> button in the top navigation bar at any time.
           </p>
           <div class="form-grid">
             <div class="form-group">
@@ -1258,6 +1259,39 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 </div>
 
 <!-- ==========================================================================
+     CHANGE PIN MODAL (نافذة تغيير الرمز السري للأمان)
+     ========================================================================== -->
+<div id="changePinModal" class="modal-backdrop" style="display:none">
+  <div class="modal-card" style="max-width:440px">
+    <div class="modal-header">
+      <div class="modal-title" style="color:var(--gold)">🔐 Admin Security &amp; Change PIN</div>
+      <button type="button" class="modal-close" onclick="closePinModal()">✕</button>
+    </div>
+    <form id="changePinModalForm" onsubmit="handleModalChangePin(event)">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.6">
+        Change your secret 4-digit access PIN. Your session stays active for <strong>30 minutes</strong> after entering the PIN.
+      </p>
+      <div class="form-group full">
+        <label>Current PIN *</label>
+        <input type="password" id="modal_sec_current_pin" maxlength="4" required placeholder="••••" style="letter-spacing:4px;font-size:16px;text-align:center" inputmode="numeric">
+      </div>
+      <div class="form-group full">
+        <label>New 4-Digit PIN *</label>
+        <input type="password" id="modal_sec_new_pin" maxlength="4" required placeholder="••••" style="letter-spacing:4px;font-size:16px;text-align:center" inputmode="numeric">
+      </div>
+      <div class="form-group full">
+        <label>Confirm New PIN *</label>
+        <input type="password" id="modal_sec_confirm_pin" maxlength="4" required placeholder="••••" style="letter-spacing:4px;font-size:16px;text-align:center" inputmode="numeric">
+      </div>
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <button type="button" class="btn-cancel" onclick="closePinModal()" style="flex:1">Cancel</button>
+        <button type="submit" id="btnUpdatePinModal" class="btn-primary" style="flex:2">UPDATE TERMINAL PIN 🔑</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ==========================================================================
      ADMIN LOGIC SCRIPT
      ========================================================================== -->
 <script>
@@ -1275,9 +1309,12 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   } catch(e){}
 
   // --------------------------------------------------------------------------
-  // AUTHENTICATION & PIN MANAGEMENT (ALWAYS PROMPT ON REFRESH / OPEN)
+  // AUTHENTICATION & 30-MINUTE SESSION MANAGEMENT
   // --------------------------------------------------------------------------
+  var AUTH_TIME_KEY = 'hntsb15_auth_time';
+  var SESSION_DURATION_MS = 30 * 60 * 1000; // 30 minutes
   var currentPin = '';
+  var sessionWatchdogTimer = null;
 
   function fetchRemotePin() {
     if (!sdb) return;
@@ -1289,25 +1326,70 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   }
   fetchRemotePin();
 
-  function checkAuth() {
-    // Strictly clear all saved auth pins - NO password remembering across reloads/sessions
+  function isSessionValid() {
     try {
-      localStorage.removeItem(AUTH_KEY);
-      sessionStorage.removeItem(AUTH_KEY);
-    } catch(e){}
-
-    // Always display lock screen on page load or browser refresh
-    var lock = document.getElementById('lockScreen');
-    if (lock) lock.style.display = 'flex';
-    currentPin = '';
-    updatePinDisplay();
-    setTimeout(function(){
-      var inp = document.getElementById('pinInput');
-      if (inp) {
-        inp.value = '';
-        inp.focus();
+      var authPin = localStorage.getItem(AUTH_KEY);
+      var authTimeStr = localStorage.getItem(AUTH_TIME_KEY);
+      if (!authPin || !authTimeStr) return false;
+      var authTime = parseInt(authTimeStr, 10);
+      if (isNaN(authTime)) return false;
+      var elapsed = Date.now() - authTime;
+      if (elapsed >= SESSION_DURATION_MS) {
+        return false; // Expired after 30 minutes
       }
-    }, 300);
+      return true;
+    } catch(e) {
+      return false;
+    }
+  }
+
+  function getRemainingSessionMs() {
+    try {
+      var authTime = parseInt(localStorage.getItem(AUTH_TIME_KEY) || '0', 10);
+      if (!authTime) return 0;
+      var elapsed = Date.now() - authTime;
+      return Math.max(0, SESSION_DURATION_MS - elapsed);
+    } catch(e) {
+      return 0;
+    }
+  }
+
+  function startSessionWatchdog(ms) {
+    if (sessionWatchdogTimer) clearTimeout(sessionWatchdogTimer);
+    var duration = (typeof ms === 'number') ? ms : SESSION_DURATION_MS;
+    sessionWatchdogTimer = setTimeout(function() {
+      // 30 minutes expired -> Lock console and request PIN
+      adminLogout(true);
+    }, duration);
+  }
+
+  function checkAuth() {
+    if (isSessionValid()) {
+      // Active session within 30 minutes -> Keep logged in without prompting PIN
+      var lock = document.getElementById('lockScreen');
+      if (lock) lock.style.display = 'none';
+      initAdminData();
+      restoreActiveTab();
+      startSessionWatchdog(getRemainingSessionMs());
+    } else {
+      // Session has expired or first time -> Prompt for PIN
+      try {
+        localStorage.removeItem(AUTH_KEY);
+        localStorage.removeItem(AUTH_TIME_KEY);
+      } catch(e){}
+
+      var lock = document.getElementById('lockScreen');
+      if (lock) lock.style.display = 'flex';
+      currentPin = '';
+      updatePinDisplay();
+      setTimeout(function(){
+        var inp = document.getElementById('pinInput');
+        if (inp) {
+          inp.value = '';
+          inp.focus();
+        }
+      }, 300);
+    }
   }
 
   window.pressKey = function(digit) {
@@ -1360,13 +1442,18 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     var card = document.getElementById('lockCard');
 
     function unlockSuccess() {
-      // NOTE: We deliberately do NOT save AUTH_KEY into localStorage or sessionStorage!
-      // This guarantees that ANY page refresh or reopen will mandate entering the PIN again.
+      // Store auth pin and timestamp for 30 minutes
+      try {
+        localStorage.setItem(AUTH_KEY, CORRECT_PIN);
+        localStorage.setItem(AUTH_TIME_KEY, Date.now().toString());
+      } catch(e){}
+
       if (errEl) errEl.textContent = '';
       document.getElementById('lockScreen').style.display = 'none';
       initAdminData();
       restoreActiveTab();
-      showToast('✓ Access Granted. Welcome Saifeddine!');
+      startSessionWatchdog(SESSION_DURATION_MS);
+      showToast('✓ Access Granted. Session active for 30 minutes.');
     }
 
     function unlockFailed() {
@@ -1398,7 +1485,12 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     }
   };
 
-  window.adminLogout = function() {
+  window.adminLogout = function(isExpired) {
+    if (sessionWatchdogTimer) clearTimeout(sessionWatchdogTimer);
+    try {
+      localStorage.removeItem(AUTH_KEY);
+      localStorage.removeItem(AUTH_TIME_KEY);
+    } catch(e){}
     currentPin = '';
     updatePinDisplay();
     var lock = document.getElementById('lockScreen');
@@ -1408,7 +1500,13 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       inp.value = '';
       inp.focus();
     }
-    showToast('Terminal Locked 🔒');
+    if (isExpired) {
+      var errEl = document.getElementById('lockError');
+      if (errEl) errEl.textContent = 'SESSION EXPIRED: 30 minutes elapsed. Please re-enter PIN.';
+      showToast('Session expired after 30 minutes. Please enter PIN.', true);
+    } else {
+      showToast('Terminal Locked 🔒');
+    }
   };
 
   // --------------------------------------------------------------------------
@@ -1458,13 +1556,41 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   }
 
   // --------------------------------------------------------------------------
-  // ADMIN SECURITY & CHANGE PIN (قسم تغيير كلمة المرور والرمز السري)
+  // ADMIN SECURITY & CHANGE PIN (نافذة تغيير الرمز من الهيدر وقسم الإعدادات)
   // --------------------------------------------------------------------------
-  window.changeAdminPin = function() {
-    var curr = (document.getElementById('sec_current_pin').value || '').trim();
-    var next = (document.getElementById('sec_new_pin').value || '').trim();
-    var conf = (document.getElementById('sec_confirm_pin').value || '').trim();
+  window.openPinModal = function() {
+    var m = document.getElementById('changePinModal');
+    if (m) {
+      var cInp = document.getElementById('modal_sec_current_pin');
+      var nInp = document.getElementById('modal_sec_new_pin');
+      var fInp = document.getElementById('modal_sec_confirm_pin');
+      if (cInp) cInp.value = '';
+      if (nInp) nInp.value = '';
+      if (fInp) fInp.value = '';
+      m.style.display = 'flex';
+      setTimeout(function(){
+        if (cInp) cInp.focus();
+      }, 200);
+    }
+  };
 
+  window.closePinModal = function() {
+    var m = document.getElementById('changePinModal');
+    if (m) m.style.display = 'none';
+  };
+
+  window.handleModalChangePin = function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    var curr = (document.getElementById('modal_sec_current_pin').value || '').trim();
+    var next = (document.getElementById('modal_sec_new_pin').value || '').trim();
+    var conf = (document.getElementById('modal_sec_confirm_pin').value || '').trim();
+
+    executePinUpdate(curr, next, conf, document.getElementById('btnUpdatePinModal'), function() {
+      closePinModal();
+    });
+  };
+
+  function executePinUpdate(curr, next, conf, btnEl, onSuccessCb) {
     if (!curr || !next || !conf) {
       showToast('Please fill in all PIN fields', true);
       return;
@@ -1491,6 +1617,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       return;
     }
 
+    if (btnEl) btnEl.disabled = true;
+
     var payload = {
       setting_name: 'admin_security_pin',
       current_value: next,
@@ -1500,18 +1628,48 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     };
 
     sdb.from('website_settings').upsert([payload], { onConflict: 'setting_name' }).then(function(res) {
+      if (btnEl) btnEl.disabled = false;
       if (res.error) {
         showToast('Error updating PIN: ' + res.error.message, true);
       } else {
         CORRECT_PIN = next;
-        document.getElementById('sec_current_pin').value = '';
-        document.getElementById('sec_new_pin').value = '';
-        document.getElementById('sec_confirm_pin').value = '';
+        // Keep active session alive with new PIN
+        try {
+          localStorage.setItem(AUTH_KEY, next);
+          localStorage.setItem(AUTH_TIME_KEY, Date.now().toString());
+        } catch(e){}
+
+        // Clear modal fields
+        var cInp = document.getElementById('modal_sec_current_pin');
+        var nInp = document.getElementById('modal_sec_new_pin');
+        var fInp = document.getElementById('modal_sec_confirm_pin');
+        if (cInp) cInp.value = '';
+        if (nInp) nInp.value = '';
+        if (fInp) fInp.value = '';
+
+        // Clear settings section 8 fields
+        var sCurr = document.getElementById('sec_current_pin');
+        var sNext = document.getElementById('sec_new_pin');
+        var sConf = document.getElementById('sec_confirm_pin');
+        if (sCurr) sCurr.value = '';
+        if (sNext) sNext.value = '';
+        if (sConf) sConf.value = '';
+
+        if (onSuccessCb) onSuccessCb();
         showToast('✓ Access PIN successfully changed to: ' + next);
       }
     }).catch(function(err) {
+      if (btnEl) btnEl.disabled = false;
       showToast('Network error updating PIN: ' + (err ? err.message : ''), true);
     });
+  }
+
+  // Also support the update button in Tab 5 Section 8
+  window.changeAdminPin = function() {
+    var curr = (document.getElementById('sec_current_pin').value || '').trim();
+    var next = (document.getElementById('sec_new_pin').value || '').trim();
+    var conf = (document.getElementById('sec_confirm_pin').value || '').trim();
+    executePinUpdate(curr, next, conf, null, null);
   };
 
   // --------------------------------------------------------------------------
