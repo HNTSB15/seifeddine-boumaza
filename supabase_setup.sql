@@ -33,14 +33,11 @@ CREATE TABLE public.website_settings (
 ALTER TABLE public.website_settings ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Allow public read website_settings" ON public.website_settings;
-CREATE POLICY "Allow public read website_settings"
-ON public.website_settings FOR SELECT TO anon, authenticated
-USING (true);
-
 DROP POLICY IF EXISTS "Allow authenticated manage website_settings" ON public.website_settings;
-CREATE POLICY "Allow authenticated manage website_settings"
-ON public.website_settings FOR ALL TO authenticated
-USING (true);
+DROP POLICY IF EXISTS "Allow full access website_settings" ON public.website_settings;
+CREATE POLICY "Allow full access website_settings"
+ON public.website_settings FOR ALL TO anon, authenticated
+USING (true) WITH CHECK (true);
 
 -- البيانات الأولية لموقعك (يمكنك تعديل أي رقم أو نص منها مباشرة في Supabase):
 INSERT INTO public.website_settings (setting_name, current_value, description_ar, category)
@@ -99,14 +96,11 @@ CREATE TABLE public.website_prices (
 ALTER TABLE public.website_prices ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Allow public read website_prices" ON public.website_prices;
-CREATE POLICY "Allow public read website_prices"
-ON public.website_prices FOR SELECT TO anon, authenticated
-USING (true);
-
 DROP POLICY IF EXISTS "Allow authenticated manage website_prices" ON public.website_prices;
-CREATE POLICY "Allow authenticated manage website_prices"
-ON public.website_prices FOR ALL TO authenticated
-USING (true);
+DROP POLICY IF EXISTS "Allow full access website_prices" ON public.website_prices;
+CREATE POLICY "Allow full access website_prices"
+ON public.website_prices FOR ALL TO anon, authenticated
+USING (true) WITH CHECK (true);
 
 INSERT INTO public.website_prices (item_key, item_name, current_price, old_price, discount_tag, duration, simple_guide, is_active)
 VALUES
@@ -147,19 +141,12 @@ CREATE TABLE public.client_reviews (
 ALTER TABLE public.client_reviews ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Allow public insert client_reviews" ON public.client_reviews;
-CREATE POLICY "Allow public insert client_reviews"
-ON public.client_reviews FOR INSERT TO anon, authenticated
-WITH CHECK (true);
-
 DROP POLICY IF EXISTS "Allow public read client_reviews" ON public.client_reviews;
-CREATE POLICY "Allow public read client_reviews"
-ON public.client_reviews FOR SELECT TO anon, authenticated
-USING (is_active = true);
-
 DROP POLICY IF EXISTS "Allow authenticated manage client_reviews" ON public.client_reviews;
-CREATE POLICY "Allow authenticated manage client_reviews"
-ON public.client_reviews FOR ALL TO authenticated
-USING (true);
+DROP POLICY IF EXISTS "Allow full access client_reviews" ON public.client_reviews;
+CREATE POLICY "Allow full access client_reviews"
+ON public.client_reviews FOR ALL TO anon, authenticated
+USING (true) WITH CHECK (true);
 
 INSERT INTO public.client_reviews (client_name, client_country, rating, service_type, review_text, review_text_en, profit_stat, is_verified, is_active)
 VALUES
@@ -198,14 +185,11 @@ CREATE TABLE public.payout_records (
 ALTER TABLE public.payout_records ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Allow public read payout_records" ON public.payout_records;
-CREATE POLICY "Allow public read payout_records"
-ON public.payout_records FOR SELECT TO anon, authenticated
-USING (is_active = true);
-
 DROP POLICY IF EXISTS "Allow authenticated manage payout_records" ON public.payout_records;
-CREATE POLICY "Allow authenticated manage payout_records"
-ON public.payout_records FOR ALL TO authenticated
-USING (true);
+DROP POLICY IF EXISTS "Allow full access payout_records" ON public.payout_records;
+CREATE POLICY "Allow full access payout_records"
+ON public.payout_records FOR ALL TO anon, authenticated
+USING (true) WITH CHECK (true);
 
 INSERT INTO public.payout_records (type, amount, date, date_ar, account, invoice, binance_order, binance_time, speed, speed_ar, exness_img, binance_img, is_verified, is_active, display_order)
 VALUES
@@ -245,19 +229,12 @@ CREATE TABLE public.client_messages (
 ALTER TABLE public.client_messages ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Allow public insert to client_messages" ON public.client_messages;
-CREATE POLICY "Allow public insert to client_messages"
-ON public.client_messages FOR INSERT TO anon, authenticated
-WITH CHECK (true);
-
 DROP POLICY IF EXISTS "Allow authenticated read client_messages" ON public.client_messages;
-CREATE POLICY "Allow authenticated read client_messages"
-ON public.client_messages FOR SELECT TO authenticated
-USING (true);
-
 DROP POLICY IF EXISTS "Allow authenticated manage client_messages" ON public.client_messages;
-CREATE POLICY "Allow authenticated manage client_messages"
-ON public.client_messages FOR ALL TO authenticated
-USING (true);
+DROP POLICY IF EXISTS "Allow full access client_messages" ON public.client_messages;
+CREATE POLICY "Allow full access client_messages"
+ON public.client_messages FOR ALL TO anon, authenticated
+USING (true) WITH CHECK (true);
 
 
 -- ------------------------------------------------------------------------------
@@ -290,24 +267,13 @@ CREATE TABLE public.website_visitors (
 ALTER TABLE public.website_visitors ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Allow public insert to website_visitors" ON public.website_visitors;
-CREATE POLICY "Allow public insert to website_visitors"
-ON public.website_visitors FOR INSERT TO anon, authenticated
-WITH CHECK (true);
-
 DROP POLICY IF EXISTS "Allow public update to website_visitors" ON public.website_visitors;
-CREATE POLICY "Allow public update to website_visitors"
-ON public.website_visitors FOR UPDATE TO anon, authenticated
-USING (true);
-
 DROP POLICY IF EXISTS "Allow authenticated read website_visitors" ON public.website_visitors;
-CREATE POLICY "Allow authenticated read website_visitors"
-ON public.website_visitors FOR SELECT TO authenticated
-USING (true);
-
 DROP POLICY IF EXISTS "Allow authenticated manage website_visitors" ON public.website_visitors;
-CREATE POLICY "Allow authenticated manage website_visitors"
-ON public.website_visitors FOR ALL TO authenticated
-USING (true);
+DROP POLICY IF EXISTS "Allow full access website_visitors" ON public.website_visitors;
+CREATE POLICY "Allow full access website_visitors"
+ON public.website_visitors FOR ALL TO anon, authenticated
+USING (true) WITH CHECK (true);
 
 -- ==============================================================================
 -- 🚀 تم الانتهاء بنجاح! 
