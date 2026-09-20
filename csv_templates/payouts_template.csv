@@ -1,6 +1,2 @@
-type,amount,date,date_ar,account,invoice,binance_order,binance_time,speed,speed_ar,exness_img,binance_img,is_verified,is_active,display_order
-double,$3150.51 USD,"11 Sep 2026, 14:11","11 سبتمبر 2026 - 14:11",ex 256505258,807876734982,441672878207459329,14:12:42 UTC,1m 42s,دقيقة و 42 ثانية,proofs/payout-1-exness.png,proofs/payout-1-binance.png,TRUE,TRUE,1
-double,$1555.00 USD,"19 May 2026, 12:35","19 مايو 2026 - 12:35",ex 256511737,676651208710,441672878207459329,12:37:42 UTC,2m 42s,دقيقتين و 42 ثانية,proofs/payout-2-exness.png,proofs/payout-2-binance.png,TRUE,TRUE,2
-double,$1026.00 USD,"18 May 2026, 13:36","18 مايو 2026 - 13:36",ex 256505258,675581050886,441672878207459329,13:37:42 UTC,1m 42s,دقيقة و 42 ثانية,proofs/payout-3-exness.png,proofs/payout-3-binance.png,TRUE,TRUE,3
-double,$723.00 USD,"18 May 2026, 02:13","18 مايو 2026 - 02:13",ex 256505258,674909700102,441672878207459329,02:14:42 UTC,1m 42s,دقيقة و 42 ثانية,proofs/payout-4-exness.png,proofs/payout-4-binance.png,TRUE,TRUE,4
-ledger,$4278.81 USD,"28 Aug 2026, 16:24","28 أغسطس 2026 - 16:24",ex 256505258,788728934406,,,Instant,فوري,proofs/payout-7-exness.png,,TRUE,TRUE,5
+type,amount,date,date_ar,account,invoice,speed,speed_ar,exness_img,binance_img
+double,$2450.00 USD,"21 Sep 2026, 17:30","21 سبتمبر 2026 - 17:30",ex 256505258,819203847291,1m 30s,دقيقة و 30 ثانية,proofs/payout-11-exness.png,proofs/payout-11-binance.png

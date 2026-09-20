@@ -7863,7 +7863,7 @@ body.theme-light .payouts-more-btn.active {
   function loadLivePayouts() {
     if (!sdb || typeof sdb.from !== 'function') return;
     try {
-      sdb.from('payout_records').select('*').eq('is_active', true).order('display_order', { ascending: true }).order('id', { ascending: false }).then(function(res) {
+      sdb.from('payout_records').select('*').eq('is_active', true).order('id', { ascending: false }).then(function(res) {
         var list = (res && res.data && res.data.length) ? res.data : [];
         if (!list.length) return;
         var dynamicPayouts = list.map(function(p) {
