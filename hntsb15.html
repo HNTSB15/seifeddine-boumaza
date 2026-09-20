@@ -363,6 +363,110 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 }
 .btn-delete:hover { background: rgba(255, 77, 109, 0.3); }
 
+.btn-edit {
+  background: rgba(18, 214, 255, 0.12);
+  border: 1px solid rgba(18, 214, 255, 0.35);
+  color: var(--cyan);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+}
+.btn-edit:hover, .btn-edit:active {
+  background: var(--cyan);
+  color: #04080e;
+  box-shadow: 0 0 12px rgba(18, 214, 255, 0.4);
+}
+
+.item-card.is-hidden {
+  opacity: 0.6;
+  border-color: rgba(255, 77, 109, 0.25);
+  background: rgba(255, 77, 109, 0.03);
+}
+
+/* Modals */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 8, 14, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.2s ease-out;
+}
+.modal-card {
+  background: #0d131a;
+  border: 1px solid rgba(0, 255, 156, 0.3);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 255, 156, 0.12);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 22px;
+  position: relative;
+  box-sizing: border-box;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.modal-title {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--neon);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.modal-close {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--muted);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  transition: all 0.2s;
+}
+.modal-close:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+}
+.btn-cancel {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--muted);
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
 /* Table */
 .data-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .data-table { width: 100%; border-collapse: collapse; font-size: 12px; font-family: var(--font-mono); }
@@ -859,6 +963,171 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 <div id="adminToast"></div>
 
 <!-- ==========================================================================
+     EDIT PAYOUT MODAL (تعديل إثباتات الأرباح والصفقات المنشورة)
+     ========================================================================== -->
+<div id="editPayoutModal" class="modal-backdrop" style="display:none">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title">✏️ Edit Payout Proof</div>
+      <button type="button" class="modal-close" onclick="closeEditPayoutModal()">✕</button>
+    </div>
+    <form id="editPayoutForm" onsubmit="saveEditedPayout(event)">
+      <input type="hidden" id="edit_payout_id">
+      
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Profit Amount *</label>
+          <input type="text" id="edit_pAmount" required placeholder="$3,150.51 USD">
+        </div>
+        <div class="form-group">
+          <label>Date & Time *</label>
+          <input type="text" id="edit_pDate" required placeholder="11 Sep 2026, 14:11">
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Arabic Date Display</label>
+          <input type="text" id="edit_pDateAr" placeholder="11 سبتمبر 2026 - 14:11">
+        </div>
+        <div class="form-group">
+          <label>Exness Account</label>
+          <input type="text" id="edit_pAccount" placeholder="ex 256505258">
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Invoice ID</label>
+          <input type="text" id="edit_pInvoice" placeholder="807876734982">
+        </div>
+        <div class="form-group">
+          <label>Settlement Speed</label>
+          <input type="text" id="edit_pSpeed" placeholder="1m 42s">
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Arabic Speed Text</label>
+          <input type="text" id="edit_pSpeedAr" placeholder="دقيقة و 42 ثانية">
+        </div>
+        <div class="form-group">
+          <label>Verification Type</label>
+          <select id="edit_pType">
+            <option value="double">⚡ Double-Verified (Exness + Binance)</option>
+            <option value="ledger">💼 Direct Ledger (Exness Server)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Exness Screenshot</label>
+          <input type="text" id="edit_pExnessImg" placeholder="proofs/... or image URL">
+          <div class="file-drop-zone" onclick="document.getElementById('edit_exnessFileInp').click()">
+            <span>📷 Change Photo</span>
+            <input type="file" id="edit_exnessFileInp" accept="image/*" onchange="handleImagePick(this, 'edit_pExnessImg', 'edit_exnessPrev')">
+          </div>
+          <img id="edit_exnessPrev" class="file-preview" alt="Exness Proof Preview">
+        </div>
+        <div class="form-group">
+          <label>Binance Screenshot</label>
+          <input type="text" id="edit_pBinanceImg" placeholder="proofs/... or image URL">
+          <div class="file-drop-zone" onclick="document.getElementById('edit_binanceFileInp').click()">
+            <span>📷 Change Photo</span>
+            <input type="file" id="edit_binanceFileInp" accept="image/*" onchange="handleImagePick(this, 'edit_pBinanceImg', 'edit_binancePrev')">
+          </div>
+          <img id="edit_binancePrev" class="file-preview" alt="Binance Proof Preview">
+        </div>
+      </div>
+
+      <div class="form-group full">
+        <label>Website Visibility Status</label>
+        <select id="edit_pActive">
+          <option value="true">🟢 Active (Visible on Live Website)</option>
+          <option value="false">🔴 Hidden (Draft / Inactive)</option>
+        </select>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <button type="button" class="btn-cancel" onclick="closeEditPayoutModal()" style="flex:1">Cancel</button>
+        <button type="submit" id="btnUpdatePayout" class="btn-primary" style="flex:2">SAVE CHANGES 💾</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ==========================================================================
+     EDIT REVIEW MODAL (تعديل التقييمات السابقة)
+     ========================================================================== -->
+<div id="editReviewModal" class="modal-backdrop" style="display:none">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title">✏️ Edit Client Review</div>
+      <button type="button" class="modal-close" onclick="closeEditReviewModal()">✕</button>
+    </div>
+    <form id="editReviewForm" onsubmit="saveEditedReview(event)">
+      <input type="hidden" id="edit_review_id">
+      
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Client Name *</label>
+          <input type="text" id="edit_rName" required>
+        </div>
+        <div class="form-group">
+          <label>Country / Flag *</label>
+          <input type="text" id="edit_rCountry" required>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Service Type</label>
+          <select id="edit_rService">
+            <option value="managed">💼 Managed Accounts</option>
+            <option value="signals">📡 VIP Signals Channel</option>
+            <option value="newsx">⚡ NewsX AI Platform</option>
+            <option value="indicators">📊 MT5 Quantitative Indicator</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Rating (Stars)</label>
+          <select id="edit_rRating">
+            <option value="5">★★★★★ (5 Stars)</option>
+            <option value="4">★★★★☆ (4 Stars)</option>
+            <option value="3">★★★☆☆ (3 Stars)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group full">
+        <label>Profit / Performance Tag</label>
+        <input type="text" id="edit_rProfit" placeholder="+42.8% ROI (5 أشهر)">
+      </div>
+
+      <div class="form-group full">
+        <label>Review Text (Arabic or English) *</label>
+        <textarea id="edit_rText" rows="4" required></textarea>
+      </div>
+
+      <div class="form-group full">
+        <label>Website Visibility Status</label>
+        <select id="edit_rActive">
+          <option value="true">🟢 Active (Visible on Live Website)</option>
+          <option value="false">🔴 Hidden (Draft / Inactive)</option>
+        </select>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <button type="button" class="btn-cancel" onclick="closeEditReviewModal()" style="flex:1">Cancel</button>
+        <button type="submit" id="btnUpdateReview" class="btn-primary" style="flex:2">SAVE CHANGES 💾</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ==========================================================================
      ADMIN LOGIC SCRIPT
      ========================================================================== -->
 <script>
@@ -1077,6 +1346,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 
     sdb.from('payout_records').select('*').order('id', { ascending: false }).then(function(res) {
       var list = (res && res.data) ? res.data : [];
+      window._payoutsCache = list;
       if (countTag) countTag.textContent = list.length + ' Records';
       if (!list.length) {
         listEl.innerHTML = '<p style="color:var(--muted);text-align:center;padding:16px">No payouts found in database.</p>';
@@ -1085,22 +1355,101 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 
       var html = '';
       list.forEach(function(p) {
-        html += '<div class="item-card">' +
+        var isHidden = p.is_active === false;
+        html += '<div class="item-card' + (isHidden ? ' is-hidden' : '') + '">' +
           '<div class="item-info">' +
             '<div class="item-title">' +
               '<span style="color:var(--neon)">' + (p.amount || '') + '</span>' +
-              '<span class="tag" style="font-size:10px">' + (p.type === 'double' ? '⚡ Double-Verified' : '💼 Ledger') + '</span>' +
+              '<span class="tag" style="font-size:10px">' + (p.type === 'double' ? '⚡ Double' : '💼 Ledger') + '</span>' +
+              (isHidden ? '<span class="tag" style="font-size:10px;color:var(--red);border-color:var(--red)">HIDDEN</span>' : '') +
             '</div>' +
             '<div class="item-sub">' + (p.date || '') + ' · Invoice #' + (p.invoice || '') + ' · ' + (p.account || '') + '</div>' +
           '</div>' +
           '<div class="item-actions">' +
-            '<button type="button" class="btn-delete" onclick="deletePayout(' + p.id + ')">Delete 🗑️</button>' +
+            '<button type="button" class="btn-edit" onclick="openEditPayoutModal(' + p.id + ')">Edit ✏️</button>' +
+            '<button type="button" class="btn-delete" onclick="deletePayout(' + p.id + ')">🗑️</button>' +
           '</div>' +
         '</div>';
       });
       listEl.innerHTML = html;
     }).catch(function(){ listEl.innerHTML = 'Error loading payouts list.'; });
   }
+
+  window.openEditPayoutModal = function(id) {
+    if (!window._payoutsCache) return;
+    var p = window._payoutsCache.find(function(item){ return String(item.id) === String(id); });
+    if (!p) return;
+
+    document.getElementById('edit_payout_id').value = p.id;
+    document.getElementById('edit_pAmount').value = p.amount || '';
+    document.getElementById('edit_pDate').value = p.date || '';
+    document.getElementById('edit_pDateAr').value = p.date_ar || p.date || '';
+    document.getElementById('edit_pAccount').value = p.account || '';
+    document.getElementById('edit_pInvoice').value = p.invoice || '';
+    document.getElementById('edit_pSpeed').value = p.speed || '';
+    document.getElementById('edit_pSpeedAr').value = p.speed_ar || p.speed || '';
+    document.getElementById('edit_pType').value = p.type || 'double';
+    document.getElementById('edit_pExnessImg').value = p.exness_img || '';
+    document.getElementById('edit_pBinanceImg').value = p.binance_img || '';
+    document.getElementById('edit_pActive').value = (p.is_active !== false) ? 'true' : 'false';
+
+    var exPrev = document.getElementById('edit_exnessPrev');
+    if (p.exness_img) {
+      exPrev.src = p.exness_img;
+      exPrev.style.display = 'block';
+    } else {
+      exPrev.style.display = 'none';
+    }
+
+    var bnPrev = document.getElementById('edit_binancePrev');
+    if (p.binance_img) {
+      bnPrev.src = p.binance_img;
+      bnPrev.style.display = 'block';
+    } else {
+      bnPrev.style.display = 'none';
+    }
+
+    document.getElementById('editPayoutModal').style.display = 'flex';
+  };
+
+  window.closeEditPayoutModal = function() {
+    document.getElementById('editPayoutModal').style.display = 'none';
+  };
+
+  window.saveEditedPayout = function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    var id = document.getElementById('edit_payout_id').value;
+    var btn = document.getElementById('btnUpdatePayout');
+    if (btn) btn.disabled = true;
+
+    var payload = {
+      amount: document.getElementById('edit_pAmount').value.trim(),
+      date: document.getElementById('edit_pDate').value.trim(),
+      date_ar: document.getElementById('edit_pDateAr').value.trim() || document.getElementById('edit_pDate').value.trim(),
+      account: document.getElementById('edit_pAccount').value.trim(),
+      invoice: document.getElementById('edit_pInvoice').value.trim(),
+      type: document.getElementById('edit_pType').value,
+      speed: document.getElementById('edit_pSpeed').value.trim() || '1m 30s',
+      speed_ar: document.getElementById('edit_pSpeedAr').value.trim() || 'دقيقة و 30 ثانية',
+      exness_img: document.getElementById('edit_pExnessImg').value.trim(),
+      binance_img: document.getElementById('edit_pBinanceImg').value.trim(),
+      is_active: document.getElementById('edit_pActive').value === 'true'
+    };
+
+    sdb.from('payout_records').update(payload).eq('id', id).then(function(res) {
+      if (btn) btn.disabled = false;
+      if (res.error) {
+        showToast('Error updating payout: ' + res.error.message, true);
+      } else {
+        showToast('✓ Payout proof updated on live website!');
+        closeEditPayoutModal();
+        loadPayoutsList();
+      }
+    }).catch(function(err) {
+      if (btn) btn.disabled = false;
+      showToast('Network error updating payout', true);
+    });
+  };
 
   window.deletePayout = function(id) {
     if (!confirm('Are you sure you want to remove this payout proof from the website?')) return;
@@ -1192,6 +1541,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 
     sdb.from('client_reviews').select('*').order('id', { ascending: false }).then(function(res) {
       var list = (res && res.data) ? res.data : [];
+      window._reviewsCache = list;
       if (countTag) countTag.textContent = list.length + ' Reviews';
       if (!list.length) {
         listEl.innerHTML = '<p style="color:var(--muted);text-align:center;padding:16px">No client reviews found.</p>';
@@ -1200,19 +1550,75 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 
       var html = '';
       list.forEach(function(r) {
-        html += '<div class="item-card">' +
+        var isHidden = r.is_active === false;
+        html += '<div class="item-card' + (isHidden ? ' is-hidden' : '') + '">' +
           '<div class="item-info">' +
-            '<div class="item-title">' + (r.client_name || '') + ' (' + (r.client_country || '') + ') · ' + '★'.repeat(r.rating || 5) + '</div>' +
+            '<div class="item-title">' + (r.client_name || '') + ' (' + (r.client_country || '') + ') · ' + '★'.repeat(r.rating || 5) +
+              (isHidden ? ' <span class="tag" style="font-size:10px;color:var(--red);border-color:var(--red)">HIDDEN</span>' : '') +
+            '</div>' +
             '<div class="item-sub">“' + (r.review_text ? r.review_text.substring(0, 75) + '...' : '') + '”</div>' +
           '</div>' +
           '<div class="item-actions">' +
-            '<button type="button" class="btn-delete" onclick="deleteReview(' + r.id + ')">Delete 🗑️</button>' +
+            '<button type="button" class="btn-edit" onclick="openEditReviewModal(' + r.id + ')">Edit ✏️</button>' +
+            '<button type="button" class="btn-delete" onclick="deleteReview(' + r.id + ')">🗑️</button>' +
           '</div>' +
         '</div>';
       });
       listEl.innerHTML = html;
     });
   }
+
+  window.openEditReviewModal = function(id) {
+    if (!window._reviewsCache) return;
+    var r = window._reviewsCache.find(function(item){ return String(item.id) === String(id); });
+    if (!r) return;
+
+    document.getElementById('edit_review_id').value = r.id;
+    document.getElementById('edit_rName').value = r.client_name || '';
+    document.getElementById('edit_rCountry').value = r.client_country || '';
+    document.getElementById('edit_rService').value = r.service_type || 'managed';
+    document.getElementById('edit_rRating').value = r.rating || 5;
+    document.getElementById('edit_rProfit').value = r.profit_stat || '';
+    document.getElementById('edit_rText').value = r.review_text || '';
+    document.getElementById('edit_rActive').value = (r.is_active !== false) ? 'true' : 'false';
+
+    document.getElementById('editReviewModal').style.display = 'flex';
+  };
+
+  window.closeEditReviewModal = function() {
+    document.getElementById('editReviewModal').style.display = 'none';
+  };
+
+  window.saveEditedReview = function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    var id = document.getElementById('edit_review_id').value;
+    var btn = document.getElementById('btnUpdateReview');
+    if (btn) btn.disabled = true;
+
+    var payload = {
+      client_name: document.getElementById('edit_rName').value.trim(),
+      client_country: document.getElementById('edit_rCountry').value.trim(),
+      service_type: document.getElementById('edit_rService').value,
+      rating: parseInt(document.getElementById('edit_rRating').value, 10) || 5,
+      profit_stat: document.getElementById('edit_rProfit').value.trim(),
+      review_text: document.getElementById('edit_rText').value.trim(),
+      is_active: document.getElementById('edit_rActive').value === 'true'
+    };
+
+    sdb.from('client_reviews').update(payload).eq('id', id).then(function(res) {
+      if (btn) btn.disabled = false;
+      if (res.error) {
+        showToast('Error updating review: ' + res.error.message, true);
+      } else {
+        showToast('✓ Client review updated on live website!');
+        closeEditReviewModal();
+        loadReviewsList();
+      }
+    }).catch(function(err) {
+      if (btn) btn.disabled = false;
+      showToast('Network error updating review', true);
+    });
+  };
 
   window.deleteReview = function(id) {
     if (!confirm('Delete this client review?')) return;
