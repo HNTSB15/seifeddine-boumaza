@@ -101,11 +101,24 @@ body {
   background: transparent;
   transition: all .2s;
 }
+.pin-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 255, 156, 0.45);
+  background: rgba(0, 255, 156, 0.04);
+  transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
+}
 .pin-dot.filled {
   background: var(--neon);
   border-color: var(--neon);
-  box-shadow: 0 0 10px var(--neon);
-  transform: scale(1.1);
+  box-shadow: 0 0 15px var(--neon), 0 0 25px rgba(0, 255, 156, 0.35);
+  transform: scale(1.2);
+}
+.pin-dot.error {
+  background: var(--red);
+  border-color: var(--red);
+  box-shadow: 0 0 15px var(--red);
 }
 
 .pin-input {
@@ -515,14 +528,13 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     <div class="lock-sub">Saifeddine Boumaza</div>
     <div class="lock-desc">Enter authorization PIN to manage live website data</div>
 
-    <div class="pin-display">
+    <div class="pin-display" id="pinDisplay" style="cursor:pointer;padding:10px 0" onclick="focusPinInput()">
       <div class="pin-dot" id="dot0"></div>
       <div class="pin-dot" id="dot1"></div>
       <div class="pin-dot" id="dot2"></div>
       <div class="pin-dot" id="dot3"></div>
     </div>
-
-    <input type="password" id="pinInput" class="pin-input" maxlength="4" placeholder="••••" autocomplete="off" inputmode="numeric">
+    <input type="password" id="pinInput" style="position:absolute;opacity:0;pointer-events:none;width:1px;height:1px" autocomplete="off" inputmode="numeric">
 
     <div class="pin-keypad">
       <button type="button" class="keypad-btn" onclick="pressKey('1')">1</button>
@@ -547,7 +559,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 <!-- ==========================================================================
      ADMIN HEADER
      ========================================================================== -->
-\n\n<header class="admin-header">
+
+
+<header class="admin-header">
   <div class="header-brand">
     <img src="SB.jpg" alt="SB">
     <div>
@@ -560,7 +574,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     <a href="index.html" target="_blank" class="btn-secondary" style="text-decoration:none;font-size:11px">VIEW SITE ↗</a>
     <button type="button" class="btn-logout" onclick="adminLogout()">LOGOUT 🔒</button>
   </div>
-</header>\n\n<nav class="admin-tabs-bar">
+</header>
+
+<nav class="admin-tabs-bar">
   <button type="button" class="tab-btn active" data-tab="hero" onclick="switchTab('hero', this)">🏠 Hero &amp; Bio</button>
   <button type="button" class="tab-btn" data-tab="stats" onclick="switchTab('stats', this)">📈 Stats</button>
   <button type="button" class="tab-btn" data-tab="managed" onclick="switchTab('managed', this)">💼 Managed Terms</button>
@@ -572,7 +588,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   <button type="button" class="tab-btn" data-tab="socials" onclick="switchTab('socials', this)">🌐 Socials &amp; Wallets</button>
   <button type="button" class="tab-btn" data-tab="inbox" onclick="switchTab('inbox', this)">📬 Inbox <span class="tab-badge" id="inboxBadge" style="display:none">0</span></button>
   <button type="button" class="tab-btn" data-tab="visitors" onclick="switchTab('visitors', this)">🌍 Visitors</button>
-</nav>\n\n<main class="admin-container">
+</nav>
+
+<main class="admin-container">
 
   <!-- ==========================================================================
        TAB 1: HERO & BIO (الواجهة الرئيسية ونبذة عني)
@@ -1257,7 +1275,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     </div>
   </section>
 
-</main>\n\n
+</main>
+
+
 <!-- ==========================================================================
      EDIT PAYOUT MODAL (تعديل إثباتات الأرباح والصفقات المنشورة)
      ========================================================================== -->
@@ -1601,7 +1621,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     </form>
   </div>
 </div>
-\n\n
+
+
+
 <script>
 (function() {
   'use strict';
@@ -1697,6 +1719,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     for (var i = 0; i < 4; i++) {
       var dot = document.getElementById('dot' + i);
       if (dot) {
+        dot.classList.remove('error');
         if (i < currentEnteredPin.length) dot.classList.add('filled');
         else dot.classList.remove('filled');
       }
@@ -1704,6 +1727,11 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     var pinInp = document.getElementById('pinInput');
     if (pinInp) pinInp.value = currentEnteredPin;
   }
+
+  window.focusPinInput = function() {
+    var inp = document.getElementById('pinInput');
+    if (inp) inp.focus();
+  };
 
   window.verifyPin = function() {
     if (currentEnteredPin === remotePin || currentEnteredPin === '1973') {
@@ -1739,10 +1767,51 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       card.classList.add('shake');
       setTimeout(function() { card.classList.remove('shake'); }, 400);
     }
+    for (var i = 0; i < 4; i++) {
+      var dot = document.getElementById('dot' + i);
+      if (dot) {
+        dot.classList.remove('filled');
+        dot.classList.add('error');
+      }
+    }
+    var err = document.getElementById('lockError');
+    if (err) {
+      err.textContent = 'PIN غير صحيح // Incorrect PIN';
+      setTimeout(function() {
+        if (err) err.textContent = '';
+        for (var j = 0; j < 4; j++) {
+          var d = document.getElementById('dot' + j);
+          if (d) d.classList.remove('error');
+        }
+      }, 1200);
+    }
     currentEnteredPin = '';
-    updatePinDisplay();
     showToast('Invalid PIN. Access denied.', 'error');
   }
+
+  // KEYBOARD SUPPORT (Numbers, Backspace, Enter, Esc)
+  window.addEventListener('keydown', function(e) {
+    var lock = document.getElementById('lockScreen');
+    if (!lock || lock.style.display === 'none') return;
+
+    // Do not intercept if Change PIN modal is currently open
+    var pinModal = document.getElementById('changePinModal');
+    if (pinModal && pinModal.style.display === 'flex') return;
+
+    if (e.key >= '0' && e.key <= '9') {
+      e.preventDefault();
+      pressKey(e.key);
+    } else if (e.key === 'Backspace') {
+      e.preventDefault();
+      deleteKey();
+    } else if (e.key === 'Escape' || e.key === 'Delete') {
+      e.preventDefault();
+      clearPin();
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      verifyPin();
+    }
+  });
 
   window.adminLogout = function() {
     try {
