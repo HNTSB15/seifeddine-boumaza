@@ -1,0 +1,19 @@
+setting_name,current_value,description_ar,category
+stat_win_rate,88%,نسبة نجاح الصفقات والتوصيات (Win Rate),إحصائيات التداول
+stat_avg_return,45%,متوسط العائد الاستثماري (Avg Return),إحصائيات التداول
+stat_managed_capital,$100K+,حجم رؤوس الأموال المدارة (Managed Capital),إحصائيات التداول
+stat_years_exp,5+,سنوات الخبرة في أسواق المال (Years Experience),إحصائيات التداول
+stat_tracked_months,12+,أشهر الأداء والنتائج الموثقة (Months Tracked),إحصائيات التداول
+stat_community_traders,500+,عدد المتداولين وأعضاء المجتمع (Community),إحصائيات التداول
+hero_badge_text,متصل الآن · متاح لقبول محافظ جديدة للإدارة,النص الترحيبي بجانب النقطة الخضراء في أعلى الموقع,الواجهة الرئيسية
+hero_role,Forex Trading Expert,المسمى الوظيفي أسفل الاسم في الهيدر,الواجهة الرئيسية
+telegram_username,@HNTSB15,معرف حساب تيليجرام الرسمي,روابط التواصل
+telegram_channel,https://t.me/HNTSB15,رابط قناة تيليجرام الرسمية أو الشات المباشر,روابط التواصل
+whatsapp_number,+213697114385,رقم الواتساب مع الرمز الدولي للشات المباشر,روابط التواصل
+support_email,saifeddine.jskyst15@gmail.com,البريد الإلكتروني الرسمي للاستفسارات,روابط التواصل
+instagram_profile,https://www.instagram.com/oo._.saifeddine._.oo/,رابط حساب انستغرام الرسمي,روابط التواصل
+x_profile,https://x.com/seifeddin06,رابط حساب منصة X (تويتر) الرسمي,روابط التواصل
+bep20_deposit_wallet,0x41f8a3a3a841cb3305bf1ebabe4ede7169a55bce,عنوان محفظة USDT (BEP20 - Binance Smart Chain),المحافظ الرقمية
+trc20_deposit_wallet,TEznkT5SKzYNHNe3wDEwfrxLpAq9HYA9sP,عنوان محفظة USDT (TRC20 - Tron),المحافظ الرقمية
+announcement_banner_text,,نص الشريط الإعلاني في أعلى الموقع (اتركه فارغاً لإخفائه),شريط الإعلانات
+announcement_banner_active,false,تفعيل (true) أو إيقاف (false) الشريط الإعلاني,شريط الإعلانات
