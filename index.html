@@ -7514,7 +7514,132 @@ body.theme-light .payouts-more-btn.active {
           var foot = document.querySelector('footer.cvx-foot .cvx-foot-copy') || document.querySelector('footer.cvx-foot .cvx-wrap');
           if (foot) foot.innerHTML = '<span class="mono">' + val + '</span>';
         }
+
+        // Dynamic Live Trades & Results
+        if (k === 'trading_deals_json' && val) {
+          try {
+            var trades = (typeof val === 'string') ? JSON.parse(val) : val;
+            if (Array.isArray(trades) && trades.length > 0) {
+              renderDynamicTrades(trades);
+            }
+          } catch(e){}
+        }
+
+        // Dynamic FAQs
+        if (k === 'faq_items_json' && val) {
+          try {
+            var faqs = (typeof val === 'string') ? JSON.parse(val) : val;
+            if (Array.isArray(faqs) && faqs.length > 0) {
+              renderDynamicFaqs(faqs);
+            }
+          } catch(e){}
+        }
       });
+
+      function renderDynamicTrades(trades) {
+        var track = document.getElementById('cvxStreamTrack') || document.querySelector('.cvx-x-slides-track');
+        if (!track) return;
+        var activeTrades = trades.filter(function(t){ return t.is_active !== false; });
+        if (!activeTrades.length) return;
+
+        var html = '';
+        activeTrades.forEach(function(t, idx) {
+          var badgeClass = (t.badge_type === 'gold' || (t.badge && t.badge.indexOf('PROFIT') > -1)) ? 'gold' : 'neon';
+          var imgs = Array.isArray(t.images) ? t.images : [];
+          var gridClass = 'grid-' + Math.min(Math.max(imgs.length, 1), 4);
+
+          var galleryHtml = '';
+          if (imgs.length > 0) {
+            galleryHtml = '<div class="cvx-gallery-grid ' + gridClass + '">';
+            imgs.forEach(function(imgSrc) {
+              galleryHtml += '<div class="cvx-gallery-item" onclick="cvxOpenLightbox(\'' + imgSrc + '\')">' +
+                '<img src="' + imgSrc + '" alt="Trade Proof" loading="lazy">' +
+                '<span class="cvx-zoom-hint">🔍 Zoom</span>' +
+              '</div>';
+            });
+            galleryHtml += '</div>';
+          }
+
+          var tagsHtml = '';
+          if (t.tags) {
+            tagsHtml = '<div class="cvx-slide-tags">';
+            var tagsArr = t.tags.split(/[\s,]+/);
+            tagsArr.forEach(function(tg) {
+              if (tg.trim()) tagsHtml += '<span>' + tg.trim() + '</span>';
+            });
+            tagsHtml += '</div>';
+          }
+
+          var linkHtml = '';
+          if (t.proof_link && t.proof_link.indexOf('http') === 0) {
+            linkHtml = '<a href="' + t.proof_link + '" target="_blank" rel="noopener" class="cvx-slide-link">View Proof on X ↗</a>';
+          }
+
+          html += '<article class="cvx-x-slide" data-slide="' + idx + '">' +
+            '<div class="cvx-slide-head">' +
+              '<div class="cvx-slide-author">' +
+                '<img src="SB.jpg" alt="Saifeddine Boumaza" class="cvx-slide-avatar">' +
+                '<div class="cvx-slide-author-info">' +
+                  '<b>Saifeddine Boumaza</b>' +
+                  '<small>' + (t.date_text || '@seifeddin06') + '</small>' +
+                '</div>' +
+              '</div>' +
+              '<div class="cvx-slide-head-right">' +
+                '<span class="cvx-slide-badge ' + badgeClass + '">' + (t.badge || 'VERIFIED ⚡') + '</span>' +
+                (t.proof_link ? ('<a href="' + t.proof_link + '" target="_blank" rel="noopener" title="View Proof">' +
+                  '<svg class="cvx-slide-xlogo" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>' +
+                '</a>') : '') +
+              '</div>' +
+            '</div>' +
+            '<div class="cvx-slide-body">' +
+              '<div class="cvx-slide-profit-row">' +
+                (t.deposit ? ('<span class="dep">' + (t.deposit.indexOf('Deposit:') === -1 ? ('Deposit: <b>' + t.deposit + '</b>') : t.deposit) + '</span>') : '') +
+                (t.profit ? ('<span class="pft">' + t.profit + '</span>') : '') +
+              '</div>' +
+              '<p class="cvx-slide-desc">' + (t.description || '') + '</p>' +
+              tagsHtml +
+              galleryHtml +
+            '</div>' +
+            '<div class="cvx-slide-foot">' +
+              '<span class="cvx-slide-split">' + (t.split || 'Profit Split: 50/50') + '</span>' +
+              linkHtml +
+            '</div>' +
+          '</article>';
+        });
+
+        track.innerHTML = html;
+        var counter = document.getElementById('cvxStreamCounter');
+        if (counter) counter.textContent = '1 / ' + activeTrades.length;
+        var firstSlide = track.querySelector('.cvx-x-slide');
+        if (firstSlide) firstSlide.classList.add('active-slide');
+      }
+
+      function renderDynamicFaqs(faqs) {
+        var container = document.querySelector('.cvx-faq-container');
+        if (!container) return;
+        var activeFaqs = faqs.filter(function(f){ return f.is_active !== false; });
+        if (!activeFaqs.length) return;
+
+        var html = '';
+        activeFaqs.forEach(function(f, idx) {
+          var numStr = (idx + 1 < 10) ? ('0' + (idx + 1)) : (idx + 1);
+          var isFirst = (idx === 0) ? ' active' : '';
+          html += '<div class="cvx-faq-item' + isFirst + '">' +
+            '<button type="button" class="cvx-faq-question" onclick="cvxToggleFaq(this)">' +
+              '<div class="faq-q-left">' +
+                '<span class="faq-num">' + (f.num || numStr) + '</span>' +
+                '<span class="faq-q-text">' + f.question + '</span>' +
+              '</div>' +
+              '<span class="faq-icon">' + (idx === 0 ? '−' : '+') + '</span>' +
+            '</button>' +
+            '<div class="cvx-faq-answer">' +
+              '<div class="cvx-faq-answer-inner">' + f.answer + '</div>' +
+            '</div>' +
+          '</div>';
+        });
+
+        container.innerHTML = html;
+      }
 
       // Render Announcement Banner if Active
       if (bannerActive && bannerText) {

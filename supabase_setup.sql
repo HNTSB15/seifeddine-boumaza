@@ -89,7 +89,9 @@ VALUES
     ('youtube_channel', '', 'رابط قناة اليوتيوب الرسمية', 'روابط التواصل'),
     ('binance_pay_id', '441672878', 'معرف Binance Pay ID', 'المحافظ الرقمية'),
     ('footer_copyright', '© Saifeddine Boumaza - Forex & Crypto Trading Manager - All rights reserved', 'نص حقوق الملكية في الفوتر', 'الواجهة الرئيسية'),
-    ('admin_security_pin', '1973', 'الرمز السري للدخول إلى لوحة التحكم (PIN)', 'الأمان وحماية الحساب')
+    ('admin_security_pin', '1973', 'الرمز السري للدخول إلى لوحة التحكم (PIN)', 'الأمان وحماية الحساب'),
+    ('trading_deals_json', '[]', 'قائمة الصفقات ونتائج التداول المنشورة في الموقع', 'الصفقات والنتائج'),
+    ('faq_items_json', '[]', 'قائمة الأسئلة الشائعة والأجوبة في الموقع', 'الأسئلة الشائعة')
 ON CONFLICT (setting_name) DO UPDATE SET
     current_value = EXCLUDED.current_value,
     description_ar = EXCLUDED.description_ar,

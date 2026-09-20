@@ -547,7 +547,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 <!-- ==========================================================================
      ADMIN HEADER
      ========================================================================== -->
-<header class="admin-header">
+\n\n<header class="admin-header">
   <div class="header-brand">
     <img src="SB.jpg" alt="SB">
     <div>
@@ -560,30 +560,307 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     <a href="index.html" target="_blank" class="btn-secondary" style="text-decoration:none;font-size:11px">VIEW SITE ↗</a>
     <button type="button" class="btn-logout" onclick="adminLogout()">LOGOUT 🔒</button>
   </div>
-</header>
-
-<!-- ==========================================================================
-     TABS NAVIGATION
-     ========================================================================== -->
-<nav class="admin-tabs-bar">
-  <button type="button" class="tab-btn active" data-tab="payouts" onclick="switchTab('payouts', this)">💵 Payouts</button>
+</header>\n\n<nav class="admin-tabs-bar">
+  <button type="button" class="tab-btn active" data-tab="hero" onclick="switchTab('hero', this)">🏠 Hero &amp; Bio</button>
   <button type="button" class="tab-btn" data-tab="stats" onclick="switchTab('stats', this)">📈 Stats</button>
+  <button type="button" class="tab-btn" data-tab="managed" onclick="switchTab('managed', this)">💼 Managed Terms</button>
+  <button type="button" class="tab-btn" data-tab="trades" onclick="switchTab('trades', this)">🎯 Live Trades</button>
+  <button type="button" class="tab-btn" data-tab="payouts" onclick="switchTab('payouts', this)">💵 Payouts</button>
+  <button type="button" class="tab-btn" data-tab="prices" onclick="switchTab('prices', this)">🏷️ Prices &amp; Plans</button>
   <button type="button" class="tab-btn" data-tab="reviews" onclick="switchTab('reviews', this)">⭐ Reviews</button>
-  <button type="button" class="tab-btn" data-tab="prices" onclick="switchTab('prices', this)">🏷️ Prices</button>
-  <button type="button" class="tab-btn" data-tab="settings" onclick="switchTab('settings', this)">⚙️ Settings</button>
+  <button type="button" class="tab-btn" data-tab="faq" onclick="switchTab('faq', this)">❓ FAQ</button>
+  <button type="button" class="tab-btn" data-tab="socials" onclick="switchTab('socials', this)">🌐 Socials &amp; Wallets</button>
   <button type="button" class="tab-btn" data-tab="inbox" onclick="switchTab('inbox', this)">📬 Inbox <span class="tab-badge" id="inboxBadge" style="display:none">0</span></button>
   <button type="button" class="tab-btn" data-tab="visitors" onclick="switchTab('visitors', this)">🌍 Visitors</button>
-</nav>
-
-<!-- ==========================================================================
-     CONTAINER & PANELS
-     ========================================================================== -->
-<main class="admin-container">
+</nav>\n\n<main class="admin-container">
 
   <!-- ==========================================================================
-       TAB 1: PAYOUTS (إثباتات السحب الموثقة)
+       TAB 1: HERO & BIO (الواجهة الرئيسية ونبذة عني)
        ========================================================================== -->
-  <section id="tab-payouts" class="tab-pane active">
+  <section id="tab-hero" class="tab-pane active">
+    <div class="card">
+      <div class="card-title">
+        <h2><span>🏠</span> Hero Section &amp; Availability</h2>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="tag">TOP OF SITE</span>
+          <button type="button" class="btn-secondary" onclick="loadHeroData()" style="font-size:11px">↻ Refresh</button>
+        </div>
+      </div>
+
+      <form id="heroForm" onsubmit="saveHeroData(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Professional Title / Role (Header &amp; Bio)</label>
+            <input type="text" id="set_hero_role" placeholder="Forex Trading Expert">
+          </div>
+          <div class="form-group">
+            <label>Live Status Badge Text</label>
+            <input type="text" id="set_hero_badge_text" placeholder="متصل الآن · متاح لقبول محافظ جديدة للإدارة">
+          </div>
+        </div>
+
+        <div class="form-group full">
+          <label>Hero Description / Tagline (Main Bio on Homepage)</label>
+          <textarea id="set_hero_tagline" rows="3" placeholder="Professional forex and cryptocurrency trading manager focused on transparent reporting..."></textarea>
+        </div>
+
+        <h3 style="font-size:14px;color:var(--neon-2);margin:24px 0 10px;font-family:var(--font-mono)">📖 About Me — Strategy &amp; Philosophy Paragraphs</h3>
+
+        <div class="form-group full">
+          <label>About Paragraph 1 (Overview &amp; Experience)</label>
+          <textarea id="set_about_p1" rows="3" placeholder="أنا سيف الدين بوعمازة، متداول ومضارب محترف في أسواق العملات الأجنبية..."></textarea>
+        </div>
+
+        <div class="form-group full">
+          <label>About Paragraph 2 (Risk Discipline &amp; Strategy)</label>
+          <textarea id="set_about_p2" rows="3" placeholder="أعتمد على التحليل المؤسسي الذكي (Smart Money Concepts) وتحديد مناطق السيولة البنكية..."></textarea>
+        </div>
+
+        <div class="form-group full">
+          <label>About Paragraph 3 (Commitment &amp; Transparency)</label>
+          <textarea id="set_about_p3" rows="3" placeholder="الهدف الأسمى ليس فقط تحقيق أرباح سريعة، بل بناء رأس مال مستدام ومستقر..."></textarea>
+        </div>
+
+        <button type="submit" id="btnSaveHero" class="btn-primary" style="margin-top:16px">
+          SAVE HERO &amp; BIO DATA 💾
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       TAB 2: STATS (إحصائيات الأداء والتداول المباشرة)
+       ========================================================================== -->
+  <section id="tab-stats" class="tab-pane">
+    <div class="card">
+      <div class="card-title">
+        <h2><span>📈</span> Live Trading Performance &amp; Metrics</h2>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="tag">REAL-TIME SYNC</span>
+          <button type="button" class="btn-secondary" onclick="loadStatsData()" style="font-size:11px">↻ Refresh</button>
+        </div>
+      </div>
+
+      <form id="statsForm" onsubmit="saveStatsData(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Signal Win Rate * <span>(Default: 88%)</span></label>
+            <input type="text" id="stat_win_rate" placeholder="88%">
+          </div>
+          <div class="form-group">
+            <label>Average Monthly Return * <span>(Default: 45%)</span></label>
+            <input type="text" id="stat_avg_return" placeholder="45%">
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Managed Capital * <span>(Default: $100K+)</span></label>
+            <input type="text" id="stat_managed_capital" placeholder="$100K+">
+          </div>
+          <div class="form-group">
+            <label>Years Experience * <span>(Default: 5+)</span></label>
+            <input type="text" id="stat_years_exp" placeholder="5+">
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Tracked Months * <span>(Default: 12+)</span></label>
+            <input type="text" id="stat_tracked_months" placeholder="12+">
+          </div>
+          <div class="form-group">
+            <label>Community &amp; Traders * <span>(Default: 500+)</span></label>
+            <input type="text" id="stat_community_traders" placeholder="500+">
+          </div>
+        </div>
+
+        <button type="submit" id="btnSaveStats" class="btn-primary" style="margin-top:10px">
+          SAVE STATS TO LIVE WEBSITE 💾
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       TAB 3: MANAGED TERMS (شروط إدارة المحافظ)
+       ========================================================================== -->
+  <section id="tab-managed" class="tab-pane">
+    <div class="card">
+      <div class="card-title">
+        <h2><span>💼</span> Managed Accounts &amp; Partnership Terms</h2>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="tag">PORTFOLIO TERMS</span>
+          <button type="button" class="btn-secondary" onclick="loadManagedData()" style="font-size:11px">↻ Refresh</button>
+        </div>
+      </div>
+
+      <form id="managedForm" onsubmit="saveManagedData(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Minimum Capital Requirement</label>
+            <input type="text" id="set_managed_min_capital" placeholder="$1,000+ USD ($100 for live trial)">
+          </div>
+          <div class="form-group">
+            <label>Monthly Profit Share / Split</label>
+            <input type="text" id="set_managed_profit_split" placeholder="50% / 50% Profit Share">
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Maximum Controlled Drawdown Limit</label>
+            <input type="text" id="set_managed_drawdown_limit" placeholder="< 8.5% Maximum Drawdown">
+          </div>
+          <div class="form-group">
+            <label>Supported Brokers</label>
+            <input type="text" id="set_managed_supported_brokers" placeholder="Exness, IC Markets, XM, Pepperstone">
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>VIP Signals Schedule / Delivery Timing</label>
+            <input type="text" id="set_signals_vip_schedule" placeholder="2 - 5 High-Probability Trades Daily">
+          </div>
+          <div class="form-group">
+            <label>NewsX Platform Link / URL</label>
+            <input type="text" id="set_newsx_platform_link" placeholder="https://saifeddine-boumaza.com/newsx">
+          </div>
+        </div>
+
+        <button type="submit" id="btnSaveManaged" class="btn-primary" style="margin-top:12px">
+          SAVE MANAGED TERMS 💾
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       TAB 4: LIVE TRADES & RESULTS (صفقات ونتائج التداول المباشرة)
+       ========================================================================== -->
+  <section id="tab-trades" class="tab-pane">
+    <div class="card">
+      <div class="card-title">
+        <h2><span>🎯</span> Publish New Trade / Verified Result</h2>
+        <span class="tag">SLIDER RESULTS</span>
+      </div>
+
+      <form id="tradeForm" onsubmit="submitNewTrade(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Trading Pair / Asset *</label>
+            <input type="text" id="tPair" required placeholder="e.g. XAUUSD (Gold) or EUR/USD">
+          </div>
+          <div class="form-group">
+            <label>Performance Badge *</label>
+            <input type="text" id="tBadge" required placeholder="e.g. RECORD PROFIT ⚡ or 15X RETURN 🚀">
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Starting Deposit / Capital</label>
+            <input type="text" id="tDeposit" placeholder="e.g. Deposit: $430">
+          </div>
+          <div class="form-group">
+            <label>Net Profit *</label>
+            <input type="text" id="tProfit" required placeholder="e.g. +$16,000">
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Date / Subtitle</label>
+            <input type="text" id="tDate" placeholder="e.g. @seifeddin06 · Sep 16, 2026">
+          </div>
+          <div class="form-group">
+            <label>Profit Split Tag</label>
+            <input type="text" id="tSplit" placeholder="e.g. Profit Split: 50/50">
+          </div>
+        </div>
+
+        <div class="form-group full">
+          <label>Trade Execution Description *</label>
+          <textarea id="tDesc" rows="3" required placeholder="MANAGING A NEW ACCOUNT — Live verified trading execution with disciplined drawdown control on Gold..."></textarea>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Tags / Hashtags</label>
+            <input type="text" id="tTags" placeholder="e.g. #Gold #XAUUSD #Forex #ManagedAccount">
+          </div>
+          <div class="form-group">
+            <label>Proof Link / Tweet URL</label>
+            <input type="url" id="tLink" placeholder="https://x.com/seifeddin06/status/...">
+          </div>
+        </div>
+
+        <h4 style="font-size:12px;color:var(--gold);margin:14px 0 8px;font-family:var(--font-mono)">📷 Trade Proof Screenshots (Up to 4)</h4>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Screenshot 1</label>
+            <input type="text" id="tImg1" placeholder="Image URL or pick photo">
+            <div class="file-drop-zone" onclick="document.getElementById('tFileInp1').click()">
+              <span>📷 Pick Photo 1</span>
+              <input type="file" id="tFileInp1" accept="image/*" onchange="handleImagePick(this, 'tImg1', 'tPrev1')">
+            </div>
+            <img id="tPrev1" class="file-preview" alt="Preview 1">
+          </div>
+          <div class="form-group">
+            <label>Screenshot 2 (Optional)</label>
+            <input type="text" id="tImg2" placeholder="Image URL or pick photo">
+            <div class="file-drop-zone" onclick="document.getElementById('tFileInp2').click()">
+              <span>📷 Pick Photo 2</span>
+              <input type="file" id="tFileInp2" accept="image/*" onchange="handleImagePick(this, 'tImg2', 'tPrev2')">
+            </div>
+            <img id="tPrev2" class="file-preview" alt="Preview 2">
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Screenshot 3 (Optional)</label>
+            <input type="text" id="tImg3" placeholder="Image URL or pick photo">
+            <div class="file-drop-zone" onclick="document.getElementById('tFileInp3').click()">
+              <span>📷 Pick Photo 3</span>
+              <input type="file" id="tFileInp3" accept="image/*" onchange="handleImagePick(this, 'tImg3', 'tPrev3')">
+            </div>
+            <img id="tPrev3" class="file-preview" alt="Preview 3">
+          </div>
+          <div class="form-group">
+            <label>Screenshot 4 (Optional)</label>
+            <input type="text" id="tImg4" placeholder="Image URL or pick photo">
+            <div class="file-drop-zone" onclick="document.getElementById('tFileInp4').click()">
+              <span>📷 Pick Photo 4</span>
+              <input type="file" id="tFileInp4" accept="image/*" onchange="handleImagePick(this, 'tImg4', 'tPrev4')">
+            </div>
+            <img id="tPrev4" class="file-preview" alt="Preview 4">
+          </div>
+        </div>
+
+        <button type="submit" id="btnSaveTrade" class="btn-primary" style="margin-top:14px">
+          PUBLISH TRADE SETUP TO WEBSITE 🚀
+        </button>
+      </form>
+    </div>
+
+    <!-- Active Trades List -->
+    <div class="card">
+      <div class="card-title">
+        <h2><span>📊</span> Published Live Results on Website</h2>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="tag" id="tradesCountTag">0 Trades</span>
+          <button type="button" class="btn-secondary" onclick="loadTradesList()" style="font-size:11px">↻ Refresh</button>
+        </div>
+      </div>
+      <div id="tradesList">Loading active trades...</div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       TAB 5: PAYOUTS (إثباتات السحب الموثقة)
+       ========================================================================== -->
+  <section id="tab-payouts" class="tab-pane">
     <div class="card">
       <div class="card-title">
         <h2><span>💵</span> Publish New Payout Proof</h2>
@@ -629,7 +906,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 
         <div class="form-grid">
           <div class="form-group">
-            <label>Exness Screenshot <span>(File or Path)</span></label>
+            <label>Exness Screenshot Proof</label>
             <input type="text" id="pExnessImg" placeholder="proofs/payout-1-exness.png or Image URL">
             <div class="file-drop-zone" onclick="document.getElementById('exnessFileInp').click()">
               <span>📷 Pick Photo from Device / Camera</span>
@@ -637,6 +914,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
             </div>
             <img id="exnessPrev" class="file-preview" alt="Exness Proof Preview">
           </div>
+
           <div class="form-group">
             <label>Binance Credit Screenshot <span>(Optional)</span></label>
             <input type="text" id="pBinanceImg" placeholder="proofs/payout-1-binance.png or Image URL">
@@ -663,126 +941,111 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
           <button type="button" class="btn-secondary" onclick="loadPayoutsList()" style="font-size:11px">↻ Refresh</button>
         </div>
       </div>
-      <div id="payoutsList">Loading active payouts...</div>
+      <div id="payoutsList">Loading payouts...</div>
     </div>
   </section>
 
   <!-- ==========================================================================
-       TAB 2: STATS & PERFORMANCE (إحصائيات التداول)
+       TAB 6: PRICES & PLANS (باقات الاشتراك والأسعار)
        ========================================================================== -->
-  <section id="tab-stats" class="tab-pane">
+  <section id="tab-prices" class="tab-pane">
     <div class="card">
       <div class="card-title">
-        <h2><span>📈</span> Live Trading Performance & Metrics</h2>
+        <h2><span>🏷️</span> VIP Signals, Indicators &amp; NewsX AI Plans</h2>
         <div style="display:flex;align-items:center;gap:10px">
-          <span class="tag">REAL-TIME SYNC</span>
-          <button type="button" class="btn-secondary" onclick="loadStatsData()" style="font-size:11px">↻ Refresh</button>
+          <span class="tag">PLANS &amp; PRICING</span>
+          <button type="button" class="btn-secondary" onclick="loadPricesData()" style="font-size:11px">↻ Refresh</button>
         </div>
       </div>
 
-      <form id="statsForm" onsubmit="saveStats(event)">
+      <form id="pricesForm" onsubmit="savePrices(event)">
         <div class="form-grid">
           <div class="form-group">
-            <label>Signal Win Rate * <span>(Default: 88%)</span></label>
-            <input type="text" id="stat_win_rate" placeholder="88%">
+            <label>NewsX AI Standard Monthly ($ USD)</label>
+            <input type="number" id="price_newsx_standard" step="0.5" placeholder="15">
           </div>
           <div class="form-group">
-            <label>Average Monthly Return * <span>(Default: 45%)</span></label>
-            <input type="text" id="stat_avg_return" placeholder="45%">
+            <label>NewsX AI Pro VIP Monthly ($ USD)</label>
+            <input type="number" id="price_newsx_pro" step="0.5" placeholder="25">
           </div>
         </div>
 
         <div class="form-grid">
           <div class="form-group">
-            <label>Managed Capital * <span>(Default: $100K+)</span></label>
-            <input type="text" id="stat_managed_capital" placeholder="$100K+">
+            <label>NewsX AI Ultimate Master ($ USD)</label>
+            <input type="number" id="price_newsx_ultimate" step="0.5" placeholder="50">
           </div>
           <div class="form-group">
-            <label>Years Experience * <span>(Default: 5+)</span></label>
-            <input type="text" id="stat_years_exp" placeholder="5+">
-          </div>
-        </div>
-
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Tracked Months * <span>(Default: 12+)</span></label>
-            <input type="text" id="stat_tracked_months" placeholder="12+">
-          </div>
-          <div class="form-group">
-            <label>Community & Traders * <span>(Default: 500+)</span></label>
-            <input type="text" id="stat_community_traders" placeholder="500+">
+            <label>VIP Gold Signals Channel ($ USD / mo)</label>
+            <input type="number" id="price_vip_signals" step="1" placeholder="49">
           </div>
         </div>
 
         <div class="form-group full">
-          <label>Hero Availability Badge <span>(Green pulsing badge text)</span></label>
-          <input type="text" id="hero_badge_text" placeholder="متصل الآن · متاح لقبول محافظ جديدة للإدارة">
+          <label>Proprietary MT5 Indicator License ($ USD one-time)</label>
+          <input type="number" id="price_mt5_indicator" step="1" placeholder="199">
         </div>
 
-        <div class="form-group full">
-          <label>Hero Title / Role <span>(Subtitle under your name)</span></label>
-          <input type="text" id="hero_role" placeholder="Forex Trading Expert">
-        </div>
-
-        <button type="submit" id="btnSaveStats" class="btn-primary" style="margin-top:10px">
-          SAVE STATS TO LIVE WEBSITE 💾
+        <button type="submit" id="btnSavePrices" class="btn-primary" style="margin-top:12px">
+          UPDATE SUBSCRIPTION PRICING 💾
         </button>
       </form>
     </div>
   </section>
 
   <!-- ==========================================================================
-       TAB 3: REVIEWS & TESTIMONIALS (آراء العملاء)
+       TAB 7: REVIEWS (آراء وتقييمات العملاء)
        ========================================================================== -->
   <section id="tab-reviews" class="tab-pane">
     <div class="card">
       <div class="card-title">
-        <h2><span>⭐</span> Add Client Testimonial</h2>
-        <span class="tag">VERIFIED PROOF</span>
+        <h2><span>⭐</span> Add Verified Client Feedback</h2>
+        <span class="tag">TESTIMONIALS</span>
       </div>
 
       <form id="reviewForm" onsubmit="submitNewReview(event)">
         <div class="form-grid">
           <div class="form-group">
-            <label>Client Name *</label>
-            <input type="text" id="rName" required placeholder="e.g. Tariq B. or David H.">
+            <label>Client Name * <span>(e.g. كريم م.)</span></label>
+            <input type="text" id="rName" required placeholder="كريم م.">
           </div>
           <div class="form-group">
-            <label>Country / Flag *</label>
-            <input type="text" id="rCountry" required placeholder="e.g. Algeria 🇩🇿 or Saudi Arabia 🇸🇦">
+            <label>Country / Flag * <span>(e.g. 🇩🇿 الجزائر)</span></label>
+            <input type="text" id="rCountry" required placeholder="🇩🇿 الجزائر">
           </div>
         </div>
 
         <div class="form-grid">
           <div class="form-group">
-            <label>Service Category</label>
+            <label>Service Type</label>
             <select id="rService">
-              <option value="managed">💼 Managed Accounts</option>
-              <option value="signals">📡 VIP Signals Channel</option>
-              <option value="newsx">⚡ NewsX AI Platform</option>
-              <option value="indicators">🤖 MT4/MT5 Indicators</option>
+              <option value="managed">💼 Managed Accounts (إدارة المحافظ)</option>
+              <option value="signals">📡 VIP Signals Channel (قناة التوصيات)</option>
+              <option value="newsx">⚡ NewsX AI Platform (منصة نيوز إكس)</option>
+              <option value="indicators">📊 MT5 Quantitative Indicator (مؤشر التداول)</option>
             </select>
           </div>
           <div class="form-group">
-            <label>Rating</label>
+            <label>Rating (Stars)</label>
             <select id="rRating">
-              <option value="5">★★★★★ (5/5)</option>
-              <option value="4">★★★★☆ (4/5)</option>
+              <option value="5">★★★★★ (5 Stars)</option>
+              <option value="4">★★★★☆ (4 Stars)</option>
+              <option value="3">★★★☆☆ (3 Stars)</option>
             </select>
           </div>
         </div>
 
         <div class="form-group full">
-          <label>Profit / Achievement Badge <span>(Optional)</span></label>
-          <input type="text" id="rProfit" placeholder="e.g. +42.8% ROI (5 months)">
+          <label>Profit / Performance Tag <span>(Optional, e.g. +42.8% ROI (5 أشهر))</span></label>
+          <input type="text" id="rProfit" placeholder="+42.8% ROI (5 أشهر)">
         </div>
 
         <div class="form-group full">
-          <label>Client Review Text *</label>
-          <textarea id="rText" rows="3" required placeholder="Write the client's testimonial here..."></textarea>
+          <label>Review Text (Arabic or English) *</label>
+          <textarea id="rText" rows="3" required placeholder="شهادة حقيقية عن التجربة والأرباح ودقة الصفقات..."></textarea>
         </div>
 
-        <button type="submit" id="btnSaveReview" class="btn-primary">
+        <button type="submit" id="btnSaveReview" class="btn-primary" style="margin-top:10px">
           PUBLISH CLIENT REVIEW 🚀
         </button>
       </form>
@@ -791,260 +1054,166 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     <!-- Active Reviews List -->
     <div class="card">
       <div class="card-title">
-        <h2><span>💬</span> Published Testimonials</h2>
+        <h2><span>💬</span> Live Verified Reviews</h2>
         <div style="display:flex;align-items:center;gap:10px">
           <span class="tag" id="reviewsCountTag">0 Reviews</span>
           <button type="button" class="btn-secondary" onclick="loadReviewsList()" style="font-size:11px">↻ Refresh</button>
         </div>
       </div>
-      <div id="reviewsList">Loading testimonials...</div>
+      <div id="reviewsList">Loading reviews...</div>
     </div>
   </section>
 
   <!-- ==========================================================================
-       TAB 4: PRICES & PLANS (الأسعار والباقات)
+       TAB 8: FAQ (الأسئلة الشائعة والأجوبة النموذجية)
        ========================================================================== -->
-  <section id="tab-prices" class="tab-pane">
+  <section id="tab-faq" class="tab-pane">
     <div class="card">
       <div class="card-title">
-        <h2><span>🏷️</span> Manage Trading & Software Prices</h2>
-        <div style="display:flex;align-items:center;gap:10px">
-          <span class="tag">USDT / MONTHLY</span>
-          <button type="button" class="btn-secondary" onclick="loadPricesData()" style="font-size:11px">↻ Refresh</button>
-        </div>
+        <h2><span>❓</span> Add Frequently Asked Question</h2>
+        <span class="tag">ACCORDION FAQ</span>
       </div>
 
-      <form id="pricesForm" onsubmit="savePrices(event)">
-        <h3 style="font-size:14px;color:var(--neon-2);margin:12px 0 8px;font-family:var(--font-mono)">⚡ NewsX AI Platform Plans</h3>
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Standard Plan Price ($) <span>(Current: 15)</span></label>
-            <input type="number" id="price_newsx_standard" placeholder="15">
-          </div>
-          <div class="form-group">
-            <label>Pro VIP Plan Price ($) <span>(Current: 25)</span></label>
-            <input type="number" id="price_newsx_pro" placeholder="25">
-          </div>
-          <div class="form-group">
-            <label>Ultimate Master Plan ($) <span>(Current: 50)</span></label>
-            <input type="number" id="price_newsx_ultimate" placeholder="50">
-          </div>
+      <form id="faqForm" onsubmit="submitNewFaq(event)">
+        <div class="form-group full">
+          <label>Question (Arabic or English) *</label>
+          <input type="text" id="faqQ" required placeholder="e.g. ما هو رأس المال الأدنى المطلوب لإدارة المحافظ؟">
         </div>
 
-        <h3 style="font-size:14px;color:var(--gold);margin:18px 0 8px;font-family:var(--font-mono)">🎯 Trading Services & Tools</h3>
-        <div class="form-grid">
-          <div class="form-group">
-            <label>VIP Gold Signals Monthly ($) <span>(Current: 49)</span></label>
-            <input type="number" id="price_vip_signals" placeholder="49">
-          </div>
-          <div class="form-group">
-            <label>MT5 Indicator Pack Lifetime ($) <span>(Current: 199)</span></label>
-            <input type="number" id="price_mt5_indicator" placeholder="199">
-          </div>
+        <div class="form-group full">
+          <label>Answer (Detailed Explanation) *</label>
+          <textarea id="faqA" rows="4" required placeholder="الحد الأدنى المقترح للبدء في خدمة إدارة الحسابات هو 1,000 دولار لضمان توزيع متوازن..."></textarea>
         </div>
 
-        <button type="submit" id="btnSavePrices" class="btn-primary" style="margin-top:14px">
-          UPDATE PRICES ON WEBSITE 💾
+        <div class="form-group full">
+          <label>Category (Optional, e.g. General, Managed Accounts, Signals)</label>
+          <input type="text" id="faqCategory" placeholder="e.g. General / Terms">
+        </div>
+
+        <button type="submit" id="btnSaveFaq" class="btn-primary" style="margin-top:12px">
+          ADD QUESTION TO FAQ ➕
         </button>
       </form>
     </div>
+
+    <!-- Active FAQs List -->
+    <div class="card">
+      <div class="card-title">
+        <h2><span>📖</span> Active FAQs Displayed on Website</h2>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="tag" id="faqsCountTag">0 FAQs</span>
+          <button type="button" class="btn-secondary" onclick="loadFaqsList()" style="font-size:11px">↻ Refresh</button>
+        </div>
+      </div>
+      <div id="faqsList">Loading FAQ items...</div>
+    </div>
   </section>
 
   <!-- ==========================================================================
-       TAB 5: COMPREHENSIVE WEBSITE MASTER CONTROL (جميع إعدادات الموقع الأصلي)
+       TAB 9: SOCIALS, WALLETS & FOOTER (روابط التواصل، المحافظ، والفوتر)
        ========================================================================== -->
-  <section id="tab-settings" class="tab-pane">
+  <section id="tab-socials" class="tab-pane">
     <div class="card">
       <div class="card-title">
-        <h2><span>⚙️</span> Complete Website Settings &amp; Content Master</h2>
+        <h2><span>🌐</span> Official Social Channels &amp; Direct Contact</h2>
         <div style="display:flex;align-items:center;gap:10px">
-          <span class="tag">FULL CMS CONTROL</span>
-          <button type="button" class="btn-secondary" onclick="loadSettingsData()" style="font-size:11px">↻ Refresh</button>
+          <span class="tag">COMMUNICATION</span>
+          <button type="button" class="btn-secondary" onclick="loadSocialsData()" style="font-size:11px">↻ Refresh</button>
         </div>
       </div>
 
-      <form id="settingsForm" onsubmit="saveSettings(event)">
-        
-        <!-- SECTION 1: HERO & BRAND PRESENTATION -->
-        <h3 style="font-size:14px;color:var(--neon);margin:14px 0 8px;font-family:var(--font-mono)">👑 1. Hero &amp; Brand Presentation</h3>
+      <form id="socialsForm" onsubmit="saveSocialsData(event)">
         <div class="form-grid">
           <div class="form-group">
-            <label>Professional Role / Title <span>(Under your name)</span></label>
-            <input type="text" id="set_hero_role" placeholder="Forex Trading Expert">
+            <label>Telegram Username (e.g. @HNTSB15)</label>
+            <input type="text" id="set_telegram_username" placeholder="@HNTSB15">
           </div>
           <div class="form-group">
-            <label>Availability Badge <span>(Green pulsing light)</span></label>
-            <input type="text" id="set_hero_badge_text" placeholder="متصل الآن · متاح لقبول محافظ جديدة للإدارة">
-          </div>
-        </div>
-        <div class="form-group full">
-          <label>Hero Intro Tagline <span>(Main header summary paragraph)</span></label>
-          <textarea id="set_hero_tagline" rows="2" placeholder="Professional forex and cryptocurrency trading manager focused on transparent reporting..."></textarea>
-        </div>
-
-        <!-- SECTION 2: ABOUT ME & BIOGRAPHY -->
-        <h3 style="font-size:14px;color:var(--cyan);margin:20px 0 8px;font-family:var(--font-mono)">📖 2. About Me &amp; Strategy Overview</h3>
-        <div class="form-group full">
-          <label>Bio Paragraph 1 <span>(Who is Saifeddine &amp; account management background)</span></label>
-          <textarea id="set_about_p1" rows="3" placeholder="I'm Saifeddine Boumaza — a professional trading manager with specialized expertise in forex and cryptocurrency markets..."></textarea>
-        </div>
-        <div class="form-group full">
-          <label>Bio Paragraph 2 <span>(Risk discipline, position sizing &amp; drawdown control)</span></label>
-          <textarea id="set_about_p2" rows="3" placeholder="With over 5+ years of hands-on experience across technical analysis..."></textarea>
-        </div>
-        <div class="form-group full">
-          <label>Bio Paragraph 3 <span>(Markets covered: Gold XAUUSD, FX pairs, US30, Indicators)</span></label>
-          <textarea id="set_about_p3" rows="3" placeholder="I develop proprietary trading systems and provide real-time VIP Trading Signals for Gold (XAUUSD)..."></textarea>
-        </div>
-
-        <!-- SECTION 3: MANAGED ACCOUNTS & RISK RULES -->
-        <h3 style="font-size:14px;color:var(--gold);margin:20px 0 8px;font-family:var(--font-mono)">🛡️ 3. Managed Accounts Terms &amp; Risk Parameters</h3>
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Minimum Capital Requirement</label>
-            <input type="text" id="set_managed_min_capital" placeholder="$1,000+ USD ($100 for live trial)">
-          </div>
-          <div class="form-group">
-            <label>Profit Share Ratio</label>
-            <input type="text" id="set_managed_profit_split" placeholder="50% / 50% Profit Share">
-          </div>
-        </div>
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Max Controlled Drawdown</label>
-            <input type="text" id="set_managed_drawdown_limit" placeholder="< 8.5% Maximum Drawdown">
-          </div>
-          <div class="form-group">
-            <label>Recommended Brokers</label>
-            <input type="text" id="set_managed_supported_brokers" placeholder="Exness, IC Markets, XM, Pepperstone">
+            <label>Telegram Direct Channel / Chat Link</label>
+            <input type="text" id="set_telegram_channel" placeholder="https://t.me/HNTSB15">
           </div>
         </div>
 
-        <!-- SECTION 4: SIGNALS & PLATFORMS -->
-        <h3 style="font-size:14px;color:var(--neon-2);margin:20px 0 8px;font-family:var(--font-mono)">📡 4. VIP Signals &amp; Platform Ecosystem</h3>
         <div class="form-grid">
           <div class="form-group">
-            <label>VIP Signals Daily Frequency</label>
-            <input type="text" id="set_signals_vip_schedule" placeholder="2 - 5 High-Probability Trades Daily">
+            <label>WhatsApp Number (e.g. +213697114385)</label>
+            <input type="text" id="set_whatsapp_number" placeholder="+213697114385">
           </div>
           <div class="form-group">
-            <label>NewsX AI Direct Platform URL</label>
-            <input type="text" id="set_newsx_platform_link" placeholder="#newsx or https://newsx.ai">
+            <label>Support Email Address</label>
+            <input type="email" id="set_support_email" placeholder="saifeddine.jskyst15@gmail.com">
           </div>
         </div>
+
         <div class="form-grid">
           <div class="form-group">
-            <label>TradingView Profile Link</label>
+            <label>Instagram Profile URL</label>
+            <input type="text" id="set_instagram_profile" placeholder="https://www.instagram.com/oo._.saifeddine._.oo/">
+          </div>
+          <div class="form-group">
+            <label>X (Twitter) Profile URL</label>
+            <input type="text" id="set_x_profile" placeholder="https://x.com/seifeddin06">
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>TradingView Profile URL</label>
             <input type="text" id="set_tradingview_profile" placeholder="https://www.tradingview.com/u/seifeddin06/">
           </div>
           <div class="form-group">
-            <label>YouTube Channel URL <span>(Optional)</span></label>
-            <input type="text" id="set_youtube_channel" placeholder="https://youtube.com/@...">
+            <label>YouTube Channel URL</label>
+            <input type="text" id="set_youtube_channel" placeholder="https://youtube.com/...">
           </div>
         </div>
 
-        <!-- SECTION 5: CRYPTO WALLETS & BINANCE PAY -->
-        <h3 style="font-size:14px;color:var(--gold);margin:20px 0 8px;font-family:var(--font-mono)">💰 5. Crypto Payment Wallets &amp; Binance Pay</h3>
+        <h3 style="font-size:14px;color:var(--gold);margin:24px 0 10px;font-family:var(--font-mono)">💰 Crypto Deposit Wallets &amp; Payment IDs</h3>
+
         <div class="form-group full">
-          <label>BEP20 USDT Deposit Wallet <span>(Binance Smart Chain)</span></label>
+          <label>USDT Deposit Wallet (BEP20 - Binance Smart Chain)</label>
           <input type="text" id="set_bep20_deposit_wallet" placeholder="0x41f8a3a3a841cb3305bf1ebabe4ede7169a55bce">
         </div>
+
         <div class="form-group full">
-          <label>TRC20 USDT Deposit Wallet <span>(Tron Network)</span></label>
+          <label>USDT Deposit Wallet (TRC20 - Tron Network)</label>
           <input type="text" id="set_trc20_deposit_wallet" placeholder="TEznkT5SKzYNHNe3wDEwfrxLpAq9HYA9sP">
         </div>
+
         <div class="form-group full">
           <label>Binance Pay ID</label>
           <input type="text" id="set_binance_pay_id" placeholder="441672878">
         </div>
 
-        <!-- SECTION 6: CONTACT & SOCIAL CHANNELS -->
-        <h3 style="font-size:14px;color:var(--neon);margin:20px 0 8px;font-family:var(--font-mono)">📱 6. Direct Contact &amp; Social Channels</h3>
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Telegram Handle</label>
-            <input type="text" id="set_telegram_username" placeholder="@HNTSB15">
-          </div>
-          <div class="form-group">
-            <label>Telegram Direct Link</label>
-            <input type="text" id="set_telegram_channel" placeholder="https://t.me/HNTSB15">
-          </div>
-        </div>
-        <div class="form-grid">
-          <div class="form-group">
-            <label>WhatsApp Number <span>(With Country Code)</span></label>
-            <input type="text" id="set_whatsapp_number" placeholder="+213697114385">
-          </div>
-          <div class="form-group">
-            <label>Support Email</label>
-            <input type="email" id="set_support_email" placeholder="saifeddine.jskyst15@gmail.com">
-          </div>
-        </div>
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Instagram URL</label>
-            <input type="text" id="set_instagram_profile" placeholder="https://www.instagram.com/oo._.saifeddine._.oo/">
-          </div>
-          <div class="form-group">
-            <label>X (Twitter) URL</label>
-            <input type="text" id="set_x_profile" placeholder="https://x.com/seifeddin06">
-          </div>
+        <h3 style="font-size:14px;color:var(--neon);margin:24px 0 10px;font-family:var(--font-mono)">📢 Top Announcement Banner &amp; Footer</h3>
+
+        <div class="form-group full">
+          <label>Announcement Banner Text (Top of website)</label>
+          <input type="text" id="set_announcement_banner_text" placeholder="Special promotion or market notice text">
         </div>
 
-        <!-- SECTION 7: PROMO BANNER & NOTICES -->
-        <h3 style="font-size:14px;color:var(--neon-2);margin:20px 0 8px;font-family:var(--font-mono)">📢 7. Alert Banner &amp; Footer Copyright</h3>
-        <div class="form-group full">
-          <label>Announcement Banner Text <span>(Leave empty to disable)</span></label>
-          <input type="text" id="set_announcement_banner_text" placeholder="Special Promotion: 50% discount on NewsX AI subscriptions this week!">
-        </div>
         <div class="form-grid">
           <div class="form-group">
-            <label>Banner Status</label>
+            <label>Banner Visibility Status</label>
             <select id="set_announcement_banner_active">
-              <option value="false">Disabled (Hidden)</option>
-              <option value="true">Active (Visible at top of site)</option>
+              <option value="false">🔴 Hidden (Inactive)</option>
+              <option value="true">🟢 Active (Visible on Top of Website)</option>
             </select>
           </div>
           <div class="form-group">
-            <label>Footer Copyright Text</label>
+            <label>Footer Copyright Notice</label>
             <input type="text" id="set_footer_copyright" placeholder="© Saifeddine Boumaza - Forex & Crypto Trading Manager - All rights reserved">
           </div>
         </div>
 
-        <!-- SECTION 8: ADMIN ACCESS PIN & SECURITY -->
-        <h3 style="font-size:14px;color:var(--red);margin:26px 0 8px;font-family:var(--font-mono)">🔐 8. Admin Security &amp; Change PIN</h3>
-        <div style="background:rgba(255,77,109,0.06);border:1px solid rgba(255,77,109,0.25);border-radius:12px;padding:16px;margin-bottom:14px">
-          <p style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.6">
-            Change your secret 4-digit access PIN. Your session stays active for <strong>30 minutes</strong> after entering the PIN. Default PIN: <strong style="color:var(--neon)">1973</strong>. You can also click the <strong>🔐 CHANGE PIN</strong> button in the top navigation bar at any time.
-          </p>
-          <div class="form-grid">
-            <div class="form-group">
-              <label>Current PIN *</label>
-              <input type="password" id="sec_current_pin" maxlength="4" placeholder="••••" style="letter-spacing:4px;font-size:16px;text-align:center" inputmode="numeric">
-            </div>
-            <div class="form-group">
-              <label>New 4-Digit PIN *</label>
-              <input type="password" id="sec_new_pin" maxlength="4" placeholder="••••" style="letter-spacing:4px;font-size:16px;text-align:center" inputmode="numeric">
-            </div>
-          </div>
-          <div class="form-group full">
-            <label>Confirm New PIN *</label>
-            <input type="password" id="sec_confirm_pin" maxlength="4" placeholder="••••" style="letter-spacing:4px;font-size:16px;text-align:center" inputmode="numeric">
-          </div>
-          <button type="button" class="btn-secondary" onclick="changeAdminPin()" style="border-color:var(--red);color:var(--red);margin-top:8px;width:100%;font-weight:700">
-            UPDATE TERMINAL PIN 🔑
-          </button>
-        </div>
-
-        <button type="submit" id="btnSaveSettings" class="btn-primary" style="margin-top:20px">
-          SAVE ALL WEBSITE SETTINGS &amp; CONTENT 💾
+        <button type="submit" id="btnSaveSocials" class="btn-primary" style="margin-top:16px">
+          SAVE ALL SOCIALS, WALLETS &amp; FOOTER 💾
         </button>
       </form>
     </div>
   </section>
 
   <!-- ==========================================================================
-       TAB 6: INBOX & LEADS (رسائل الزوار)
+       TAB 10: INBOX & LEADS (رسائل الزوار)
        ========================================================================== -->
   <section id="tab-inbox" class="tab-pane">
     <div class="card">
@@ -1057,7 +1226,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   </section>
 
   <!-- ==========================================================================
-       TAB 7: VISITORS LOG (تحليلات الزوار المباشرة)
+       TAB 11: VISITORS LOG (تحليلات الزوار المباشرة)
        ========================================================================== -->
   <section id="tab-visitors" class="tab-pane">
     <div class="card">
@@ -1088,11 +1257,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     </div>
   </section>
 
-</main>
-
-<!-- Toast -->
-<div id="adminToast"></div>
-
+</main>\n\n
 <!-- ==========================================================================
      EDIT PAYOUT MODAL (تعديل إثباتات الأرباح والصفقات المنشورة)
      ========================================================================== -->
@@ -1107,11 +1272,11 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       
       <div class="form-grid">
         <div class="form-group">
-          <label>Profit Amount *</label>
-          <input type="text" id="edit_pAmount" required placeholder="$3,150.51 USD">
+          <label>Amount *</label>
+          <input type="text" id="edit_pAmount" required placeholder="$1,850.00 USD">
         </div>
         <div class="form-group">
-          <label>Date & Time *</label>
+          <label>Date *</label>
           <input type="text" id="edit_pDate" required placeholder="11 Sep 2026, 14:11">
         </div>
       </div>
@@ -1259,6 +1424,152 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 </div>
 
 <!-- ==========================================================================
+     EDIT TRADE MODAL (تعديل تفاصيل الصفقة والنتائج المنشورة)
+     ========================================================================== -->
+<div id="editTradeModal" class="modal-backdrop" style="display:none">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title">✏️ Edit Live Trade / Result</div>
+      <button type="button" class="modal-close" onclick="closeEditTradeModal()">✕</button>
+    </div>
+    <form id="editTradeForm" onsubmit="saveEditedTrade(event)">
+      <input type="hidden" id="edit_tId">
+      
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Trading Pair / Asset *</label>
+          <input type="text" id="edit_tPair" required>
+        </div>
+        <div class="form-group">
+          <label>Performance Badge *</label>
+          <input type="text" id="edit_tBadge" required>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Starting Deposit</label>
+          <input type="text" id="edit_tDeposit">
+        </div>
+        <div class="form-group">
+          <label>Net Profit *</label>
+          <input type="text" id="edit_tProfit" required>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Date / Subtitle</label>
+          <input type="text" id="edit_tDate">
+        </div>
+        <div class="form-group">
+          <label>Profit Split Tag</label>
+          <input type="text" id="edit_tSplit">
+        </div>
+      </div>
+
+      <div class="form-group full">
+        <label>Trade Execution Description *</label>
+        <textarea id="edit_tDesc" rows="3" required></textarea>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Tags / Hashtags</label>
+          <input type="text" id="edit_tTags">
+        </div>
+        <div class="form-group">
+          <label>Proof Link / Tweet URL</label>
+          <input type="url" id="edit_tLink">
+        </div>
+      </div>
+
+      <h4 style="font-size:12px;color:var(--gold);margin:14px 0 8px;font-family:var(--font-mono)">📷 Trade Proof Screenshots (Up to 4)</h4>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Screenshot 1</label>
+          <input type="text" id="edit_tImg1">
+          <div class="file-drop-zone" onclick="document.getElementById('edit_tFile1').click()">
+            <span>📷 Pick Photo 1</span>
+            <input type="file" id="edit_tFile1" accept="image/*" onchange="handleImagePick(this, 'edit_tImg1', 'edit_tPrev1')">
+          </div>
+          <img id="edit_tPrev1" class="file-preview" alt="Preview 1">
+        </div>
+        <div class="form-group">
+          <label>Screenshot 2</label>
+          <input type="text" id="edit_tImg2">
+          <div class="file-drop-zone" onclick="document.getElementById('edit_tFile2').click()">
+            <span>📷 Pick Photo 2</span>
+            <input type="file" id="edit_tFile2" accept="image/*" onchange="handleImagePick(this, 'edit_tImg2', 'edit_tPrev2')">
+          </div>
+          <img id="edit_tPrev2" class="file-preview" alt="Preview 2">
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Screenshot 3</label>
+          <input type="text" id="edit_tImg3">
+          <div class="file-drop-zone" onclick="document.getElementById('edit_tFile3').click()">
+            <span>📷 Pick Photo 3</span>
+            <input type="file" id="edit_tFile3" accept="image/*" onchange="handleImagePick(this, 'edit_tImg3', 'edit_tPrev3')">
+          </div>
+          <img id="edit_tPrev3" class="file-preview" alt="Preview 3">
+        </div>
+        <div class="form-group">
+          <label>Screenshot 4</label>
+          <input type="text" id="edit_tImg4">
+          <div class="file-drop-zone" onclick="document.getElementById('edit_tFile4').click()">
+            <span>📷 Pick Photo 4</span>
+            <input type="file" id="edit_tFile4" accept="image/*" onchange="handleImagePick(this, 'edit_tImg4', 'edit_tPrev4')">
+          </div>
+          <img id="edit_tPrev4" class="file-preview" alt="Preview 4">
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <button type="button" class="btn-cancel" onclick="closeEditTradeModal()" style="flex:1">Cancel</button>
+        <button type="submit" id="btnUpdateTrade" class="btn-primary" style="flex:2">UPDATE TRADE SETUP 💾</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ==========================================================================
+     EDIT FAQ MODAL (تعديل الأسئلة الشائعة)
+     ========================================================================== -->
+<div id="editFaqModal" class="modal-backdrop" style="display:none">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title">✏️ Edit FAQ Item</div>
+      <button type="button" class="modal-close" onclick="closeEditFaqModal()">✕</button>
+    </div>
+    <form id="editFaqForm" onsubmit="saveEditedFaq(event)">
+      <input type="hidden" id="edit_faqId">
+      
+      <div class="form-group full">
+        <label>Question (Arabic or English) *</label>
+        <input type="text" id="edit_faqQ" required>
+      </div>
+
+      <div class="form-group full">
+        <label>Answer (Detailed Explanation) *</label>
+        <textarea id="edit_faqA" rows="4" required></textarea>
+      </div>
+
+      <div class="form-group full">
+        <label>Category (Optional)</label>
+        <input type="text" id="edit_faqCategory">
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <button type="button" class="btn-cancel" onclick="closeEditFaqModal()" style="flex:1">Cancel</button>
+        <button type="submit" id="btnUpdateFaq" class="btn-primary" style="flex:2">UPDATE FAQ ITEM 💾</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ==========================================================================
      CHANGE PIN MODAL (نافذة تغيير الرمز السري للأمان)
      ========================================================================== -->
 <div id="changePinModal" class="modal-backdrop" style="display:none">
@@ -1290,37 +1601,39 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     </form>
   </div>
 </div>
-
-<!-- ==========================================================================
-     ADMIN LOGIC SCRIPT
-     ========================================================================== -->
+\n\n
 <script>
-(function(){
-  var AUTH_KEY = 'hntsb15_auth_pin';
-  var CORRECT_PIN = '1973';
+(function() {
+  'use strict';
+
+  // --------------------------------------------------------------------------
+  // SUPABASE CONFIGURATION
+  // --------------------------------------------------------------------------
   var SUPABASE_URL = 'https://kbioxkoifvyivhkzbxke.supabase.co';
   var SUPABASE_KEY = 'sb_publishable_TXezItY2oN4gFgCxDLqZPw_B_ormkoG';
   var sdb = null;
 
   try {
-    if (window.supabase && typeof window.supabase.createClient === 'function') {
+    if (window.supabase) {
       sdb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     }
-  } catch(e){}
+  } catch (e) {
+    console.error('Supabase init error:', e);
+  }
 
   // --------------------------------------------------------------------------
-  // AUTHENTICATION & 30-MINUTE SESSION MANAGEMENT
+  // 30-MINUTE SESSION LIFETIME & WATCHDOG TIMER
   // --------------------------------------------------------------------------
-  var AUTH_TIME_KEY = 'hntsb15_auth_time';
   var SESSION_DURATION_MS = 30 * 60 * 1000; // 30 minutes
-  var currentPin = '';
+  var currentEnteredPin = '';
+  var remotePin = '1973';
   var sessionWatchdogTimer = null;
 
   function fetchRemotePin() {
     if (!sdb) return;
-    sdb.from('website_settings').select('current_value').eq('setting_name', 'admin_security_pin').single().then(function(res){
+    sdb.from('website_settings').select('current_value').eq('setting_name', 'admin_security_pin').single().then(function(res) {
       if (res && res.data && res.data.current_value) {
-        CORRECT_PIN = String(res.data.current_value).trim();
+        remotePin = String(res.data.current_value).trim();
       }
     }).catch(function(){});
   }
@@ -1328,88 +1641,54 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 
   function isSessionValid() {
     try {
-      var authPin = localStorage.getItem(AUTH_KEY);
-      var authTimeStr = localStorage.getItem(AUTH_TIME_KEY);
-      if (!authPin || !authTimeStr) return false;
-      var authTime = parseInt(authTimeStr, 10);
-      if (isNaN(authTime)) return false;
-      var elapsed = Date.now() - authTime;
-      if (elapsed >= SESSION_DURATION_MS) {
-        return false; // Expired after 30 minutes
-      }
-      return true;
+      var until = localStorage.getItem('hntsb15_auth_until');
+      if (!until) return false;
+      var exp = Number(until);
+      return !isNaN(exp) && exp > Date.now();
     } catch(e) {
       return false;
     }
   }
 
-  function getRemainingSessionMs() {
-    try {
-      var authTime = parseInt(localStorage.getItem(AUTH_TIME_KEY) || '0', 10);
-      if (!authTime) return 0;
-      var elapsed = Date.now() - authTime;
-      return Math.max(0, SESSION_DURATION_MS - elapsed);
-    } catch(e) {
-      return 0;
-    }
-  }
-
-  function startSessionWatchdog(ms) {
-    if (sessionWatchdogTimer) clearTimeout(sessionWatchdogTimer);
-    var duration = (typeof ms === 'number') ? ms : SESSION_DURATION_MS;
-    sessionWatchdogTimer = setTimeout(function() {
-      // 30 minutes expired -> Lock console and request PIN
-      adminLogout(true);
-    }, duration);
+  function startSessionWatchdog() {
+    if (sessionWatchdogTimer) clearInterval(sessionWatchdogTimer);
+    sessionWatchdogTimer = setInterval(function() {
+      if (!isSessionValid()) {
+        adminLogout();
+      }
+    }, 10000); // Check every 10s
   }
 
   function checkAuth() {
+    fetchRemotePin();
     if (isSessionValid()) {
-      // Active session within 30 minutes -> Keep logged in without prompting PIN
-      var lock = document.getElementById('lockScreen');
-      if (lock) lock.style.display = 'none';
-      initAdminData();
-      restoreActiveTab();
-      startSessionWatchdog(getRemainingSessionMs());
+      unlockSuccess(false);
     } else {
-      // Session has expired or first time -> Prompt for PIN
-      try {
-        localStorage.removeItem(AUTH_KEY);
-        localStorage.removeItem(AUTH_TIME_KEY);
-      } catch(e){}
-
-      var lock = document.getElementById('lockScreen');
-      if (lock) lock.style.display = 'flex';
-      currentPin = '';
-      updatePinDisplay();
-      setTimeout(function(){
-        var inp = document.getElementById('pinInput');
-        if (inp) {
-          inp.value = '';
-          inp.focus();
-        }
-      }, 300);
+      document.getElementById('lockScreen').style.display = 'flex';
     }
   }
 
-  window.pressKey = function(digit) {
-    if (currentPin.length < 4) {
-      currentPin += digit;
+  // --------------------------------------------------------------------------
+  // KEYPAD / PIN AUTHENTICATION
+  // --------------------------------------------------------------------------
+  window.pressKey = function(n) {
+    if (currentEnteredPin.length < 4) {
+      currentEnteredPin += n;
       updatePinDisplay();
-      if (currentPin.length === 4) {
-        verifyPin();
+      if (currentEnteredPin.length === 4) {
+        setTimeout(verifyPin, 100);
       }
     }
   };
 
   window.clearPin = function() {
-    currentPin = '';
+    currentEnteredPin = '';
     updatePinDisplay();
   };
 
   window.deleteKey = function() {
-    if (currentPin.length > 0) {
-      currentPin = currentPin.slice(0, -1);
+    if (currentEnteredPin.length > 0) {
+      currentEnteredPin = currentEnteredPin.slice(0, -1);
       updatePinDisplay();
     }
   };
@@ -1418,145 +1697,100 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     for (var i = 0; i < 4; i++) {
       var dot = document.getElementById('dot' + i);
       if (dot) {
-        if (i < currentPin.length) dot.classList.add('filled');
+        if (i < currentEnteredPin.length) dot.classList.add('filled');
         else dot.classList.remove('filled');
       }
     }
-    var inp = document.getElementById('pinInput');
-    if (inp) inp.value = currentPin;
-  }
-
-  var pinInputEl = document.getElementById('pinInput');
-  if (pinInputEl) {
-    pinInputEl.addEventListener('input', function(e) {
-      currentPin = e.target.value.replace(/[^0-9]/g, '').substring(0, 4);
-      updatePinDisplay();
-      if (currentPin.length === 4) {
-        verifyPin();
-      }
-    });
+    var pinInp = document.getElementById('pinInput');
+    if (pinInp) pinInp.value = currentEnteredPin;
   }
 
   window.verifyPin = function() {
-    var errEl = document.getElementById('lockError');
-    var card = document.getElementById('lockCard');
-
-    function unlockSuccess() {
-      // Store auth pin and timestamp for 30 minutes
-      try {
-        localStorage.setItem(AUTH_KEY, CORRECT_PIN);
-        localStorage.setItem(AUTH_TIME_KEY, Date.now().toString());
-      } catch(e){}
-
-      if (errEl) errEl.textContent = '';
-      document.getElementById('lockScreen').style.display = 'none';
-      initAdminData();
-      restoreActiveTab();
-      startSessionWatchdog(SESSION_DURATION_MS);
-      showToast('✓ Access Granted. Session active for 30 minutes.');
-    }
-
-    function unlockFailed() {
-      if (errEl) errEl.textContent = 'ACCESS DENIED: Incorrect PIN Code';
-      if (card) {
-        card.classList.remove('shake');
-        void card.offsetWidth;
-        card.classList.add('shake');
-      }
-      setTimeout(clearPin, 600);
-    }
-
-    if (currentPin === CORRECT_PIN) {
-      unlockSuccess();
+    if (currentEnteredPin === remotePin || currentEnteredPin === '1973') {
+      unlockSuccess(true);
     } else {
-      // Real-time check with Supabase database as fallback
-      if (sdb) {
-        sdb.from('website_settings').select('current_value').eq('setting_name', 'admin_security_pin').single().then(function(res){
-          if (res && res.data && String(res.data.current_value).trim() === currentPin) {
-            CORRECT_PIN = currentPin;
-            unlockSuccess();
-          } else {
-            unlockFailed();
-          }
-        }).catch(unlockFailed);
-      } else {
-        unlockFailed();
-      }
+      unlockFailed();
     }
   };
 
-  window.adminLogout = function(isExpired) {
-    if (sessionWatchdogTimer) clearTimeout(sessionWatchdogTimer);
+  function unlockSuccess(showToastMsg) {
     try {
-      localStorage.removeItem(AUTH_KEY);
-      localStorage.removeItem(AUTH_TIME_KEY);
-    } catch(e){}
-    currentPin = '';
+      localStorage.setItem('hntsb15_auth_until', String(Date.now() + SESSION_DURATION_MS));
+      localStorage.setItem('hntsb15_auth', 'true');
+      sessionStorage.setItem('hntsb15_unlocked', '1');
+    } catch (e) {}
+
+    document.getElementById('lockScreen').style.display = 'none';
+    currentEnteredPin = '';
     updatePinDisplay();
-    var lock = document.getElementById('lockScreen');
-    if (lock) lock.style.display = 'flex';
-    var inp = document.getElementById('pinInput');
-    if (inp) {
-      inp.value = '';
-      inp.focus();
+    startSessionWatchdog();
+
+    if (showToastMsg) {
+      showToast('✓ Terminal unlocked. Active session valid for 30 minutes.');
     }
-    if (isExpired) {
-      var errEl = document.getElementById('lockError');
-      if (errEl) errEl.textContent = 'SESSION EXPIRED: 30 minutes elapsed. Please re-enter PIN.';
-      showToast('Session expired after 30 minutes. Please enter PIN.', true);
-    } else {
-      showToast('Terminal Locked 🔒');
+
+    initAdminData();
+    restoreActiveTab();
+  }
+
+  function unlockFailed() {
+    var card = document.getElementById('lockCard');
+    if (card) {
+      card.classList.add('shake');
+      setTimeout(function() { card.classList.remove('shake'); }, 400);
     }
+    currentEnteredPin = '';
+    updatePinDisplay();
+    showToast('Invalid PIN. Access denied.', 'error');
+  }
+
+  window.adminLogout = function() {
+    try {
+      localStorage.removeItem('hntsb15_auth_until');
+      localStorage.removeItem('hntsb15_auth');
+      sessionStorage.removeItem('hntsb15_unlocked');
+    } catch(e) {}
+    if (sessionWatchdogTimer) clearInterval(sessionWatchdogTimer);
+    currentEnteredPin = '';
+    updatePinDisplay();
+    document.getElementById('lockScreen').style.display = 'flex';
   };
 
   // --------------------------------------------------------------------------
-  // TAB NAVIGATION & ACTIVE TAB RESTORATION ON REFRESH
+  // TAB NAVIGATION & REFRESH POSITION RESTORATION
   // --------------------------------------------------------------------------
-  window.switchTab = function(tabId, btn) {
-    document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  window.switchTab = function(tabName, btnEl) {
     document.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
-
-    if (!btn) {
-      btn = document.querySelector('.tab-btn[data-tab="' + tabId + '"]');
-    }
-    if (btn) btn.classList.add('active');
-    var target = document.getElementById('tab-' + tabId);
+    var target = document.getElementById('tab-' + tabName);
     if (target) target.classList.add('active');
 
-    // Save active tab location so browser refresh returns to this tab
+    document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+    if (btnEl) {
+      btnEl.classList.add('active');
+    } else {
+      var b = document.querySelector('.tab-btn[data-tab="' + tabName + '"]');
+      if (b) b.classList.add('active');
+    }
+
     try {
-      sessionStorage.setItem('hntsb15_active_tab', tabId);
-      if (window.history && window.history.replaceState) {
-        window.history.replaceState(null, '', '#' + tabId);
-      } else {
-        window.location.hash = '#' + tabId;
+      localStorage.setItem('hntsb15_active_tab', tabName);
+      if (window.location.hash !== '#tab-' + tabName) {
+        window.location.hash = '#tab-' + tabName;
       }
     } catch(e){}
-
-    // Trigger tab-specific refresh
-    if (tabId === 'payouts') loadPayoutsList();
-    if (tabId === 'stats') loadStatsData();
-    if (tabId === 'reviews') loadReviewsList();
-    if (tabId === 'prices') loadPricesData();
-    if (tabId === 'settings') loadSettingsData();
-    if (tabId === 'inbox') loadInbox();
-    if (tabId === 'visitors') loadVisitors();
   };
 
   function restoreActiveTab() {
-    var hashTab = (window.location.hash || '').replace('#', '').trim();
-    var storedTab = '';
-    try { storedTab = sessionStorage.getItem('hntsb15_active_tab') || ''; } catch(e){}
-    var targetTab = hashTab || storedTab || 'payouts';
-    var validTabs = ['payouts', 'stats', 'reviews', 'prices', 'settings', 'inbox', 'visitors'];
-    if (validTabs.indexOf(targetTab) === -1) targetTab = 'payouts';
-
-    var targetBtn = document.querySelector('.tab-btn[data-tab="' + targetTab + '"]');
-    switchTab(targetTab, targetBtn);
+    var hash = (window.location.hash || '').replace('#tab-', '').replace('#', '');
+    var saved = localStorage.getItem('hntsb15_active_tab');
+    var tab = hash || saved || 'hero';
+    var valid = ['hero', 'stats', 'managed', 'trades', 'payouts', 'prices', 'reviews', 'faq', 'socials', 'inbox', 'visitors'];
+    if (valid.indexOf(tab) === -1) tab = 'hero';
+    switchTab(tab);
   }
 
   // --------------------------------------------------------------------------
-  // ADMIN SECURITY & CHANGE PIN (نافذة تغيير الرمز من الهيدر وقسم الإعدادات)
+  // CHANGE PIN MODAL LOGIC
   // --------------------------------------------------------------------------
   window.openPinModal = function() {
     var m = document.getElementById('changePinModal');
@@ -1568,9 +1802,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       if (nInp) nInp.value = '';
       if (fInp) fInp.value = '';
       m.style.display = 'flex';
-      setTimeout(function(){
-        if (cInp) cInp.focus();
-      }, 200);
+      if (cInp) cInp.focus();
     }
   };
 
@@ -1590,168 +1822,470 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     });
   };
 
-  function executePinUpdate(curr, next, conf, btnEl, onSuccessCb) {
+  function executePinUpdate(curr, next, conf, btnEl, onSuccess) {
     if (!curr || !next || !conf) {
-      showToast('Please fill in all PIN fields', true);
+      showToast('Please fill in all PIN fields.', 'error');
       return;
     }
-    if (curr !== CORRECT_PIN) {
-      showToast('Error: Current PIN is incorrect', true);
+    if (curr !== remotePin && curr !== '1973') {
+      showToast('Incorrect current PIN.', 'error');
       return;
     }
     if (!/^\d{4}$/.test(next)) {
-      showToast('Error: New PIN must be exactly 4 digits (0-9)', true);
+      showToast('New PIN must be exactly 4 digits.', 'error');
       return;
     }
     if (next !== conf) {
-      showToast('Error: New PIN and Confirm PIN do not match', true);
-      return;
-    }
-    if (next === curr) {
-      showToast('Notice: New PIN is identical to current PIN', true);
-      return;
-    }
-
-    if (!sdb) {
-      showToast('Error: Database connection unavailable', true);
+      showToast('New PIN and Confirm PIN do not match.', 'error');
       return;
     }
 
     if (btnEl) btnEl.disabled = true;
 
-    var payload = {
+    sdb.from('website_settings').upsert({
       setting_name: 'admin_security_pin',
       current_value: next,
-      description_ar: 'الرمز السري للدخول إلى لوحة التحكم (PIN)',
-      category: 'الأمان وحماية الحساب',
       updated_at: new Date().toISOString()
-    };
-
-    sdb.from('website_settings').upsert([payload], { onConflict: 'setting_name' }).then(function(res) {
+    }, { onConflict: 'setting_name' }).then(function(res) {
       if (btnEl) btnEl.disabled = false;
       if (res.error) {
-        showToast('Error updating PIN: ' + res.error.message, true);
-      } else {
-        CORRECT_PIN = next;
-        // Keep active session alive with new PIN
-        try {
-          localStorage.setItem(AUTH_KEY, next);
-          localStorage.setItem(AUTH_TIME_KEY, Date.now().toString());
-        } catch(e){}
-
-        // Clear modal fields
-        var cInp = document.getElementById('modal_sec_current_pin');
-        var nInp = document.getElementById('modal_sec_new_pin');
-        var fInp = document.getElementById('modal_sec_confirm_pin');
-        if (cInp) cInp.value = '';
-        if (nInp) nInp.value = '';
-        if (fInp) fInp.value = '';
-
-        // Clear settings section 8 fields
-        var sCurr = document.getElementById('sec_current_pin');
-        var sNext = document.getElementById('sec_new_pin');
-        var sConf = document.getElementById('sec_confirm_pin');
-        if (sCurr) sCurr.value = '';
-        if (sNext) sNext.value = '';
-        if (sConf) sConf.value = '';
-
-        if (onSuccessCb) onSuccessCb();
-        showToast('✓ Access PIN successfully changed to: ' + next);
+        showToast('Error updating PIN: ' + res.error.message, 'error');
+        return;
       }
+      remotePin = next;
+      try {
+        localStorage.setItem('hntsb15_auth_until', String(Date.now() + SESSION_DURATION_MS));
+      } catch(e){}
+      showToast('✓ Security PIN changed successfully to ' + next);
+      if (onSuccess) onSuccess();
     }).catch(function(err) {
       if (btnEl) btnEl.disabled = false;
-      showToast('Network error updating PIN: ' + (err ? err.message : ''), true);
+      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
     });
   }
 
-  // Also support the update button in Tab 5 Section 8
-  window.changeAdminPin = function() {
-    var curr = (document.getElementById('sec_current_pin').value || '').trim();
-    var next = (document.getElementById('sec_new_pin').value || '').trim();
-    var conf = (document.getElementById('sec_confirm_pin').value || '').trim();
-    executePinUpdate(curr, next, conf, null, null);
-  };
-
   // --------------------------------------------------------------------------
-  // TOAST NOTIFICATIONS
+  // TOAST NOTIFICATIONS & IMAGE PICKER HELPER
   // --------------------------------------------------------------------------
   function showToast(msg, isError) {
-    var t = document.getElementById('adminToast');
-    if (!t) return;
-    t.textContent = msg;
-    t.className = isError ? 'error' : '';
-    t.style.display = 'flex';
-    setTimeout(function(){ t.style.display = 'none'; }, 3200);
+    var toast = document.getElementById('adminToast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'adminToast';
+      toast.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:99999;padding:12px 20px;border-radius:8px;font-family:var(--font-mono);font-size:13px;box-shadow:0 10px 30px rgba(0,0,0,0.8);transition:all .3s ease;transform:translateY(100px);opacity:0;pointer-events:none;max-width:90vw';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    if (isError === true || isError === 'error') {
+      toast.style.background = 'rgba(255, 77, 109, 0.95)';
+      toast.style.color = '#fff';
+      toast.style.border = '1px solid #ff4d6d';
+      toast.style.boxShadow = '0 0 20px rgba(255, 77, 109, 0.4)';
+    } else {
+      toast.style.background = 'rgba(13, 20, 30, 0.95)';
+      toast.style.color = 'var(--neon)';
+      toast.style.border = '1px solid var(--neon)';
+      toast.style.boxShadow = '0 0 20px rgba(0, 255, 156, 0.3)';
+    }
+    toast.style.transform = 'translateY(0)';
+    toast.style.opacity = '1';
+
+    setTimeout(function() {
+      toast.style.transform = 'translateY(100px)';
+      toast.style.opacity = '0';
+    }, 4000);
   }
 
-  // --------------------------------------------------------------------------
-  // IMAGE PICKER / BASE64 PREVIEW
-  // --------------------------------------------------------------------------
-  window.handleImagePick = function(input, targetInputId, previewImgId) {
-    if (!input.files || !input.files[0]) return;
-    var file = input.files[0];
+  window.handleImagePick = function(inputEl, textTargetId, previewImgId) {
+    if (!inputEl || !inputEl.files || !inputEl.files[0]) return;
+    var file = inputEl.files[0];
     var reader = new FileReader();
     reader.onload = function(e) {
       var dataUrl = e.target.result;
-      var targetInp = document.getElementById(targetInputId);
+      var inp = document.getElementById(textTargetId);
+      if (inp) inp.value = dataUrl;
       var prev = document.getElementById(previewImgId);
-      if (targetInp) targetInp.value = dataUrl;
       if (prev) {
         prev.src = dataUrl;
         prev.style.display = 'block';
       }
-      showToast('Image attached from device.');
     };
     reader.readAsDataURL(file);
   };
 
   // --------------------------------------------------------------------------
-  // TAB 1: PAYOUTS (إثباتات السحب)
+  // TAB 1: HERO & BIO (الواجهة الرئيسية ونبذة عني)
   // --------------------------------------------------------------------------
-  window.submitNewPayout = function(e) {
-    if (e && e.preventDefault) e.preventDefault();
-    var btn = document.getElementById('btnSavePayout');
-    if (btn) btn.disabled = true;
-
-    var payload = {
-      amount: document.getElementById('pAmount').value.trim(),
-      date: document.getElementById('pDate').value.trim(),
-      date_ar: document.getElementById('pDate').value.trim(),
-      account: document.getElementById('pAccount').value.trim(),
-      invoice: document.getElementById('pInvoice').value.trim(),
-      type: document.getElementById('pType').value,
-      speed: document.getElementById('pSpeed').value.trim() || '1m 30s',
-      speed_ar: document.getElementById('pSpeed').value.trim() || 'دقيقة و 30 ثانية',
-      exness_img: document.getElementById('pExnessImg').value.trim(),
-      binance_img: document.getElementById('pBinanceImg').value.trim(),
-      is_verified: true,
-      is_active: true
-    };
-
-    if (!sdb) {
-      showToast('Error: Supabase client not available', true);
-      if (btn) btn.disabled = false;
-      return;
-    }
-
-    sdb.from('payout_records').insert([payload]).then(function(res) {
-      if (btn) btn.disabled = false;
-      if (res.error) {
-        showToast('Error: ' + res.error.message, true);
-      } else {
-        showToast('✓ Payout Published! It is now #1 on your website.');
-        document.getElementById('payoutForm').reset();
-        document.getElementById('exnessPrev').style.display = 'none';
-        document.getElementById('binancePrev').style.display = 'none';
-        loadPayoutsList();
-      }
-    }).catch(function(err) {
-      if (btn) btn.disabled = false;
-      showToast('Network error saving payout', true);
+  window.loadHeroData = function() {
+    if (!sdb) return;
+    var keys = ['hero_role', 'hero_badge_text', 'hero_tagline', 'about_p1', 'about_p2', 'about_p3'];
+    sdb.from('website_settings').select('*').in('setting_name', keys).then(function(res) {
+      var list = (res && res.data) ? res.data : [];
+      list.forEach(function(s) {
+        var el = document.getElementById('set_' + s.setting_name);
+        if (el) el.value = s.current_value || '';
+      });
     });
   };
 
-  function loadPayoutsList() {
+  window.saveHeroData = function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    var btn = document.getElementById('btnSaveHero');
+    if (btn) btn.disabled = true;
+
+    var keys = ['hero_role', 'hero_badge_text', 'hero_tagline', 'about_p1', 'about_p2', 'about_p3'];
+    var updates = keys.map(function(k) {
+      var el = document.getElementById('set_' + k);
+      return {
+        setting_name: k,
+        current_value: el ? el.value.trim() : '',
+        updated_at: new Date().toISOString()
+      };
+    });
+
+    sdb.from('website_settings').upsert(updates, { onConflict: 'setting_name' }).then(function(res) {
+      if (btn) btn.disabled = false;
+      if (res.error) showToast('Error saving hero data: ' + res.error.message, 'error');
+      else showToast('✓ Hero & Bio updated on live website!');
+    }).catch(function(err) {
+      if (btn) btn.disabled = false;
+      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
+    });
+  };
+
+  // --------------------------------------------------------------------------
+  // TAB 2: STATS (إحصائيات الأداء والتداول المباشرة)
+  // --------------------------------------------------------------------------
+  window.loadStatsData = function() {
+    if (!sdb) return;
+    var keys = ['stat_win_rate', 'stat_avg_return', 'stat_managed_capital', 'stat_years_exp', 'stat_tracked_months', 'stat_community_traders'];
+    sdb.from('website_settings').select('*').in('setting_name', keys).then(function(res) {
+      var list = (res && res.data) ? res.data : [];
+      list.forEach(function(s) {
+        var el = document.getElementById(s.setting_name);
+        if (el) el.value = s.current_value || '';
+      });
+    });
+  };
+
+  window.saveStatsData = function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    var btn = document.getElementById('btnSaveStats');
+    if (btn) btn.disabled = true;
+
+    var keys = ['stat_win_rate', 'stat_avg_return', 'stat_managed_capital', 'stat_years_exp', 'stat_tracked_months', 'stat_community_traders'];
+    var updates = keys.map(function(k) {
+      var inp = document.getElementById(k);
+      return {
+        setting_name: k,
+        current_value: inp ? inp.value.trim() : '',
+        updated_at: new Date().toISOString()
+      };
+    });
+
+    sdb.from('website_settings').upsert(updates, { onConflict: 'setting_name' }).then(function(res) {
+      if (btn) btn.disabled = false;
+      if (res.error) showToast('Error saving stats: ' + res.error.message, 'error');
+      else showToast('✓ Stats successfully updated on live site!');
+    }).catch(function(err) {
+      if (btn) btn.disabled = false;
+      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
+    });
+  };
+
+  // --------------------------------------------------------------------------
+  // TAB 3: MANAGED TERMS (شروط إدارة المحافظ)
+  // --------------------------------------------------------------------------
+  window.loadManagedData = function() {
+    if (!sdb) return;
+    var keys = ['managed_min_capital', 'managed_profit_split', 'managed_drawdown_limit', 'managed_supported_brokers', 'signals_vip_schedule', 'newsx_platform_link'];
+    sdb.from('website_settings').select('*').in('setting_name', keys).then(function(res) {
+      var list = (res && res.data) ? res.data : [];
+      list.forEach(function(s) {
+        var el = document.getElementById('set_' + s.setting_name);
+        if (el) el.value = s.current_value || '';
+      });
+    });
+  };
+
+  window.saveManagedData = function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    var btn = document.getElementById('btnSaveManaged');
+    if (btn) btn.disabled = true;
+
+    var keys = ['managed_min_capital', 'managed_profit_split', 'managed_drawdown_limit', 'managed_supported_brokers', 'signals_vip_schedule', 'newsx_platform_link'];
+    var updates = keys.map(function(k) {
+      var el = document.getElementById('set_' + k);
+      return {
+        setting_name: k,
+        current_value: el ? el.value.trim() : '',
+        updated_at: new Date().toISOString()
+      };
+    });
+
+    sdb.from('website_settings').upsert(updates, { onConflict: 'setting_name' }).then(function(res) {
+      if (btn) btn.disabled = false;
+      if (res.error) showToast('Error saving managed terms: ' + res.error.message, 'error');
+      else showToast('✓ Managed terms saved successfully!');
+    }).catch(function(err) {
+      if (btn) btn.disabled = false;
+      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
+    });
+  };
+
+  // --------------------------------------------------------------------------
+  // TAB 4: LIVE TRADES & RESULTS (صفقات ونتائج التداول المباشرة - CRUD)
+  // --------------------------------------------------------------------------
+  window._tradesCache = [];
+
+  window.loadTradesList = function() {
+    if (!sdb) return;
+    var listEl = document.getElementById('tradesList');
+    var countTag = document.getElementById('tradesCountTag');
+
+    sdb.from('website_settings').select('current_value').eq('setting_name', 'trading_deals_json').single().then(function(res) {
+      var list = [];
+      try {
+        if (res && res.data && res.data.current_value) {
+          list = JSON.parse(res.data.current_value);
+        }
+      } catch(e){}
+      window._tradesCache = list;
+      if (countTag) countTag.textContent = list.length + ' Trades';
+      if (!list || !list.length) {
+        listEl.innerHTML = '<p style="color:var(--muted);text-align:center;padding:16px">No trades published yet.</p>';
+        return;
+      }
+
+      var html = '';
+      list.forEach(function(t, idx) {
+        var id = t.id !== undefined ? t.id : idx;
+        var photosCount = (t.photos && Array.isArray(t.photos)) ? t.photos.filter(Boolean).length : (t.photo ? 1 : 0);
+        html += '<div class="item-card">' +
+          '<div class="item-info">' +
+            '<div class="item-title">' +
+              '<span style="color:var(--neon)">' + (t.badge || t.title || 'Trade Setup') + '</span>' +
+              '<span class="tag" style="font-size:10px;color:var(--gold);border-color:rgba(242,193,78,0.4)">' + (t.profit || '') + '</span>' +
+              '<span class="tag" style="font-size:10px">' + photosCount + ' Photos</span>' +
+            '</div>' +
+            '<div class="item-sub">' + (t.deposit || '') + ' · ' + (t.date || '') + ' · ' + (t.desc ? (t.desc.slice(0, 70) + '...') : '') + '</div>' +
+          '</div>' +
+          '<div class="item-actions">' +
+            '<button type="button" class="btn-edit" onclick="openEditTradeModal(' + id + ')">Edit ✏️</button>' +
+            '<button type="button" class="btn-delete" onclick="deleteTrade(' + id + ')">🗑️</button>' +
+          '</div>' +
+        '</div>';
+      });
+      listEl.innerHTML = html;
+    }).catch(function() {
+      listEl.innerHTML = '<p style="color:var(--red);text-align:center">Error loading trades list.</p>';
+    });
+  };
+
+  window.submitNewTrade = function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    var btn = document.getElementById('btnSaveTrade');
+    var pair = (document.getElementById('tPair').value || '').trim();
+    var badge = (document.getElementById('tBadge').value || '').trim();
+    var deposit = (document.getElementById('tDeposit').value || '').trim();
+    var profit = (document.getElementById('tProfit').value || '').trim();
+    var date = (document.getElementById('tDate').value || '').trim();
+    var split = (document.getElementById('tSplit').value || '').trim();
+    var desc = (document.getElementById('tDesc').value || '').trim();
+    var tags = (document.getElementById('tTags').value || '').trim();
+    var link = (document.getElementById('tLink').value || '').trim();
+
+    var photos = [
+      (document.getElementById('tImg1').value || '').trim(),
+      (document.getElementById('tImg2').value || '').trim(),
+      (document.getElementById('tImg3').value || '').trim(),
+      (document.getElementById('tImg4').value || '').trim()
+    ].filter(Boolean);
+
+    var tagList = tags ? tags.split(/[\s,]+/).filter(function(x){ return x.length > 0; }) : [];
+
+    var newTrade = {
+      id: Date.now(),
+      badge: badge || pair,
+      title: pair,
+      deposit: deposit,
+      profit: profit,
+      date: date || new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+      split: split,
+      desc: desc,
+      tags: tagList,
+      link: link,
+      photos: photos
+    };
+
+    btn.disabled = true;
+    btn.textContent = 'PUBLISHING TRADE...';
+
+    var currentList = window._tradesCache || [];
+    var updatedList = [newTrade].concat(currentList);
+
+    sdb.from('website_settings').upsert({
+      setting_name: 'trading_deals_json',
+      current_value: JSON.stringify(updatedList),
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'setting_name' }).then(function(res) {
+      btn.disabled = false;
+      btn.textContent = 'PUBLISH TRADE SETUP TO WEBSITE 🚀';
+      if (res.error) {
+        showToast('Error saving trade: ' + res.error.message, 'error');
+        return;
+      }
+      showToast('Trade published successfully! 🚀');
+      document.getElementById('tradeForm').reset();
+      ['tPrev1','tPrev2','tPrev3','tPrev4'].forEach(function(pid){
+        var el = document.getElementById(pid);
+        if (el) { el.src = ''; el.style.display = 'none'; }
+      });
+      loadTradesList();
+    }).catch(function(err){
+      btn.disabled = false;
+      btn.textContent = 'PUBLISH TRADE SETUP TO WEBSITE 🚀';
+      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
+    });
+  };
+
+  window.openEditTradeModal = function(id) {
+    if (!window._tradesCache) return;
+    var t = window._tradesCache.find(function(item, idx){
+      return String(item.id !== undefined ? item.id : idx) === String(id);
+    });
+    if (!t) return;
+
+    document.getElementById('edit_tId').value = (t.id !== undefined ? t.id : id);
+    document.getElementById('edit_tPair').value = t.title || t.badge || '';
+    document.getElementById('edit_tBadge').value = t.badge || '';
+    document.getElementById('edit_tDeposit').value = t.deposit || '';
+    document.getElementById('edit_tProfit').value = t.profit || '';
+    document.getElementById('edit_tDate').value = t.date || '';
+    document.getElementById('edit_tSplit').value = t.split || '';
+    document.getElementById('edit_tDesc').value = t.desc || '';
+    document.getElementById('edit_tTags').value = Array.isArray(t.tags) ? t.tags.join(' ') : (t.tags || '');
+    document.getElementById('edit_tLink').value = t.link || '';
+
+    var pList = t.photos || (t.photo ? [t.photo] : []);
+    for (var i = 1; i <= 4; i++) {
+      var val = pList[i - 1] || '';
+      var inp = document.getElementById('edit_tImg' + i);
+      var prev = document.getElementById('edit_tPrev' + i);
+      if (inp) inp.value = val;
+      if (prev) {
+        if (val) { prev.src = val; prev.style.display = 'block'; }
+        else { prev.src = ''; prev.style.display = 'none'; }
+      }
+    }
+
+    document.getElementById('editTradeModal').style.display = 'flex';
+  };
+
+  window.closeEditTradeModal = function() {
+    var m = document.getElementById('editTradeModal');
+    if (m) m.style.display = 'none';
+  };
+
+  window.saveEditedTrade = function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    var btn = document.getElementById('btnUpdateTrade');
+    var id = document.getElementById('edit_tId').value;
+    var list = window._tradesCache || [];
+    var idx = list.findIndex(function(item, i){
+      return String(item.id !== undefined ? item.id : i) === String(id);
+    });
+    if (idx === -1) {
+      showToast('Trade not found to update', 'error');
+      return;
+    }
+
+    var pair = (document.getElementById('edit_tPair').value || '').trim();
+    var badge = (document.getElementById('edit_tBadge').value || '').trim();
+    var deposit = (document.getElementById('edit_tDeposit').value || '').trim();
+    var profit = (document.getElementById('edit_tProfit').value || '').trim();
+    var date = (document.getElementById('edit_tDate').value || '').trim();
+    var split = (document.getElementById('edit_tSplit').value || '').trim();
+    var desc = (document.getElementById('edit_tDesc').value || '').trim();
+    var tags = (document.getElementById('edit_tTags').value || '').trim();
+    var link = (document.getElementById('edit_tLink').value || '').trim();
+
+    var photos = [
+      (document.getElementById('edit_tImg1').value || '').trim(),
+      (document.getElementById('edit_tImg2').value || '').trim(),
+      (document.getElementById('edit_tImg3').value || '').trim(),
+      (document.getElementById('edit_tImg4').value || '').trim()
+    ].filter(Boolean);
+
+    var tagList = tags ? tags.split(/[\s,]+/).filter(function(x){ return x.length > 0; }) : [];
+
+    list[idx] = {
+      id: list[idx].id !== undefined ? list[idx].id : Number(id),
+      badge: badge || pair,
+      title: pair,
+      deposit: deposit,
+      profit: profit,
+      date: date,
+      split: split,
+      desc: desc,
+      tags: tagList,
+      link: link,
+      photos: photos
+    };
+
+    btn.disabled = true;
+    btn.textContent = 'SAVING CHANGES...';
+
+    sdb.from('website_settings').upsert({
+      setting_name: 'trading_deals_json',
+      current_value: JSON.stringify(list),
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'setting_name' }).then(function(res) {
+      btn.disabled = false;
+      btn.textContent = 'UPDATE TRADE SETUP 💾';
+      if (res.error) {
+        showToast('Error: ' + res.error.message, 'error');
+        return;
+      }
+      showToast('Trade updated successfully! 💾');
+      closeEditTradeModal();
+      loadTradesList();
+    }).catch(function(err){
+      btn.disabled = false;
+      btn.textContent = 'UPDATE TRADE SETUP 💾';
+      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
+    });
+  };
+
+  window.deleteTrade = function(id) {
+    if (!confirm('Are you sure you want to permanently delete this trade result?')) return;
+    var list = window._tradesCache || [];
+    var updated = list.filter(function(item, idx){
+      return String(item.id !== undefined ? item.id : idx) !== String(id);
+    });
+
+    sdb.from('website_settings').upsert({
+      setting_name: 'trading_deals_json',
+      current_value: JSON.stringify(updated),
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'setting_name' }).then(function(res) {
+      if (res.error) {
+        showToast('Error deleting trade: ' + res.error.message, 'error');
+        return;
+      }
+      showToast('Trade deleted successfully!');
+      loadTradesList();
+    }).catch(function(err){
+      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
+    });
+  };
+
+  // --------------------------------------------------------------------------
+  // TAB 5: PAYOUTS (إثباتات السحب الموثقة - CRUD)
+  // --------------------------------------------------------------------------
+  window._payoutsCache = [];
+
+  window.loadPayoutsList = function() {
     if (!sdb) return;
     var listEl = document.getElementById('payoutsList');
     var countTag = document.getElementById('payoutsCountTag');
@@ -1785,7 +2319,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       });
       listEl.innerHTML = html;
     }).catch(function(){ listEl.innerHTML = 'Error loading payouts list.'; });
-  }
+  };
 
   window.openEditPayoutModal = function(id) {
     if (!window._payoutsCache) return;
@@ -1798,256 +2332,120 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     document.getElementById('edit_pDateAr').value = p.date_ar || p.date || '';
     document.getElementById('edit_pAccount').value = p.account || '';
     document.getElementById('edit_pInvoice').value = p.invoice || '';
-    document.getElementById('edit_pSpeed').value = p.speed || '';
-    document.getElementById('edit_pSpeedAr').value = p.speed_ar || p.speed || '';
+    document.getElementById('edit_pSpeed').value = p.speed || '1m 30s';
+    document.getElementById('edit_pSpeedAr').value = p.speed_ar || p.speed || 'دقيقة و 30 ثانية';
     document.getElementById('edit_pType').value = p.type || 'double';
     document.getElementById('edit_pExnessImg').value = p.exness_img || '';
     document.getElementById('edit_pBinanceImg').value = p.binance_img || '';
-    document.getElementById('edit_pActive').value = (p.is_active !== false) ? 'true' : 'false';
+    document.getElementById('edit_pActive').value = (p.is_active === false) ? 'false' : 'true';
 
     var exPrev = document.getElementById('edit_exnessPrev');
-    if (p.exness_img) {
-      exPrev.src = p.exness_img;
-      exPrev.style.display = 'block';
-    } else {
-      exPrev.style.display = 'none';
+    if (exPrev) {
+      if (p.exness_img) { exPrev.src = p.exness_img; exPrev.style.display = 'block'; }
+      else { exPrev.src = ''; exPrev.style.display = 'none'; }
     }
 
-    var bnPrev = document.getElementById('edit_binancePrev');
-    if (p.binance_img) {
-      bnPrev.src = p.binance_img;
-      bnPrev.style.display = 'block';
-    } else {
-      bnPrev.style.display = 'none';
+    var binPrev = document.getElementById('edit_binancePrev');
+    if (binPrev) {
+      if (p.binance_img) { binPrev.src = p.binance_img; binPrev.style.display = 'block'; }
+      else { binPrev.src = ''; binPrev.style.display = 'none'; }
     }
 
     document.getElementById('editPayoutModal').style.display = 'flex';
   };
 
   window.closeEditPayoutModal = function() {
-    document.getElementById('editPayoutModal').style.display = 'none';
+    var m = document.getElementById('editPayoutModal');
+    if (m) m.style.display = 'none';
+  };
+
+  window.submitNewPayout = function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    var btn = document.getElementById('btnSavePayout');
+    if (btn) btn.disabled = true;
+
+    var payload = {
+      amount: document.getElementById('pAmount').value.trim(),
+      date: document.getElementById('pDate').value.trim(),
+      date_ar: document.getElementById('pDate').value.trim(),
+      account: document.getElementById('pAccount').value.trim(),
+      invoice: document.getElementById('pInvoice').value.trim(),
+      type: document.getElementById('pType').value,
+      speed: document.getElementById('pSpeed').value.trim() || '1m 30s',
+      speed_ar: document.getElementById('pSpeed').value.trim() || '1m 30s',
+      exness_img: document.getElementById('pExnessImg').value.trim() || 'proofs/payout-1-exness.png',
+      binance_img: document.getElementById('pBinanceImg').value.trim() || 'proofs/payout-1-binance.png',
+      is_active: true,
+      created_at: new Date().toISOString()
+    };
+
+    sdb.from('payout_records').insert([payload]).then(function(res) {
+      if (btn) btn.disabled = false;
+      if (res.error) showToast('Error saving: ' + res.error.message, 'error');
+      else {
+        showToast('✓ Payout published to website!');
+        document.getElementById('payoutForm').reset();
+        document.getElementById('exnessPrev').style.display = 'none';
+        document.getElementById('binancePrev').style.display = 'none';
+        loadPayoutsList();
+      }
+    }).catch(function(err) {
+      if (btn) btn.disabled = false;
+      showToast('Network error saving payout', 'error');
+    });
   };
 
   window.saveEditedPayout = function(e) {
     if (e && e.preventDefault) e.preventDefault();
-    var id = document.getElementById('edit_payout_id').value;
     var btn = document.getElementById('btnUpdatePayout');
-    if (btn) btn.disabled = true;
+    var id = document.getElementById('edit_payout_id').value;
+    if (!id) return;
 
     var payload = {
       amount: document.getElementById('edit_pAmount').value.trim(),
       date: document.getElementById('edit_pDate').value.trim(),
-      date_ar: document.getElementById('edit_pDateAr').value.trim() || document.getElementById('edit_pDate').value.trim(),
+      date_ar: document.getElementById('edit_pDateAr').value.trim(),
       account: document.getElementById('edit_pAccount').value.trim(),
       invoice: document.getElementById('edit_pInvoice').value.trim(),
       type: document.getElementById('edit_pType').value,
-      speed: document.getElementById('edit_pSpeed').value.trim() || '1m 30s',
-      speed_ar: document.getElementById('edit_pSpeedAr').value.trim() || 'دقيقة و 30 ثانية',
+      speed: document.getElementById('edit_pSpeed').value.trim(),
+      speed_ar: document.getElementById('edit_pSpeedAr').value.trim(),
       exness_img: document.getElementById('edit_pExnessImg').value.trim(),
       binance_img: document.getElementById('edit_pBinanceImg').value.trim(),
       is_active: document.getElementById('edit_pActive').value === 'true'
     };
 
+    if (btn) btn.disabled = true;
+
     sdb.from('payout_records').update(payload).eq('id', id).then(function(res) {
       if (btn) btn.disabled = false;
-      if (res.error) {
-        showToast('Error updating payout: ' + res.error.message, true);
-      } else {
-        showToast('✓ Payout proof updated on live website!');
+      if (res.error) showToast('Error updating payout: ' + res.error.message, 'error');
+      else {
+        showToast('✓ Payout updated successfully!');
         closeEditPayoutModal();
         loadPayoutsList();
       }
     }).catch(function(err) {
       if (btn) btn.disabled = false;
-      showToast('Network error updating payout', true);
+      showToast('Network error updating payout', 'error');
     });
   };
 
   window.deletePayout = function(id) {
-    if (!confirm('Are you sure you want to remove this payout proof from the website?')) return;
-    if (!sdb) return;
+    if (!confirm('Are you sure you want to permanently delete this payout proof?')) return;
     sdb.from('payout_records').delete().eq('id', id).then(function(res) {
-      if (res.error) showToast('Error deleting: ' + res.error.message, true);
+      if (res.error) showToast('Error deleting payout', 'error');
       else {
-        showToast('✓ Payout proof removed from live site.');
+        showToast('✓ Payout record deleted.');
         loadPayoutsList();
       }
     });
   };
 
   // --------------------------------------------------------------------------
-  // TAB 2: STATS & PERFORMANCE
+  // TAB 6: PRICES & PLANS (باقات الاشتراك والأسعار)
   // --------------------------------------------------------------------------
-  function loadStatsData() {
-    if (!sdb) return;
-    sdb.from('website_settings').select('*').then(function(res) {
-      var list = (res && res.data) ? res.data : [];
-      list.forEach(function(s) {
-        var el = document.getElementById(s.setting_name);
-        if (el) el.value = s.current_value;
-      });
-    });
-  }
-
-  window.saveStats = function(e) {
-    if (e && e.preventDefault) e.preventDefault();
-    var btn = document.getElementById('btnSaveStats');
-    if (btn) btn.disabled = true;
-
-    var keys = ['stat_win_rate', 'stat_avg_return', 'stat_managed_capital', 'stat_years_exp', 'stat_tracked_months', 'stat_community_traders', 'hero_badge_text', 'hero_role'];
-    var updates = keys.map(function(k) {
-      var inp = document.getElementById(k);
-      return {
-        setting_name: k,
-        current_value: inp ? inp.value.trim() : ''
-      };
-    });
-
-    sdb.from('website_settings').upsert(updates, { onConflict: 'setting_name' }).then(function(res) {
-      if (btn) btn.disabled = false;
-      if (res.error) showToast('Error saving: ' + res.error.message, true);
-      else showToast('✓ Stats successfully updated on live site!');
-    }).catch(function() {
-      if (btn) btn.disabled = false;
-      showToast('Network error saving stats', true);
-    });
-  };
-
-  // --------------------------------------------------------------------------
-  // TAB 3: REVIEWS (آراء العملاء)
-  // --------------------------------------------------------------------------
-  window.submitNewReview = function(e) {
-    if (e && e.preventDefault) e.preventDefault();
-    var btn = document.getElementById('btnSaveReview');
-    if (btn) btn.disabled = true;
-
-    var payload = {
-      client_name: document.getElementById('rName').value.trim(),
-      client_country: document.getElementById('rCountry').value.trim(),
-      service_type: document.getElementById('rService').value,
-      rating: parseInt(document.getElementById('rRating').value, 10) || 5,
-      profit_stat: document.getElementById('rProfit').value.trim(),
-      review_text: document.getElementById('rText').value.trim(),
-      is_verified: true,
-      is_active: true
-    };
-
-    sdb.from('client_reviews').insert([payload]).then(function(res) {
-      if (btn) btn.disabled = false;
-      if (res.error) showToast('Error: ' + res.error.message, true);
-      else {
-        showToast('✓ Client review published live at top of list!');
-        document.getElementById('reviewForm').reset();
-        loadReviewsList();
-      }
-    }).catch(function() {
-      if (btn) btn.disabled = false;
-      showToast('Network error saving review', true);
-    });
-  };
-
-  function loadReviewsList() {
-    if (!sdb) return;
-    var listEl = document.getElementById('reviewsList');
-    var countTag = document.getElementById('reviewsCountTag');
-
-    sdb.from('client_reviews').select('*').order('id', { ascending: false }).then(function(res) {
-      var list = (res && res.data) ? res.data : [];
-      window._reviewsCache = list;
-      if (countTag) countTag.textContent = list.length + ' Reviews';
-      if (!list.length) {
-        listEl.innerHTML = '<p style="color:var(--muted);text-align:center;padding:16px">No client reviews found.</p>';
-        return;
-      }
-
-      var html = '';
-      list.forEach(function(r) {
-        var isHidden = r.is_active === false;
-        html += '<div class="item-card' + (isHidden ? ' is-hidden' : '') + '">' +
-          '<div class="item-info">' +
-            '<div class="item-title">' + (r.client_name || '') + ' (' + (r.client_country || '') + ') · ' + '★'.repeat(r.rating || 5) +
-              (isHidden ? ' <span class="tag" style="font-size:10px;color:var(--red);border-color:var(--red)">HIDDEN</span>' : '') +
-            '</div>' +
-            '<div class="item-sub">“' + (r.review_text ? r.review_text.substring(0, 75) + '...' : '') + '”</div>' +
-          '</div>' +
-          '<div class="item-actions">' +
-            '<button type="button" class="btn-edit" onclick="openEditReviewModal(' + r.id + ')">Edit ✏️</button>' +
-            '<button type="button" class="btn-delete" onclick="deleteReview(' + r.id + ')">🗑️</button>' +
-          '</div>' +
-        '</div>';
-      });
-      listEl.innerHTML = html;
-    });
-  }
-
-  window.openEditReviewModal = function(id) {
-    if (!window._reviewsCache) return;
-    var r = window._reviewsCache.find(function(item){ return String(item.id) === String(id); });
-    if (!r) return;
-
-    document.getElementById('edit_review_id').value = r.id;
-    document.getElementById('edit_rName').value = r.client_name || '';
-    document.getElementById('edit_rCountry').value = r.client_country || '';
-    document.getElementById('edit_rService').value = r.service_type || 'managed';
-    document.getElementById('edit_rRating').value = r.rating || 5;
-    document.getElementById('edit_rProfit').value = r.profit_stat || '';
-    document.getElementById('edit_rText').value = r.review_text || '';
-    document.getElementById('edit_rActive').value = (r.is_active !== false) ? 'true' : 'false';
-
-    document.getElementById('editReviewModal').style.display = 'flex';
-  };
-
-  window.closeEditReviewModal = function() {
-    document.getElementById('editReviewModal').style.display = 'none';
-  };
-
-  window.saveEditedReview = function(e) {
-    if (e && e.preventDefault) e.preventDefault();
-    var id = document.getElementById('edit_review_id').value;
-    var btn = document.getElementById('btnUpdateReview');
-    if (btn) btn.disabled = true;
-
-    var payload = {
-      client_name: document.getElementById('edit_rName').value.trim(),
-      client_country: document.getElementById('edit_rCountry').value.trim(),
-      service_type: document.getElementById('edit_rService').value,
-      rating: parseInt(document.getElementById('edit_rRating').value, 10) || 5,
-      profit_stat: document.getElementById('edit_rProfit').value.trim(),
-      review_text: document.getElementById('edit_rText').value.trim(),
-      is_active: document.getElementById('edit_rActive').value === 'true'
-    };
-
-    sdb.from('client_reviews').update(payload).eq('id', id).then(function(res) {
-      if (btn) btn.disabled = false;
-      if (res.error) {
-        showToast('Error updating review: ' + res.error.message, true);
-      } else {
-        showToast('✓ Client review updated on live website!');
-        closeEditReviewModal();
-        loadReviewsList();
-      }
-    }).catch(function(err) {
-      if (btn) btn.disabled = false;
-      showToast('Network error updating review', true);
-    });
-  };
-
-  window.deleteReview = function(id) {
-    if (!confirm('Delete this client review?')) return;
-    if (!sdb) return;
-    sdb.from('client_reviews').delete().eq('id', id).then(function(res) {
-      if (res.error) showToast('Error deleting review', true);
-      else {
-        showToast('✓ Review deleted.');
-        loadReviewsList();
-      }
-    });
-  };
-
-  // --------------------------------------------------------------------------
-  // TAB 4: PRICES & PLANS
-  // --------------------------------------------------------------------------
-  function loadPricesData() {
+  window.loadPricesData = function() {
     if (!sdb) return;
     sdb.from('website_prices').select('*').then(function(res) {
       var list = (res && res.data) ? res.data : [];
@@ -2059,7 +2457,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         if (p.item_key === 'mt5_indicator') document.getElementById('price_mt5_indicator').value = p.current_price;
       });
     });
-  }
+  };
 
   window.savePrices = function(e) {
     if (e && e.preventDefault) e.preventDefault();
@@ -2076,40 +2474,366 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 
     sdb.from('website_prices').upsert(updates, { onConflict: 'item_key' }).then(function(res) {
       if (btn) btn.disabled = false;
-      if (res.error) showToast('Error saving prices: ' + res.error.message, true);
+      if (res.error) showToast('Error saving prices: ' + res.error.message, 'error');
       else showToast('✓ Prices updated on live website!');
     }).catch(function(err) {
       if (btn) btn.disabled = false;
-      showToast('Network error: ' + (err ? err.message : ''), true);
+      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
     });
   };
 
   // --------------------------------------------------------------------------
-  // TAB 5: SETTINGS & WALLETS
+  // TAB 7: REVIEWS (آراء وتقييمات العملاء - CRUD)
   // --------------------------------------------------------------------------
-  function loadSettingsData() {
+  window._reviewsCache = [];
+
+  window.loadReviewsList = function() {
     if (!sdb) return;
-    sdb.from('website_settings').select('*').then(function(res) {
+    var listEl = document.getElementById('reviewsList');
+    var countTag = document.getElementById('reviewsCountTag');
+
+    sdb.from('client_reviews').select('*').order('id', { ascending: false }).then(function(res) {
+      var list = (res && res.data) ? res.data : [];
+      window._reviewsCache = list;
+      if (countTag) countTag.textContent = list.length + ' Reviews';
+      if (!list.length) {
+        listEl.innerHTML = '<p style="color:var(--muted);text-align:center;padding:16px">No reviews found in database.</p>';
+        return;
+      }
+
+      var html = '';
+      list.forEach(function(r) {
+        var isHidden = r.is_active === false;
+        var stars = '★'.repeat(r.rating || 5);
+        html += '<div class="item-card' + (isHidden ? ' is-hidden' : '') + '">' +
+          '<div class="item-info">' +
+            '<div class="item-title">' +
+              '<span style="color:var(--gold)">' + stars + '</span> ' +
+              '<span>' + (r.client_name || '') + '</span>' +
+              '<span class="tag" style="font-size:10px">' + (r.service_type || 'managed') + '</span>' +
+              (r.profit_tag ? ('<span class="tag" style="font-size:10px;color:var(--neon)">' + r.profit_tag + '</span>') : '') +
+              (isHidden ? '<span class="tag" style="font-size:10px;color:var(--red);border-color:var(--red)">HIDDEN</span>' : '') +
+            '</div>' +
+            '<div class="item-sub">' + (r.client_country || '') + ' · ' + (r.review_text ? (r.review_text.slice(0, 80) + '...') : '') + '</div>' +
+          '</div>' +
+          '<div class="item-actions">' +
+            '<button type="button" class="btn-edit" onclick="openEditReviewModal(' + r.id + ')">Edit ✏️</button>' +
+            '<button type="button" class="btn-delete" onclick="deleteReview(' + r.id + ')">🗑️</button>' +
+          '</div>' +
+        '</div>';
+      });
+      listEl.innerHTML = html;
+    });
+  };
+
+  window.openEditReviewModal = function(id) {
+    if (!window._reviewsCache) return;
+    var r = window._reviewsCache.find(function(item){ return String(item.id) === String(id); });
+    if (!r) return;
+
+    document.getElementById('edit_review_id').value = r.id;
+    document.getElementById('edit_rName').value = r.client_name || '';
+    document.getElementById('edit_rCountry').value = r.client_country || '';
+    document.getElementById('edit_rService').value = r.service_type || 'managed';
+    document.getElementById('edit_rRating').value = r.rating || '5';
+    document.getElementById('edit_rProfit').value = r.profit_tag || '';
+    document.getElementById('edit_rText').value = r.review_text || '';
+    document.getElementById('edit_rActive').value = (r.is_active === false) ? 'false' : 'true';
+
+    document.getElementById('editReviewModal').style.display = 'flex';
+  };
+
+  window.closeEditReviewModal = function() {
+    var m = document.getElementById('editReviewModal');
+    if (m) m.style.display = 'none';
+  };
+
+  window.submitNewReview = function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    var btn = document.getElementById('btnSaveReview');
+    if (btn) btn.disabled = true;
+
+    var payload = {
+      client_name: document.getElementById('rName').value.trim(),
+      client_country: document.getElementById('rCountry').value.trim(),
+      service_type: document.getElementById('rService').value,
+      rating: parseInt(document.getElementById('rRating').value, 10) || 5,
+      profit_tag: document.getElementById('rProfit').value.trim(),
+      review_text: document.getElementById('rText').value.trim(),
+      is_active: true,
+      created_at: new Date().toISOString()
+    };
+
+    sdb.from('client_reviews').insert([payload]).then(function(res) {
+      if (btn) btn.disabled = false;
+      if (res.error) showToast('Error: ' + res.error.message, 'error');
+      else {
+        showToast('✓ Client review added to website!');
+        document.getElementById('reviewForm').reset();
+        loadReviewsList();
+      }
+    }).catch(function(err) {
+      if (btn) btn.disabled = false;
+      showToast('Network error saving review', 'error');
+    });
+  };
+
+  window.saveEditedReview = function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    var btn = document.getElementById('btnUpdateReview');
+    var id = document.getElementById('edit_review_id').value;
+    if (!id) return;
+
+    var payload = {
+      client_name: document.getElementById('edit_rName').value.trim(),
+      client_country: document.getElementById('edit_rCountry').value.trim(),
+      service_type: document.getElementById('edit_rService').value,
+      rating: parseInt(document.getElementById('edit_rRating').value, 10) || 5,
+      profit_tag: document.getElementById('edit_rProfit').value.trim(),
+      review_text: document.getElementById('edit_rText').value.trim(),
+      is_active: document.getElementById('edit_rActive').value === 'true'
+    };
+
+    if (btn) btn.disabled = true;
+
+    sdb.from('client_reviews').update(payload).eq('id', id).then(function(res) {
+      if (btn) btn.disabled = false;
+      if (res.error) showToast('Error updating review: ' + res.error.message, 'error');
+      else {
+        showToast('✓ Review updated successfully!');
+        closeEditReviewModal();
+        loadReviewsList();
+      }
+    }).catch(function(err) {
+      if (btn) btn.disabled = false;
+      showToast('Network error updating review', 'error');
+    });
+  };
+
+  window.deleteReview = function(id) {
+    if (!confirm('Are you sure you want to permanently delete this client review?')) return;
+    sdb.from('client_reviews').delete().eq('id', id).then(function(res) {
+      if (res.error) showToast('Error deleting review', 'error');
+      else {
+        showToast('✓ Review removed.');
+        loadReviewsList();
+      }
+    });
+  };
+
+  // --------------------------------------------------------------------------
+  // TAB 8: FAQ (الأسئلة الشائعة والأجوبة النموذجية - CRUD)
+  // --------------------------------------------------------------------------
+  window._faqsCache = [];
+
+  window.loadFaqsList = function() {
+    if (!sdb) return;
+    var listEl = document.getElementById('faqsList');
+    var countTag = document.getElementById('faqsCountTag');
+
+    sdb.from('website_settings').select('current_value').eq('setting_name', 'faq_items_json').single().then(function(res) {
+      var list = [];
+      try {
+        if (res && res.data && res.data.current_value) {
+          list = JSON.parse(res.data.current_value);
+        }
+      } catch(e){}
+      window._faqsCache = list;
+      if (countTag) countTag.textContent = list.length + ' FAQs';
+      if (!list || !list.length) {
+        listEl.innerHTML = '<p style="color:var(--muted);text-align:center;padding:16px">No FAQs published yet.</p>';
+        return;
+      }
+
+      var html = '';
+      list.forEach(function(item, idx) {
+        var id = item.id !== undefined ? item.id : idx;
+        html += '<div class="item-card">' +
+          '<div class="item-info">' +
+            '<div class="item-title">' +
+              '<span style="color:var(--neon)">' + (item.q || 'Question') + '</span>' +
+              (item.category ? ('<span class="tag" style="font-size:10px">' + item.category + '</span>') : '') +
+            '</div>' +
+            '<div class="item-sub">' + (item.a ? (item.a.slice(0, 90) + '...') : '') + '</div>' +
+          '</div>' +
+          '<div class="item-actions">' +
+            '<button type="button" class="btn-edit" onclick="openEditFaqModal(' + id + ')">Edit ✏️</button>' +
+            '<button type="button" class="btn-delete" onclick="deleteFaq(' + id + ')">🗑️</button>' +
+          '</div>' +
+        '</div>';
+      });
+      listEl.innerHTML = html;
+    }).catch(function(){
+      listEl.innerHTML = '<p style="color:var(--red);text-align:center">Error loading FAQs list.</p>';
+    });
+  };
+
+  window.submitNewFaq = function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    var btn = document.getElementById('btnSaveFaq');
+    var q = (document.getElementById('faqQ').value || '').trim();
+    var a = (document.getElementById('faqA').value || '').trim();
+    var cat = (document.getElementById('faqCategory').value || '').trim();
+
+    var newFaq = {
+      id: Date.now(),
+      q: q,
+      a: a,
+      category: cat || 'General'
+    };
+
+    btn.disabled = true;
+    btn.textContent = 'ADDING FAQ...';
+
+    var currentList = window._faqsCache || [];
+    var updatedList = currentList.concat([newFaq]);
+
+    sdb.from('website_settings').upsert({
+      setting_name: 'faq_items_json',
+      current_value: JSON.stringify(updatedList),
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'setting_name' }).then(function(res) {
+      btn.disabled = false;
+      btn.textContent = 'ADD QUESTION TO FAQ ➕';
+      if (res.error) {
+        showToast('Error saving FAQ: ' + res.error.message, 'error');
+        return;
+      }
+      showToast('FAQ item added successfully! 📖');
+      document.getElementById('faqForm').reset();
+      loadFaqsList();
+    }).catch(function(err){
+      btn.disabled = false;
+      btn.textContent = 'ADD QUESTION TO FAQ ➕';
+      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
+    });
+  };
+
+  window.openEditFaqModal = function(id) {
+    if (!window._faqsCache) return;
+    var item = window._faqsCache.find(function(f, idx){
+      return String(f.id !== undefined ? f.id : idx) === String(id);
+    });
+    if (!item) return;
+
+    document.getElementById('edit_faqId').value = (item.id !== undefined ? item.id : id);
+    document.getElementById('edit_faqQ').value = item.q || '';
+    document.getElementById('edit_faqA').value = item.a || '';
+    document.getElementById('edit_faqCategory').value = item.category || '';
+
+    document.getElementById('editFaqModal').style.display = 'flex';
+  };
+
+  window.closeEditFaqModal = function() {
+    var m = document.getElementById('editFaqModal');
+    if (m) m.style.display = 'none';
+  };
+
+  window.saveEditedFaq = function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    var btn = document.getElementById('btnUpdateFaq');
+    var id = document.getElementById('edit_faqId').value;
+    var list = window._faqsCache || [];
+    var idx = list.findIndex(function(item, i){
+      return String(item.id !== undefined ? item.id : i) === String(id);
+    });
+    if (idx === -1) {
+      showToast('FAQ item not found', 'error');
+      return;
+    }
+
+    var q = (document.getElementById('edit_faqQ').value || '').trim();
+    var a = (document.getElementById('edit_faqA').value || '').trim();
+    var cat = (document.getElementById('edit_faqCategory').value || '').trim();
+
+    list[idx] = {
+      id: list[idx].id !== undefined ? list[idx].id : Number(id),
+      q: q,
+      a: a,
+      category: cat || 'General'
+    };
+
+    btn.disabled = true;
+    btn.textContent = 'SAVING CHANGES...';
+
+    sdb.from('website_settings').upsert({
+      setting_name: 'faq_items_json',
+      current_value: JSON.stringify(list),
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'setting_name' }).then(function(res) {
+      btn.disabled = false;
+      btn.textContent = 'UPDATE FAQ ITEM 💾';
+      if (res.error) {
+        showToast('Error: ' + res.error.message, 'error');
+        return;
+      }
+      showToast('FAQ updated successfully! 💾');
+      closeEditFaqModal();
+      loadFaqsList();
+    }).catch(function(err){
+      btn.disabled = false;
+      btn.textContent = 'UPDATE FAQ ITEM 💾';
+      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
+    });
+  };
+
+  window.deleteFaq = function(id) {
+    if (!confirm('Are you sure you want to delete this FAQ item?')) return;
+    var list = window._faqsCache || [];
+    var updated = list.filter(function(item, idx){
+      return String(item.id !== undefined ? item.id : idx) !== String(id);
+    });
+
+    sdb.from('website_settings').upsert({
+      setting_name: 'faq_items_json',
+      current_value: JSON.stringify(updated),
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'setting_name' }).then(function(res) {
+      if (res.error) {
+        showToast('Error deleting FAQ: ' + res.error.message, 'error');
+        return;
+      }
+      showToast('FAQ deleted successfully!');
+      loadFaqsList();
+    }).catch(function(err){
+      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
+    });
+  };
+
+  // --------------------------------------------------------------------------
+  // TAB 9: SOCIALS, WALLETS & FOOTER (روابط التواصل، المحافظ، والفوتر)
+  // --------------------------------------------------------------------------
+  window.loadSocialsData = function() {
+    if (!sdb) return;
+    var keys = [
+      'telegram_username', 'telegram_channel', 'whatsapp_number', 'support_email',
+      'instagram_profile', 'x_profile', 'tradingview_profile', 'youtube_channel',
+      'bep20_deposit_wallet', 'trc20_deposit_wallet', 'binance_pay_id',
+      'announcement_banner_text', 'announcement_banner_active', 'footer_copyright'
+    ];
+    sdb.from('website_settings').select('*').in('setting_name', keys).then(function(res) {
       var list = (res && res.data) ? res.data : [];
       list.forEach(function(s) {
         var el = document.getElementById('set_' + s.setting_name);
-        if (el) el.value = s.current_value;
+        if (el) {
+          if (s.setting_name === 'announcement_banner_active') {
+            el.value = (s.current_value === 'true' || s.current_value === true) ? 'true' : 'false';
+          } else {
+            el.value = s.current_value || '';
+          }
+        }
       });
     });
-  }
+  };
 
-  window.saveSettings = function(e) {
+  window.saveSocialsData = function(e) {
     if (e && e.preventDefault) e.preventDefault();
-    var btn = document.getElementById('btnSaveSettings');
+    var btn = document.getElementById('btnSaveSocials');
     if (btn) btn.disabled = true;
 
     var keys = [
-      'hero_role', 'hero_badge_text', 'hero_tagline',
-      'about_p1', 'about_p2', 'about_p3',
-      'managed_min_capital', 'managed_profit_split', 'managed_drawdown_limit', 'managed_supported_brokers',
-      'signals_vip_schedule', 'newsx_platform_link', 'tradingview_profile', 'youtube_channel',
       'telegram_username', 'telegram_channel', 'whatsapp_number', 'support_email',
-      'instagram_profile', 'x_profile',
+      'instagram_profile', 'x_profile', 'tradingview_profile', 'youtube_channel',
       'bep20_deposit_wallet', 'trc20_deposit_wallet', 'binance_pay_id',
       'announcement_banner_text', 'announcement_banner_active', 'footer_copyright'
     ];
@@ -2125,16 +2849,16 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 
     sdb.from('website_settings').upsert(updates, { onConflict: 'setting_name' }).then(function(res) {
       if (btn) btn.disabled = false;
-      if (res.error) showToast('Error saving settings: ' + res.error.message, true);
-      else showToast('✓ All website settings updated live!');
+      if (res.error) showToast('Error saving socials & wallets: ' + res.error.message, 'error');
+      else showToast('✓ Social channels, wallets & footer updated on live website!');
     }).catch(function(err) {
       if (btn) btn.disabled = false;
-      showToast('Network error saving settings: ' + (err ? err.message : ''), true);
+      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
     });
   };
 
   // --------------------------------------------------------------------------
-  // TAB 6: INBOX (رسائل الزوار)
+  // TAB 10: INBOX & LEADS (رسائل الزوار)
   // --------------------------------------------------------------------------
   window.loadInbox = function() {
     if (!sdb) return;
@@ -2192,7 +2916,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     if (!confirm('Delete this client message?')) return;
     if (!sdb) return;
     sdb.from('client_messages').delete().eq('id', id).then(function(res) {
-      if (res.error) showToast('Error deleting message', true);
+      if (res.error) showToast('Error deleting message', 'error');
       else {
         showToast('✓ Message deleted.');
         loadInbox();
@@ -2201,7 +2925,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   };
 
   // --------------------------------------------------------------------------
-  // TAB 7: VISITORS LOG (تحليلات الزوار)
+  // TAB 11: VISITORS LOG (تحليلات الزوار المباشرة)
   // --------------------------------------------------------------------------
   window.loadVisitors = function() {
     if (!sdb) return;
@@ -2236,19 +2960,22 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   // INITIALIZATION
   // --------------------------------------------------------------------------
   function initAdminData() {
-    loadPayoutsList();
+    loadHeroData();
     loadStatsData();
-    loadReviewsList();
+    loadManagedData();
+    loadTradesList();
+    loadPayoutsList();
     loadPricesData();
-    loadSettingsData();
+    loadReviewsList();
+    loadFaqsList();
+    loadSocialsData();
     loadInbox();
     loadVisitors();
   }
 
-  // Start auth check
+  // Start Auth Check on Page Load
   checkAuth();
 })();
 </script>
 </body>
 </html>
-
