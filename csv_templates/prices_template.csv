@@ -1,8 +1,2 @@
-item_key,item_name,current_price,old_price,discount_tag,duration,simple_guide,is_active
-newsx_standard,NewsX AI Standard Monthly,15,25,Standard,1 Month,اشتراك شهري في منصة NewsX AI للتحليل الآلي,TRUE
-newsx_pro,NewsX AI Pro VIP Monthly,25,45,Popular,1 Month,باقة NewsX AI الاحترافية مع تنبيهات تيليجرام الفورية,TRUE
-newsx_ultimate,NewsX AI Ultimate Master,50,90,Elite,1 Month,الباقة الشاملة مع متابعة وتوجيه مباشر 1-on-1,TRUE
-account_management,Institutional Account Management,0,0,50/50 Split,Ongoing,إدارة حسابات التداول بنظام تقاسم الأرباح 50/50,TRUE
-vip_gold_signals,VIP Gold & Forex Daily Signals,49,99,50% OFF,1 Month,توصيات VIP اليومية على الذهب والعملات مع أهداف محددة,TRUE
-mt5_indicator,Proprietary MT5 Volatility Indicator,199,350,Lifetime,Lifetime License,حزمة مؤشرات MT4/MT5 للويندوز بترخيص دائم مدى الحياة,TRUE
-
+item_key,item_name,current_price,old_price,discount_tag,duration,simple_guide
+newsx_pro,NewsX AI Pro VIP Monthly,25,45,Popular,1 Month,باقة NewsX AI الاحترافية مع تنبيهات فورية
