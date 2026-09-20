@@ -17,3 +17,4 @@ bep20_deposit_wallet,0x41f8a3a3a841cb3305bf1ebabe4ede7169a55bce,عنوان مح�
 trc20_deposit_wallet,TEznkT5SKzYNHNe3wDEwfrxLpAq9HYA9sP,عنوان محفظة USDT (TRC20 - Tron),المحافظ الرقمية
 announcement_banner_text,,نص الشريط الإعلاني في أعلى الموقع (اتركه فارغاً لإخفائه),شريط الإعلانات
 announcement_banner_active,false,تفعيل (true) أو إيقاف (false) الشريط الإعلاني,شريط الإعلانات
+
