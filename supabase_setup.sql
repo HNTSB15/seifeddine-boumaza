@@ -83,7 +83,7 @@ ON CONFLICT (setting_name) DO UPDATE SET
 -- ------------------------------------------------------------------------------
 CREATE TABLE public.website_prices (
     item_key TEXT PRIMARY KEY,
-    item_name TEXT NOT NULL,
+    item_name TEXT DEFAULT '',
     current_price NUMERIC NOT NULL,
     old_price NUMERIC DEFAULT 0,
     discount_tag TEXT DEFAULT '',

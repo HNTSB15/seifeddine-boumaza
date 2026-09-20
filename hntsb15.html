@@ -1249,20 +1249,20 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     if (btn) btn.disabled = true;
 
     var updates = [
-      { item_key: 'newsx_standard', current_price: parseFloat(document.getElementById('price_newsx_standard').value) || 15 },
-      { item_key: 'newsx_pro', current_price: parseFloat(document.getElementById('price_newsx_pro').value) || 25 },
-      { item_key: 'newsx_ultimate', current_price: parseFloat(document.getElementById('price_newsx_ultimate').value) || 50 },
-      { item_key: 'vip_gold_signals', current_price: parseFloat(document.getElementById('price_vip_signals').value) || 49 },
-      { item_key: 'mt5_indicator', current_price: parseFloat(document.getElementById('price_mt5_indicator').value) || 199 }
+      { item_key: 'newsx_standard', item_name: 'NewsX AI Standard Monthly', current_price: parseFloat(document.getElementById('price_newsx_standard').value) || 15, updated_at: new Date().toISOString() },
+      { item_key: 'newsx_pro', item_name: 'NewsX AI Pro VIP Monthly', current_price: parseFloat(document.getElementById('price_newsx_pro').value) || 25, updated_at: new Date().toISOString() },
+      { item_key: 'newsx_ultimate', item_name: 'NewsX AI Ultimate Master', current_price: parseFloat(document.getElementById('price_newsx_ultimate').value) || 50, updated_at: new Date().toISOString() },
+      { item_key: 'vip_gold_signals', item_name: 'VIP Gold & Forex Daily Signals', current_price: parseFloat(document.getElementById('price_vip_signals').value) || 49, updated_at: new Date().toISOString() },
+      { item_key: 'mt5_indicator', item_name: 'Proprietary MT5 Volatility Indicator', current_price: parseFloat(document.getElementById('price_mt5_indicator').value) || 199, updated_at: new Date().toISOString() }
     ];
 
     sdb.from('website_prices').upsert(updates, { onConflict: 'item_key' }).then(function(res) {
       if (btn) btn.disabled = false;
       if (res.error) showToast('Error saving prices: ' + res.error.message, true);
       else showToast('✓ Prices updated on live website!');
-    }).catch(function() {
+    }).catch(function(err) {
       if (btn) btn.disabled = false;
-      showToast('Network error', true);
+      showToast('Network error: ' + (err ? err.message : ''), true);
     });
   };
 
