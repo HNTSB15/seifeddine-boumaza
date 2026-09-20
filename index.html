@@ -5668,6 +5668,498 @@ body.theme-light .payouts-more-btn.active {
     padding: 14px;
   }
 }
+
+
+/* ==========================================================================
+   COMPREHENSIVE MOBILE REFINEMENT & RESPONSIVE POLISH (320px - 768px)
+   ========================================================================== */
+
+/* Global mobile overflow prevention & typography reset */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+  width: 100% !important;
+  position: relative;
+  -webkit-text-size-adjust: 100%;
+}
+.cvx {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+  width: 100% !important;
+}
+
+/* Base mobile responsive touch refinements */
+@media (max-width: 768px) {
+  /* Touch target ergonomics */
+  button, .cvx-btn, .cvx-filter, .payout-filter-btn, .rev-filter-btn, .cvx-tl-btn, .cvx-faq-question {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Floating action buttons safe area & stacking */
+  .cvx-fab {
+    bottom: max(16px, calc(10px + env(safe-area-inset-bottom))) !important;
+    width: 46px !important;
+    height: 46px !important;
+    z-index: 99 !important;
+  }
+  .cvx-fab.tg {
+    left: max(16px, env(safe-area-inset-left)) !important;
+  }
+  .cvx-fab.top {
+    right: max(16px, env(safe-area-inset-right)) !important;
+  }
+  html[dir="rtl"] .cvx-fab.tg {
+    right: max(16px, env(safe-area-inset-right)) !important;
+    left: auto !important;
+  }
+  html[dir="rtl"] .cvx-fab.top {
+    left: max(16px, env(safe-area-inset-left)) !important;
+    right: auto !important;
+  }
+
+  /* Video and lightbox fullscreen safety */
+  .cvx-lb-box {
+    max-width: 96vw !important;
+    max-height: 88vh !important;
+  }
+}
+
+/* Tablet & Mobile Phone Refinements (<= 640px) */
+@media (max-width: 640px) {
+  /* Hero Section */
+  .cvx-hero {
+    min-height: auto !important;
+    padding: 34px 14px 26px !important;
+  }
+  .cvx-badge {
+    font-size: 11.5px !important;
+    padding: 6px 14px !important;
+    margin-bottom: 16px !important;
+    max-width: 100% !important;
+    line-height: 1.4 !important;
+  }
+  .cvx-avatar {
+    width: 106px !important;
+    height: 106px !important;
+    margin-bottom: 16px !important;
+  }
+  .cvx-hero h1 {
+    font-size: clamp(30px, 8.5vw, 42px) !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.5px !important;
+  }
+  .cvx-role {
+    font-size: 14px !important;
+    margin-top: 6px !important;
+  }
+  .cvx-tag {
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+    margin: 14px auto 0 !important;
+    padding: 0 4px !important;
+  }
+  .cvx-cta {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 320px !important;
+    margin: 22px auto 0 !important;
+    gap: 10px !important;
+  }
+  .cvx-cta .cvx-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 13px 20px !important;
+    font-size: 14px !important;
+    min-height: 48px !important;
+    box-sizing: border-box !important;
+  }
+  .cvx-chips {
+    gap: 6px !important;
+    margin-top: 18px !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+  }
+  .cvx-chip {
+    font-size: 11px !important;
+    padding: 5px 10px !important;
+  }
+  .cvx-hero-market-console {
+    margin-top: 20px !important;
+    border-radius: 12px !important;
+  }
+  .cvx-market-console-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+    padding: 10px 14px !important;
+  }
+  .cvx-market-console-tag {
+    font-size: 9.5px !important;
+  }
+
+  /* Live Results & Trade Carousel (#results) */
+  .cvx-res-metrics {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+  .cvx-res-metric {
+    padding: 14px 10px !important;
+  }
+  .cvx-res-metric .m-val {
+    font-size: 18px !important;
+  }
+  .cvx-res-metric .m-lbl {
+    font-size: 10.5px !important;
+  }
+  .cvx-x-feed-box {
+    border-radius: 14px !important;
+  }
+  .cvx-x-feed-bar {
+    padding: 12px 14px !important;
+    gap: 12px !important;
+  }
+  .cvx-x-avatar-box {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .cvx-x-handle-line b {
+    font-size: 14px !important;
+  }
+  .cvx-x-sub {
+    font-size: 11px !important;
+  }
+  .cvx-stream-wrapper {
+    position: relative !important;
+    padding: 0 !important;
+  }
+  /* Hide overlapping intrusive side arrows on mobile touchscreens */
+  .cvx-stream-arrow {
+    display: none !important;
+  }
+  .cvx-x-stream {
+    padding: 12px 12px !important;
+    gap: 12px !important;
+    scroll-padding: 12px !important;
+  }
+  .cvx-x-slide {
+    flex: 0 0 calc(100vw - 44px) !important;
+    max-width: calc(100vw - 44px) !important;
+    border-radius: 14px !important;
+  }
+  .cvx-slide-head {
+    padding: 12px 14px !important;
+  }
+  .cvx-slide-avatar {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  .cvx-slide-author-info b {
+    font-size: 13.5px !important;
+  }
+  .cvx-slide-author-info small {
+    font-size: 11px !important;
+  }
+  .cvx-slide-badge {
+    font-size: 10px !important;
+    padding: 3px 8px !important;
+  }
+  .cvx-slide-body {
+    padding: 12px 14px !important;
+  }
+  .cvx-slide-profit-row {
+    font-size: 13.5px !important;
+    margin-bottom: 8px !important;
+  }
+  .cvx-slide-profit-row .pft {
+    font-size: 16px !important;
+  }
+  .cvx-slide-desc {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    margin-bottom: 10px !important;
+  }
+  .cvx-slide-tags span {
+    font-size: 10.5px !important;
+    padding: 2px 6px !important;
+  }
+  .cvx-gallery-grid {
+    height: 200px !important;
+    gap: 4px !important;
+    padding: 4px !important;
+    border-radius: 10px !important;
+    margin-bottom: 10px !important;
+  }
+  .cvx-x-bottom-bar {
+    padding: 12px 14px !important;
+    gap: 10px !important;
+  }
+  .cvx-x-bottom-bar a {
+    font-size: 12.5px !important;
+  }
+
+  /* Projects Filter Buttons */
+  .cvx-filters {
+    gap: 6px !important;
+    justify-content: center !important;
+    margin-bottom: 20px !important;
+  }
+  .cvx-filter {
+    padding: 6px 12px !important;
+    font-size: 11.5px !important;
+  }
+
+  /* Verified Payouts Section & Comparison Modal (#payouts) */
+  .payouts-filters {
+    gap: 6px !important;
+    justify-content: center !important;
+    margin-bottom: 18px !important;
+  }
+  .payout-filter-btn {
+    padding: 6px 13px !important;
+    font-size: 11.5px !important;
+  }
+  .payouts-grid {
+    gap: 14px !important;
+  }
+  .payout-card {
+    padding: 16px 14px !important;
+    border-radius: 14px !important;
+  }
+  .payout-amt-val {
+    font-size: 22px !important;
+  }
+  .payout-modal-backdrop {
+    padding: 8px !important;
+  }
+  .payout-modal-box {
+    max-height: 94vh !important;
+    border-radius: 16px !important;
+    width: 100% !important;
+  }
+  .payout-modal-head {
+    padding: 13px 15px !important;
+  }
+  .payout-modal-title {
+    font-size: 14.5px !important;
+  }
+  .payout-modal-close {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    font-size: 20px !important;
+  }
+  .payout-modal-body {
+    padding: 14px !important;
+    gap: 14px !important;
+  }
+  .payout-proof-comparison {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .payout-proof-pane {
+    padding: 12px !important;
+    border-radius: 12px !important;
+    gap: 10px !important;
+  }
+  .payout-proof-img-wrap {
+    max-height: 250px !important;
+    border-radius: 8px !important;
+  }
+  .payout-proof-img-wrap img {
+    max-height: 250px !important;
+    object-fit: contain !important;
+  }
+  .payout-meta-list {
+    font-size: 11.5px !important;
+    gap: 6px !important;
+  }
+
+  /* Client Reviews Section & Submit Review Modal (#reviews) */
+  .rev-filters {
+    gap: 6px !important;
+    justify-content: center !important;
+    margin-bottom: 18px !important;
+  }
+  .rev-filter-btn {
+    padding: 6px 13px !important;
+    font-size: 11.5px !important;
+  }
+  .rev-card {
+    padding: 18px 16px !important;
+    border-radius: 14px !important;
+  }
+  .rev-text {
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+  }
+  .rev-modal-backdrop {
+    padding: 8px !important;
+  }
+  .rev-modal-box {
+    padding: 20px 16px !important;
+    border-radius: 16px !important;
+    max-height: 94vh !important;
+  }
+  .rev-modal-close {
+    width: 42px !important;
+    height: 42px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    top: 8px !important;
+  }
+  html[dir="rtl"] .rev-modal-close {
+    left: 8px !important;
+    right: auto !important;
+  }
+  html[dir="ltr"] .rev-modal-close {
+    right: 8px !important;
+    left: auto !important;
+  }
+  .rev-modal-head h3 {
+    font-size: 18px !important;
+  }
+  .rev-form-row input,
+  .rev-form-row select,
+  .rev-form-row textarea {
+    font-size: 14px !important;
+    padding: 11px 13px !important;
+  }
+
+  /* FAQ Accordion (#faq) */
+  .cvx-faq-container {
+    gap: 10px !important;
+  }
+  .cvx-faq-item {
+    border-radius: 13px !important;
+  }
+  .cvx-faq-question {
+    padding: 14px 16px !important;
+    font-size: 14px !important;
+    gap: 10px !important;
+  }
+  .faq-num {
+    font-size: 11px !important;
+  }
+  .faq-icon {
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    font-size: 17px !important;
+  }
+  .cvx-faq-item.active .cvx-faq-answer {
+    padding: 0 16px 18px !important;
+  }
+  .cvx-faq-answer-inner {
+    font-size: 13.5px !important;
+    line-height: 1.65 !important;
+    padding-top: 12px !important;
+  }
+
+  /* NewsX AI Platform (#newsx) */
+  .nx-kicker {
+    font-size: 11px !important;
+  }
+  .nx-head-title {
+    font-size: clamp(20px, 6vw, 26px) !important;
+    line-height: 1.25 !important;
+  }
+  .nx-sub {
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+  }
+  .nx-chart-card {
+    padding: 16px 14px !important;
+    border-radius: 14px !important;
+  }
+  .nx-price-grid {
+    gap: 16px !important;
+  }
+  .nx-price-card {
+    padding: 22px 18px !important;
+    border-radius: 16px !important;
+  }
+  .nx-price-amt {
+    font-size: 34px !important;
+  }
+}
+
+/* Compact Smartphones (<= 480px) */
+@media (max-width: 480px) {
+  .cvx-sec {
+    padding: 42px 0 !important;
+  }
+  .cvx-wrap {
+    padding: 0 14px !important;
+  }
+  .cvx-head {
+    margin-bottom: 24px !important;
+  }
+  .cvx-head h2 {
+    font-size: clamp(22px, 6.8vw, 28px) !important;
+    line-height: 1.2 !important;
+  }
+  .cvx-head p {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+  }
+  .cvx-stats {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    margin-top: 10px !important;
+  }
+  .cvx-stat {
+    padding: 14px 8px !important;
+    border-radius: 12px !important;
+  }
+  .cvx-stat .n {
+    font-size: clamp(18px, 5.2vw, 22px) !important;
+  }
+  .cvx-stat .l {
+    font-size: 11px !important;
+    margin-top: 3px !important;
+    line-height: 1.3 !important;
+  }
+  .cvx-about {
+    padding: 20px 16px !important;
+    font-size: 14px !important;
+    border-radius: 14px !important;
+  }
+  .cvx-about .term {
+    font-size: 12px !important;
+    word-break: break-all !important;
+  }
+  .cvx-skill {
+    padding: 14px 14px !important;
+    border-radius: 12px !important;
+  }
+  .cvx-proj {
+    padding: 16px 14px !important;
+    border-radius: 14px !important;
+  }
+  .cvx-ti {
+    padding-bottom: 24px !important;
+  }
+  .cvx-ti h3 {
+    font-size: 15px !important;
+  }
+  .cvx-disclaimer {
+    padding: 16px 14px !important;
+    font-size: 11.5px !important;
+    border-radius: 12px !important;
+  }
+  .cvx-foot {
+    padding: 28px 14px 80px !important;
+  }
+  .cvx-foot-copy {
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+  }
+}
+
 </style>
 <div class="cvx" id="cvtop">
 
