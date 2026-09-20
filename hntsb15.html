@@ -203,58 +203,159 @@ body {
 .btn-logout:hover { background: rgba(255, 77, 109, 0.25); border-color: var(--red); }
 
 /* ==========================================================================
-   NAV TABS (SCROLLABLE & TOUCH OPTIMIZED)
+   VERTICAL SIDEBAR LAYOUT & NAVIGATION
    ========================================================================== */
-.admin-tabs-bar {
-  background: var(--panel);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+.admin-layout {
   display: flex;
-  overflow-x: auto;
-  white-space: nowrap;
-  padding: 6px 12px;
-  gap: 8px;
-  scrollbar-width: none;
+  min-height: calc(100vh - 60px);
+  position: relative;
+  width: 100%;
 }
-.admin-tabs-bar::-webkit-scrollbar { display: none; }
+
+.admin-sidebar {
+  width: 280px;
+  min-width: 280px;
+  flex-shrink: 0;
+  background: #0b1118;
+  border-right: 1px solid rgba(0, 255, 156, 0.16);
+  padding: 22px 14px;
+  position: sticky;
+  top: 60px;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  transition: all .3s ease;
+  z-index: 100;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 255, 156, 0.25) transparent;
+}
+.admin-sidebar::-webkit-scrollbar { width: 5px; }
+.admin-sidebar::-webkit-scrollbar-thumb { background: rgba(0, 255, 156, 0.25); border-radius: 4px; }
+
+.sidebar-header-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-nav-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  flex: 1;
+}
 
 .tab-btn {
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  color: var(--muted);
+  width: 100%;
+  text-align: left;
+  background: rgba(18, 28, 42, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  color: #94a3b8;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
-  padding: 8px 14px;
+  padding: 11px 14px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
-  transition: all .2s;
+  justify-content: space-between;
+  gap: 10px;
+  transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
 }
-.tab-btn:hover { color: #fff; background: rgba(255, 255, 255, 0.04); }
+.tab-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(0, 255, 156, 0.25);
+  transform: translateX(4px);
+}
 .tab-btn.active {
   background: rgba(0, 255, 156, 0.12);
-  border-color: rgba(0, 255, 156, 0.35);
+  border-color: rgba(0, 255, 156, 0.45);
   color: var(--neon);
-  box-shadow: 0 0 10px rgba(0, 255, 156, 0.1);
+  box-shadow: 0 0 16px rgba(0, 255, 156, 0.18);
+  font-weight: 700;
+  transform: translateX(5px);
 }
 .tab-btn .tab-badge {
   background: var(--neon);
-  color: #000;
+  color: #080c10;
   font-size: 10px;
   font-weight: 800;
   border-radius: 10px;
-  padding: 1px 6px;
+  padding: 2px 7px;
+  margin-left: auto;
+}
+
+.sidebar-toggle-btn {
+  display: none;
+  background: rgba(0, 255, 156, 0.08);
+  border: 1px solid rgba(0, 255, 156, 0.3);
+  color: var(--neon);
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 6px;
+  transition: all .2s;
+}
+.sidebar-toggle-btn:hover {
+  background: rgba(0, 255, 156, 0.18);
 }
 
 /* ==========================================================================
    CONTENT LAYOUT
    ========================================================================== */
 .admin-container {
-  max-width: 900px;
+  flex: 1;
+  max-width: 1180px;
+  width: 100%;
   margin: 0 auto;
-  padding: 20px 16px;
+  padding: 28px 24px;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Responsive Breakpoints for Tablet & Mobile */
+@media (max-width: 900px) {
+  .admin-layout {
+    flex-direction: column;
+  }
+  .sidebar-toggle-btn {
+    display: inline-block;
+  }
+  .admin-sidebar {
+    width: 100%;
+    min-width: 100%;
+    position: static;
+    height: auto;
+    max-height: none;
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 255, 156, 0.18);
+    padding: 14px;
+    box-sizing: border-box;
+  }
+  .admin-nav-vertical {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 7px;
+  }
+  .tab-btn:hover,
+  .tab-btn.active {
+    transform: none;
+  }
+  .admin-container {
+    padding: 18px 12px;
+  }
 }
 
 .tab-pane { display: none; animation: fadeIn .25s ease-out; }
@@ -563,6 +664,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 
 <header class="admin-header">
   <div class="header-brand">
+    <button type="button" class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Toggle Sidebar">☰ TABS</button>
     <img src="SB.jpg" alt="SB">
     <div>
       <div class="header-title">HNTSB15 // DESK</div>
@@ -576,19 +678,49 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   </div>
 </header>
 
-<nav class="admin-tabs-bar">
-  <button type="button" class="tab-btn active" data-tab="hero" onclick="switchTab('hero', this)">🏠 Hero &amp; Bio</button>
-  <button type="button" class="tab-btn" data-tab="stats" onclick="switchTab('stats', this)">📈 Stats</button>
-  <button type="button" class="tab-btn" data-tab="managed" onclick="switchTab('managed', this)">💼 Managed Terms</button>
-  <button type="button" class="tab-btn" data-tab="trades" onclick="switchTab('trades', this)">🎯 Live Trades</button>
-  <button type="button" class="tab-btn" data-tab="payouts" onclick="switchTab('payouts', this)">💵 Payouts</button>
-  <button type="button" class="tab-btn" data-tab="prices" onclick="switchTab('prices', this)">🏷️ Prices &amp; Plans</button>
-  <button type="button" class="tab-btn" data-tab="reviews" onclick="switchTab('reviews', this)">⭐ Reviews</button>
-  <button type="button" class="tab-btn" data-tab="faq" onclick="switchTab('faq', this)">❓ FAQ</button>
-  <button type="button" class="tab-btn" data-tab="socials" onclick="switchTab('socials', this)">🌐 Socials &amp; Wallets</button>
-  <button type="button" class="tab-btn" data-tab="inbox" onclick="switchTab('inbox', this)">📬 Inbox <span class="tab-badge" id="inboxBadge" style="display:none">0</span></button>
-  <button type="button" class="tab-btn" data-tab="visitors" onclick="switchTab('visitors', this)">🌍 Visitors</button>
-</nav>
+<div class="admin-layout">
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="sidebar-header-label">
+      <span>// TERMINAL TABS</span>
+      <span style="color:var(--neon);font-size:10px">11 MODULES</span>
+    </div>
+    <nav class="admin-nav-vertical">
+      <button type="button" class="tab-btn active" data-tab="hero" onclick="switchTab('hero', this)">
+        <span>🏠 Hero &amp; Bio</span>
+      </button>
+      <button type="button" class="tab-btn" data-tab="stats" onclick="switchTab('stats', this)">
+        <span>📈 Stats &amp; Metrics</span>
+      </button>
+      <button type="button" class="tab-btn" data-tab="managed" onclick="switchTab('managed', this)">
+        <span>💼 Managed Terms</span>
+      </button>
+      <button type="button" class="tab-btn" data-tab="trades" onclick="switchTab('trades', this)">
+        <span>🎯 Live Trades</span>
+      </button>
+      <button type="button" class="tab-btn" data-tab="payouts" onclick="switchTab('payouts', this)">
+        <span>💵 Payouts Proof</span>
+      </button>
+      <button type="button" class="tab-btn" data-tab="prices" onclick="switchTab('prices', this)">
+        <span>🏷️ Prices &amp; Plans</span>
+      </button>
+      <button type="button" class="tab-btn" data-tab="reviews" onclick="switchTab('reviews', this)">
+        <span>⭐ Reviews</span>
+      </button>
+      <button type="button" class="tab-btn" data-tab="faq" onclick="switchTab('faq', this)">
+        <span>❓ FAQ Accordion</span>
+      </button>
+      <button type="button" class="tab-btn" data-tab="socials" onclick="switchTab('socials', this)">
+        <span>🌐 Socials &amp; Wallets</span>
+      </button>
+      <button type="button" class="tab-btn" data-tab="inbox" onclick="switchTab('inbox', this)">
+        <span>📬 Client Inbox</span>
+        <span class="tab-badge" id="inboxBadge" style="display:none">0</span>
+      </button>
+      <button type="button" class="tab-btn" data-tab="visitors" onclick="switchTab('visitors', this)">
+        <span>🌍 Live Visitors</span>
+      </button>
+    </nav>
+  </aside>
 
 <main class="admin-container">
 
@@ -1276,6 +1408,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   </section>
 
 </main>
+</div> <!-- end .admin-layout -->
 
 
 <!-- ==========================================================================
@@ -1828,6 +1961,17 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   // --------------------------------------------------------------------------
   // TAB NAVIGATION & REFRESH POSITION RESTORATION
   // --------------------------------------------------------------------------
+  window.toggleSidebar = function() {
+    var sb = document.getElementById('adminSidebar');
+    if (sb) {
+      if (sb.style.display === 'none') {
+        sb.style.display = (window.innerWidth <= 900) ? 'grid' : 'flex';
+      } else {
+        sb.style.display = 'none';
+      }
+    }
+  };
+
   window.switchTab = function(tabName, btnEl) {
     document.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
     var target = document.getElementById('tab-' + tabName);
@@ -1847,6 +1991,12 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         window.location.hash = '#tab-' + tabName;
       }
     } catch(e){}
+
+    // On mobile screens, smoothly scroll to the content area after selecting a tab
+    if (window.innerWidth <= 900) {
+      var mainEl = document.querySelector('.admin-container');
+      if (mainEl) mainEl.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   function restoreActiveTab() {
