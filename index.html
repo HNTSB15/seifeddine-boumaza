@@ -5797,16 +5797,16 @@ body.theme-light .payouts-more-btn.active {
 </div>
 <h1>Saifeddine <span class="grad">Boumaza</span></h1>
 <div class="cvx-role" id="cvxRole">Forex Trading Expert<span class="cur">&nbsp;</span></div>
-<p class="cvx-tag">Professional forex and cryptocurrency trading manager focused on transparent reporting, disciplined risk management, and strategic execution across active markets. <b>Fast execution</b>, <b>trusted strategies</b>, and expert support.</p>
+<p class="cvx-tag" id="cvxHeroTagline">Professional forex and cryptocurrency trading manager focused on transparent reporting, disciplined risk management, and strategic execution across active markets. <b>Fast execution</b>, <b>trusted strategies</b>, and expert support.</p>
 <div class="cvx-cta">
 <a class="cvx-btn pri" href="#projects"><svg viewBox="0 0 24 24"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"></path></svg> View Trading Records</a>
 <a class="cvx-btn ghost" href="#newsx" style="border-color:rgba(18,214,255,.45);color:var(--neon-2)"><svg viewBox="0 0 24 24" style="fill:currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg> NewsX AI Platform</a>
 <a class="cvx-btn ghost" href="#contact"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path></svg> Request Account Info</a>
 </div>
 <div class="cvx-chips">
-<span class="cvx-chip"><b>45%</b> Avg Return</span>
-<span class="cvx-chip"><b>5+</b> Years Trading</span>
-<span class="cvx-chip"><b>$100K+</b> Managed Capital</span>
+<span class="cvx-chip"><b id="heroChipReturn">45%</b> Avg Return</span>
+<span class="cvx-chip"><b id="heroChipExp">5+</b> Years Trading</span>
+<span class="cvx-chip"><b id="heroChipCapital">$100K+</b> Managed Capital</span>
 <span class="cvx-chip"><b>MT4 / MT5</b> Indicator Systems</span>
 <a class="cvx-chip" href="#newsx" style="text-decoration:none;border-color:rgba(18,214,255,0.45);background:rgba(18,214,255,0.08);color:var(--neon-2)">⚡ <b>NewsX AI</b> Live Bias</a>
 </div>
@@ -5853,12 +5853,12 @@ body.theme-light .payouts-more-btn.active {
 </header>
 <section class="cvx-wrap">
 <div class="cvx-stats cvx-reveal">
-<div class="cvx-stat"><div class="n" data-n="5" data-suf="+">5+</div><div class="l">Years trading<br>experience</div></div>
-<div class="cvx-stat"><div class="n" data-n="45" data-suf="%">45%</div><div class="l">Historical<br>avg return</div></div>
-<div class="cvx-stat"><div class="n" data-n="100" data-pre="$" data-suf="+">$100+</div><div class="l">Managed<br>capital</div></div>
-<div class="cvx-stat"><div class="n" data-n="88" data-suf="%">88%</div><div class="l">Signal win rate<br>tracked</div></div>
-<div class="cvx-stat"><div class="n" data-n="12" data-suf="+">12+</div><div class="l">Months<br>tracked</div></div>
-<div class="cvx-stat"><div class="n" data-n="500" data-suf="+">500+</div><div class="l">Traders &amp;<br>community</div></div>
+<div class="cvx-stat"><div class="n" id="statYearsExp" data-n="5" data-suf="+">5+</div><div class="l">Years trading<br>experience</div></div>
+<div class="cvx-stat"><div class="n" id="statAvgReturn" data-n="45" data-suf="%">45%</div><div class="l">Historical<br>avg return</div></div>
+<div class="cvx-stat"><div class="n" id="statCapital" data-n="100" data-pre="$" data-suf="+">$100+</div><div class="l">Managed<br>capital</div></div>
+<div class="cvx-stat"><div class="n" id="statWinRate" data-n="88" data-suf="%">88%</div><div class="l">Signal win rate<br>tracked</div></div>
+<div class="cvx-stat"><div class="n" id="statMonths" data-n="12" data-suf="+">12+</div><div class="l">Months<br>tracked</div></div>
+<div class="cvx-stat"><div class="n" id="statCommunity" data-n="500" data-suf="+">500+</div><div class="l">Traders &amp;<br>community</div></div>
 </div>
 </section>
 <section class="cvx-sec" id="about">
@@ -7345,11 +7345,86 @@ body.theme-light .payouts-more-btn.active {
     sdb.from('website_settings').select('*').then(function(res) {
       var list = (res && res.data && res.data.length) ? res.data : [];
       if (!list.length) return;
+      var bannerText = '', bannerActive = false;
+
       list.forEach(function(s) {
         var k = s.setting_name || s.key;
         var val = s.current_value || s.value;
         if (!k || !val) return;
 
+        // Stats & Metrics
+        if (k === 'stat_win_rate') {
+          var el = document.getElementById('statWinRate');
+          if (el) {
+            var num = parseInt(val.replace(/[^0-9]/g, ''), 10) || 88;
+            el.setAttribute('data-n', num);
+            el.textContent = val;
+          }
+          var r3 = document.getElementById('revStat3');
+          if (r3) r3.textContent = val + ' نسبة نجاح الصفقات';
+        }
+        if (k === 'stat_avg_return') {
+          var el = document.getElementById('statAvgReturn');
+          if (el) {
+            var num = parseInt(val.replace(/[^0-9]/g, ''), 10) || 45;
+            el.setAttribute('data-n', num);
+            el.textContent = val;
+          }
+          var chip = document.getElementById('heroChipReturn');
+          if (chip) chip.textContent = val;
+        }
+        if (k === 'stat_managed_capital') {
+          var el = document.getElementById('statCapital');
+          if (el) el.textContent = val;
+          var chip = document.getElementById('heroChipCapital');
+          if (chip) chip.textContent = val;
+        }
+        if (k === 'stat_years_exp') {
+          var el = document.getElementById('statYearsExp');
+          if (el) {
+            var num = parseInt(val.replace(/[^0-9]/g, ''), 10) || 5;
+            el.setAttribute('data-n', num);
+            el.textContent = val;
+          }
+          var chip = document.getElementById('heroChipExp');
+          if (chip) chip.textContent = val;
+        }
+        if (k === 'stat_tracked_months') {
+          var el = document.getElementById('statMonths');
+          if (el) {
+            var num = parseInt(val.replace(/[^0-9]/g, ''), 10) || 12;
+            el.setAttribute('data-n', num);
+            el.textContent = val;
+          }
+        }
+        if (k === 'stat_community_traders') {
+          var el = document.getElementById('statCommunity');
+          if (el) {
+            var num = parseInt(val.replace(/[^0-9]/g, ''), 10) || 500;
+            el.setAttribute('data-n', num);
+            el.textContent = val;
+          }
+        }
+
+        // Hero Section & Texts
+        if (k === 'hero_badge_text') {
+          var el = document.getElementById('cvxHeroBadgeTxt');
+          if (el) el.textContent = val;
+        }
+        if (k === 'hero_role') {
+          var el = document.getElementById('cvxRole');
+          if (el) el.innerHTML = val + '<span class="cur">&nbsp;</span>';
+        }
+        if (k === 'hero_tagline') {
+          var el = document.getElementById('cvxHeroTagline');
+          if (el) el.innerHTML = val;
+        }
+
+        // Banner
+        if (k === 'announcement_banner_text') bannerText = val;
+        if (k === 'announcement_banner_active') bannerActive = (val === 'true' || val === true);
+
+        // Crypto Wallets
         if (k === 'bep20_deposit_wallet' || k === 'wallet_bep20') {
           if (window.cvxWallets) window.cvxWallets['BEP20'] = val;
           var wInp = document.getElementById('flDepositWallet');
@@ -7362,6 +7437,8 @@ body.theme-light .payouts-more-btn.active {
           var netEl = document.getElementById('flModalNet');
           if (wInp && netEl && netEl.textContent === 'TRC20') wInp.value = val;
         }
+
+        // Social Links & Contacts
         if (k === 'telegram_username' || k === 'telegram_handle') {
           var tg = val.replace(/^@/, '');
           window.CVX_DIRECT_TG = tg;
@@ -7376,14 +7453,45 @@ body.theme-light .payouts-more-btn.active {
         }
         if (k === 'whatsapp_number' || k === 'whatsapp') {
           window.CVX_WHATSAPP = val;
+          var cleanWa = val.replace(/[^0-9]/g, '');
+          document.querySelectorAll('a[href*="wa.me/"]').forEach(function(a){
+            a.href = 'https://wa.me/' + cleanWa;
+          });
         }
         if (k === 'instagram_profile' || k === 'instagram') {
           window.CVX_INSTAGRAM = val;
+          document.querySelectorAll('a[href*="instagram.com/"]').forEach(function(a){
+            a.href = val;
+          });
         }
         if (k === 'x_profile' || k === 'x_twitter') {
           window.CVX_X = val;
+          document.querySelectorAll('a[href*="x.com/"], a[href*="twitter.com/"]').forEach(function(a){
+            a.href = val;
+          });
+        }
+        if (k === 'support_email' || k === 'email') {
+          document.querySelectorAll('a[href^="mailto:"]').forEach(function(a){
+            a.href = 'mailto:' + val;
+          });
         }
       });
+
+      // Render Announcement Banner if Active
+      if (bannerActive && bannerText) {
+        var bEl = document.getElementById('cvxTopBanner');
+        if (!bEl) {
+          bEl = document.createElement('div');
+          bEl.id = 'cvxTopBanner';
+          bEl.style.cssText = 'background:linear-gradient(90deg,var(--neon-2),var(--neon));color:#000;font-weight:700;font-size:13px;padding:8px 16px;text-align:center;position:relative;z-index:9999;box-shadow:0 2px 10px rgba(0,0,0,0.3);letter-spacing:.3px;';
+          document.body.prepend(bEl);
+        }
+        bEl.textContent = bannerText;
+        bEl.style.display = 'block';
+      } else {
+        var existingB = document.getElementById('cvxTopBanner');
+        if (existingB) existingB.style.display = 'none';
+      }
     }).catch(function(){});
   }
   loadLiveSettings();
@@ -8208,20 +8316,24 @@ body.theme-light .payouts-more-btn.active {
 
       function getDeviceInfo() {
         var ua = navigator.userAgent || '';
+        var deviceType = 'Desktop';
         var device = 'Desktop PC';
         var os = 'Unknown OS';
         var browser = 'Browser';
 
-        // Detect device / phone model
+        // Detect device / phone model & type
         if (/iPhone/i.test(ua)) {
+          deviceType = 'Mobile';
           var iosM = ua.match(/OS ([\d_]+)/i);
           var iosVer = iosM ? iosM[1].replace(/_/g, '.') : '';
           device = 'Apple iPhone' + (iosVer ? (' (iOS ' + iosVer + ')') : '');
           os = 'iOS ' + (iosVer || '');
         } else if (/iPad/i.test(ua)) {
+          deviceType = 'Tablet';
           device = 'Apple iPad';
           os = 'iPadOS';
         } else if (/Android/i.test(ua)) {
+          deviceType = /Mobile/i.test(ua) ? 'Mobile' : 'Tablet';
           var andM = ua.match(/Android\s+([\d.]+)/i);
           var andVer = andM ? andM[1] : '';
           var modelMatch = ua.match(/;\s*([^;)]+)\s+Build/i) || ua.match(/Android\s+[\d.]+;\s*([^;)]+)\)/i);
@@ -8229,12 +8341,15 @@ body.theme-light .payouts-more-btn.active {
           device = phoneModel;
           os = 'Android ' + (andVer || '');
         } else if (/Windows NT 10.0/i.test(ua)) {
+          deviceType = 'Desktop';
           device = 'Windows PC';
           os = 'Windows 10/11';
         } else if (/Macintosh|Mac OS X/i.test(ua)) {
+          deviceType = 'Desktop';
           device = 'Apple Mac';
           os = 'macOS';
         } else if (/Linux/i.test(ua)) {
+          deviceType = 'Desktop';
           device = 'Linux PC';
           os = 'Linux';
         }
@@ -8247,6 +8362,7 @@ body.theme-light .payouts-more-btn.active {
         else if (/OPR/i.test(ua)) browser = 'Opera';
 
         return {
+          type: deviceType,
           device: device,
           os: os,
           browser: browser,
@@ -8257,20 +8373,32 @@ body.theme-light .payouts-more-btn.active {
       }
 
       function sendVisitorLog(geo) {
-        // Mark as tracked immediately so subsequent attempts or reloads never re-trigger
         markAsTracked();
 
         var info = getDeviceInfo();
+        window._cvxVisitorGeo = geo;
+        window._cvxVisitorInfo = info;
+
+        var countryDisplay = (geo && geo.country) ? geo.country : 'Unknown Country';
+        if (geo && geo.country_code) countryDisplay += ' (' + geo.country_code + ')';
+        if (geo && geo.flag && geo.flag.emoji) countryDisplay += ' ' + geo.flag.emoji;
+
         var payload = {
-          ip_address: (geo && geo.ip) ? geo.ip : 'Direct Visitor',
-          country: (geo && geo.country) ? (geo.country + (geo.country_code ? (' (' + geo.country_code + ')') : '')) : 'Unknown Country',
-          city: (geo && geo.city) ? geo.city : 'Unknown City',
+          ip_address: (geo && geo.ip) ? geo.ip : ('Visitor-' + Math.random().toString(36).substring(2, 9)),
+          country: countryDisplay,
+          country_code: (geo && geo.country_code) ? geo.country_code : '',
+          city: (geo && (geo.city || geo.region)) ? (geo.city || geo.region) : 'Unknown City',
+          region: (geo && geo.region) ? geo.region : '',
+          timezone: (geo && geo.timezone && geo.timezone.id) ? geo.timezone.id : '',
+          isp_provider: (geo && geo.connection && geo.connection.isp) ? geo.connection.isp : '',
+          device_type: info.type,
           device_model: info.device,
           operating_system: info.os,
           browser: info.browser,
           screen_size: info.screen,
           language: info.lang,
-          source_referrer: info.ref
+          source_referrer: info.ref,
+          landing_page: window.location.pathname || '/'
         };
 
         var postUrl = 'https://kbioxkoifvyivhkzbxke.supabase.co/rest/v1/website_visitors';
@@ -8283,12 +8411,12 @@ body.theme-light .payouts-more-btn.active {
               'apikey': postKey,
               'Authorization': 'Bearer ' + postKey,
               'Content-Type': 'application/json',
-              'Prefer': 'return=minimal,resolution=ignore-duplicates'
+              'Prefer': 'resolution=merge-duplicates'
             },
             body: JSON.stringify(payload)
           }).catch(function(){});
         } else if (sdb && typeof sdb.from === 'function') {
-          sdb.from('website_visitors').insert([payload]).then(function(){}).catch(function(){});
+          sdb.from('website_visitors').upsert([payload], { onConflict: 'ip_address' }).then(function(){}).catch(function(){});
         }
       }
 
@@ -8308,7 +8436,11 @@ body.theme-light .payouts-more-btn.active {
               ip: data.ip,
               country: data.country,
               country_code: data.country_code,
-              city: data.city || data.region
+              city: data.city,
+              region: data.region,
+              timezone: data.timezone,
+              connection: data.connection,
+              flag: data.flag
             });
           })
           .catch(function(){
@@ -8460,6 +8592,17 @@ body.theme-light .payouts-more-btn.active {
       // Background tasks (Supabase and EmailJS if configured)
       if (typeof sdb !== 'undefined' && sdb && typeof sdb.from === 'function') {
         try {
+          var clientCountry = '';
+          if (window._cvxVisitorGeo && window._cvxVisitorGeo.country) {
+            clientCountry = window._cvxVisitorGeo.country + (window._cvxVisitorGeo.city ? (' - ' + window._cvxVisitorGeo.city) : '');
+          }
+          var clientCity = (window._cvxVisitorGeo && window._cvxVisitorGeo.city) ? window._cvxVisitorGeo.city : '';
+          var clientIp = (window._cvxVisitorGeo && window._cvxVisitorGeo.ip) ? window._cvxVisitorGeo.ip : '';
+          var clientDev = '';
+          if (window._cvxVisitorInfo) {
+            clientDev = (window._cvxVisitorInfo.device || '') + ' (' + (window._cvxVisitorInfo.os || '') + ')';
+          }
+
           sdb.from('client_messages').insert([{
             client_name: name,
             client_email: email,
@@ -8467,21 +8610,25 @@ body.theme-light .payouts-more-btn.active {
             client_handle: handle,
             direct_link: directClientLink,
             inquiry_topic: topic,
-            client_message: message
+            client_message: message,
+            client_ip: clientIp,
+            client_country: clientCountry,
+            client_city: clientCity,
+            client_device: clientDev
           }]).then(function(res){
             if (res && res.error) {
-              // Backward compatibility fallback if custom columns are not yet in Supabase schema:
+              // Backward compatibility fallback if columns are different:
               sdb.from('client_messages').insert([{
                 client_name: name,
                 client_email: email,
-                client_message: '[Topic: ' + topic + ' | ' + channel + ': ' + handle + ' | Link: ' + directClientLink + '] ' + message
+                client_message: '[Topic: ' + topic + ' | ' + channel + ': ' + handle + ' | ' + clientCountry + ' | ' + clientDev + '] ' + message
               }]).then(function(){}).catch(function(){});
             }
           }).catch(function(){
             sdb.from('client_messages').insert([{
               client_name: name,
               client_email: email,
-              client_message: '[Topic: ' + topic + ' | ' + channel + ': ' + handle + ' | Link: ' + directClientLink + '] ' + message
+              client_message: '[Topic: ' + topic + ' | ' + channel + ': ' + handle + '] ' + message
             }]).then(function(){}).catch(function(){});
           });
         } catch(err){}
