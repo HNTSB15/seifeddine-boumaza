@@ -7,7 +7,18 @@
 <!-- Standard scroll & hash restoration on refresh across PC & Mobile -->
 <script type="text/javascript">//<![CDATA[
 (function(){
-  if ('scrollRestoration' in history) {
+  // If URL has #reviews on load, clean it so the website always starts at the very top (Hero / Bio / Portfolio)
+  if (location.hash && location.hash.toLowerCase().indexOf('review') !== -1) {
+    try {
+      if (history.replaceState) {
+        history.replaceState(null, '', location.pathname + location.search);
+      }
+    } catch(e){}
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  } else if ('scrollRestoration' in history) {
     history.scrollRestoration = 'auto';
   }
 })();
@@ -7814,7 +7825,7 @@ html, body {
           if (typeof closeMobileMenu === 'function') closeMobileMenu();
 
           try {
-            if (history.pushState) {
+            if (history.pushState && id !== '#reviews') {
               history.pushState(null, '', id);
             }
           } catch(err){}
@@ -9871,7 +9882,7 @@ html, body {
 
       // Update URL hash without causing page jump
       try {
-        if (history.pushState && el.id) {
+        if (history.pushState && el.id && el.id !== 'reviews') {
           history.pushState(null, '', '#' + el.id);
         }
       } catch(err){}

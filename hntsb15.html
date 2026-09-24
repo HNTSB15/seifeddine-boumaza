@@ -2460,22 +2460,20 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     document.querySelectorAll('.tab-btn').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-tab') === name && !isOpen);
     });
-
-    try {
-      localStorage.setItem('hntsb15_active_module', name);
-    } catch(e){}
   };
 
-  window.openModule = function(name) {
+  window.openModule = function(name, skipScroll) {
     var card = document.getElementById('module-' + name);
     if (!card) return;
     card.classList.add('is-open');
     var pane = document.getElementById('tab-' + name);
     if (pane) pane.classList.add('active');
 
-    setTimeout(function(){
-      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 70);
+    if (!skipScroll) {
+      setTimeout(function(){
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 70);
+    }
 
     document.querySelectorAll('.tab-btn').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-tab') === name);
@@ -2495,16 +2493,75 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   };
 
   window.switchTab = function(tabName, btnEl) {
-    window.openModule(tabName);
+    // When clicking a tab from sidebar on desktop:
+    // Close other modules and open target module cleanly, then scroll into view
+    document.querySelectorAll('.module-card').forEach(function(c){
+      if (c.id === 'module-' + tabName) {
+        c.classList.add('is-open');
+      } else {
+        c.classList.remove('is-open');
+      }
+    });
+    document.querySelectorAll('.tab-pane').forEach(function(p){
+      if (p.id === 'tab-' + tabName) {
+        p.classList.add('active');
+      } else {
+        p.classList.remove('active');
+      }
+    });
+    document.querySelectorAll('.tab-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-tab') === tabName);
+    });
+
+    var card = document.getElementById('module-' + tabName);
+    if (card) {
+      setTimeout(function(){
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    }
   };
 
   function restoreActiveTab() {
-    var hash = (window.location.hash || '').replace('#tab-', '').replace('#module-', '').replace('#', '');
-    var saved = localStorage.getItem('hntsb15_active_module') || localStorage.getItem('hntsb15_active_tab');
-    var tab = hash || saved || 'hero';
-    var valid = ['hero', 'stats', 'managed', 'trades', 'payouts', 'prices', 'reviews', 'faq', 'socials', 'inbox', 'visitors'];
-    if (valid.indexOf(tab) === -1) tab = 'hero';
-    openModule(tab);
+    // 1. Clear any legacy cached review tab preference
+    try {
+      localStorage.removeItem('hntsb15_active_module');
+      localStorage.removeItem('hntsb15_active_tab');
+    } catch(e){}
+
+    // 2. Clear any lingering hash that points to reviews or tabs
+    if (window.location.hash && (window.location.hash.indexOf('review') !== -1 || window.location.hash.indexOf('tab') !== -1 || window.location.hash.indexOf('module') !== -1)) {
+      try {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      } catch(e){}
+    }
+
+    // 3. Always open the first module on computer & mobile: Module 01 (Hero & Bio)
+    document.querySelectorAll('.module-card').forEach(function(c){
+      c.classList.remove('is-open');
+    });
+    document.querySelectorAll('.tab-pane').forEach(function(p){
+      p.classList.remove('active');
+    });
+
+    // Exclusively open Module 01 (Hero & Bio)
+    var firstCard = document.getElementById('module-hero');
+    if (firstCard) firstCard.classList.add('is-open');
+    var firstPane = document.getElementById('tab-hero');
+    if (firstPane) firstPane.classList.add('active');
+
+    // Highlight the first sidebar button (Hero & Bio)
+    document.querySelectorAll('.tab-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-tab') === 'hero');
+    });
+
+    // 4. Force screen to stay strictly at the very top (first thing on screen)
+    window.scrollTo(0, 0);
+    setTimeout(function(){
+      window.scrollTo(0, 0);
+    }, 60);
+    setTimeout(function(){
+      window.scrollTo(0, 0);
+    }, 200);
   }
 
   // --------------------------------------------------------------------------
