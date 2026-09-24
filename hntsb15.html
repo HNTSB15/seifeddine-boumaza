@@ -474,6 +474,46 @@ body {
   gap: 10px;
   flex-shrink: 0;
 }
+.module-header-right .tag {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 800;
+  color: #ffd700 !important; /* Visible Radiant Gold */
+  background: rgba(255, 215, 0, 0.15) !important;
+  border: 1.5px solid rgba(255, 215, 0, 0.65) !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  letter-spacing: 0.8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.25) !important;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
+}
+.module-header-right .tag.green {
+  color: #00ff9c !important;
+  background: rgba(0, 255, 156, 0.15) !important;
+  border-color: rgba(0, 255, 156, 0.6) !important;
+  box-shadow: 0 0 10px rgba(0, 255, 156, 0.25) !important;
+  text-shadow: 0 0 6px rgba(0, 255, 156, 0.4);
+}
+.module-header-right .tag.gold {
+  color: #ffbe1a !important;
+  background: rgba(255, 190, 26, 0.16) !important;
+  border-color: rgba(255, 190, 26, 0.6) !important;
+  box-shadow: 0 0 10px rgba(255, 190, 26, 0.25) !important;
+  text-shadow: 0 0 6px rgba(255, 190, 26, 0.4);
+}
+.tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--neon);
+  background: rgba(0, 255, 156, 0.12);
+  border: 1px solid rgba(0, 255, 156, 0.35);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
 .module-arrow {
   width: 28px;
   height: 28px;
@@ -923,7 +963,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       <span style="color:var(--neon);font-size:10px">11 MODULES</span>
     </div>
     <nav class="admin-nav-vertical">
-      <button type="button" class="tab-btn active" data-tab="hero" onclick="switchTab('hero', this)">
+      <button type="button" class="tab-btn" data-tab="hero" onclick="switchTab('hero', this)">
         <span>🏠 Hero &amp; Bio</span>
       </button>
       <button type="button" class="tab-btn" data-tab="stats" onclick="switchTab('stats', this)">
@@ -982,7 +1022,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     <!-- ==========================================================================
          MODULE 1: HERO & BIO (الواجهة الرئيسية ونبذة عني)
          ========================================================================== -->
-    <div class="module-card is-open" id="module-hero">
+    <div class="module-card" id="module-hero">
       <button type="button" class="module-header-btn" onclick="toggleModule('hero')">
         <div class="module-header-left">
           <span class="module-header-icon">🏠</span>
@@ -997,7 +1037,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         </div>
       </button>
       <div class="module-body">
-        <section id="tab-hero" class="tab-pane active">
+        <section id="tab-hero" class="tab-pane">
           <div class="card">
             <div class="card-title">
               <h2><span>🏠</span> Hero Section &amp; Availability</h2>
@@ -1205,6 +1245,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
           </div>
         </div>
         <div class="module-header-right">
+          <span class="tag">#04</span>
           <span class="tag green" id="tradesHeaderTag">Live Deals</span>
           <span class="module-arrow">▼</span>
         </div>
@@ -1513,6 +1554,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
           </div>
         </div>
         <div class="module-header-right">
+          <span class="tag">#07</span>
           <span class="tag gold" id="reviewsPendingHeaderBadge">⭐ Reviews</span>
           <span class="module-arrow">▼</span>
         </div>
@@ -1798,6 +1840,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
           </div>
         </div>
         <div class="module-header-right">
+          <span class="tag">#10</span>
           <span class="tab-badge" id="inboxHeaderBadge" style="display:none">0</span>
           <span class="module-arrow">▼</span>
         </div>
@@ -1828,6 +1871,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
           </div>
         </div>
         <div class="module-header-right">
+          <span class="tag">#11</span>
           <span class="tag green" style="animation:pulse 2s infinite">● Live</span>
           <span class="module-arrow">▼</span>
         </div>
@@ -2535,33 +2579,23 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       } catch(e){}
     }
 
-    // 3. Always open the first module on computer & mobile: Module 01 (Hero & Bio)
+    // 3. User explicit rule: DO NOT open anything automatically on load!
+    // Everything starts completely collapsed (مطوي) on both PC and mobile!
     document.querySelectorAll('.module-card').forEach(function(c){
       c.classList.remove('is-open');
     });
     document.querySelectorAll('.tab-pane').forEach(function(p){
       p.classList.remove('active');
     });
-
-    // Exclusively open Module 01 (Hero & Bio)
-    var firstCard = document.getElementById('module-hero');
-    if (firstCard) firstCard.classList.add('is-open');
-    var firstPane = document.getElementById('tab-hero');
-    if (firstPane) firstPane.classList.add('active');
-
-    // Highlight the first sidebar button (Hero & Bio)
     document.querySelectorAll('.tab-btn').forEach(function(b){
-      b.classList.toggle('active', b.getAttribute('data-tab') === 'hero');
+      b.classList.remove('active');
     });
 
-    // 4. Force screen to stay strictly at the very top (first thing on screen)
+    // 4. Force screen to stay strictly at the very top (0, 0)
     window.scrollTo(0, 0);
     setTimeout(function(){
       window.scrollTo(0, 0);
-    }, 60);
-    setTimeout(function(){
-      window.scrollTo(0, 0);
-    }, 200);
+    }, 50);
   }
 
   // --------------------------------------------------------------------------
