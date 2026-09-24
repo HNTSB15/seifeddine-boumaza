@@ -7993,8 +7993,9 @@ html, body {
 
         // Hero Section & Texts
         if (k === 'hero_badge_text') {
-          var el = document.getElementById('cvxHeroBadgeTxt');
-          if (el) el.textContent = val;
+          if (typeof window.updateOnlineStatusSchedule === 'function') {
+            window.updateOnlineStatusSchedule();
+          }
         }
         if (k === 'hero_role') {
           var el = document.getElementById('cvxRole');
@@ -11398,8 +11399,8 @@ html, body {
         currentHour = fallbackAlg.getHours() + (fallbackAlg.getMinutes() / 60);
       }
 
-      // 8:00 AM (8.0) to 6:00 PM (18.0) -> Online (Green), otherwise Offline (Red)
-      var isOnline = (currentHour >= 8 && currentHour < 18);
+      // 8:00 AM (8.0) to 4:00 PM (16.0) Algeria Time (UTC+1) -> Online (Green), otherwise Offline (Red)
+      var isOnline = (currentHour >= 8 && currentHour < 16);
 
       if (isOnline) {
         document.body.classList.remove('status-offline');
@@ -11409,28 +11410,34 @@ html, body {
         document.body.classList.add('status-offline');
       }
 
-      // 1. Hero Badge — Keep permanent availability message ("متاح لإدارة الحسابات")
+      // 1. Hero Badge — Dynamic based on working hours in Algeria (8:00 AM - 4:00 PM)
       var hBadge = document.getElementById('cvxHeroBadgeTxt') || document.querySelector('.cvx-badge .mono');
       if (hBadge) {
-        hBadge.textContent = isAr
-          ? 'متصل الآن · متاح لقبول محافظ جديدة للإدارة'
-          : 'Online Now · Accepting New Managed Accounts';
+        if (isOnline) {
+          hBadge.textContent = isAr
+            ? 'متصل الآن · متاح لقبول محافظ جديدة للإدارة'
+            : 'Online Now · Accepting New Managed Accounts';
+        } else {
+          hBadge.textContent = isAr
+            ? 'غير متصل الآن (أوقات العمل: 8:00 ص - 4:00 م) · اترك رسالتك وسأرد عليك'
+            : 'Offline Now (Active Hours: 8:00 AM - 4:00 PM) · Leave a message';
+        }
       }
 
       // 2. Navbar Brand Beacon Tooltip
       var brandDot = document.querySelector('.cvx-brand-logo-dot');
       if (brandDot) {
         brandDot.setAttribute('title', isOnline
-          ? (isAr ? 'متصل الآن (أوقات العمل: 8:00 ص - 6:00 م)' : 'Online Now · Working Hours: 8:00 AM - 6:00 PM')
-          : (isAr ? 'غير متصل الآن (أوقات العمل من 8:00 ص إلى 6:00 م)' : 'Offline Now · Business Hours: 8:00 AM - 6:00 PM'));
+          ? (isAr ? 'متصل الآن (أوقات العمل: 8:00 ص - 4:00 م)' : 'Online Now · Working Hours: 8:00 AM - 4:00 PM')
+          : (isAr ? 'غير متصل الآن (أوقات العمل من 8:00 ص إلى 4:00 م)' : 'Offline Now · Business Hours: 8:00 AM - 4:00 PM'));
       }
 
       // 3. Avatar Status Dot Tooltip
       var avatarStat = document.querySelector('.cvx-avatar-status');
       if (avatarStat) {
         avatarStat.setAttribute('title', isOnline
-          ? (isAr ? 'متصل الآن (أوقات العمل: 8:00 ص - 6:00 م)' : 'Online Now · Working Hours: 8:00 AM - 6:00 PM')
-          : (isAr ? 'غير متصل الآن (أوقات العمل من 8:00 ص إلى 6:00 م)' : 'Offline Now · Business Hours: 8:00 AM - 6:00 PM'));
+          ? (isAr ? 'متصل الآن (أوقات العمل: 8:00 ص - 4:00 م)' : 'Online Now · Working Hours: 8:00 AM - 4:00 PM')
+          : (isAr ? 'غير متصل الآن (أوقات العمل من 8:00 ص إلى 4:00 م)' : 'Offline Now · Business Hours: 8:00 AM - 4:00 PM'));
       }
 
       // 4. Navbar Live Status text (if exists)
