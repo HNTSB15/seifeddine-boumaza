@@ -2764,6 +2764,51 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     }, duration || 3000);
   };
 
+  window.escapeAdminHtml = function(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  };
+
+  window.escapeJsQuotes = function(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/\\/g, '\\\\')
+      .replace(/'/g, "\\'")
+      .replace(/"/g, '\\"')
+      .replace(/\n/g, '\\n')
+      .replace(/\r/g, '');
+  };
+
+  window.copyToClipboard = function(text, successMsg) {
+    if (!text) return;
+    if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() {
+        showToast(successMsg ? ('✓ ' + successMsg) : '✓ تم النسخ بنجاح!');
+      }).catch(function() {
+        showToast('فشل النسخ تلقائياً', 'error');
+      });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMsg ? ('✓ ' + successMsg) : '✓ تم النسخ بنجاح!');
+      } catch(e) {
+        showToast('فشل النسخ', 'error');
+      }
+      document.body.removeChild(ta);
+    }
+  };
+
   window.handleImagePick = function(inputEl, textTargetId, previewImgId) {
     if (!inputEl || !inputEl.files || !inputEl.files[0]) return;
     var file = inputEl.files[0];
