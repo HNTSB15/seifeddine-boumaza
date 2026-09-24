@@ -8218,32 +8218,134 @@ html, body {
         if (firstSlide) firstSlide.classList.add('active-slide');
       }
 
-      function renderDynamicFaqs(faqs) {
+      function renderDynamicFaqs(faqs, overrideLang) {
         var container = document.querySelector('.cvx-faq-container');
         if (!container) return;
-        var activeFaqs = faqs.filter(function(f){ return f.is_active !== false; });
+        var activeFaqs = Array.isArray(faqs) ? faqs.filter(function(f){ return f.is_active !== false; }) : [];
         if (!activeFaqs.length) return;
+
+        window.cvxDynamicFaqs = activeFaqs;
+
+        // Preserve open accordion item index across language toggles
+        var openIdx = -1;
+        var existingItems = container.querySelectorAll('.cvx-faq-item');
+        if (existingItems && existingItems.length > 0) {
+          for (var ei = 0; ei < existingItems.length; ei++) {
+            if (existingItems[ei].classList.contains('active')) {
+              openIdx = ei;
+              break;
+            }
+          }
+        }
+        if (openIdx === -1) openIdx = 0;
+
+        var lang = overrideLang || (document.documentElement ? document.documentElement.getAttribute('lang') : null) || (function(){
+          try { return localStorage.getItem('cvx_lang'); } catch(e){ return 'ar'; }
+        })() || 'ar';
+        var isAr = (lang === 'ar');
+
+        var defaultArFaqs = {
+          faq_q1: 'كيف تتم مشاركة الأرباح (50/50 Profit Split) ومتى يتم سحب الأرباح؟',
+          faq_a1: 'يعتمد نظام إدارة الحسابات لدينا على تقاسم صافي الأرباح بنسبة <b>50% للمستثمر و 50% لمدير الحساب</b> بدون أي رسوم إدارة مسبقة. يتم ربط حسابك لدى وسيطك المفضل (Broker) بصلاحية التداول فقط. في نهاية كل دورة تداول (أسبوعياً أو كل أسبوعين)، تقوم بسحب أرباحك بنفسك من حسابك لدى الوسيط، ثم تحول نسبة الإدارة (50%) بسهولة عبر USDT.',
+          faq_q2: 'هل تملك أي صلاحية لسحب أموالي من حسابي؟ (أمان رأس المال)',
+          faq_a2: '<b>مستحيل تماماً و100% مستبعد.</b> في جميع شركات الوساطة المرخصة عالمياً، ترتبط عمليات السحب والإيداع حصراً بهويتك، بريدك الشخصي، وحسابك البنكي. نحن نحصل فقط على كلمة سر التداول أو المستثمر (Trading Password) لتنفيذ الصفقات فقط. أنت تحتفظ بالسيطرة الكاملة بنسبة 100% وتستطيع إيقاف التداول أو سحب كامل أموالك في أي ثانية.',
+          faq_q3: 'ما هو الحد الأدنى لرأس المال؟ وكيف تضمن حماية الحساب من التراجع (Drawdown)؟',
+          faq_a3: 'يبدأ الحد الأدنى للبدء من <b>$100+</b> لاختبار الأداء والاطمئنان، وصولاً لحسابات المحافظ الكبرى ($1,000 إلى $10,000+). نطبق إدارة مخاطر مؤسسية صارمة:<br/>• <b>حجم لوت منضبط (Lot Sizing):</b> مخاطرة 1% إلى 2% كحد أقصى لكل صفقة.<br/>• <b>وقف خسارة إلزامي (Strict Stop-Loss):</b> كل صفقة تُفتح محصنة بأمر وقف خسارة فوري.<br/>• <b>قواطع أمان ضد التراجع:</b> يتوقف التداول فوراً لحماية رأس المال إذا تجاوزت تقلبات السوق الحد المسموح به.',
+          faq_q4: 'كيف تقوم منصة NewsX AI بتوقع الأخبار الاقتصادية وتقلبات الذهب؟',
+          faq_a4: 'تعتبر <b>NewsX AI</b> منصتنا الذكية الخاصة المطورة لتحليل البيانات الاقتصادية الأمريكية عالية التأثير (NFP, CPI, FOMC, GDP) فورياً. تقوم الخوارزمية بحساب ترجيح الاتجاه وتوليد إشارات تداول نوعية للذهب (XAUUSD) متزامنة مع سحب السيولة المؤسسية، مما يمنح المشتركين ميزة تنافسية استثنائية خلال جلسات التداول الأكثر تقلباً.',
+          faq_q5: 'كيف أبدأ الاشتراك معك أو طلب إدارة حسابي اليوم؟',
+          faq_a5: 'البدء سهل ويستغرق أقل من 5 دقائق:<br/>1. أرسل استفسارك عبر <a href="#contact" style="color:var(--neon);font-weight:700">طرفية التواصل المباشر</a> أسفل هذه الصفحة.<br/>2. أو تواصل مع سيف الدين مباشرة عبر التيليجرام الرسمي: <a href="https://t.me/HNTSB15" target="_blank" rel="noopener" style="color:var(--neon-2);font-weight:700">@HNTSB15 ↗</a>.<br/>سنراجع معك وسيطك المفضل، نحدد خطة إدارة المخاطر، ونبدأ العمل فوراً بكل انضباط وأمان.',
+          faq_q6: 'ما هي شركات الوساطة (Brokers) المدعومة لإدارة الحسابات؟',
+          faq_a6: 'ندعم جميع شركات الوساطة المالية المرخصة التي تدعم منصات MetaTrader 4 (MT4) أو MetaTrader 5 (MT5) عالمياً، مثل <b>Exness، IC Markets، XM، Pepperstone، FXTM</b>، أو أي وسيط مرخص من اختيارك. نوصي دائماً بفتح حسابات ECN أو Raw Spread للاستفادة من أقل سبريد ممكن وأعلى سرعة تنفيذ لصفقات الذهب (XAUUSD).',
+          faq_q7: 'ما هي العوائد الشهرية المتوقعة أو الأداء المستهدف لحسابي؟',
+          faq_a7: 'يستهدف سجل أدائنا نمواً سنوياً متزناً بين <b>30% إلى 50%+ سنوياً (بمتوسط 3% إلى 8% شهرياً بانضباط تام)</b> مع إبقاء التراجع الأقصى تحت سقف 8.5% الصارم. نرفض استراتيجيات المقامرة والمضاعفات الخطرة (Martingale)، وأولويتنا الدائمة هي حماية رأس المال الأساسي أولاً وتحقيق نمو تراكمي آمن ومستمر.',
+          faq_q8: 'كيف يتم إرسال إشارات وتوصيات VIP وعلى أي أزواج يتم التداول؟',
+          faq_a8: 'يتم بث الإشارات فورياً ومباشرة إلى هاتفك عبر <b>قناة تيليجرام VIP الخاصة</b> وتطبيق <b>منصة NewsX AI</b> مع إشعارات دفع فورية. تتضمن كل توصية: نقطة الدخول المحددة، أمر وقف الخسارة (SL)، وأهداف ربح متعددة (TP1, TP2, TP3). يتركز التداول بشكل أساسي على <b>الذهب (XAUUSD)، مؤشر US30، ناسداك، والعملات الكبرى (EUR/USD, GBP/USD)</b> خاصة أوقات الأخبار الاقتصادية الكبرى (NFP, CPI, FOMC).'
+        };
+
+        var trans = window.cvxTranslations || (typeof cvxTranslations !== 'undefined' ? cvxTranslations : null);
+        var dict = (trans && trans[lang]) ? trans[lang] : (isAr ? defaultArFaqs : null);
 
         var html = '';
         activeFaqs.forEach(function(f, idx) {
           var numStr = (idx + 1 < 10) ? ('0' + (idx + 1)) : (idx + 1);
-          var isFirst = (idx === 0) ? ' active' : '';
-          html += '<div class="cvx-faq-item' + isFirst + '">' +
+          var isActive = (idx === openIdx);
+          var activeClass = isActive ? ' active' : '';
+          var slotNum = idx + 1;
+
+          var qText = '';
+          if (isAr) {
+            qText = f.question_ar || f.q_ar || f.questionAr;
+            if (!qText && /[\u0600-\u06FF]/.test(f.question || f.q || '')) {
+              qText = f.question || f.q;
+            }
+            if (!qText && dict && dict['faq_q' + slotNum]) {
+              qText = dict['faq_q' + slotNum];
+            }
+            if (!qText && defaultArFaqs['faq_q' + slotNum]) {
+              qText = defaultArFaqs['faq_q' + slotNum];
+            }
+            if (!qText) {
+              qText = f.question || f.q || '';
+            }
+          } else {
+            qText = f.question_en || f.q_en || f.questionEn;
+            if (!qText && dict && dict['faq_q' + slotNum] && !/[\u0600-\u06FF]/.test(dict['faq_q' + slotNum])) {
+              if (/[\u0600-\u06FF]/.test(f.question || f.q || '')) {
+                qText = dict['faq_q' + slotNum];
+              } else {
+                qText = f.question || f.q || dict['faq_q' + slotNum];
+              }
+            } else if (!qText) {
+              qText = f.question || f.q || '';
+            }
+          }
+
+          var aText = '';
+          if (isAr) {
+            aText = f.answer_ar || f.a_ar || f.answerAr;
+            if (!aText && /[\u0600-\u06FF]/.test(f.answer || f.a || '')) {
+              aText = f.answer || f.a;
+            }
+            if (!aText && dict && dict['faq_a' + slotNum]) {
+              aText = dict['faq_a' + slotNum];
+            }
+            if (!aText && defaultArFaqs['faq_a' + slotNum]) {
+              aText = defaultArFaqs['faq_a' + slotNum];
+            }
+            if (!aText) {
+              aText = f.answer || f.a || '';
+            }
+          } else {
+            aText = f.answer_en || f.a_en || f.answerEn;
+            if (!aText && dict && dict['faq_a' + slotNum] && !/[\u0600-\u06FF]/.test(dict['faq_a' + slotNum])) {
+              if (/[\u0600-\u06FF]/.test(f.answer || f.a || '')) {
+                aText = dict['faq_a' + slotNum];
+              } else {
+                aText = f.answer || f.a || dict['faq_a' + slotNum];
+              }
+            } else if (!aText) {
+              aText = f.answer || f.a || '';
+            }
+          }
+
+          html += '<div class="cvx-faq-item' + activeClass + '">' +
             '<button type="button" class="cvx-faq-question" onclick="cvxToggleFaq(this)">' +
               '<div class="faq-q-left">' +
                 '<span class="faq-num">' + (f.num || numStr) + '</span>' +
-                '<span class="faq-q-text">' + f.question + '</span>' +
+                '<span class="faq-q-text" id="faqQ' + slotNum + '">' + qText + '</span>' +
               '</div>' +
-              '<span class="faq-icon">' + (idx === 0 ? '−' : '+') + '</span>' +
+              '<span class="faq-icon">' + (isActive ? '−' : '+') + '</span>' +
             '</button>' +
             '<div class="cvx-faq-answer">' +
-              '<div class="cvx-faq-answer-inner">' + f.answer + '</div>' +
+              '<div class="cvx-faq-answer-inner" id="faqA' + slotNum + '">' + aText + '</div>' +
             '</div>' +
           '</div>';
         });
 
         container.innerHTML = html;
       }
+      window.renderDynamicFaqs = renderDynamicFaqs;
 
       // Render Announcement Banner if Active
       if (bannerActive && bannerText) {
@@ -9983,7 +10085,7 @@ html, body {
     // 🌐 BILINGUAL TRANSLATION ENGINE (Arabic & English)
     // ==========================================================================
 // Full Bilingual Translation Engine for Saifeddine Boumaza Trading Platform
-    var cvxTranslations = {
+    var cvxTranslations = window.cvxTranslations = {
       ar: {
         // Header & Navigation
         'brand_title': 'سيف الدين<br/>بومعزة',
@@ -11380,11 +11482,15 @@ html, body {
       if (faqT && t['faq_title']) faqT.innerHTML = t['faq_title'];
       var faqS = document.getElementById('faqSub');
       if (faqS && t['faq_sub']) faqS.textContent = t['faq_sub'];
-      for (var f = 1; f <= 8; f++) {
-        var qEl = document.getElementById('faqQ' + f);
-        if (qEl && t['faq_q' + f]) qEl.textContent = t['faq_q' + f];
-        var aEl = document.getElementById('faqA' + f);
-        if (aEl && t['faq_a' + f]) aEl.innerHTML = t['faq_a' + f];
+      if (window.renderDynamicFaqs && window.cvxDynamicFaqs && Array.isArray(window.cvxDynamicFaqs) && window.cvxDynamicFaqs.length > 0) {
+        window.renderDynamicFaqs(window.cvxDynamicFaqs, lang);
+      } else {
+        for (var f = 1; f <= 8; f++) {
+          var qEl = document.getElementById('faqQ' + f);
+          if (qEl && t['faq_q' + f]) qEl.innerHTML = t['faq_q' + f];
+          var aEl = document.getElementById('faqA' + f);
+          if (aEl && t['faq_a' + f]) aEl.innerHTML = t['faq_a' + f];
+        }
       }
 
       try {

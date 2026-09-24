@@ -3804,13 +3804,15 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       var html = '';
       list.forEach(function(item, idx) {
         var id = item.id !== undefined ? item.id : idx;
+        var qText = item.q || item.question || ('FAQ Item ' + (idx + 1));
+        var aText = (item.a || item.answer || '').replace(/<[^>]+>/g, '');
         html += '<div class="item-card">' +
           '<div class="item-info">' +
             '<div class="item-title">' +
-              '<span style="color:var(--neon)">' + (item.q || 'Question') + '</span>' +
+              '<span style="color:var(--neon)">' + qText + '</span>' +
               (item.category ? ('<span class="tag" style="font-size:10px">' + item.category + '</span>') : '') +
             '</div>' +
-            '<div class="item-sub">' + (item.a ? (item.a.slice(0, 90) + '...') : '') + '</div>' +
+            '<div class="item-sub">' + (aText ? (aText.slice(0, 90) + '...') : '') + '</div>' +
           '</div>' +
           '<div class="item-actions">' +
             '<button type="button" class="btn-edit" onclick="openEditFaqModal(' + id + ')">Edit ✏️</button>' +
@@ -3833,9 +3835,13 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 
     var newFaq = {
       id: Date.now(),
+      num: ((currentList.length + 1) < 10 ? '0' : '') + (currentList.length + 1),
       q: q,
+      question: q,
       a: a,
-      category: cat || 'General'
+      answer: a,
+      category: cat || 'General',
+      is_active: true
     };
 
     btn.disabled = true;
@@ -3873,8 +3879,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     if (!item) return;
 
     document.getElementById('edit_faqId').value = (item.id !== undefined ? item.id : id);
-    document.getElementById('edit_faqQ').value = item.q || '';
-    document.getElementById('edit_faqA').value = item.a || '';
+    document.getElementById('edit_faqQ').value = item.q || item.question || '';
+    document.getElementById('edit_faqA').value = item.a || item.answer || '';
     document.getElementById('edit_faqCategory').value = item.category || '';
 
     document.getElementById('editFaqModal').style.display = 'flex';
@@ -3902,12 +3908,14 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     var a = (document.getElementById('edit_faqA').value || '').trim();
     var cat = (document.getElementById('edit_faqCategory').value || '').trim();
 
-    list[idx] = {
+    list[idx] = Object.assign({}, list[idx], {
       id: list[idx].id !== undefined ? list[idx].id : Number(id),
       q: q,
+      question: q,
       a: a,
+      answer: a,
       category: cat || 'General'
-    };
+    });
 
     btn.disabled = true;
     btn.textContent = 'SAVING CHANGES...';
