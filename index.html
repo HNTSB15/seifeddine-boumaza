@@ -9008,81 +9008,85 @@ html, body {
   loadLiveReviews();
 
   // ==========================================================================
-  // 🌍 UNIQUE VISITOR TRACKER (Table: website_visitors)
-  // Only records each visitor ONCE on their very first visit.
-  // Never duplicates on re-entries, page refreshes, or return visits.
+  // 🌍 REAL-TIME VISITOR TELEMETRY TRACKER (Table: website_visitors)
+  // Real-time tracking with Supabase on_conflict upsert & multi-tier geo
   // ==========================================================================
   (function(){
     try {
-      var TRACK_KEY = 'sb_visitor_tracked_v1';
-      var COOKIE_KEY = 'sb_vtr';
+      var PING_KEY = 'sb_last_vtr_ts';
 
-      // 1. Guard check: If visitor was already tracked previously, exit immediately
-      function isAlreadyTracked() {
+      // Clean up legacy permanent block if present from previous version
+      try {
+        localStorage.removeItem('sb_visitor_tracked_v1');
+      } catch(e) {}
+
+      // Throttle: avoid spamming within 90 seconds in the same tab/session,
+      // but ensure every fresh entry or return visit records in real-time
+      function shouldThrottle() {
         try {
-          if (localStorage.getItem(TRACK_KEY)) return true;
-          if (sessionStorage.getItem(TRACK_KEY)) return true;
-          if (document.cookie && document.cookie.indexOf(COOKIE_KEY + '=1') !== -1) return true;
+          var lastPing = sessionStorage.getItem(PING_KEY);
+          if (lastPing && (Date.now() - parseInt(lastPing, 10)) < 90000) {
+            return true;
+          }
         } catch(e) {}
         return false;
       }
 
-      // If already tracked on a prior visit, STOP right here (no network calls, no Supabase insert)
-      if (isAlreadyTracked()) {
-        return;
-      }
-
-      // Mark session as pending immediately to avoid any duplicate calls during rapid loads
-      try {
-        sessionStorage.setItem(TRACK_KEY, 'pending');
-      } catch(e) {}
-
-      function markAsTracked() {
+      function markPing() {
         try {
-          localStorage.setItem(TRACK_KEY, new Date().toISOString());
-          sessionStorage.setItem(TRACK_KEY, '1');
-          document.cookie = COOKIE_KEY + '=1; path=/; max-age=31536000; SameSite=Lax';
+          sessionStorage.setItem(PING_KEY, String(Date.now()));
         } catch(e) {}
       }
-
-      // Optional manual reset helper for testing in browser console: window.resetVisitorTracking()
-      window.resetVisitorTracking = function() {
-        try {
-          localStorage.removeItem(TRACK_KEY);
-          sessionStorage.removeItem(TRACK_KEY);
-          document.cookie = COOKIE_KEY + '=; Max-Age=-99999999; path=/;';
-          console.log('[VisitorTracker] Reset complete. Next page reload will record as a fresh visit.');
-        } catch(e) {}
-      };
 
       function getDeviceInfo() {
         var ua = navigator.userAgent || '';
-        var deviceType = 'Desktop';
+        var isTouch = (navigator.maxTouchPoints && navigator.maxTouchPoints > 0) || ('ontouchstart' in window);
+        var screenW = window.screen ? (window.screen.width || 0) : (window.innerWidth || 0);
+        var screenH = window.screen ? (window.screen.height || 0) : (window.innerHeight || 0);
+        var isSmallScreen = (screenW > 0 && screenW <= 820);
+
+        var deviceType = (isTouch && isSmallScreen) ? 'Mobile' : 'Desktop';
         var device = 'Desktop PC';
         var os = 'Unknown OS';
         var browser = 'Browser';
 
-        // Detect device / phone model & type
+        // 1. Apple iOS (iPhone / iPad)
         if (/iPhone/i.test(ua)) {
           deviceType = 'Mobile';
           var iosM = ua.match(/OS ([\d_]+)/i);
           var iosVer = iosM ? iosM[1].replace(/_/g, '.') : '';
-          device = 'Apple iPhone' + (iosVer ? (' (iOS ' + iosVer + ')') : '');
+          var iPhoneModel = 'iPhone';
+          var minDim = Math.min(screenW, screenH);
+          var maxDim = Math.max(screenW, screenH);
+          if (minDim === 393 && maxDim === 852) iPhoneModel = 'iPhone 15/14 Pro';
+          else if (minDim === 430 && maxDim === 932) iPhoneModel = 'iPhone 15/14 Pro Max';
+          else if (minDim === 390 && maxDim === 844) iPhoneModel = 'iPhone 14/13/12';
+          else if (minDim === 428 && maxDim === 926) iPhoneModel = 'iPhone 14/13/12 Pro Max';
+          else if (minDim === 375 && maxDim === 812) iPhoneModel = 'iPhone X/XS/11 Pro';
+          else if (minDim === 414 && maxDim === 896) iPhoneModel = 'iPhone 11/XR';
+          else if (minDim === 375 && maxDim === 667) iPhoneModel = 'iPhone SE/8/7';
+          device = iPhoneModel + (iosVer ? (' (iOS ' + iosVer + ')') : '');
           os = 'iOS ' + (iosVer || '');
-        } else if (/iPad/i.test(ua)) {
+        } else if (/iPad/i.test(ua) || (isTouch && /Macintosh/i.test(ua) && screenW <= 1366)) {
           deviceType = 'Tablet';
           device = 'Apple iPad';
           os = 'iPadOS';
-        } else if (/Android/i.test(ua)) {
-          deviceType = /Mobile/i.test(ua) ? 'Mobile' : 'Tablet';
+        }
+        // 2. Android
+        else if (/Android/i.test(ua)) {
+          deviceType = (/Mobile/i.test(ua) || isSmallScreen) ? 'Mobile' : 'Tablet';
           var andM = ua.match(/Android\s+([\d.]+)/i);
           var andVer = andM ? andM[1] : '';
           var modelMatch = ua.match(/;\s*([^;)]+)\s+Build/i) || ua.match(/Android\s+[\d.]+;\s*([^;)]+)\)/i);
           var phoneModel = modelMatch && modelMatch[1] ? modelMatch[1].trim() : 'Android Device';
+          if (phoneModel.length > 32) phoneModel = phoneModel.slice(0, 32);
+          if (phoneModel === 'K' || phoneModel === 'Mobile') phoneModel = 'Android Smartphone';
           device = phoneModel;
           os = 'Android ' + (andVer || '');
-        } else if (/Windows NT 10.0/i.test(ua)) {
-          deviceType = 'Desktop';
+        }
+        // 3. Desktop Windows / Mac / Linux
+        else if (/Windows NT 10.0/i.test(ua)) {
+          deviceType = (isTouch && isSmallScreen) ? 'Tablet' : 'Desktop';
           device = 'Windows PC';
           os = 'Windows 10/11';
         } else if (/Macintosh|Mac OS X/i.test(ua)) {
@@ -9090,14 +9094,14 @@ html, body {
           device = 'Apple Mac';
           os = 'macOS';
         } else if (/Linux/i.test(ua)) {
-          deviceType = 'Desktop';
-          device = 'Linux PC';
+          deviceType = (isTouch && isSmallScreen) ? 'Mobile' : 'Desktop';
+          device = deviceType === 'Mobile' ? 'Linux Mobile' : 'Linux PC';
           os = 'Linux';
         }
 
         // Detect browser
-        if (/Chrome/i.test(ua) && !/Edge|Edg|OPR/i.test(ua)) browser = 'Chrome';
-        else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) browser = 'Safari';
+        if (/Chrome/i.test(ua) && !/Edge|Edg|OPR/i.test(ua)) browser = deviceType === 'Mobile' ? 'Chrome Mobile' : 'Chrome';
+        else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) browser = deviceType === 'Mobile' ? 'Mobile Safari' : 'Safari';
         else if (/Edg/i.test(ua)) browser = 'Edge';
         else if (/Firefox/i.test(ua)) browser = 'Firefox';
         else if (/OPR/i.test(ua)) browser = 'Opera';
@@ -9107,31 +9111,51 @@ html, body {
           device: device,
           os: os,
           browser: browser,
-          screen: window.screen ? (window.screen.width + 'x' + window.screen.height) : '',
+          screen: (screenW && screenH) ? (screenW + 'x' + screenH) : '',
           lang: navigator.language || navigator.userLanguage || '',
           ref: document.referrer || 'Direct Visit'
         };
       }
 
       function sendVisitorLog(geo) {
-        markAsTracked();
-
+        markPing();
         var info = getDeviceInfo();
         window._cvxVisitorGeo = geo;
         window._cvxVisitorInfo = info;
 
-        var countryDisplay = (geo && geo.country) ? geo.country : 'Unknown Country';
-        if (geo && geo.country_code) countryDisplay += ' (' + geo.country_code + ')';
-        if (geo && geo.flag && geo.flag.emoji) countryDisplay += ' ' + geo.flag.emoji;
+        var countryDisplay = (geo && geo.country) ? geo.country : '';
+        if (!countryDisplay) {
+          try {
+            var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+            if (tz.indexOf('Algiers') > -1) countryDisplay = 'Algeria (DZ) 🇩🇿';
+            else if (tz.indexOf('Cairo') > -1) countryDisplay = 'Egypt (EG) 🇪🇬';
+            else if (tz.indexOf('Riyadh') > -1) countryDisplay = 'Saudi Arabia (SA) 🇸🇦';
+            else if (tz.indexOf('Dubai') > -1) countryDisplay = 'UAE (AE) 🇦🇪';
+            else if (tz.indexOf('Casablanca') > -1) countryDisplay = 'Morocco (MA) 🇲🇦';
+            else if (tz.indexOf('Tunis') > -1) countryDisplay = 'Tunisia (TN) 🇹🇳';
+            else countryDisplay = 'Global Visitor';
+          } catch(e) {
+            countryDisplay = 'Global Visitor';
+          }
+        } else {
+          if (geo && geo.country_code && countryDisplay.indexOf('(') === -1) {
+            countryDisplay += ' (' + geo.country_code + ')';
+          }
+          if (geo && geo.flag && countryDisplay.indexOf(geo.flag) === -1) {
+            countryDisplay += ' ' + geo.flag;
+          }
+        }
+
+        var ip = (geo && geo.ip) ? geo.ip : ('v-' + Math.random().toString(36).substring(2, 10));
 
         var payload = {
-          ip_address: (geo && geo.ip) ? (geo.ip + (info.type === 'Mobile' ? ' [Mobile]' : '')) : ('Visitor-' + Math.random().toString(36).substring(2, 9)),
+          ip_address: ip,
           country: countryDisplay,
           country_code: (geo && geo.country_code) ? geo.country_code : '',
-          city: (geo && (geo.city || geo.region)) ? (geo.city || geo.region) : 'Unknown City',
+          city: (geo && geo.city) ? geo.city : (geo && geo.region ? geo.region : 'Active Session'),
           region: (geo && geo.region) ? geo.region : '',
-          timezone: (geo && geo.timezone && geo.timezone.id) ? geo.timezone.id : '',
-          isp_provider: (geo && geo.connection && geo.connection.isp) ? geo.connection.isp : '',
+          timezone: (geo && geo.timezone) ? geo.timezone : '',
+          isp_provider: (geo && geo.isp) ? geo.isp : '',
           device_type: info.type,
           device_model: info.device,
           operating_system: info.os,
@@ -9139,10 +9163,12 @@ html, body {
           screen_size: info.screen,
           language: info.lang,
           source_referrer: info.ref,
-          landing_page: window.location.pathname || '/'
+          landing_page: window.location.pathname || '/',
+          last_seen: new Date().toISOString()
         };
 
-        var postUrl = 'https://kbioxkoifvyivhkzbxke.supabase.co/rest/v1/website_visitors';
+        // PostgREST on_conflict ensures merge-duplicates works without 409 error
+        var postUrl = 'https://kbioxkoifvyivhkzbxke.supabase.co/rest/v1/website_visitors?on_conflict=ip_address';
         var postKey = 'sb_publishable_TXezItY2oN4gFgCxDLqZPw_B_ormkoG';
 
         if (window.fetch) {
@@ -9156,52 +9182,68 @@ html, body {
             },
             body: JSON.stringify(payload)
           }).catch(function(){});
-        } else if (sdb && typeof sdb.from === 'function') {
-          sdb.from('website_visitors').upsert([payload], { onConflict: 'ip_address' }).then(function(){}).catch(function(){});
         }
       }
 
       function trackVisitor() {
-        if (isAlreadyTracked() && sessionStorage.getItem(TRACK_KEY) !== 'pending') {
-          return;
-        }
+        if (shouldThrottle()) return;
 
-        // Use ipwho.is (fast, reliable, free CORS JSON geolocation)
-        fetch('https://ipwho.is/')
-          .then(function(res){
-            if (!res.ok) throw new Error('ipwho error');
-            return res.json();
-          })
-          .then(function(data){
+        var timeoutPromise = function(ms) {
+          return new Promise(function(_, reject){
+            setTimeout(function(){ reject(new Error('timeout')); }, ms);
+          });
+        };
+
+        // Tier 1: ipwho.is
+        Promise.race([
+          fetch('https://ipwho.is/').then(function(r){ return r.json(); }),
+          timeoutPromise(3500)
+        ]).then(function(data){
+          if (data && data.success !== false && data.ip) {
             sendVisitorLog({
               ip: data.ip,
               country: data.country,
               country_code: data.country_code,
               city: data.city,
               region: data.region,
-              timezone: data.timezone,
-              connection: data.connection,
-              flag: data.flag
+              timezone: data.timezone && data.timezone.id ? data.timezone.id : '',
+              isp: data.connection && data.connection.isp ? data.connection.isp : '',
+              flag: data.flag && data.flag.emoji ? data.flag.emoji : ''
             });
-          })
-          .catch(function(){
-            // Fallback 1: api.ipify.org
-            fetch('https://api.ipify.org?format=json')
-              .then(function(r){ return r.json(); })
-              .then(function(d){
-                sendVisitorLog({ ip: d.ip, country: 'Online', city: 'Online' });
-              })
-              .catch(function(){
-                // Fallback 2: Direct log with device and screen info
-                sendVisitorLog(null);
+            return;
+          }
+          throw new Error('ipwho invalid');
+        }).catch(function(){
+          // Tier 2: get.geojs.io
+          Promise.race([
+            fetch('https://get.geojs.io/v1/ip/geo.json').then(function(r){ return r.json(); }),
+            timeoutPromise(3500)
+          ]).then(function(geo){
+            if (geo && geo.ip) {
+              sendVisitorLog({
+                ip: geo.ip,
+                country: geo.country,
+                country_code: geo.country_code,
+                city: geo.city,
+                region: geo.region,
+                timezone: geo.timezone,
+                isp: geo.organization_name || geo.organization || '',
+                flag: ''
               });
+              return;
+            }
+            throw new Error('geojs invalid');
+          }).catch(function(){
+            // Tier 3: Client telemetry fallback (never fake "Online")
+            sendVisitorLog(null);
           });
+        });
       }
 
-      if (document.readyState === 'complete') {
-        setTimeout(trackVisitor, 1200);
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        setTimeout(trackVisitor, 300);
       } else {
-        window.addEventListener('load', function(){ setTimeout(trackVisitor, 1200); });
+        window.addEventListener('DOMContentLoaded', function(){ setTimeout(trackVisitor, 300); });
       }
     } catch(err){}
   })();

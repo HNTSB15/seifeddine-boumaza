@@ -325,89 +325,147 @@ body {
   box-sizing: border-box;
 }
 
-/* Responsive Breakpoints for Tablet & Mobile */
+/* Animated Spinners & Action Feedback */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.spin {
+  display: inline-block;
+  animation: spin 0.75s linear infinite;
+  vertical-align: middle;
+}
+.btn-refresh {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-refresh .refresh-icon {
+  display: inline-block;
+  transition: transform .2s;
+}
+.btn-refresh.loading .refresh-icon {
+  animation: spin 0.75s linear infinite;
+}
+.btn-refresh.loading {
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* Responsive Breakpoints for Tablet & Mobile - Modern Cyber App Layout */
 @media (max-width: 900px) {
   .admin-layout {
     flex-direction: column !important;
   }
   .sidebar-toggle-btn {
-    display: none !important; /* Hide toggle button so tabs are ALWAYS visible and directly accessible */
+    display: none !important;
   }
   .admin-sidebar {
-    display: flex !important;
+    display: block !important;
     width: 100% !important;
     min-width: 100% !important;
-    position: static !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 95 !important;
     height: auto !important;
     max-height: none !important;
     border-right: none !important;
-    border-bottom: 2px solid rgba(0, 255, 156, 0.25) !important;
-    background: #090e14 !important;
-    padding: 12px 10px !important;
+    border-bottom: 1px solid rgba(0, 255, 156, 0.22) !important;
+    background: rgba(9, 14, 20, 0.96) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    padding: 8px 10px !important;
     box-sizing: border-box !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
   }
   .sidebar-header-label {
-    margin-bottom: 8px !important;
-    padding: 0 4px !important;
-    font-size: 11px !important;
+    display: none !important;
   }
   .admin-nav-vertical {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 6px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    gap: 8px !important;
+    padding: 4px 4px 6px 4px !important;
+    white-space: nowrap !important;
+  }
+  .admin-nav-vertical::-webkit-scrollbar {
+    display: none !important;
   }
   .tab-btn {
-    padding: 10px 8px !important;
-    font-size: 11.5px !important;
-    border-radius: 8px !important;
+    flex: 0 0 auto !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 8px 14px !important;
+    font-size: 12px !important;
+    border-radius: 20px !important;
     white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    gap: 6px !important;
+    transform: none !important;
   }
-  .tab-btn:hover,
+  .tab-btn:hover {
+    transform: none !important;
+  }
   .tab-btn.active {
+    background: rgba(0, 255, 156, 0.15) !important;
+    border-color: var(--neon) !important;
+    color: var(--neon) !important;
+    box-shadow: 0 0 12px rgba(0, 255, 156, 0.25) !important;
+    font-weight: 700 !important;
     transform: none !important;
   }
   .admin-container {
-    padding: 14px 10px !important;
+    padding: 16px 12px !important;
   }
 }
 
 @media (max-width: 600px) {
   .admin-header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 10px;
     padding: 10px 14px;
+  }
+  .header-brand {
+    justify-content: space-between;
+    width: 100%;
   }
   .admin-header > div:last-child {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: stretch;
     gap: 6px;
   }
   .admin-header > div:last-child .btn-secondary,
   .admin-header > div:last-child .btn-logout {
-    padding: 7px 8px;
-    font-size: 10px;
+    padding: 8px 6px;
+    font-size: 11px;
     flex: 1;
     text-align: center;
     justify-content: center;
-  }
-  .admin-nav-vertical {
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-  }
-  .tab-btn {
-    padding: 9px 8px;
-    font-size: 11.5px;
+    border-radius: 8px;
+    white-space: nowrap;
   }
   .form-grid {
     grid-template-columns: 1fr;
   }
   .card {
-    padding: 14px;
+    padding: 14px 12px;
     margin-bottom: 14px;
+    border-radius: 12px;
+  }
+  .data-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .data-table {
+    min-width: 600px;
   }
 }
 
@@ -840,7 +898,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         <h2><span>📈</span> Live Trading Performance &amp; Metrics</h2>
         <div style="display:flex;align-items:center;gap:10px">
           <span class="tag">REAL-TIME SYNC</span>
-          <button type="button" class="btn-secondary" onclick="loadStatsData()" style="font-size:11px">↻ Refresh</button>
+          <button type="button" class="btn-secondary btn-refresh" onclick="loadStatsData(this)" style="font-size:11px"><span class="refresh-icon">↻</span> Refresh</button>
         </div>
       </div>
 
@@ -894,7 +952,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         <h2><span>💼</span> Managed Accounts &amp; Partnership Terms</h2>
         <div style="display:flex;align-items:center;gap:10px">
           <span class="tag">PORTFOLIO TERMS</span>
-          <button type="button" class="btn-secondary" onclick="loadManagedData()" style="font-size:11px">↻ Refresh</button>
+          <button type="button" class="btn-secondary btn-refresh" onclick="loadManagedData(this)" style="font-size:11px"><span class="refresh-icon">↻</span> Refresh</button>
         </div>
       </div>
 
@@ -995,7 +1053,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
           </div>
           <div class="form-group">
             <label>Proof Link / Tweet URL</label>
-            <input type="url" id="tLink" placeholder="https://x.com/seifeddin06/status/...">
+            <input type="text" id="tLink" placeholder="https://x.com/seifeddin06/status/...">
           </div>
         </div>
 
@@ -1053,7 +1111,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         <h2><span>📊</span> Published Live Results on Website</h2>
         <div style="display:flex;align-items:center;gap:10px">
           <span class="tag" id="tradesCountTag">0 Trades</span>
-          <button type="button" class="btn-secondary" onclick="loadTradesList()" style="font-size:11px">↻ Refresh</button>
+          <button type="button" class="btn-secondary btn-refresh" onclick="loadTradesList(this)" style="font-size:11px"><span class="refresh-icon">↻</span> Refresh</button>
         </div>
       </div>
       <div id="tradesList">Loading active trades...</div>
@@ -1141,7 +1199,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         <h2><span>📋</span> Active Verified Payouts on Site</h2>
         <div style="display:flex;align-items:center;gap:10px">
           <span class="tag" id="payoutsCountTag">0 Records</span>
-          <button type="button" class="btn-secondary" onclick="loadPayoutsList()" style="font-size:11px">↻ Refresh</button>
+          <button type="button" class="btn-secondary btn-refresh" onclick="loadPayoutsList(this)" style="font-size:11px"><span class="refresh-icon">↻</span> Refresh</button>
         </div>
       </div>
       <div id="payoutsList">Loading payouts...</div>
@@ -1254,16 +1312,31 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       </form>
     </div>
 
-    <!-- Active Reviews List -->
-    <div class="card">
+    <!-- Reviews Section 1: New Pending Client Reviews awaiting approval -->
+    <div class="card" style="border-color:rgba(242,193,78,0.35);box-shadow:0 0 20px rgba(242,193,78,0.06)">
       <div class="card-title">
-        <h2><span>💬</span> Live Verified Reviews</h2>
+        <h2><span style="color:var(--gold)">⏳</span> التقييمات الجديدة الواردة من الموقع (بانتظار الموافقة)</h2>
         <div style="display:flex;align-items:center;gap:10px">
-          <span class="tag" id="reviewsCountTag">0 Reviews</span>
-          <button type="button" class="btn-secondary" onclick="loadReviewsList()" style="font-size:11px">↻ Refresh</button>
+          <span class="tag gold" id="pendingReviewsCountTag">0 New Pending</span>
+          <button type="button" class="btn-secondary btn-refresh" onclick="loadReviewsList(this)" style="font-size:11px"><span class="refresh-icon">↻</span> Refresh</button>
         </div>
       </div>
-      <div id="reviewsList">Loading reviews...</div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:14px">
+        التقييمات التي يرسلها زوار الموقع وتتطلب مراجعتك. اضغط <b>نشر التقييم ✅</b> لاعتماده وعرضه فوراً على الموقع الحي، أو <b>تعديل ✏️</b> أو <b>حذف 🗑️</b>.
+      </p>
+      <div id="pendingReviewsList">Loading pending reviews...</div>
+    </div>
+
+    <!-- Reviews Section 2: Currently Published Live Reviews on Website -->
+    <div class="card" style="border-color:rgba(0,255,156,0.3)">
+      <div class="card-title">
+        <h2><span style="color:var(--neon)">⭐</span> التقييمات المنشورة والمعتمدة على الموقع الحي</h2>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="tag green" id="liveReviewsCountTag">0 Live Published</span>
+          <button type="button" class="btn-secondary btn-refresh" onclick="loadReviewsList(this)" style="font-size:11px"><span class="refresh-icon">↻</span> Refresh</button>
+        </div>
+      </div>
+      <div id="liveReviewsList">Loading live reviews...</div>
     </div>
   </section>
 
@@ -1305,7 +1378,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         <h2><span>📖</span> Active FAQs Displayed on Website</h2>
         <div style="display:flex;align-items:center;gap:10px">
           <span class="tag" id="faqsCountTag">0 FAQs</span>
-          <button type="button" class="btn-secondary" onclick="loadFaqsList()" style="font-size:11px">↻ Refresh</button>
+          <button type="button" class="btn-secondary btn-refresh" onclick="loadFaqsList(this)" style="font-size:11px"><span class="refresh-icon">↻</span> Refresh</button>
         </div>
       </div>
       <div id="faqsList">Loading FAQ items...</div>
@@ -1321,7 +1394,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         <h2><span>🌐</span> Official Social Channels &amp; Direct Contact</h2>
         <div style="display:flex;align-items:center;gap:10px">
           <span class="tag">COMMUNICATION</span>
-          <button type="button" class="btn-secondary" onclick="loadSocialsData()" style="font-size:11px">↻ Refresh</button>
+          <button type="button" class="btn-secondary btn-refresh" onclick="loadSocialsData(this)" style="font-size:11px"><span class="refresh-icon">↻</span> Refresh</button>
         </div>
       </div>
 
@@ -1422,7 +1495,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     <div class="card">
       <div class="card-title">
         <h2><span>📬</span> Client Inquiries &amp; Leads</h2>
-        <button type="button" class="btn-secondary" onclick="loadInbox()">↻ Refresh</button>
+        <button type="button" class="btn-secondary btn-refresh" onclick="loadInbox(this)"><span class="refresh-icon">↻</span> Refresh</button>
       </div>
       <div id="inboxList">Loading incoming inquiries...</div>
     </div>
@@ -1437,7 +1510,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         <h2><span>🌍</span> Live Visitors Analytics</h2>
         <div style="display:flex;align-items:center;gap:10px">
           <span class="tag" id="visitorsCountTag">0 Total</span>
-          <button type="button" class="btn-secondary" onclick="loadVisitors()">↻ Refresh</button>
+          <button type="button" class="btn-secondary btn-refresh" onclick="loadVisitors(this)"><span class="refresh-icon">↻</span> Refresh</button>
         </div>
       </div>
       <div class="data-table-wrap">
@@ -1463,6 +1536,23 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 </main>
 </div> <!-- end .admin-layout -->
 
+
+<!-- ==========================================================================
+     MESSAGE DETAILS MODAL (عرض كافة تفاصيل رسالة العميل)
+     ========================================================================== -->
+<div id="messageDetailsModal" class="modal-backdrop" style="display:none">
+  <div class="modal-card" style="max-width:640px;width:95%">
+    <div class="modal-header">
+      <div class="modal-title" style="color:var(--neon);display:flex;align-items:center;gap:8px">
+        <span>📨</span> تفاصيل استفسار العميل (Lead Dossier)
+      </div>
+      <button type="button" class="modal-close" onclick="closeMessageDetailsModal()">✕</button>
+    </div>
+    <div id="messageDetailsContent" style="padding:10px 0">
+      <!-- Injected dynamically -->
+    </div>
+  </div>
+</div>
 
 <!-- ==========================================================================
      EDIT PAYOUT MODAL (تعديل إثباتات الأرباح والصفقات المنشورة)
@@ -1686,7 +1776,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         </div>
         <div class="form-group">
           <label>Proof Link / Tweet URL</label>
-          <input type="url" id="edit_tLink">
+          <input type="text" id="edit_tLink">
         </div>
       </div>
 
@@ -2045,10 +2135,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       }
     } catch(e){}
 
-    // On mobile screens, smoothly scroll to the content area after selecting a tab
-    if (window.innerWidth <= 900) {
-      var mainEl = document.querySelector('.admin-container');
-      if (mainEl) mainEl.scrollIntoView({ behavior: 'smooth' });
+    var activeBtn = btnEl || document.querySelector('.tab-btn[data-tab="' + tabName + '"]');
+    if (activeBtn && activeBtn.scrollIntoView) {
+      activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     }
   };
 
@@ -2173,14 +2262,47 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     var file = inputEl.files[0];
     var reader = new FileReader();
     reader.onload = function(e) {
-      var dataUrl = e.target.result;
-      var inp = document.getElementById(textTargetId);
-      if (inp) inp.value = dataUrl;
-      var prev = document.getElementById(previewImgId);
-      if (prev) {
-        prev.src = dataUrl;
-        prev.style.display = 'block';
-      }
+      var rawResult = e.target.result;
+      var img = new Image();
+      img.onload = function() {
+        var canvas = document.createElement('canvas');
+        var maxDim = 1200;
+        var width = img.width;
+        var height = img.height;
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        var compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+
+        var inp = document.getElementById(textTargetId);
+        if (inp) inp.value = compressedDataUrl;
+        var prev = document.getElementById(previewImgId);
+        if (prev) {
+          prev.src = compressedDataUrl;
+          prev.style.display = 'block';
+        }
+      };
+      img.onerror = function() {
+        // Fallback to raw if canvas fails
+        var inp = document.getElementById(textTargetId);
+        if (inp) inp.value = rawResult;
+        var prev = document.getElementById(previewImgId);
+        if (prev) {
+          prev.src = rawResult;
+          prev.style.display = 'block';
+        }
+      };
+      img.src = rawResult;
     };
     reader.readAsDataURL(file);
   };
@@ -2188,8 +2310,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   // --------------------------------------------------------------------------
   // TAB 1: HERO & BIO (الواجهة الرئيسية ونبذة عني)
   // --------------------------------------------------------------------------
-  window.loadHeroData = function() {
+  window.loadHeroData = function(btn) {
     if (!sdb) return;
+    if (btn) btn.classList.add('loading');
     var keys = ['hero_role', 'hero_badge_text', 'hero_tagline', 'about_p1', 'about_p2', 'about_p3'];
     sdb.from('website_settings').select('*').in('setting_name', keys).then(function(res) {
       var list = (res && res.data) ? res.data : [];
@@ -2197,13 +2320,20 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         var el = document.getElementById('set_' + s.setting_name);
         if (el) el.value = s.current_value || '';
       });
-    });
+      if (btn) {
+        btn.classList.remove('loading');
+        showToast('✓ Hero & bio data refreshed', 'success');
+      }
+    }).catch(function(){ if (btn) btn.classList.remove('loading'); });
   };
 
   window.saveHeroData = function(e) {
     if (e && e.preventDefault) e.preventDefault();
     var btn = document.getElementById('btnSaveHero');
-    if (btn) btn.disabled = true;
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spin">🔄</span> SAVING HERO DATA...';
+    }
 
     var keys = ['hero_role', 'hero_badge_text', 'hero_tagline', 'about_p1', 'about_p2', 'about_p3'];
     var updates = keys.map(function(k) {
@@ -2216,11 +2346,17 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     });
 
     sdb.from('website_settings').upsert(updates, { onConflict: 'setting_name' }).then(function(res) {
-      if (btn) btn.disabled = false;
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = 'SAVE HERO &amp; BIO DATA 💾';
+      }
       if (res.error) showToast('Error saving hero data: ' + res.error.message, 'error');
       else showToast('✓ Hero & Bio updated on live website!');
     }).catch(function(err) {
-      if (btn) btn.disabled = false;
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = 'SAVE HERO &amp; BIO DATA 💾';
+      }
       showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
     });
   };
@@ -2228,8 +2364,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   // --------------------------------------------------------------------------
   // TAB 2: STATS (إحصائيات الأداء والتداول المباشرة)
   // --------------------------------------------------------------------------
-  window.loadStatsData = function() {
+  window.loadStatsData = function(btn) {
     if (!sdb) return;
+    if (btn) btn.classList.add('loading');
     var keys = ['stat_win_rate', 'stat_avg_return', 'stat_managed_capital', 'stat_years_exp', 'stat_tracked_months', 'stat_community_traders'];
     sdb.from('website_settings').select('*').in('setting_name', keys).then(function(res) {
       var list = (res && res.data) ? res.data : [];
@@ -2237,13 +2374,20 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         var el = document.getElementById(s.setting_name);
         if (el) el.value = s.current_value || '';
       });
-    });
+      if (btn) {
+        btn.classList.remove('loading');
+        showToast('✓ Stats refreshed', 'success');
+      }
+    }).catch(function(){ if (btn) btn.classList.remove('loading'); });
   };
 
   window.saveStatsData = function(e) {
     if (e && e.preventDefault) e.preventDefault();
     var btn = document.getElementById('btnSaveStats');
-    if (btn) btn.disabled = true;
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spin">🔄</span> SAVING STATS...';
+    }
 
     var keys = ['stat_win_rate', 'stat_avg_return', 'stat_managed_capital', 'stat_years_exp', 'stat_tracked_months', 'stat_community_traders'];
     var updates = keys.map(function(k) {
@@ -2256,11 +2400,17 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     });
 
     sdb.from('website_settings').upsert(updates, { onConflict: 'setting_name' }).then(function(res) {
-      if (btn) btn.disabled = false;
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = 'SAVE STATS TO LIVE WEBSITE 💾';
+      }
       if (res.error) showToast('Error saving stats: ' + res.error.message, 'error');
       else showToast('✓ Stats successfully updated on live site!');
     }).catch(function(err) {
-      if (btn) btn.disabled = false;
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = 'SAVE STATS TO LIVE WEBSITE 💾';
+      }
       showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
     });
   };
@@ -2268,8 +2418,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   // --------------------------------------------------------------------------
   // TAB 3: MANAGED TERMS (شروط إدارة المحافظ)
   // --------------------------------------------------------------------------
-  window.loadManagedData = function() {
+  window.loadManagedData = function(btn) {
     if (!sdb) return;
+    if (btn) btn.classList.add('loading');
     var keys = ['managed_min_capital', 'managed_profit_split', 'managed_drawdown_limit', 'managed_supported_brokers', 'signals_vip_schedule', 'newsx_platform_link'];
     sdb.from('website_settings').select('*').in('setting_name', keys).then(function(res) {
       var list = (res && res.data) ? res.data : [];
@@ -2283,7 +2434,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   window.saveManagedData = function(e) {
     if (e && e.preventDefault) e.preventDefault();
     var btn = document.getElementById('btnSaveManaged');
-    if (btn) btn.disabled = true;
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spin">🔄</span> SAVING TERMS...';
+    }
 
     var keys = ['managed_min_capital', 'managed_profit_split', 'managed_drawdown_limit', 'managed_supported_brokers', 'signals_vip_schedule', 'newsx_platform_link'];
     var updates = keys.map(function(k) {
@@ -2310,12 +2464,17 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   // --------------------------------------------------------------------------
   window._tradesCache = [];
 
-  window.loadTradesList = function() {
+  window.loadTradesList = function(btn) {
     if (!sdb) return;
+    if (btn) btn.classList.add('loading');
     var listEl = document.getElementById('tradesList');
     var countTag = document.getElementById('tradesCountTag');
 
     sdb.from('website_settings').select('current_value').eq('setting_name', 'trading_deals_json').single().then(function(res) {
+      if (btn) {
+        btn.classList.remove('loading');
+        showToast('✓ Trades list refreshed', 'success');
+      }
       var list = [];
       try {
         if (res && res.data && res.data.current_value) {
@@ -2349,7 +2508,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         '</div>';
       });
       listEl.innerHTML = html;
-    }).catch(function() {
+    }).catch(function(err) {
+      if (btn) btn.classList.remove('loading');
       listEl.innerHTML = '<p style="color:var(--red);text-align:center">Error loading trades list.</p>';
     });
   };
@@ -2367,6 +2527,11 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     var tags = (document.getElementById('tTags').value || '').trim();
     var link = (document.getElementById('tLink').value || '').trim();
 
+    if (!pair) {
+      showToast('⚠️ يرجى إدخال اسم زوج التداول / الأداة المالية', 'error');
+      return;
+    }
+
     var photos = [
       (document.getElementById('tImg1').value || '').trim(),
       (document.getElementById('tImg2').value || '').trim(),
@@ -2380,44 +2545,79 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       id: Date.now(),
       badge: badge || pair,
       title: pair,
-      deposit: deposit,
-      profit: profit,
+      deposit: deposit || 'Live Managed Account',
+      profit: profit || '+$0.00',
       date: date || new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
-      split: split,
-      desc: desc,
+      split: split || '50/50 Share',
+      desc: desc || (pair + ' - Live verified trade execution.'),
       tags: tagList,
       link: link,
       photos: photos
     };
 
-    btn.disabled = true;
-    btn.textContent = 'PUBLISHING TRADE...';
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spin">🔄</span> PUBLISHING TO LIVE WEBSITE...';
+    }
 
-    var currentList = window._tradesCache || [];
-    var updatedList = [newTrade].concat(currentList);
+    // Fetch latest current trades
+    sdb.from('website_settings').select('current_value').eq('setting_name', 'trading_deals_json').single().then(function(fetchRes) {
+      var currentList = [];
+      try {
+        if (fetchRes && fetchRes.data && fetchRes.data.current_value) {
+          currentList = JSON.parse(fetchRes.data.current_value);
+        }
+      } catch(e){}
+      if (!Array.isArray(currentList)) currentList = window._tradesCache || [];
 
-    sdb.from('website_settings').upsert({
-      setting_name: 'trading_deals_json',
-      current_value: JSON.stringify(updatedList),
-      updated_at: new Date().toISOString()
-    }, { onConflict: 'setting_name' }).then(function(res) {
-      btn.disabled = false;
-      btn.textContent = 'PUBLISH TRADE SETUP TO WEBSITE 🚀';
-      if (res.error) {
-        showToast('Error saving trade: ' + res.error.message, 'error');
-        return;
-      }
-      showToast('Trade published successfully! 🚀');
-      document.getElementById('tradeForm').reset();
-      ['tPrev1','tPrev2','tPrev3','tPrev4'].forEach(function(pid){
-        var el = document.getElementById(pid);
-        if (el) { el.src = ''; el.style.display = 'none'; }
+      var updatedList = [newTrade].concat(currentList);
+
+      sdb.from('website_settings').upsert({
+        setting_name: 'trading_deals_json',
+        current_value: JSON.stringify(updatedList),
+        updated_at: new Date().toISOString()
+      }, { onConflict: 'setting_name' }).then(function(res) {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = 'PUBLISH TRADE SETUP TO WEBSITE 🚀';
+        }
+        if (res && res.error) {
+          showToast('Error saving trade: ' + res.error.message, 'error');
+          return;
+        }
+        showToast('✓ تم نشر الصفقة بنجاح على الموقع الحي! 🚀', 'success');
+        document.getElementById('tradeForm').reset();
+        ['tPrev1','tPrev2','tPrev3','tPrev4'].forEach(function(pid){
+          var el = document.getElementById(pid);
+          if (el) { el.src = ''; el.style.display = 'none'; }
+        });
+        loadTradesList();
+      }).catch(function(err){
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = 'PUBLISH TRADE SETUP TO WEBSITE 🚀';
+        }
+        showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
       });
-      loadTradesList();
-    }).catch(function(err){
-      btn.disabled = false;
-      btn.textContent = 'PUBLISH TRADE SETUP TO WEBSITE 🚀';
-      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
+    }).catch(function(){
+      // Direct upsert fallback
+      var updatedList = [newTrade].concat(window._tradesCache || []);
+      sdb.from('website_settings').upsert({
+        setting_name: 'trading_deals_json',
+        current_value: JSON.stringify(updatedList),
+        updated_at: new Date().toISOString()
+      }, { onConflict: 'setting_name' }).then(function(res) {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = 'PUBLISH TRADE SETUP TO WEBSITE 🚀';
+        }
+        if (res && res.error) showToast('Error: ' + res.error.message, 'error');
+        else {
+          showToast('✓ تم نشر الصفقة بنجاح على الموقع الحي! 🚀', 'success');
+          document.getElementById('tradeForm').reset();
+          loadTradesList();
+        }
+      });
     });
   };
 
@@ -2557,8 +2757,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   // --------------------------------------------------------------------------
   window._payoutsCache = [];
 
-  window.loadPayoutsList = function() {
+  window.loadPayoutsList = function(btn) {
     if (!sdb) return;
+    if (btn) btn.classList.add('loading');
     var listEl = document.getElementById('payoutsList');
     var countTag = document.getElementById('payoutsCountTag');
 
@@ -2759,46 +2960,90 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   // --------------------------------------------------------------------------
   window._reviewsCache = [];
 
-  window.loadReviewsList = function() {
+  window.loadReviewsList = function(btn) {
     if (!sdb) return;
-    var listEl = document.getElementById('reviewsList');
-    var countTag = document.getElementById('reviewsCountTag');
+    if (btn) btn.classList.add('loading');
+    var pendingListEl = document.getElementById('pendingReviewsList');
+    var liveListEl = document.getElementById('liveReviewsList');
+    var pendingCountTag = document.getElementById('pendingReviewsCountTag');
+    var liveCountTag = document.getElementById('liveReviewsCountTag');
 
     sdb.from('client_reviews').select('*').order('id', { ascending: false }).then(function(res) {
+      if (btn) {
+        btn.classList.remove('loading');
+        showToast('✓ Reviews refreshed', 'success');
+      }
       var list = (res && res.data) ? res.data : [];
       window._reviewsCache = list;
-      if (countTag) countTag.textContent = list.length + ' Reviews';
-      if (!list.length) {
-        listEl.innerHTML = '<p style="color:var(--muted);text-align:center;padding:16px">No reviews found in database.</p>';
-        return;
+      
+      var pendingList = list.filter(function(r){ return r.is_active === false; });
+      var liveList = list.filter(function(r){ return r.is_active !== false; });
+
+      if (pendingCountTag) pendingCountTag.textContent = pendingList.length + ' New Pending';
+      if (liveCountTag) liveCountTag.textContent = liveList.length + ' Live Published';
+
+      // 1. Render Pending Reviews
+      if (pendingListEl) {
+        if (!pendingList.length) {
+          pendingListEl.innerHTML = '<div style="text-align:center;color:var(--muted);padding:20px;border:1px dashed rgba(255,255,255,0.08);border-radius:8px">✓ لا توجد أي تقييمات جديدة معلقة حالياً. كل التقييمات معتمدة ومنشورة.</div>';
+        } else {
+          var pHtml = '';
+          pendingList.forEach(function(r) {
+            var stars = '★'.repeat(r.rating || 5);
+            pHtml += '<div class="item-card is-hidden" style="border-left:3px solid var(--gold);background:rgba(242,193,78,0.03);margin-bottom:12px">' +
+              '<div class="item-info">' +
+                '<div class="item-title">' +
+                  '<span style="color:var(--gold)">' + stars + '</span> ' +
+                  '<b style="color:#fff;font-size:14px">' + (r.client_name || 'Anonymous') + '</b>' +
+                  '<span class="tag" style="font-size:10px">' + (r.service_type || 'managed') + '</span>' +
+                  (r.profit_tag ? ('<span class="tag" style="font-size:10px;color:var(--neon)">' + r.profit_tag + '</span>') : '') +
+                  '<span class="tag" style="font-size:10px;color:var(--gold);border-color:var(--gold)">⏳ PENDING REVIEW</span>' +
+                '</div>' +
+                '<div class="item-sub" style="color:#e2e8f0;margin-top:6px;line-height:1.5"><b style="color:var(--gold)">📍 ' + (r.client_country || '') + ':</b> ' + (r.review_text || '') + '</div>' +
+              '</div>' +
+              '<div class="item-actions" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">' +
+                '<button type="button" class="btn-primary" style="padding:6px 14px;font-size:12px;background:var(--neon);color:#000;border:none;font-weight:700" onclick="toggleReviewActive(' + r.id + ', true)" title="نشر التقييم فوراً على الموقع">نشر التقييم ✅</button>' +
+                '<button type="button" class="btn-edit" onclick="openEditReviewModal(' + r.id + ')">تعديل ✏️</button>' +
+                '<button type="button" class="btn-delete" onclick="deleteReview(' + r.id + ')">حذف 🗑️</button>' +
+              '</div>' +
+            '</div>';
+          });
+          pendingListEl.innerHTML = pHtml;
+        }
       }
 
-      var html = '';
-      list.forEach(function(r) {
-        var isHidden = r.is_active === false;
-        var stars = '★'.repeat(r.rating || 5);
-        html += '<div class="item-card' + (isHidden ? ' is-hidden' : '') + '">' +
-          '<div class="item-info">' +
-            '<div class="item-title">' +
-              '<span style="color:var(--gold)">' + stars + '</span> ' +
-              '<span>' + (r.client_name || '') + '</span>' +
-              '<span class="tag" style="font-size:10px">' + (r.service_type || 'managed') + '</span>' +
-              (r.profit_tag ? ('<span class="tag" style="font-size:10px;color:var(--neon)">' + r.profit_tag + '</span>') : '') +
-              (isHidden ? '<span class="tag" style="font-size:10px;color:var(--gold);border-color:var(--gold)">⏳ PENDING REVIEW</span>' : '<span class="tag" style="font-size:10px;color:var(--neon);border-color:var(--neon)">✓ LIVE</span>') +
-            '</div>' +
-            '<div class="item-sub">' + (r.client_country || '') + ' · ' + (r.review_text ? (r.review_text.slice(0, 80) + '...') : '') + '</div>' +
-          '</div>' +
-          '<div class="item-actions">' +
-            (isHidden ?
-              '<button type="button" class="btn-edit" style="color:var(--neon);border-color:var(--neon);background:rgba(0,255,156,0.08)" onclick="toggleReviewActive(' + r.id + ', true)" title="Approve & Publish to site">Approve ✅</button>' :
-              '<button type="button" class="btn-edit" style="color:var(--muted);border-color:var(--border)" onclick="toggleReviewActive(' + r.id + ', false)" title="Hide from site">Hide 👁️</button>'
-            ) +
-            '<button type="button" class="btn-edit" onclick="openEditReviewModal(' + r.id + ')">Edit ✏️</button>' +
-            '<button type="button" class="btn-delete" onclick="deleteReview(' + r.id + ')">🗑️</button>' +
-          '</div>' +
-        '</div>';
-      });
-      listEl.innerHTML = html;
+      // 2. Render Live Published Reviews
+      if (liveListEl) {
+        if (!liveList.length) {
+          liveListEl.innerHTML = '<div style="text-align:center;color:var(--muted);padding:20px;border:1px dashed rgba(255,255,255,0.08);border-radius:8px">No live published reviews found.</div>';
+        } else {
+          var lHtml = '';
+          liveList.forEach(function(r) {
+            var stars = '★'.repeat(r.rating || 5);
+            lHtml += '<div class="item-card" style="border-left:3px solid var(--neon);margin-bottom:12px">' +
+              '<div class="item-info">' +
+                '<div class="item-title">' +
+                  '<span style="color:var(--gold)">' + stars + '</span> ' +
+                  '<b style="color:#fff;font-size:14px">' + (r.client_name || 'Anonymous') + '</b>' +
+                  '<span class="tag" style="font-size:10px">' + (r.service_type || 'managed') + '</span>' +
+                  (r.profit_tag ? ('<span class="tag" style="font-size:10px;color:var(--neon)">' + r.profit_tag + '</span>') : '') +
+                  '<span class="tag" style="font-size:10px;color:var(--neon);border-color:var(--neon)">✓ LIVE ON SITE</span>' +
+                '</div>' +
+                '<div class="item-sub" style="color:#cbd5e1;margin-top:6px;line-height:1.5"><b>📍 ' + (r.client_country || '') + ':</b> ' + (r.review_text || '') + '</div>' +
+              '</div>' +
+              '<div class="item-actions" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">' +
+                '<button type="button" class="btn-secondary" style="font-size:11px;color:var(--gold);border-color:rgba(242,193,78,0.4)" onclick="toggleReviewActive(' + r.id + ', false)" title="إخفاء التقييم من الموقع مؤقتاً">إخفاء 👁️</button>' +
+                '<button type="button" class="btn-edit" onclick="openEditReviewModal(' + r.id + ')">تعديل ✏️</button>' +
+                '<button type="button" class="btn-delete" onclick="deleteReview(' + r.id + ')">حذف 🗑️</button>' +
+              '</div>' +
+            '</div>';
+          });
+          liveListEl.innerHTML = lHtml;
+        }
+      }
+    }).catch(function(err){
+      if (btn) btn.classList.remove('loading');
+      showToast('Error loading reviews: ' + err.message, 'error');
     });
   };
 
@@ -2915,8 +3160,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   // --------------------------------------------------------------------------
   window._faqsCache = [];
 
-  window.loadFaqsList = function() {
+  window.loadFaqsList = function(btn) {
     if (!sdb) return;
+    if (btn) btn.classList.add('loading');
     var listEl = document.getElementById('faqsList');
     var countTag = document.getElementById('faqsCountTag');
 
@@ -3092,8 +3338,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   // --------------------------------------------------------------------------
   // TAB 9: SOCIALS, WALLETS & FOOTER (روابط التواصل، المحافظ، والفوتر)
   // --------------------------------------------------------------------------
-  window.loadSocialsData = function() {
+  window.loadSocialsData = function(btn) {
     if (!sdb) return;
+    if (btn) btn.classList.add('loading');
     var keys = [
       'telegram_username', 'telegram_channel', 'whatsapp_number', 'support_email',
       'instagram_profile', 'x_profile', 'tradingview_profile', 'youtube_channel',
@@ -3118,7 +3365,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   window.saveSocialsData = function(e) {
     if (e && e.preventDefault) e.preventDefault();
     var btn = document.getElementById('btnSaveSocials');
-    if (btn) btn.disabled = true;
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spin">🔄</span> SAVING ALL SOCIALS & WALLETS...';
+    }
 
     var keys = [
       'telegram_username', 'telegram_channel', 'whatsapp_number', 'support_email',
@@ -3149,13 +3399,22 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   // --------------------------------------------------------------------------
   // TAB 10: INBOX & LEADS (رسائل الزوار)
   // --------------------------------------------------------------------------
-  window.loadInbox = function() {
+  window._inboxCache = [];
+
+  window.loadInbox = function(btn) {
     if (!sdb) return;
+    if (btn) btn.classList.add('loading');
     var listEl = document.getElementById('inboxList');
     var badge = document.getElementById('inboxBadge');
 
     sdb.from('client_messages').select('*').order('id', { ascending: false }).then(function(res) {
+      if (btn) {
+        btn.classList.remove('loading');
+        showToast('✓ Inbox refreshed', 'success');
+      }
       var list = (res && res.data) ? res.data : [];
+      window._inboxCache = list;
+
       if (badge) {
         if (list.length > 0) {
           badge.textContent = list.length;
@@ -3179,26 +3438,135 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         }
 
         html += '<div class="card" style="margin-bottom:14px;border-color:rgba(18,214,255,0.25)">' +
-          '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">' +
+          '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap;gap:8px">' +
             '<div>' +
-              '<h3 style="font-size:15px;color:#fff;font-weight:700">' + (m.client_name || 'Anonymous Lead') + '</h3>' +
-              '<div style="font-size:12px;color:var(--neon-2);font-family:var(--font-mono)">' + (m.client_email || '') + ' · ' + (m.preferred_platform || '') + ': ' + (m.client_handle || 'N/A') + '</div>' +
-              '<div style="font-size:11px;color:var(--muted);margin-top:2px">' + (m.client_country ? ('📍 ' + m.client_country) : '') + (m.client_device ? (' · 📱 ' + m.client_device) : '') + '</div>' +
+              '<h3 style="font-size:15px;color:#fff;font-weight:700">' + escapeAdminHtml(m.client_name || 'Anonymous Lead') + '</h3>' +
+              '<div style="font-size:12px;color:var(--neon-2);font-family:var(--font-mono)">' + escapeAdminHtml(m.client_email || '') + ' · ' + escapeAdminHtml(m.preferred_platform || '') + ': ' + escapeAdminHtml(m.client_handle || 'N/A') + '</div>' +
+              '<div style="font-size:11px;color:var(--muted);margin-top:2px">' + (m.client_country ? ('📍 ' + escapeAdminHtml(m.client_country)) : '') + (m.client_device ? (' · 📱 ' + escapeAdminHtml(m.client_device)) : '') + '</div>' +
             '</div>' +
             '<div style="font-family:var(--font-mono);font-size:11px;color:var(--gold)">' + dateStr + '</div>' +
           '</div>' +
           '<div style="background:rgba(0,0,0,0.3);border-radius:6px;padding:12px;font-size:13px;color:#cbd5e1;white-space:pre-wrap;margin-bottom:12px;border:1px solid rgba(255,255,255,0.05)">' +
-            '<div style="font-family:var(--font-mono);font-size:11px;color:var(--neon);margin-bottom:4px">// TOPIC: ' + (m.inquiry_topic || 'General') + '</div>' +
-            (m.client_message || '') +
+            '<div style="font-family:var(--font-mono);font-size:11px;color:var(--neon);margin-bottom:4px">// TOPIC: ' + escapeAdminHtml(m.inquiry_topic || 'General') + '</div>' +
+            escapeAdminHtml(m.client_message ? (m.client_message.slice(0, 140) + (m.client_message.length > 140 ? '...' : '')) : '') +
           '</div>' +
-          '<div style="display:flex;justify-content:space-between;align-items:center">' +
-            '<div>' + chatBtn + '</div>' +
-            '<button type="button" class="btn-delete" onclick="deleteMessage(' + m.id + ')">Delete Message 🗑️</button>' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">' +
+            '<div style="display:flex;gap:8px">' +
+              '<button type="button" class="btn-secondary" style="font-size:11px;padding:6px 12px;color:var(--neon);border-color:rgba(0,255,156,0.4)" onclick="openMessageDetailsModal(' + m.id + ')">عرض التفاصيل كاملة 👁️</button>' +
+              chatBtn +
+            '</div>' +
+            '<button type="button" class="btn-delete" onclick="deleteMessage(' + m.id + ')">Delete 🗑️</button>' +
           '</div>' +
         '</div>';
       });
       listEl.innerHTML = html;
+    }).catch(function(err){
+      if (btn) btn.classList.remove('loading');
+      showToast('Error loading inbox: ' + err.message, 'error');
     });
+  };
+
+  window.openMessageDetailsModal = function(id) {
+    var m = (window._inboxCache || []).find(function(item){ return String(item.id) === String(id); });
+    if (!m) return;
+
+    var modal = document.getElementById('messageDetailsModal');
+    var container = document.getElementById('messageDetailsContent');
+    if (!modal || !container) return;
+
+    var dateStr = m.date_sent ? new Date(m.date_sent).toLocaleString('en-US', {
+      weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+    }) : 'Just now';
+
+    var email = m.client_email || '';
+    var phone = m.client_phone || '';
+    var platform = m.preferred_platform || 'Direct';
+    var handle = m.client_handle || '';
+    var topic = m.inquiry_topic || 'General Inquiry';
+    var country = m.client_country || 'Online Visitor';
+    var device = m.client_device || 'Unknown Device';
+    var ip = m.client_ip || 'N/A';
+    var messageText = m.client_message || '';
+    var directLink = m.direct_link || '';
+
+    var html =
+      '<div style="background:rgba(0,255,156,0.06);border:1px solid rgba(0,255,156,0.25);border-radius:10px;padding:14px;margin-bottom:14px">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">' +
+          '<div>' +
+            '<h3 style="font-size:17px;color:#fff;font-weight:800;margin:0 0 4px 0">' + escapeAdminHtml(m.client_name || 'Anonymous Lead') + '</h3>' +
+            '<div style="font-family:var(--font-mono);font-size:12px;color:var(--neon)">🎯 الموضوع: ' + escapeAdminHtml(topic) + '</div>' +
+          '</div>' +
+          '<div><span class="tag gold" style="font-size:11px">' + dateStr + '</span></div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:10px;margin-bottom:14px">' +
+        // Email
+        '<div style="background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px">' +
+          '<div style="font-family:var(--font-mono);font-size:11px;color:var(--muted);margin-bottom:3px">✉️ البريد الإلكتروني (EMAIL)</div>' +
+          '<div style="font-size:13px;color:#fff;font-weight:600;word-break:break-all">' + (email ? escapeAdminHtml(email) : '<span style="color:var(--muted)">غير متوفر</span>') + '</div>' +
+          (email ? (
+            '<div style="display:flex;gap:6px;margin-top:6px">' +
+              '<button type="button" class="btn-secondary" style="font-size:10px;padding:3px 7px" onclick="copyToClipboard(\'' + escapeJsQuotes(email) + '\', \'Email copied!\')">📋 نسخ</button>' +
+              '<a href="mailto:' + encodeURIComponent(email) + '" class="btn-secondary" style="font-size:10px;padding:3px 7px;text-decoration:none">✉️ إرسال بريد</a>' +
+            '</div>'
+          ) : '') +
+        '</div>' +
+
+        // Phone / WhatsApp
+        '<div style="background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px">' +
+          '<div style="font-family:var(--font-mono);font-size:11px;color:var(--muted);margin-bottom:3px">📱 الهاتف / واتساب (PHONE)</div>' +
+          '<div style="font-size:13px;color:#fff;font-weight:600">' + (phone ? escapeAdminHtml(phone) : '<span style="color:var(--muted)">غير متوفر</span>') + '</div>' +
+          (phone ? (
+            '<div style="display:flex;gap:6px;margin-top:6px">' +
+              '<button type="button" class="btn-secondary" style="font-size:10px;padding:3px 7px" onclick="copyToClipboard(\'' + escapeJsQuotes(phone) + '\', \'Phone copied!\')">📋 نسخ</button>' +
+              '<a href="https://wa.me/' + phone.replace(/[^0-9]/g, '') + '" target="_blank" rel="noopener" class="btn-primary" style="font-size:10px;padding:3px 7px;text-decoration:none;background:#25D366;color:#000;border:none">💬 واتساب</a>' +
+            '</div>'
+          ) : '') +
+        '</div>' +
+
+        // Platform & Username
+        '<div style="background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px">' +
+          '<div style="font-family:var(--font-mono);font-size:11px;color:var(--muted);margin-bottom:3px">✈️ المنصة المفضلة واليوزر</div>' +
+          '<div style="font-size:13px;color:var(--neon-2);font-weight:700">' + escapeAdminHtml(platform) + ': ' + escapeAdminHtml(handle || 'N/A') + '</div>' +
+          ((handle && handle.indexOf('@') > -1) ? (
+            '<div style="margin-top:6px">' +
+              '<a href="https://t.me/' + handle.replace('@', '') + '" target="_blank" rel="noopener" class="btn-secondary" style="font-size:10px;padding:3px 7px;text-decoration:none">✈️ فتح تيليجرام</a>' +
+            '</div>'
+          ) : '') +
+        '</div>' +
+
+        // Telemetry & Device
+        '<div style="background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px">' +
+          '<div style="font-family:var(--font-mono);font-size:11px;color:var(--muted);margin-bottom:3px">🌍 بيانات الموقع والاتصال</div>' +
+          '<div style="font-size:12px;color:#cbd5e1">📍 الدولة: <b style="color:#fff">' + escapeAdminHtml(country) + '</b></div>' +
+          '<div style="font-size:12px;color:#cbd5e1">💻 الجهاز: <b style="color:var(--neon)">' + escapeAdminHtml(device) + '</b></div>' +
+          '<div style="font-size:11px;color:var(--muted);font-family:var(--font-mono);margin-top:2px">IP: ' + escapeAdminHtml(ip) + '</div>' +
+        '</div>' +
+      '</div>' +
+
+      // Full Message Text
+      '<div style="background:#05080c;border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:14px;margin-bottom:14px">' +
+        '<div style="font-family:var(--font-mono);font-size:11px;color:var(--neon);margin-bottom:6px">// نص رسالة العميل الكامل:</div>' +
+        '<div style="font-size:14px;color:#f1f5f9;line-height:1.7;white-space:pre-wrap;font-family:inherit">' + escapeAdminHtml(messageText) + '</div>' +
+      '</div>' +
+
+      // Footer Actions
+      '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,0.08);padding-top:12px">' +
+        '<div style="display:flex;gap:8px">' +
+          (directLink ? ('<a href="' + escapeAdminHtml(directLink) + '" target="_blank" rel="noopener" class="btn-primary" style="padding:7px 14px;font-size:12px;text-decoration:none">الرد المباشر 💬</a>') : '') +
+          '<button type="button" class="btn-delete" style="padding:7px 12px;font-size:12px" onclick="deleteMessage(' + m.id + '); closeMessageDetailsModal();">حذف الرسالة 🗑️</button>' +
+        '</div>' +
+        '<button type="button" class="btn-secondary" style="padding:7px 14px;font-size:12px" onclick="closeMessageDetailsModal()">إغلاق النافذة ✕</button>' +
+      '</div>';
+
+    container.innerHTML = html;
+    modal.style.display = 'flex';
+  };
+
+  window.closeMessageDetailsModal = function() {
+    var modal = document.getElementById('messageDetailsModal');
+    if (modal) modal.style.display = 'none';
   };
 
   window.deleteMessage = function(id) {
@@ -3216,12 +3584,34 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   // --------------------------------------------------------------------------
   // TAB 11: VISITORS LOG (تحليلات الزوار المباشرة)
   // --------------------------------------------------------------------------
-  window.loadVisitors = function() {
+  function getRelativeVisitorTime(isoStr) {
+    if (!isoStr) return '';
+    try {
+      var diffMs = Date.now() - new Date(isoStr).getTime();
+      var diffSec = Math.floor(diffMs / 1000);
+      if (diffSec < 45) return '<span style="color:var(--neon);font-weight:700">🟢 Just now (متصل الآن)</span>';
+      if (diffSec < 120) return '<span style="color:var(--neon)">1 min ago</span>';
+      var diffMin = Math.floor(diffSec / 60);
+      if (diffMin < 60) return diffMin + 'm ago';
+      var diffHours = Math.floor(diffMin / 60);
+      if (diffHours < 24) return diffHours + 'h ago';
+      return new Date(isoStr).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    } catch(e) {
+      return '';
+    }
+  }
+
+  window.loadVisitors = function(btn) {
     if (!sdb) return;
+    if (btn) btn.classList.add('loading');
     var tbody = document.getElementById('visitorsTableBody');
     var countTag = document.getElementById('visitorsCountTag');
 
-    sdb.from('website_visitors').select('*').order('last_seen', { ascending: false }).limit(60).then(function(res) {
+    sdb.from('website_visitors').select('*').order('last_seen', { ascending: false }).limit(80).then(function(res) {
+      if (btn) {
+        btn.classList.remove('loading');
+        showToast('✓ Visitors telemetry refreshed', 'success');
+      }
       var list = (res && res.data) ? res.data : [];
       if (countTag) countTag.textContent = list.length + ' Telemetry Logs';
       if (!list.length) {
@@ -3231,6 +3621,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 
       var html = '';
       list.forEach(function(v) {
+        var relTime = getRelativeVisitorTime(v.last_seen);
         var timeStr = v.last_seen ? new Date(v.last_seen).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
         var isMobile = (v.device_type === 'Mobile' || (v.operating_system && /Android|iOS/i.test(v.operating_system)) || (v.device_model && /Phone|Galaxy|iPhone|K$/i.test(v.device_model)));
         
@@ -3250,17 +3641,27 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
           : '<span class="tag blue" style="font-size:9.5px;padding:2px 6px">💻 DESKTOP</span>';
 
         html += '<tr>' +
-          '<td style="white-space:nowrap;color:var(--gold)">' + timeStr + '</td>' +
-          '<td><b>' + (v.country || 'Online') + '</b>' + (v.city ? ('<br><span style="color:var(--muted)">' + v.city + '</span>') : '') + '</td>' +
-          '<td><div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">' + devBadge + '</div><b>' + cleanModel + '</b></td>' +
-          '<td>' + (v.operating_system || '') + '<br><span style="color:var(--neon-2)">' + (v.browser || '') + '</span></td>' +
-          '<td style="color:var(--muted)">' + (v.source_referrer || 'Direct') + '</td>' +
+          '<td style="white-space:nowrap;color:var(--gold)">' + relTime + '<br><small style="color:var(--muted);font-size:10px">' + timeStr + '</small></td>' +
+          '<td><b>' + escapeAdminHtml(v.country || 'Online') + '</b>' + (v.city ? ('<br><span style="color:var(--muted);font-size:11px">' + escapeAdminHtml(v.city) + (v.isp_provider ? (' · ' + escapeAdminHtml(v.isp_provider)) : '') + '</span>') : '') + '</td>' +
+          '<td><div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">' + devBadge + (v.screen_size ? ('<span style="font-size:10px;color:var(--muted)">' + escapeAdminHtml(v.screen_size) + '</span>') : '') + '</div><b>' + escapeAdminHtml(cleanModel) + '</b></td>' +
+          '<td>' + escapeAdminHtml(v.operating_system || '') + '<br><span style="color:var(--neon-2)">' + escapeAdminHtml(v.browser || '') + '</span></td>' +
+          '<td style="color:var(--muted);font-size:11px">' + escapeAdminHtml(v.source_referrer || 'Direct Visit') + '</td>' +
           '<td style="color:var(--neon);font-weight:700;text-align:center">' + (v.visit_count || 1) + '</td>' +
         '</tr>';
       });
       tbody.innerHTML = html;
+    }).catch(function(err){
+      if (btn) btn.classList.remove('loading');
     });
   };
+
+  // Auto-refresh visitors log every 20 seconds when the Visitors tab is open
+  setInterval(function() {
+    var vTab = document.getElementById('tab-visitors');
+    if (vTab && vTab.classList.contains('active')) {
+      loadVisitors();
+    }
+  }, 20000);
 
   // --------------------------------------------------------------------------
   // INITIALIZATION
