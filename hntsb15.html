@@ -2713,30 +2713,30 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     if (!toast) {
       toast = document.createElement('div');
       toast.id = 'adminToast';
-      toast.style.cssText = 'position:fixed;top:20px;left:50%;transform:translate(-50%, -40px);z-index:9999999;padding:14px 26px;border-radius:12px;font-family:inherit;font-size:14.5px;font-weight:700;box-shadow:0 14px 40px rgba(0,0,0,0.85);transition:all .35s cubic-bezier(0.16, 1, 0.3, 1);opacity:0;pointer-events:none;max-width:92vw;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;direction:rtl;line-height:1.4;';
+      toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translate(-50%, 30px);z-index:999999;padding:9px 18px;border-radius:999px;font-family:inherit;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,0.65);transition:all .3s ease;opacity:0;pointer-events:none;max-width:90vw;width:max-content;text-align:center;display:inline-flex;align-items:center;justify-content:center;gap:7px;direction:rtl;backdrop-filter:blur(10px);';
       document.body.appendChild(toast);
     }
     if (adminToastTimer) clearTimeout(adminToastTimer);
 
     toast.innerHTML = msg;
     if (isError === true || isError === 'error') {
-      toast.style.background = 'rgba(255, 30, 80, 0.96)';
-      toast.style.color = '#ffffff';
-      toast.style.border = '1px solid #ff4d6d';
-      toast.style.boxShadow = '0 0 30px rgba(255, 77, 109, 0.6)';
+      toast.style.background = 'rgba(32, 12, 18, 0.95)';
+      toast.style.color = '#ff6b81';
+      toast.style.border = '1px solid rgba(255, 77, 109, 0.6)';
+      toast.style.boxShadow = '0 6px 20px rgba(255, 77, 109, 0.3)';
     } else {
-      toast.style.background = 'rgba(6, 16, 24, 0.97)';
+      toast.style.background = 'rgba(8, 18, 24, 0.95)';
       toast.style.color = '#00ff9c';
-      toast.style.border = '1px solid rgba(0, 255, 156, 0.85)';
-      toast.style.boxShadow = '0 0 32px rgba(0, 255, 156, 0.45)';
+      toast.style.border = '1px solid rgba(0, 255, 156, 0.55)';
+      toast.style.boxShadow = '0 6px 20px rgba(0, 255, 156, 0.25)';
     }
     toast.style.transform = 'translate(-50%, 0)';
     toast.style.opacity = '1';
 
     adminToastTimer = setTimeout(function() {
-      toast.style.transform = 'translate(-50%, -40px)';
+      toast.style.transform = 'translate(-50%, 30px)';
       toast.style.opacity = '0';
-    }, 4500);
+    }, 3200);
   }
 
   window.flashButtonSuccess = function(btn, successMsg, originalHtml, duration) {
