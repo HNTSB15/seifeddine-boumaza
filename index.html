@@ -4,34 +4,12 @@
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
 <meta content="#05070d" name="theme-color">
-<!-- Always start fresh at Home (Top) on page refresh/reload across PC & Mobile -->
+<!-- Standard scroll & hash restoration on refresh across PC & Mobile -->
 <script type="text/javascript">//<![CDATA[
 (function(){
   if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
+    history.scrollRestoration = 'auto';
   }
-  try {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  } catch(e) {
-    window.scrollTo(0, 0);
-  }
-  if (window.location.hash) {
-    try {
-      history.replaceState(null, '', window.location.pathname + window.location.search);
-    } catch(e){}
-  }
-  window.addEventListener('beforeunload', function(){
-    try { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); } catch(e){ window.scrollTo(0, 0); }
-  });
-  window.addEventListener('pageshow', function(){
-    try { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); } catch(e){ window.scrollTo(0, 0); }
-  });
-  window.addEventListener('DOMContentLoaded', function(){
-    try { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); } catch(e){ window.scrollTo(0, 0); }
-  });
-  window.addEventListener('load', function(){
-    try { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); } catch(e){ window.scrollTo(0, 0); }
-  });
 })();
 //]]></script>
 <!-- redirect short/bare paths to their real /p/*.html pages -->
@@ -7835,6 +7813,12 @@ html, body {
           ev.preventDefault();
           if (typeof closeMobileMenu === 'function') closeMobileMenu();
 
+          try {
+            if (history.pushState) {
+              history.pushState(null, '', id);
+            }
+          } catch(err){}
+
           setTimeout(function() {
             var revealParent = targetEl.closest ? targetEl.closest('.cvx-reveal') : null;
             if (revealParent) revealParent.classList.add('in');
@@ -8929,7 +8913,7 @@ html, body {
         (isAr ? 'جاري التحقق والإرسال...' : 'Verifying & Submitting...');
     }
 
-    // 1. Send to Supabase Table: client_reviews
+    // 1. Send to Supabase Table: client_reviews as PENDING (is_active: false, requiring admin approval)
     if (sdb && typeof sdb.from === 'function') {
       try {
         sdb.from('client_reviews').insert([{
@@ -8939,8 +8923,8 @@ html, body {
           service_type: service,
           review_text: comment,
           profit_stat: stat,
-          is_verified: true,
-          is_active: true
+          is_verified: false,
+          is_active: false
         }]).then(function(res){
           if (res && res.error) {
             console.warn('Supabase review insert error:', res.error);
@@ -8951,27 +8935,15 @@ html, body {
       } catch(err){}
     }
 
-    // 2. Prepend to local reviews list immediately so client sees it live on screen
-    var newRev = {
-      name: name,
-      country: country,
-      country_en: country,
-      rating: rating,
-      service: service,
-      stat: stat,
-      stat_en: stat,
-      text: comment,
-      text_en: comment
-    };
-    allReviews.unshift(newRev);
-    window.renderReviews();
+    // Do NOT publish immediately to the live site.
+    // Reviews require admin approval in hntsb15.html before becoming active.
 
-    // 4. Show success message & auto close
+    // 2. Show confirmation notice & reset form
     if (notice) {
       notice.className = 'rev-notice success';
       notice.innerHTML = isAr ?
-        '✓ شكراً لك، <b>' + escapeRevHtml(name) + '</b>! تم نشر تقييمك وإشعار سيف الدين بومعزة بنجاح.' :
-        '✓ Thank you, <b>' + escapeRevHtml(name) + '</b>! Your review has been published and sent to Saifeddine.';
+        '✓ شكراً لك، <b>' + escapeRevHtml(name) + '</b>! تم إرسال تقييمك بنجاح، وسيظهر على الموقع فور مراجعته واعتماده من الإدارة.' :
+        '✓ Thank you, <b>' + escapeRevHtml(name) + '</b>! Your review has been submitted and will appear on the website after verification and approval.';
     }
 
     var formEl = document.getElementById('revSubmitForm');
@@ -8983,7 +8955,7 @@ html, body {
         submitBtn.innerHTML = '<span id="revSubmitBtnTxt">' + (isAr ? 'إرسال التقييم 🚀' : 'Submit Review 🚀') + '</span>';
       }
       window.closeReviewModal();
-    }, 2200);
+    }, 2800);
   };
 
   // Load Live Verified Reviews from Supabase (Table: client_reviews)
