@@ -328,33 +328,48 @@ body {
 /* Responsive Breakpoints for Tablet & Mobile */
 @media (max-width: 900px) {
   .admin-layout {
-    flex-direction: column;
+    flex-direction: column !important;
   }
   .sidebar-toggle-btn {
-    display: inline-block;
+    display: none !important; /* Hide toggle button so tabs are ALWAYS visible and directly accessible */
   }
   .admin-sidebar {
-    width: 100%;
-    min-width: 100%;
-    position: static;
-    height: auto;
-    max-height: none;
-    border-right: none;
-    border-bottom: 1px solid rgba(0, 255, 156, 0.18);
-    padding: 14px;
-    box-sizing: border-box;
+    display: flex !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    position: static !important;
+    height: auto !important;
+    max-height: none !important;
+    border-right: none !important;
+    border-bottom: 2px solid rgba(0, 255, 156, 0.25) !important;
+    background: #090e14 !important;
+    padding: 12px 10px !important;
+    box-sizing: border-box !important;
+  }
+  .sidebar-header-label {
+    margin-bottom: 8px !important;
+    padding: 0 4px !important;
+    font-size: 11px !important;
   }
   .admin-nav-vertical {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 7px;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6px !important;
+  }
+  .tab-btn {
+    padding: 10px 8px !important;
+    font-size: 11.5px !important;
+    border-radius: 8px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
   .tab-btn:hover,
   .tab-btn.active {
-    transform: none;
+    transform: none !important;
   }
   .admin-container {
-    padding: 18px 12px;
+    padding: 14px 10px !important;
   }
 }
 
@@ -3200,10 +3215,27 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       var html = '';
       list.forEach(function(v) {
         var timeStr = v.last_seen ? new Date(v.last_seen).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
+        var isMobile = (v.device_type === 'Mobile' || (v.operating_system && /Android|iOS/i.test(v.operating_system)) || (v.device_model && /Phone|Galaxy|iPhone|K$/i.test(v.device_model)));
+        
+        var cleanModel = v.device_model || v.device_type || (isMobile ? 'Mobile Smartphone' : 'Desktop PC');
+        if (cleanModel === 'K' || cleanModel === 'Mobile') {
+          cleanModel = '📱 Android Smartphone';
+        } else if (cleanModel.indexOf('iPhone') > -1) {
+          cleanModel = '📱 Apple iPhone';
+        } else if (cleanModel.indexOf('Windows') > -1) {
+          cleanModel = '💻 Windows PC';
+        } else if (cleanModel.indexOf('Mac') > -1) {
+          cleanModel = '💻 Apple Mac';
+        }
+
+        var devBadge = isMobile
+          ? '<span class="tag green" style="font-size:9.5px;padding:2px 6px">📱 MOBILE</span>'
+          : '<span class="tag blue" style="font-size:9.5px;padding:2px 6px">💻 DESKTOP</span>';
+
         html += '<tr>' +
           '<td style="white-space:nowrap;color:var(--gold)">' + timeStr + '</td>' +
           '<td><b>' + (v.country || 'Online') + '</b>' + (v.city ? ('<br><span style="color:var(--muted)">' + v.city + '</span>') : '') + '</td>' +
-          '<td>' + (v.device_model || v.device_type || 'PC') + '</td>' +
+          '<td><div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">' + devBadge + '</div><b>' + cleanModel + '</b></td>' +
           '<td>' + (v.operating_system || '') + '<br><span style="color:var(--neon-2)">' + (v.browser || '') + '</span></td>' +
           '<td style="color:var(--muted)">' + (v.source_referrer || 'Direct') + '</td>' +
           '<td style="color:var(--neon);font-weight:700;text-align:center">' + (v.visit_count || 1) + '</td>' +
