@@ -353,6 +353,21 @@ body {
   opacity: 0.8;
   pointer-events: none;
 }
+.save-success {
+  background: #00ff9c !important;
+  color: #04140c !important;
+  border-color: #00ff9c !important;
+  box-shadow: 0 0 25px rgba(0, 255, 156, 0.7) !important;
+  font-weight: 700 !important;
+  transform: scale(1.02);
+}
+.btn-refresh.save-success {
+  background: rgba(0, 255, 156, 0.22) !important;
+  color: #00ff9c !important;
+  border-color: #00ff9c !important;
+  box-shadow: 0 0 16px rgba(0, 255, 156, 0.45) !important;
+  transform: none;
+}
 
 /* ==========================================================================
    ACCORDION MODULE SYSTEM (نظام الأكورديون الشامل للوحة التحكم)
@@ -2690,36 +2705,64 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   }
 
   // --------------------------------------------------------------------------
-  // TOAST NOTIFICATIONS & IMAGE PICKER HELPER
+  // TOAST NOTIFICATIONS & BUTTON SUCCESS HELPER
   // --------------------------------------------------------------------------
+  var adminToastTimer = null;
   function showToast(msg, isError) {
     var toast = document.getElementById('adminToast');
     if (!toast) {
       toast = document.createElement('div');
       toast.id = 'adminToast';
-      toast.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:99999;padding:12px 20px;border-radius:8px;font-family:var(--font-mono);font-size:13px;box-shadow:0 10px 30px rgba(0,0,0,0.8);transition:all .3s ease;transform:translateY(100px);opacity:0;pointer-events:none;max-width:90vw';
+      toast.style.cssText = 'position:fixed;top:20px;left:50%;transform:translate(-50%, -40px);z-index:9999999;padding:14px 26px;border-radius:12px;font-family:inherit;font-size:14.5px;font-weight:700;box-shadow:0 14px 40px rgba(0,0,0,0.85);transition:all .35s cubic-bezier(0.16, 1, 0.3, 1);opacity:0;pointer-events:none;max-width:92vw;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;direction:rtl;line-height:1.4;';
       document.body.appendChild(toast);
     }
-    toast.textContent = msg;
+    if (adminToastTimer) clearTimeout(adminToastTimer);
+
+    toast.innerHTML = msg;
     if (isError === true || isError === 'error') {
-      toast.style.background = 'rgba(255, 77, 109, 0.95)';
-      toast.style.color = '#fff';
+      toast.style.background = 'rgba(255, 30, 80, 0.96)';
+      toast.style.color = '#ffffff';
       toast.style.border = '1px solid #ff4d6d';
-      toast.style.boxShadow = '0 0 20px rgba(255, 77, 109, 0.4)';
+      toast.style.boxShadow = '0 0 30px rgba(255, 77, 109, 0.6)';
     } else {
-      toast.style.background = 'rgba(13, 20, 30, 0.95)';
-      toast.style.color = 'var(--neon)';
-      toast.style.border = '1px solid var(--neon)';
-      toast.style.boxShadow = '0 0 20px rgba(0, 255, 156, 0.3)';
+      toast.style.background = 'rgba(6, 16, 24, 0.97)';
+      toast.style.color = '#00ff9c';
+      toast.style.border = '1px solid rgba(0, 255, 156, 0.85)';
+      toast.style.boxShadow = '0 0 32px rgba(0, 255, 156, 0.45)';
     }
-    toast.style.transform = 'translateY(0)';
+    toast.style.transform = 'translate(-50%, 0)';
     toast.style.opacity = '1';
 
-    setTimeout(function() {
-      toast.style.transform = 'translateY(100px)';
+    adminToastTimer = setTimeout(function() {
+      toast.style.transform = 'translate(-50%, -40px)';
       toast.style.opacity = '0';
-    }, 4000);
+    }, 4500);
   }
+
+  window.flashButtonSuccess = function(btn, successMsg, originalHtml, duration) {
+    if (!btn) return;
+    btn.disabled = false;
+    var orig = originalHtml || btn.getAttribute('data-orig-html') || btn.innerHTML;
+    btn.setAttribute('data-orig-html', orig);
+    btn.innerHTML = successMsg || '✓ تم الحفظ بنجاح!';
+    btn.classList.add('save-success');
+    btn.style.transition = 'all 0.25s ease';
+    btn.style.background = '#00ff9c';
+    btn.style.color = '#04140c';
+    btn.style.borderColor = '#00ff9c';
+    btn.style.boxShadow = '0 0 24px rgba(0,255,156,0.6)';
+    btn.style.fontWeight = '700';
+
+    setTimeout(function() {
+      btn.innerHTML = orig;
+      btn.classList.remove('save-success');
+      btn.style.background = '';
+      btn.style.color = '';
+      btn.style.borderColor = '';
+      btn.style.boxShadow = '';
+      btn.style.fontWeight = '';
+    }, duration || 3000);
+  };
 
   window.handleImagePick = function(inputEl, textTargetId, previewImgId) {
     if (!inputEl || !inputEl.files || !inputEl.files[0]) return;
@@ -2804,7 +2847,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       });
       if (btn) {
         btn.classList.remove('loading');
-        showToast('✓ Hero & bio data refreshed', 'success');
+        flashButtonSuccess(btn, '✓ تم التحديث!');
+        showToast('🔄 تم تحديث وجلب بيانات الواجهة بنجاح!', 'success');
       }
     }).catch(function(){ if (btn) btn.classList.remove('loading'); });
   };
@@ -2814,7 +2858,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     var btn = document.getElementById('btnSaveHero');
     if (btn) {
       btn.disabled = true;
-      btn.innerHTML = '<span class="spin">🔄</span> SAVING HERO DATA...';
+      btn.innerHTML = '<span class="spin">🔄</span> جاري الحفظ...';
     }
 
     var keys = ['hero_role', 'hero_tagline', 'about_p1', 'about_p2', 'about_p3', 'managed_account_status'];
@@ -2833,17 +2877,16 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 
     sdb.from('website_settings').upsert(updates, { onConflict: 'setting_name' }).then(function(res) {
       if (btn) {
-        btn.disabled = false;
-        btn.innerHTML = 'SAVE HERO &amp; BIO DATA 💾';
+        flashButtonSuccess(btn, '✓ تم الحفظ وتحديث الموقع 💾', 'SAVE HERO &amp; BIO DATA 💾');
       }
-      if (res.error) showToast('Error saving hero data: ' + res.error.message, 'error');
-      else showToast('✓ Hero & Bio updated on live website!');
+      if (res.error) showToast('❌ حدث خطأ أثناء الحفظ: ' + res.error.message, 'error');
+      else showToast('✅ تم حفظ بيانات الواجهة ونبذة عني وتحديث الموقع بنجاح!');
     }).catch(function(err) {
       if (btn) {
         btn.disabled = false;
         btn.innerHTML = 'SAVE HERO &amp; BIO DATA 💾';
       }
-      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
+      showToast('❌ خطأ: ' + (err ? err.message : 'Network error'), 'error');
     });
   };
 
@@ -2862,7 +2905,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       });
       if (btn) {
         btn.classList.remove('loading');
-        showToast('✓ Stats refreshed', 'success');
+        flashButtonSuccess(btn, '✓ تم التحديث!');
+        showToast('🔄 تم تحديث وجلب الإحصائيات بنجاح!', 'success');
       }
     }).catch(function(){ if (btn) btn.classList.remove('loading'); });
   };
@@ -2872,7 +2916,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     var btn = document.getElementById('btnSaveStats');
     if (btn) {
       btn.disabled = true;
-      btn.innerHTML = '<span class="spin">🔄</span> SAVING STATS...';
+      btn.innerHTML = '<span class="spin">🔄</span> جاري الحفظ...';
     }
 
     var keys = ['stat_win_rate', 'stat_avg_return', 'stat_managed_capital', 'stat_years_exp', 'stat_tracked_months', 'stat_community_traders'];
@@ -2887,17 +2931,16 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 
     sdb.from('website_settings').upsert(updates, { onConflict: 'setting_name' }).then(function(res) {
       if (btn) {
-        btn.disabled = false;
-        btn.innerHTML = 'SAVE STATS TO LIVE WEBSITE 💾';
+        flashButtonSuccess(btn, '✓ تم الحفظ وتحديث الموقع 💾', 'SAVE STATS TO LIVE WEBSITE 💾');
       }
-      if (res.error) showToast('Error saving stats: ' + res.error.message, 'error');
-      else showToast('✓ Stats successfully updated on live site!');
+      if (res.error) showToast('❌ حدث خطأ أثناء الحفظ: ' + res.error.message, 'error');
+      else showToast('✅ تم حفظ الإحصائيات وتحديث الموقع بنجاح!');
     }).catch(function(err) {
       if (btn) {
         btn.disabled = false;
         btn.innerHTML = 'SAVE STATS TO LIVE WEBSITE 💾';
       }
-      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
+      showToast('❌ خطأ: ' + (err ? err.message : 'Network error'), 'error');
     });
   };
 
@@ -2920,7 +2963,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       });
       if (btn) {
         btn.classList.remove('loading');
-        showToast('✓ Managed terms refreshed', 'success');
+        flashButtonSuccess(btn, '✓ تم التحديث!');
+        showToast('🔄 تم تحديث شروط إدارة المحافظ بنجاح!', 'success');
       }
     }).catch(function(){ if (btn) btn.classList.remove('loading'); });
   };
@@ -2930,7 +2974,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     var btn = document.getElementById('btnSaveManaged');
     if (btn) {
       btn.disabled = true;
-      btn.innerHTML = '<span class="spin">🔄</span> SAVING TERMS...';
+      btn.innerHTML = '<span class="spin">🔄</span> جاري الحفظ...';
     }
 
     var keys = ['managed_min_capital', 'managed_profit_split', 'managed_drawdown_limit', 'managed_supported_brokers', 'signals_vip_schedule', 'newsx_platform_link', 'managed_account_status'];
@@ -2951,12 +2995,17 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     });
 
     sdb.from('website_settings').upsert(updates, { onConflict: 'setting_name' }).then(function(res) {
-      if (btn) btn.disabled = false;
-      if (res.error) showToast('Error saving managed terms: ' + res.error.message, 'error');
-      else showToast('✓ Managed terms saved successfully!');
+      if (btn) {
+        flashButtonSuccess(btn, '✓ تم الحفظ وتحديث الموقع 💾', 'SAVE MANAGED TERMS 💾');
+      }
+      if (res.error) showToast('❌ حدث خطأ أثناء الحفظ: ' + res.error.message, 'error');
+      else showToast('✅ تم حفظ شروط إدارة المحافظ وحالة القبول وتحديث الموقع بنجاح!');
     }).catch(function(err) {
-      if (btn) btn.disabled = false;
-      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = 'SAVE MANAGED TERMS 💾';
+      }
+      showToast('❌ خطأ: ' + (err ? err.message : 'Network error'), 'error');
     });
   };
 
@@ -2974,7 +3023,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     sdb.from('website_settings').select('current_value').eq('setting_name', 'trading_deals_json').single().then(function(res) {
       if (btn) {
         btn.classList.remove('loading');
-        showToast('✓ Trades list refreshed', 'success');
+        flashButtonSuccess(btn, '✓ تم التحديث!');
+        showToast('🔄 تم تحديث وجلب قائمة الصفقات بنجاح!', 'success');
       }
       var list = [];
       try {
@@ -3265,6 +3315,11 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     var countTag = document.getElementById('payoutsCountTag');
 
     sdb.from('payout_records').select('*').order('id', { ascending: false }).then(function(res) {
+      if (btn) {
+        btn.classList.remove('loading');
+        flashButtonSuccess(btn, '✓ تم التحديث!');
+        showToast('🔄 تم تحديث وجلب قائمة السحوبات بنجاح!', 'success');
+      }
       var list = (res && res.data) ? res.data : [];
       window._payoutsCache = list;
       if (countTag) countTag.textContent = list.length + ' Records';
@@ -3419,8 +3474,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   // --------------------------------------------------------------------------
   // TAB 6: PRICES & PLANS (باقات الاشتراك والأسعار)
   // --------------------------------------------------------------------------
-  window.loadPricesData = function() {
+  window.loadPricesData = function(btn) {
     if (!sdb) return;
+    if (btn) btn.classList.add('loading');
     sdb.from('website_prices').select('*').then(function(res) {
       var list = (res && res.data) ? res.data : [];
       list.forEach(function(p) {
@@ -3430,13 +3486,21 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         if (p.item_key === 'vip_gold_signals') document.getElementById('price_vip_signals').value = p.current_price;
         if (p.item_key === 'mt5_indicator') document.getElementById('price_mt5_indicator').value = p.current_price;
       });
-    });
+      if (btn) {
+        btn.classList.remove('loading');
+        flashButtonSuccess(btn, '✓ تم التحديث!');
+        showToast('🔄 تم تحديث باقات الأسعار بنجاح!', 'success');
+      }
+    }).catch(function(){ if (btn) btn.classList.remove('loading'); });
   };
 
   window.savePrices = function(e) {
     if (e && e.preventDefault) e.preventDefault();
     var btn = document.getElementById('btnSavePrices');
-    if (btn) btn.disabled = true;
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spin">🔄</span> جاري الحفظ...';
+    }
 
     var updates = [
       { item_key: 'newsx_standard', item_name: 'NewsX AI Standard Monthly', current_price: parseFloat(document.getElementById('price_newsx_standard').value) || 15, updated_at: new Date().toISOString() },
@@ -3447,12 +3511,17 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     ];
 
     sdb.from('website_prices').upsert(updates, { onConflict: 'item_key' }).then(function(res) {
-      if (btn) btn.disabled = false;
-      if (res.error) showToast('Error saving prices: ' + res.error.message, 'error');
-      else showToast('✓ Prices updated on live website!');
+      if (btn) {
+        flashButtonSuccess(btn, '✓ تم حفظ الأسعار بنجاح 💾', 'SAVE ALL PRICES 💾');
+      }
+      if (res.error) showToast('❌ حدث خطأ أثناء حفظ الأسعار: ' + res.error.message, 'error');
+      else showToast('✅ تم حفظ وتحديث باقات الأسعار في الموقع مباشرة!');
     }).catch(function(err) {
-      if (btn) btn.disabled = false;
-      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = 'SAVE ALL PRICES 💾';
+      }
+      showToast('❌ خطأ: ' + (err ? err.message : 'Network error'), 'error');
     });
   };
 
@@ -3472,7 +3541,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     sdb.from('client_reviews').select('*').order('id', { ascending: false }).then(function(res) {
       if (btn) {
         btn.classList.remove('loading');
-        showToast('✓ Reviews refreshed', 'success');
+        flashButtonSuccess(btn, '✓ تم التحديث!');
+        showToast('🔄 تم تحديث قائمة التقييمات بنجاح!', 'success');
       }
       var list = (res && res.data) ? res.data : [];
       window._reviewsCache = list;
@@ -3668,6 +3738,11 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     var countTag = document.getElementById('faqsCountTag');
 
     sdb.from('website_settings').select('current_value').eq('setting_name', 'faq_items_json').single().then(function(res) {
+      if (btn) {
+        btn.classList.remove('loading');
+        flashButtonSuccess(btn, '✓ تم التحديث!');
+        showToast('🔄 تم تحديث وجلب الأسئلة الشائعة بنجاح!', 'success');
+      }
       var list = [];
       try {
         if (res && res.data && res.data.current_value) {
@@ -3860,7 +3935,12 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
           }
         }
       });
-    });
+      if (btn) {
+        btn.classList.remove('loading');
+        flashButtonSuccess(btn, '✓ تم التحديث!');
+        showToast('🔄 تم تحديث قنوات التواصل والمحافظ بنجاح!', 'success');
+      }
+    }).catch(function(){ if (btn) btn.classList.remove('loading'); });
   };
 
   window.saveSocialsData = function(e) {
@@ -3868,7 +3948,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     var btn = document.getElementById('btnSaveSocials');
     if (btn) {
       btn.disabled = true;
-      btn.innerHTML = '<span class="spin">🔄</span> SAVING ALL SOCIALS & WALLETS...';
+      btn.innerHTML = '<span class="spin">🔄</span> جاري الحفظ...';
     }
 
     var keys = [
@@ -3888,12 +3968,17 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     });
 
     sdb.from('website_settings').upsert(updates, { onConflict: 'setting_name' }).then(function(res) {
-      if (btn) btn.disabled = false;
-      if (res.error) showToast('Error saving socials & wallets: ' + res.error.message, 'error');
-      else showToast('✓ Social channels, wallets & footer updated on live website!');
+      if (btn) {
+        flashButtonSuccess(btn, '✓ تم الحفظ وتحديث الموقع 💾', 'SAVE ALL SOCIALS &amp; WALLETS 💾');
+      }
+      if (res.error) showToast('❌ حدث خطأ أثناء الحفظ: ' + res.error.message, 'error');
+      else showToast('✅ تم حفظ قنوات التواصل والمحافظ والفوتر وتحديث الموقع مباشرة!');
     }).catch(function(err) {
-      if (btn) btn.disabled = false;
-      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = 'SAVE ALL SOCIALS &amp; WALLETS 💾';
+      }
+      showToast('❌ خطأ: ' + (err ? err.message : 'Network error'), 'error');
     });
   };
 
@@ -3911,7 +3996,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     sdb.from('client_messages').select('*').order('id', { ascending: false }).then(function(res) {
       if (btn) {
         btn.classList.remove('loading');
-        showToast('✓ Inbox refreshed', 'success');
+        flashButtonSuccess(btn, '✓ تم التحديث!');
+        showToast('🔄 تم تحديث وجلب رسائل الزوار بنجاح!', 'success');
       }
       var list = (res && res.data) ? res.data : [];
       window._inboxCache = list;
@@ -4111,7 +4197,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     sdb.from('website_visitors').select('*').order('last_seen', { ascending: false }).limit(80).then(function(res) {
       if (btn) {
         btn.classList.remove('loading');
-        showToast('✓ Visitors telemetry refreshed', 'success');
+        flashButtonSuccess(btn, '✓ تم التحديث!');
+        showToast('🔄 تم تحديث وجلب بيانات الزوار المباشرة بنجاح!', 'success');
       }
       var list = (res && res.data) ? res.data : [];
       if (countTag) countTag.textContent = list.length + ' Telemetry Logs';
