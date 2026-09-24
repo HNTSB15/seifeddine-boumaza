@@ -1057,19 +1057,12 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
                   <label>حالة قبول المحافظ (Managed Accounts Status)</label>
                   <select id="set_managed_account_status" onchange="syncManagedStatus(this.value)" style="background:#090d16;color:#00ff9c;border:1px solid rgba(0,255,156,.4);padding:10px 14px;border-radius:10px;font-weight:600;width:100%;font-size:13px;cursor:pointer">
                     <option value="available" selected>🟢 متاح حالياً لقبول محافظ جديدة (Accepting Accounts)</option>
-                    <option value="unavailable">🔴 غير متاح حالياً - اكتملت السعة (Unavailable / Full Capacity)</option>
+                    <option value="unavailable">🔴 الأماكن غير متوفرة (Unavailable / No Slots)</option>
                   </select>
                 </div>
               </div>
 
-              <div class="form-grid" style="margin-top:12px">
-                <div class="form-group">
-                  <label>Live Status Badge Custom Text (Fallback)</label>
-                  <input type="text" id="set_hero_badge_text" placeholder="متصل الآن (أوقات العمل: 8:00 ص - 4:00 م)">
-                </div>
-              </div>
-
-              <div class="form-group full">
+              <div class="form-group full" style="margin-top:14px">
                 <label>Hero Description / Tagline (Main Bio on Homepage)</label>
                 <textarea id="set_hero_tagline" rows="3" placeholder="Professional forex and cryptocurrency trading manager focused on transparent reporting..."></textarea>
               </div>
@@ -1206,7 +1199,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
                 </label>
                 <select id="set_managed_account_status_m3" onchange="syncManagedStatus(this.value)" style="background:#090d16;color:#00ff9c;border:1px solid rgba(0,255,156,.4);padding:11px 14px;border-radius:10px;font-weight:600;width:100%;font-size:13.5px;cursor:pointer">
                   <option value="available" selected>🟢 متاح حالياً لقبول محافظ جديدة (Accepting Accounts)</option>
-                  <option value="unavailable">🔴 غير متاح حالياً - اكتملت السعة (Unavailable / Full Capacity)</option>
+                  <option value="unavailable">🔴 الأماكن غير متوفرة (Unavailable / No Slots)</option>
                 </select>
                 <div style="font-size:12px;color:var(--muted);margin-top:7px;line-height:1.5">
                   يتحكم هذا الخيار مباشرة بالشارة الموجودة في واجهة الموقع أسفل التوقيت: (متاح بالأخضر) أو (غير متاح بالأحمر).
@@ -2798,7 +2791,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   window.loadHeroData = function(btn) {
     if (!sdb) return;
     if (btn) btn.classList.add('loading');
-    var keys = ['hero_role', 'hero_badge_text', 'hero_tagline', 'about_p1', 'about_p2', 'about_p3', 'managed_account_status'];
+    var keys = ['hero_role', 'hero_tagline', 'about_p1', 'about_p2', 'about_p3', 'managed_account_status'];
     sdb.from('website_settings').select('*').in('setting_name', keys).then(function(res) {
       var list = (res && res.data) ? res.data : [];
       list.forEach(function(s) {
@@ -2824,7 +2817,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       btn.innerHTML = '<span class="spin">🔄</span> SAVING HERO DATA...';
     }
 
-    var keys = ['hero_role', 'hero_badge_text', 'hero_tagline', 'about_p1', 'about_p2', 'about_p3', 'managed_account_status'];
+    var keys = ['hero_role', 'hero_tagline', 'about_p1', 'about_p2', 'about_p3', 'managed_account_status'];
     var updates = keys.map(function(k) {
       var el = document.getElementById('set_' + k);
       var val = el ? el.value.trim() : '';
