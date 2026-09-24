@@ -1054,8 +1054,18 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
                   <input type="text" id="set_hero_role" placeholder="Forex Trading Expert">
                 </div>
                 <div class="form-group">
-                  <label>Live Status Badge Text</label>
-                  <input type="text" id="set_hero_badge_text" placeholder="متصل الآن · متاح لقبول محافظ جديدة للإدارة">
+                  <label>حالة قبول المحافظ (Managed Accounts Status)</label>
+                  <select id="set_managed_account_status" onchange="syncManagedStatus(this.value)" style="background:#090d16;color:#00ff9c;border:1px solid rgba(0,255,156,.4);padding:10px 14px;border-radius:10px;font-weight:600;width:100%;font-size:13px;cursor:pointer">
+                    <option value="available" selected>🟢 متاح حالياً لقبول محافظ جديدة (Accepting Accounts)</option>
+                    <option value="unavailable">🔴 غير متاح حالياً - اكتملت السعة (Unavailable / Full Capacity)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-grid" style="margin-top:12px">
+                <div class="form-group">
+                  <label>Live Status Badge Custom Text (Fallback)</label>
+                  <input type="text" id="set_hero_badge_text" placeholder="متصل الآن (أوقات العمل: 8:00 ص - 4:00 م)">
                 </div>
               </div>
 
@@ -1190,6 +1200,19 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
             </div>
 
             <form id="managedForm" onsubmit="saveManagedData(event)">
+              <div class="form-group full" style="background:rgba(0,255,156,.05);border:1px solid rgba(0,255,156,.25);padding:14px 16px;border-radius:12px;margin-bottom:18px">
+                <label style="font-weight:700;color:var(--neon);display:flex;align-items:center;gap:8px;margin-bottom:8px">
+                  <span>💼</span> حالة استقبال وقبول المحافظ الجديدة (Accepting New Accounts)
+                </label>
+                <select id="set_managed_account_status_m3" onchange="syncManagedStatus(this.value)" style="background:#090d16;color:#00ff9c;border:1px solid rgba(0,255,156,.4);padding:11px 14px;border-radius:10px;font-weight:600;width:100%;font-size:13.5px;cursor:pointer">
+                  <option value="available" selected>🟢 متاح حالياً لقبول محافظ جديدة (Accepting Accounts)</option>
+                  <option value="unavailable">🔴 غير متاح حالياً - اكتملت السعة (Unavailable / Full Capacity)</option>
+                </select>
+                <div style="font-size:12px;color:var(--muted);margin-top:7px;line-height:1.5">
+                  يتحكم هذا الخيار مباشرة بالشارة الموجودة في واجهة الموقع أسفل التوقيت: (متاح بالأخضر) أو (غير متاح بالأحمر).
+                </div>
+              </div>
+
               <div class="form-grid">
                 <div class="form-group">
                   <label>Minimum Capital Requirement</label>
@@ -2758,15 +2781,33 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   // --------------------------------------------------------------------------
   // TAB 1: HERO & BIO (الواجهة الرئيسية ونبذة عني)
   // --------------------------------------------------------------------------
+  window.syncManagedStatus = function(val) {
+    var v = (val === 'unavailable') ? 'unavailable' : 'available';
+    var isUnavail = (v === 'unavailable');
+    var el1 = document.getElementById('set_managed_account_status');
+    var el2 = document.getElementById('set_managed_account_status_m3');
+    [el1, el2].forEach(function(el) {
+      if (el) {
+        el.value = v;
+        el.style.color = isUnavail ? '#ff6b81' : '#00ff9c';
+        el.style.borderColor = isUnavail ? 'rgba(255,77,109,.5)' : 'rgba(0,255,156,.4)';
+      }
+    });
+  };
+
   window.loadHeroData = function(btn) {
     if (!sdb) return;
     if (btn) btn.classList.add('loading');
-    var keys = ['hero_role', 'hero_badge_text', 'hero_tagline', 'about_p1', 'about_p2', 'about_p3'];
+    var keys = ['hero_role', 'hero_badge_text', 'hero_tagline', 'about_p1', 'about_p2', 'about_p3', 'managed_account_status'];
     sdb.from('website_settings').select('*').in('setting_name', keys).then(function(res) {
       var list = (res && res.data) ? res.data : [];
       list.forEach(function(s) {
-        var el = document.getElementById('set_' + s.setting_name);
-        if (el) el.value = s.current_value || '';
+        if (s.setting_name === 'managed_account_status') {
+          syncManagedStatus(s.current_value);
+        } else {
+          var el = document.getElementById('set_' + s.setting_name);
+          if (el) el.value = s.current_value || '';
+        }
       });
       if (btn) {
         btn.classList.remove('loading');
@@ -2783,12 +2824,16 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       btn.innerHTML = '<span class="spin">🔄</span> SAVING HERO DATA...';
     }
 
-    var keys = ['hero_role', 'hero_badge_text', 'hero_tagline', 'about_p1', 'about_p2', 'about_p3'];
+    var keys = ['hero_role', 'hero_badge_text', 'hero_tagline', 'about_p1', 'about_p2', 'about_p3', 'managed_account_status'];
     var updates = keys.map(function(k) {
       var el = document.getElementById('set_' + k);
+      var val = el ? el.value.trim() : '';
+      if (k === 'managed_account_status') {
+        val = (val === 'unavailable') ? 'unavailable' : 'available';
+      }
       return {
         setting_name: k,
-        current_value: el ? el.value.trim() : '',
+        current_value: val,
         updated_at: new Date().toISOString()
       };
     });
@@ -2869,14 +2914,22 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   window.loadManagedData = function(btn) {
     if (!sdb) return;
     if (btn) btn.classList.add('loading');
-    var keys = ['managed_min_capital', 'managed_profit_split', 'managed_drawdown_limit', 'managed_supported_brokers', 'signals_vip_schedule', 'newsx_platform_link'];
+    var keys = ['managed_min_capital', 'managed_profit_split', 'managed_drawdown_limit', 'managed_supported_brokers', 'signals_vip_schedule', 'newsx_platform_link', 'managed_account_status'];
     sdb.from('website_settings').select('*').in('setting_name', keys).then(function(res) {
       var list = (res && res.data) ? res.data : [];
       list.forEach(function(s) {
-        var el = document.getElementById('set_' + s.setting_name);
-        if (el) el.value = s.current_value || '';
+        if (s.setting_name === 'managed_account_status') {
+          syncManagedStatus(s.current_value);
+        } else {
+          var el = document.getElementById('set_' + s.setting_name);
+          if (el) el.value = s.current_value || '';
+        }
       });
-    });
+      if (btn) {
+        btn.classList.remove('loading');
+        showToast('✓ Managed terms refreshed', 'success');
+      }
+    }).catch(function(){ if (btn) btn.classList.remove('loading'); });
   };
 
   window.saveManagedData = function(e) {
@@ -2887,12 +2940,19 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       btn.innerHTML = '<span class="spin">🔄</span> SAVING TERMS...';
     }
 
-    var keys = ['managed_min_capital', 'managed_profit_split', 'managed_drawdown_limit', 'managed_supported_brokers', 'signals_vip_schedule', 'newsx_platform_link'];
+    var keys = ['managed_min_capital', 'managed_profit_split', 'managed_drawdown_limit', 'managed_supported_brokers', 'signals_vip_schedule', 'newsx_platform_link', 'managed_account_status'];
     var updates = keys.map(function(k) {
-      var el = document.getElementById('set_' + k);
+      var val = '';
+      if (k === 'managed_account_status') {
+        var elM3 = document.getElementById('set_managed_account_status_m3') || document.getElementById('set_managed_account_status');
+        val = elM3 ? elM3.value : 'available';
+      } else {
+        var el = document.getElementById('set_' + k);
+        val = el ? el.value.trim() : '';
+      }
       return {
         setting_name: k,
-        current_value: el ? el.value.trim() : '',
+        current_value: val,
         updated_at: new Date().toISOString()
       };
     });

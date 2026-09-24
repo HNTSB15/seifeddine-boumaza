@@ -677,8 +677,16 @@ footer.cv-foot .mono{color:var(--neon)}
 
 /* hero */
 .cvx-hero{min-height:calc(100vh - 61px);display:flex;flex-direction:column;justify-content:center;text-align:center;padding:60px 20px 50px}
-.cvx-badge{display:inline-flex;align-items:center;gap:8px;margin:0 auto 24px;padding:7px 16px;border:1px solid var(--line);border-radius:999px;background:rgba(13,20,32,.6);font-size:13px;color:var(--muted);max-width:94%;word-break:break-word;text-align:center;justify-content:center}
+.cvx-badge{display:inline-flex;align-items:center;gap:8px;margin:0 auto 10px;padding:7px 16px;border:1px solid var(--line);border-radius:999px;background:rgba(13,20,32,.6);font-size:13px;color:var(--muted);max-width:94%;word-break:break-word;text-align:center;justify-content:center}
 .cvx-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--neon);box-shadow:0 0 12px var(--neon);animation:cvxPulse 1.8s infinite}
+.cvx-managed-status-badge{display:inline-flex;align-items:center;gap:8px;margin:0 auto 22px;padding:6px 16px;border-radius:999px;font-size:12.5px;font-family:'JetBrains Mono',monospace;font-weight:600;max-width:94%;word-break:break-word;text-align:center;justify-content:center;transition:all .25s ease}
+.cvx-managed-status-badge .managed-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.cvx-managed-status-badge.status-available{background:rgba(0,255,156,.08);border:1px solid rgba(0,255,156,.45);color:#00ff9c;box-shadow:0 0 16px rgba(0,255,156,.15)}
+.cvx-managed-status-badge.status-available .managed-dot{background:#00ff9c;box-shadow:0 0 10px #00ff9c;animation:cvxPulse 1.8s infinite}
+.cvx-managed-status-badge.status-unavailable{background:rgba(255,77,109,.1);border:1px solid rgba(255,77,109,.5);color:#ff6b81;box-shadow:0 0 16px rgba(255,77,109,.18)}
+.cvx-managed-status-badge.status-unavailable .managed-dot{background:#ff4d6d;box-shadow:0 0 10px #ff4d6d;animation:none}
+body.theme-light .cvx-managed-status-badge.status-available{background:rgba(0,168,102,.1);border-color:rgba(0,168,102,.5);color:#008751}
+body.theme-light .cvx-managed-status-badge.status-unavailable{background:rgba(220,38,38,.1);border-color:rgba(220,38,38,.5);color:#dc2626}
 .cvx-avatar{width:132px;height:132px;border-radius:50%;margin:0 auto 22px;padding:4px;position:relative;box-shadow:0 0 34px rgba(0,255,180,.35);display:flex;align-items:center;justify-content:center}
 .cvx-avatar::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,#0ca883,#0a9bb0,#1877c4,#2f63c0,#3d54b0,#0ca883);animation:cvxSpin 7s linear infinite;z-index:0}
 .cvx-avatar img{width:100%;height:100%;border-radius:50%;background:var(--bg2);object-fit:cover;position:relative;z-index:1}
@@ -6362,8 +6370,12 @@ html, body {
 </nav>
 <header class="cvx-hero">
 <div class="cvx-wrap">
-<div class="cvx-badge"><span class="dot"></span>
-<span class="mono" id="cvxHeroBadgeTxt">Online Now · Accepting New Managed Accounts</span></div>
+<div class="cvx-badge" id="cvxOnlineBadge"><span class="dot"></span>
+<span class="mono" id="cvxHeroBadgeTxt">Online Now · Active Hours: 8:00 AM - 4:00 PM</span></div>
+<div class="cvx-managed-status-badge status-available" id="cvxManagedStatusBadge">
+  <span class="managed-dot" id="cvxManagedStatusDot"></span>
+  <span class="mono" id="cvxManagedStatusTxt">💼 Managed Accounts: Currently Accepting New Accounts</span>
+</div>
 <div class="cvx-avatar">
   <img alt="Saifeddine Boumaza" src="SB.jpg" fetchpriority="high" loading="eager" decoding="async">
   <div class="cvx-avatar-status" title="متصل الآن · Online Now">
@@ -7995,6 +8007,12 @@ html, body {
         if (k === 'hero_badge_text') {
           if (typeof window.updateOnlineStatusSchedule === 'function') {
             window.updateOnlineStatusSchedule();
+          }
+        }
+        if (k === 'managed_account_status') {
+          window.cvxManagedAccountStatus = val;
+          if (typeof window.updateManagedAccountStatus === 'function') {
+            window.updateManagedAccountStatus();
           }
         }
         if (k === 'hero_role') {
@@ -10002,7 +10020,7 @@ html, body {
         'mob_dl_link': 'تحميل ملف التداول ⇩',
 
         // Hero Section
-        'hero_badge': 'متصل الآن · متاح لقبول محافظ جديدة للإدارة',
+        'hero_badge': 'متصل الآن (أوقات العمل: 8:00 ص - 4:00 م)',
         'hero_tagline': 'مدير تداول محترف في أسواق الفوركس والعملات الرقمية يركز على التقارير الشفافة، إدارة المخاطر الصارمة، والتنفيذ الاستراتيجي عبر الأسواق النشطة. تنفيذ سريع، استراتيجيات موثوقة، ودعم خبير.',
         'hero_btn_records': 'سجل الصفقات والتداول',
         'hero_btn_newsx': 'منصة NewsX AI',
@@ -10414,7 +10432,7 @@ html, body {
         'mob_dl_link': 'Download Trading Profile ⇩',
 
         // Hero Section
-        'hero_badge': 'Online Now · Accepting New Managed Accounts',
+        'hero_badge': 'Online Now · Active Hours: 8:00 AM - 4:00 PM',
         'hero_tagline': 'Professional forex and cryptocurrency trading manager focused on transparent reporting, disciplined risk management, and strategic execution across active markets. Fast execution, trusted strategies, and expert support.',
         'hero_btn_records': 'View Trading Records',
         'hero_btn_newsx': 'NewsX AI Platform',
@@ -11376,10 +11394,49 @@ html, body {
       if (window.updateOnlineStatusSchedule) {
         window.updateOnlineStatusSchedule(lang);
       }
+      if (window.updateManagedAccountStatus) {
+        window.updateManagedAccountStatus(lang);
+      }
     };
 
     // ========================================================================
-    // ⏰ Live Scheduled Online Status System (08:00 to 18:00 = Online Green, else Offline Red)
+    // 💼 Live Managed Accounts Availability Badge (Available / Unavailable)
+    // ========================================================================
+    window.cvxManagedAccountStatus = window.cvxManagedAccountStatus || 'available';
+
+    window.updateManagedAccountStatus = function(overrideLang) {
+      var lang = overrideLang || document.documentElement.getAttribute('lang') || 'ar';
+      var isAr = (lang === 'ar');
+      var status = (window.cvxManagedAccountStatus === 'unavailable') ? 'unavailable' : 'available';
+
+      var badge = document.getElementById('cvxManagedStatusBadge');
+      var txt = document.getElementById('cvxManagedStatusTxt');
+
+      if (status === 'available') {
+        if (badge) {
+          badge.classList.remove('status-unavailable');
+          badge.classList.add('status-available');
+        }
+        if (txt) {
+          txt.textContent = isAr
+            ? '💼 إدارة المحافظ: متاح حالياً لقبول محافظ جديدة'
+            : '💼 Managed Accounts: Currently Accepting New Accounts';
+        }
+      } else {
+        if (badge) {
+          badge.classList.remove('status-available');
+          badge.classList.add('status-unavailable');
+        }
+        if (txt) {
+          txt.textContent = isAr
+            ? '🔒 إدارة المحافظ: غير متاح حالياً (اكتملت السعة)'
+            : '🔒 Managed Accounts: Currently Unavailable (Full Capacity)';
+        }
+      }
+    };
+
+    // ========================================================================
+    // ⏰ Live Scheduled Online Status System (08:00 to 16:00 = Online Green, else Offline Red)
     // ========================================================================
     window.updateOnlineStatusSchedule = function(overrideLang) {
       var lang = overrideLang || document.documentElement.getAttribute('lang') || 'ar';
@@ -11415,8 +11472,8 @@ html, body {
       if (hBadge) {
         if (isOnline) {
           hBadge.textContent = isAr
-            ? 'متصل الآن · متاح لقبول محافظ جديدة للإدارة'
-            : 'Online Now · Accepting New Managed Accounts';
+            ? 'متصل الآن (أوقات العمل: 8:00 ص - 4:00 م)'
+            : 'Online Now · Active Hours: 8:00 AM - 4:00 PM';
         } else {
           hBadge.textContent = isAr
             ? 'غير متصل الآن (أوقات العمل: 8:00 ص - 4:00 م) · اترك رسالتك وسأرد عليك'
@@ -11467,8 +11524,9 @@ html, body {
       window.setSiteLanguage('en');
     }
 
-    // Initialize scheduled online status and keep updating every minute
+    // Initialize scheduled online status and managed account status
     window.updateOnlineStatusSchedule(savedLang);
+    window.updateManagedAccountStatus(savedLang);
     setInterval(function(){
       window.updateOnlineStatusSchedule();
     }, 60000);
