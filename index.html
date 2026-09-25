@@ -863,6 +863,66 @@ body.theme-light .cvx-managed-status-badge.status-unavailable{background:rgba(22
 .cvx-proj .plink:hover{text-decoration:underline}
 .cvx-proj .plink.na{color:var(--muted);pointer-events:none}
 
+/* Project Card Price Bar & Action Button */
+.cvx-proj-bottom {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.cvx-proj-price-tag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.proj-price-curr {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--neon);
+}
+.proj-price-val {
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+.proj-price-term {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-left: 2px;
+}
+html[dir="rtl"] .proj-price-term {
+  margin-left: 0;
+  margin-right: 2px;
+}
+.cvx-proj-btn {
+  background: rgba(0, 255, 156, 0.08);
+  border: 1px solid rgba(0, 255, 156, 0.35);
+  border-radius: 8px;
+  padding: 8px 14px;
+  color: var(--neon);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.cvx-proj-btn:hover {
+  background: var(--neon);
+  color: #030712;
+  box-shadow: 0 0 15px rgba(0, 255, 156, 0.4);
+  transform: translateY(-1px);
+}
+
 /* live results & twitter feed */
 .cvx-res-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
 .cvx-res-metric{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:14px;padding:18px 14px;text-align:center;transition:transform .2s,border-color .2s}
@@ -3446,6 +3506,25 @@ body.theme-light .soon-badge {
   background: #fef3c7;
   border-color: #fde68a;
   color: #b45309;
+}
+body.theme-light .cvx-proj-bottom {
+  border-top-color: rgba(0, 0, 0, 0.08);
+}
+body.theme-light .proj-price-val {
+  color: #0f172a;
+}
+body.theme-light .proj-price-curr {
+  color: #00995c;
+}
+body.theme-light .cvx-proj-btn {
+  background: #e6f9f0;
+  border-color: #a7f3d0;
+  color: #00995c;
+}
+body.theme-light .cvx-proj-btn:hover {
+  background: #00995c;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 153, 92, 0.25);
 }
 
 /* Results & Verified Twitter Carousel */
@@ -6977,7 +7056,15 @@ html, body {
 <li>Covers Gold (XAUUSD), major currency pairs (EUR/USD, GBP/USD), and high-liquidity crypto futures (BTC, ETH, SOL).</li>
 <li><b>88% verified historical win-rate</b> with disciplined 1:2 to 1:4 risk-to-reward ratios, position size guidance, and instant market alerts.</li>
 </ul>
-<a class="plink" href="#contact">Join Signals Group ↗</a>
+<div class="cvx-proj-bottom">
+  <div class="cvx-proj-price-tag">
+    <span class="proj-price-curr">$</span><span class="proj-price-val" id="projVipSignalsPrice">49</span>
+    <span class="proj-price-term" id="projVipSignalsTerm">/mo</span>
+  </div>
+  <button type="button" class="cvx-proj-btn" id="projVipSignalsBtn" onclick="openPlanModal('VIP Gold &amp; Forex Daily Signals', window._vipSignalsPrice || 49)">
+    <span id="projVipSignalsBtnTxt">Subscribe to VIP ↗</span>
+  </button>
+</div>
 </div>
 <div class="cvx-proj" data-cat="crypto forex">
 <div class="pt"><div class="pico">📊</div><div><div class="pcat">Futures · Derivatives</div><h3>Forex &amp; Crypto Futures Management</h3></div></div>
@@ -7017,7 +7104,15 @@ html, body {
 <li>Algorithmic momentum detection with clear arrow alerts, sound notifications, and mobile push triggers.</li>
 <li>Non-repainting mathematical model helping traders identify clean trend reversals and high-volume exhaustion points.</li>
 </ul>
-<a class="plink" href="#contact">Get Indicator Pack ↗</a>
+<div class="cvx-proj-bottom">
+  <div class="cvx-proj-price-tag">
+    <span class="proj-price-curr">$</span><span class="proj-price-val" id="projMt5IndicatorPrice">199</span>
+    <span class="proj-price-term" id="projMt5IndicatorTerm">/one-time</span>
+  </div>
+  <button type="button" class="cvx-proj-btn" id="projMt5IndicatorBtn" onclick="openPlanModal('Proprietary MT5 Volatility Indicator', window._mt5IndicatorPrice || 199)">
+    <span id="projMt5IndicatorBtnTxt">Get License ↗</span>
+  </button>
+</div>
 </div>
 <div class="cvx-proj" data-cat="indicators">
 <div class="pt"><div class="pico">🤖</div><div><div class="pcat">Algorithms · Tooling</div><h3>Python Algorithmic Market Screener</h3></div></div>
@@ -8420,6 +8515,18 @@ html, body {
           var up = document.getElementById('nxPlanUltPrice'), ub = document.getElementById('nxPlanUltBtn');
           if (up) up.innerHTML = '$' + price + '<span>/month</span>';
           if (ub) ub.setAttribute('onclick', "openPlanModal('NewsX AI Ultimate', " + price + ")");
+        } else if (key === 'vip_gold_signals') {
+          window._vipSignalsPrice = price;
+          var vp = document.getElementById('projVipSignalsPrice');
+          if (vp) vp.textContent = price;
+          var vb = document.getElementById('projVipSignalsBtn');
+          if (vb) vb.setAttribute('onclick', "openPlanModal('VIP Gold & Forex Daily Signals', " + price + ")");
+        } else if (key === 'mt5_indicator') {
+          window._mt5IndicatorPrice = price;
+          var mp = document.getElementById('projMt5IndicatorPrice');
+          if (mp) mp.textContent = price;
+          var mb = document.getElementById('projMt5IndicatorBtn');
+          if (mb) mb.setAttribute('onclick', "openPlanModal('Proprietary MT5 Volatility Indicator', " + price + ")");
         }
       });
     }).catch(function(){});
@@ -10300,19 +10407,47 @@ html, body {
       curOrder.dur = 'Monthly';
       curOrder.wallet = '';
 
+      var isSignals = planName.indexOf('Signals') !== -1;
+      var isIndicator = planName.indexOf('Indicator') !== -1;
+      var isAr = (document.documentElement.getAttribute('lang') === 'ar');
+
       var titleText = document.getElementById('flModalTitleText');
-      if (titleText) titleText.textContent = '// NEWSX AI: ' + planName.toUpperCase() + ' CHECKOUT';
       var badgeEl = document.getElementById('flModalItemBadge');
-      if (badgeEl) {
-        badgeEl.textContent = '⚡ NEWSX AI MEMBERSHIP';
-        badgeEl.style.color = 'var(--neon-2)';
-        badgeEl.style.borderColor = 'rgba(18,214,255,.35)';
-        badgeEl.style.background = 'rgba(18,214,255,.12)';
-      }
       var itemTitle = document.getElementById('flModalItemTitle');
-      if (itemTitle) itemTitle.textContent = planName + ' (1 Month License)';
       var itemDur = document.getElementById('flModalItemDur');
-      if (itemDur) itemDur.textContent = '30 Days VIP Engine Access';
+
+      if (isSignals) {
+        if (titleText) titleText.textContent = isAr ? '// اشتراك قناة توصيات الذهب VIP' : '// VIP SIGNALS: DIRECT CHECKOUT';
+        if (badgeEl) {
+          badgeEl.textContent = isAr ? '🎯 باقة توصيات VIP' : '🎯 VIP SIGNALS MEMBERSHIP';
+          badgeEl.style.color = 'var(--gold)';
+          badgeEl.style.borderColor = 'rgba(242,193,78,.35)';
+          badgeEl.style.background = 'rgba(242,193,78,.12)';
+        }
+        if (itemTitle) itemTitle.textContent = isAr ? 'قناة توصيات الذهب والعملات VIP (اشتراك شهري)' : 'VIP Gold & Forex Daily Signals (Monthly)';
+        if (itemDur) itemDur.textContent = isAr ? 'وصول كامل للقناة الخاصة لمدة 30 يوماً' : '30 Days Private VIP Channel Access';
+      } else if (isIndicator) {
+        curOrder.dur = 'Lifetime';
+        if (titleText) titleText.textContent = isAr ? '// شراء ترخيص مؤشر MT5 الحصري' : '// MT5 INDICATOR: DIRECT CHECKOUT';
+        if (badgeEl) {
+          badgeEl.textContent = isAr ? '🧰 ترخيص دائم مدى الحياة' : '🧰 LIFETIME INDICATOR LICENSE';
+          badgeEl.style.color = 'var(--neon)';
+          badgeEl.style.borderColor = 'rgba(0,255,156,.35)';
+          badgeEl.style.background = 'rgba(0,255,156,.12)';
+        }
+        if (itemTitle) itemTitle.textContent = isAr ? 'ترخيص مؤشر MT5 الحصري (مدى الحياة)' : 'Proprietary MT5 Indicator (Lifetime License)';
+        if (itemDur) itemDur.textContent = isAr ? 'ترخيص دائم لجهازك مع تحديثات ودعم كامل' : 'Lifetime Terminal License + Free Updates';
+      } else {
+        if (titleText) titleText.textContent = '// NEWSX AI: ' + planName.toUpperCase() + ' CHECKOUT';
+        if (badgeEl) {
+          badgeEl.textContent = '⚡ NEWSX AI MEMBERSHIP';
+          badgeEl.style.color = 'var(--neon-2)';
+          badgeEl.style.borderColor = 'rgba(18,214,255,.35)';
+          badgeEl.style.background = 'rgba(18,214,255,.12)';
+        }
+        if (itemTitle) itemTitle.textContent = planName + ' (1 Month License)';
+        if (itemDur) itemDur.textContent = '30 Days VIP Engine Access';
+      }
       var prEl = document.getElementById('flModalPrice');
       if (prEl) prEl.textContent = price;
 
@@ -11671,6 +11806,16 @@ html, body {
           if (linkEl && t['pr' + pi + '_link']) linkEl.textContent = t['pr' + pi + '_link'];
         }
       }
+
+      var vsTerm = document.getElementById('projVipSignalsTerm');
+      if (vsTerm) vsTerm.textContent = (lang === 'ar') ? '/شهرياً' : '/mo';
+      var vsBtnTxt = document.getElementById('projVipSignalsBtnTxt');
+      if (vsBtnTxt) vsBtnTxt.textContent = (lang === 'ar') ? 'اشترك في VIP ↗' : 'Subscribe to VIP ↗';
+
+      var miTerm = document.getElementById('projMt5IndicatorTerm');
+      if (miTerm) miTerm.textContent = (lang === 'ar') ? '/مدى الحياة' : '/one-time';
+      var miBtnTxt = document.getElementById('projMt5IndicatorBtnTxt');
+      if (miBtnTxt) miBtnTxt.textContent = (lang === 'ar') ? 'شراء الترخيص ↗' : 'Get License ↗';
 
       // 7b. Live Results & Managed Accounts (Twitter / X)
       var resKick = document.getElementById('resKick');
