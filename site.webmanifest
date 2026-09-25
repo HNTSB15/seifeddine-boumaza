@@ -1,0 +1,28 @@
+{
+  "name": "Saifeddine Boumaza — Forex & Crypto Trading Manager",
+  "short_name": "Saifeddine",
+  "description": "Official portfolio and algorithmic technology website of Saifeddine Boumaza. Software engineering, NewsX AI analytics, financial market research, and verified track records.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05070d",
+  "theme_color": "#05070d",
+  "icons": [
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

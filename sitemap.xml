@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://saifeddine-boumaza.com/</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://saifeddine-boumaza.com/og-image.png</image:loc>
+      <image:title>Saifeddine Boumaza — Forex and Crypto Trading Manager</image:title>
+      <image:caption>Official Technology and Financial Portfolio of Saifeddine Boumaza</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://saifeddine-boumaza.com/SB.jpg</image:loc>
+      <image:title>Saifeddine Boumaza</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://saifeddine-boumaza.com/NewsXAIOfficial/</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
