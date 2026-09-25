@@ -1163,8 +1163,13 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
             <form id="heroForm" onsubmit="saveHeroData(event)">
               <div class="form-grid">
                 <div class="form-group">
-                  <label>Professional Title / Role (Header &amp; Bio)</label>
-                  <input type="text" id="set_hero_role" placeholder="Forex Trading Expert">
+                  <label>Professional Title / Role <span>(المسمى المهني الرئيسي)</span></label>
+                  <input type="text" id="set_hero_role" placeholder="Forex &amp; Crypto Portfolio Manager">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('set_hero_role', 'Forex &amp; Crypto Portfolio Manager')">مدير محافظ فوركس وكريبتو</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('set_hero_role', 'Institutional Gold &amp; FX Trader')">متداول مؤسسي (ذهب وفوركس)</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('set_hero_role', 'Quantitative Algorithmic Trader')">متداول خوارزمي كمّي</button>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label>حالة قبول المحافظ (Managed Accounts Status)</label>
@@ -1237,34 +1242,71 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
             <form id="statsForm" onsubmit="saveStatsData(event)">
               <div class="form-grid">
                 <div class="form-group">
-                  <label>Signal Win Rate * <span>(Default: 88%)</span></label>
+                  <label>Signal Win Rate * <span>(نسبة نجاح الصفقات)</span></label>
                   <input type="text" id="stat_win_rate" placeholder="88%">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_win_rate', '88%')">88%</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_win_rate', '89.4%')">89.4%</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_win_rate', '91.2%')">91.2%</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_win_rate', '93.5%')">93.5%</button>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <label>Average Monthly Return * <span>(Default: 45%)</span></label>
+                  <label>Average Monthly Return * <span>(متوسط العائد الشهري)</span></label>
                   <input type="text" id="stat_avg_return" placeholder="45%">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_avg_return', '+38%')">+38%</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_avg_return', '+42.5%')">+42.5%</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_avg_return', '+45%')">+45%</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_avg_return', '+52%')">+52%</button>
+                  </div>
                 </div>
               </div>
 
               <div class="form-grid">
                 <div class="form-group">
-                  <label>Managed Capital * <span>(Default: $100K+)</span></label>
+                  <label>Managed Capital * <span>(إجمالي المحافظ المدارة)</span></label>
                   <input type="text" id="stat_managed_capital" placeholder="$100K+">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_managed_capital', '$100K+')">$100K+</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_managed_capital', '$250K+')">$250K+</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_managed_capital', '$500K+')">$500K+</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_managed_capital', '$1.2M+')">$1.2M+</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_managed_capital', '$2.4M+')">$2.4M+</button>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <label>Years Experience * <span>(Default: 5+)</span></label>
+                  <label>Years Experience * <span>(سنوات الخبرة)</span></label>
                   <input type="text" id="stat_years_exp" placeholder="5+">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_years_exp', '5+')">5+ سنوات</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_years_exp', '6+')">6+ سنوات</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_years_exp', '7+')">7+ سنوات</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_years_exp', '8+')">8+ سنوات</button>
+                  </div>
                 </div>
               </div>
 
               <div class="form-grid">
                 <div class="form-group">
-                  <label>Tracked Months * <span>(Default: 12+)</span></label>
+                  <label>Tracked Months * <span>(أشهر الأداء الموثق)</span></label>
                   <input type="text" id="stat_tracked_months" placeholder="12+">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_tracked_months', '12+')">12+ شهر</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_tracked_months', '24+')">24+ شهر</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_tracked_months', '36+')">36+ شهر</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_tracked_months', '48+')">48+ شهر</button>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <label>Community &amp; Traders * <span>(Default: 500+)</span></label>
+                  <label>Community &amp; Traders * <span>(مجتمع المتداولين)</span></label>
                   <input type="text" id="stat_community_traders" placeholder="500+">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_community_traders', '500+')">500+</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_community_traders', '1,200+')">1,200+</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_community_traders', '2,500+')">2,500+</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('stat_community_traders', '5,000+')">5,000+</button>
+                  </div>
                 </div>
               </div>
 
@@ -1321,34 +1363,66 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 
               <div class="form-grid">
                 <div class="form-group">
-                  <label>Minimum Capital Requirement</label>
+                  <label>Minimum Capital Requirement <span>(الحد الأدنى لرأس المال)</span></label>
                   <input type="text" id="set_managed_min_capital" placeholder="$1,000+ USD ($100 for live trial)">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('set_managed_min_capital', '$100 (Live Trial)')">$100 (تجربة مباشرة)</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('set_managed_min_capital', '$200+')">$200+</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('set_managed_min_capital', '$500+')">$500+</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('set_managed_min_capital', '$1,000+ USD')">$1,000+ USD</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('set_managed_min_capital', '$2,500+ USD')">$2,500+ USD</button>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <label>Monthly Profit Share / Split</label>
+                  <label>Monthly Profit Share / Split <span>(نسبة تقاسم الأرباح)</span></label>
                   <input type="text" id="set_managed_profit_split" placeholder="50% / 50% Profit Share">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('set_managed_profit_split', '50% / 50% Profit Share')">50/50 Share</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('set_managed_profit_split', '60% Client / 40% Manager')">60/40 Split</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('set_managed_profit_split', 'Bi-Weekly Settlement (50/50)')">تسوية نصف شهرية (50/50)</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('set_managed_profit_split', 'Weekly Settlement (50/50)')">تسوية أسبوعية (50/50)</button>
+                  </div>
                 </div>
               </div>
 
               <div class="form-grid">
                 <div class="form-group">
-                  <label>Maximum Controlled Drawdown Limit</label>
+                  <label>Maximum Controlled Drawdown Limit <span>(أقصى حد للتراجع والمخاطرة)</span></label>
                   <input type="text" id="set_managed_drawdown_limit" placeholder="< 8.5% Maximum Drawdown">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('set_managed_drawdown_limit', '< 8.5% Maximum Drawdown')">&lt; 8.5% Max DD</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('set_managed_drawdown_limit', 'Strict 10% Max Drawdown')">Strict 10% Max</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('set_managed_drawdown_limit', 'Disciplined 15% Max DD')">Disciplined 15% Max</button>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <label>Supported Brokers</label>
+                  <label>Supported Brokers <span>(شركات الوساطة والمنصات المدعومة)</span></label>
                   <input type="text" id="set_managed_supported_brokers" placeholder="Exness, IC Markets, XM, Pepperstone">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('set_managed_supported_brokers', 'Exness, IC Markets, Tickmill')">Exness &amp; IC Markets</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('set_managed_supported_brokers', 'Exness MT5 &amp; Binance USDT')">Exness &amp; Binance</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('set_managed_supported_brokers', 'Exness, IC Markets, XM, Pepperstone')">All Major Brokers</button>
+                  </div>
                 </div>
               </div>
 
               <div class="form-grid">
                 <div class="form-group">
-                  <label>VIP Signals Schedule / Delivery Timing</label>
+                  <label>VIP Signals Schedule / Delivery Timing <span>(مواعيد وتكرار التوصيات)</span></label>
                   <input type="text" id="set_signals_vip_schedule" placeholder="2 - 5 High-Probability Trades Daily">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('set_signals_vip_schedule', '2 - 5 High-Probability Trades Daily')">2 - 5 صفقات يومياً</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('set_signals_vip_schedule', 'London &amp; New York Sessions (3-5 Signals)')">جلسات لندن ونيويورك</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('set_signals_vip_schedule', 'Daily Gold (XAUUSD) Scalping &amp; Swing')">سكالبينج وسوينغ للذهب</button>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label>NewsX Platform Link / URL</label>
                   <input type="text" id="set_newsx_platform_link" placeholder="https://saifeddine-boumaza.com/newsx">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('set_newsx_platform_link', 'https://saifeddine-boumaza.com/newsx')">NewsX Official Page</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('set_newsx_platform_link', 'https://t.me/HNTSB15')">Telegram Link</button>
+                  </div>
                 </div>
               </div>
 
@@ -1629,23 +1703,41 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
             <form id="payoutForm" onsubmit="submitNewPayout(event)">
               <div class="form-grid">
                 <div class="form-group">
-                  <label>Amount * <span>(e.g. $2,450.00 USD)</span></label>
+                  <label>Amount * <span>(المبلغ المسحوب)</span></label>
                   <input type="text" id="pAmount" required placeholder="$1,850.00 USD">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('pAmount', '$1,250.00 USD')">$1,250</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('pAmount', '$1,850.00 USD')">$1,850</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('pAmount', '$2,450.00 USD')">$2,450</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('pAmount', '$3,800.00 USD')">$3,800</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('pAmount', '$5,600.00 USD')">$5,600</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('pAmount', '$10,200.00 USD')">$10,200</button>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <label>Date * <span>(e.g. 21 Sep 2026, 16:30)</span></label>
+                  <label>Date * <span>(التاريخ والتوقيت)</span></label>
                   <input type="text" id="pDate" required placeholder="21 Sep 2026, 16:30">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPayoutCurrentDate('pDate')">📅 الآن (تاريخ وتوقيت اليوم)</button>
+                  </div>
                 </div>
               </div>
 
               <div class="form-grid">
                 <div class="form-group">
-                  <label>Exness Account</label>
+                  <label>Exness Account <span>(رقم حساب الوسيط)</span></label>
                   <input type="text" id="pAccount" value="ex 256505258" required>
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('pAccount', 'ex 256505258')">حساب 1 (256505258)</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('pAccount', 'ex 184920145')">حساب 2 (184920145)</button>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <label>Invoice ID * <span>(From Exness)</span></label>
+                  <label>Invoice ID * <span>(رقم الفاتورة المرجعي)</span></label>
                   <input type="text" id="pInvoice" required placeholder="819204829103">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="generateRandomInvoice('pInvoice')">⚡ توليد رقم فاتورة عشوائي</button>
+                  </div>
                 </div>
               </div>
 
@@ -1658,8 +1750,14 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
                   </select>
                 </div>
                 <div class="form-group">
-                  <label>Settlement Speed</label>
+                  <label>Settlement Speed <span>(سرعة وصول الأرباح)</span></label>
                   <input type="text" id="pSpeed" value="1m 30s" placeholder="1m 30s">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('pSpeed', '1m 15s')">1m 15s</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('pSpeed', '1m 30s')">1m 30s</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('pSpeed', '2m 10s')">2m 10s</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('pSpeed', 'Instant (فوري)')">سحب فوري</button>
+                  </div>
                 </div>
               </div>
 
@@ -1739,10 +1837,20 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
                 <div class="form-group">
                   <label>NewsX AI Standard Monthly ($ USD)</label>
                   <input type="number" id="price_newsx_standard" step="0.5" placeholder="15">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('price_newsx_standard', 15)">$15</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('price_newsx_standard', 19)">$19</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('price_newsx_standard', 25)">$25</button>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label>NewsX AI Pro VIP Monthly ($ USD)</label>
                   <input type="number" id="price_newsx_pro" step="0.5" placeholder="25">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('price_newsx_pro', 25)">$25</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('price_newsx_pro', 35)">$35</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('price_newsx_pro', 49)">$49</button>
+                  </div>
                 </div>
               </div>
 
@@ -1750,16 +1858,34 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
                 <div class="form-group">
                   <label>NewsX AI Ultimate Master ($ USD)</label>
                   <input type="number" id="price_newsx_ultimate" step="0.5" placeholder="50">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('price_newsx_ultimate', 49)">$49</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('price_newsx_ultimate', 50)">$50</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('price_newsx_ultimate', 75)">$75</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('price_newsx_ultimate', 99)">$99</button>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label>VIP Gold Signals Channel ($ USD / mo)</label>
                   <input type="number" id="price_vip_signals" step="1" placeholder="49">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('price_vip_signals', 39)">$39 (عرض)</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('price_vip_signals', 49)">$49</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('price_vip_signals', 59)">$59</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('price_vip_signals', 79)">$79</button>
+                  </div>
                 </div>
               </div>
 
               <div class="form-group full">
                 <label>Proprietary MT5 Indicator License ($ USD one-time)</label>
                 <input type="number" id="price_mt5_indicator" step="1" placeholder="199">
+                <div class="preset-chips">
+                  <button type="button" class="preset-chip" onclick="setPreset('price_mt5_indicator', 149)">$149 (تخفيض)</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('price_mt5_indicator', 199)">$199</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('price_mt5_indicator', 249)">$249</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('price_mt5_indicator', 299)">$299</button>
+                </div>
               </div>
 
               <button type="submit" id="btnSavePrices" class="btn-primary" style="margin-top:12px">
@@ -1804,8 +1930,17 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
                   <input type="text" id="rName" required placeholder="كريم م.">
                 </div>
                 <div class="form-group">
-                  <label>Country / Flag * <span>(e.g. 🇩🇿 الجزائر)</span></label>
-                  <input type="text" id="rCountry" required placeholder="🇩🇿 الجزائر">
+                  <label>Country / Flag * <span>(الدولة والعلم)</span></label>
+                  <input type="text" id="rCountry" required placeholder="🇩🇿 الجزائر" value="🇩🇿 الجزائر">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('rCountry', '🇩🇿 الجزائر')">🇩🇿 الجزائر</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('rCountry', '🇸🇦 السعودية')">🇸🇦 السعودية</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('rCountry', '🇦🇪 الإمارات')">🇦🇪 الإمارات</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('rCountry', '🇪🇬 مصر')">🇪🇬 مصر</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('rCountry', '🇲🇦 المغرب')">🇲🇦 المغرب</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('rCountry', '🇶🇦 قطر')">🇶🇦 قطر</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('rCountry', '🇰🇼 الكويت')">🇰🇼 الكويت</button>
+                  </div>
                 </div>
               </div>
 
@@ -1830,12 +1965,28 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
               </div>
 
               <div class="form-group full">
-                <label>Profit / Performance Tag <span>(Optional, e.g. +42.8% ROI (5 أشهر))</span></label>
+                <label>Profit / Performance Tag <span>(وسم الأرباح أو العائد)</span></label>
                 <input type="text" id="rProfit" placeholder="+42.8% ROI (5 أشهر)">
+                <div class="preset-chips">
+                  <button type="button" class="preset-chip" onclick="setPreset('rProfit', '+42.8% ROI (5 أشهر)')">+42.8% ROI</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('rProfit', '+120% ROI (3 أشهر)')">+120% ROI</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('rProfit', '+$5,400 أرباح صافية')">+$5,400 أرباح</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('rProfit', '+$16,000 سحب أرباح')">+$16,000 سحب</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('rProfit', '+15X نمو المحفظة')">+15X تضاعف</button>
+                </div>
               </div>
 
               <div class="form-group full">
-                <label>Review Text (Arabic or English) *</label>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;flex-wrap:wrap;gap:4px">
+                  <label style="margin:0">Review Text (Arabic or English) * <span>(نص شهادة العميل)</span></label>
+                  <span style="font-size:11px;color:var(--cyan)">💡 انقر لتعبئة نموذج شهادة جاهز:</span>
+                </div>
+                <div class="preset-chips" style="margin-bottom:8px">
+                  <button type="button" class="preset-chip" onclick="setReviewTextPreset('managed')">💡 تجربة إدارة محافظ</button>
+                  <button type="button" class="preset-chip" onclick="setReviewTextPreset('signals')">💡 دقة توصيات VIP</button>
+                  <button type="button" class="preset-chip" onclick="setReviewTextPreset('newsx')">💡 سرعة NewsX AI</button>
+                  <button type="button" class="preset-chip" onclick="setReviewTextPreset('indicators')">💡 مؤشر MT5 المؤسسي</button>
+                </div>
                 <textarea id="rText" rows="3" required placeholder="شهادة حقيقية عن التجربة والأرباح ودقة الصفقات..."></textarea>
               </div>
 
@@ -1902,18 +2053,35 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 
             <form id="faqForm" onsubmit="submitNewFaq(event)">
               <div class="form-group full">
-                <label>Question (Arabic or English) *</label>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;flex-wrap:wrap;gap:4px">
+                  <label style="margin:0">Question (Arabic or English) * <span>(نص السؤال)</span></label>
+                  <span style="font-size:11px;color:var(--cyan)">💡 انقر لاختيار سؤال وجواب نموذجي جاهز:</span>
+                </div>
+                <div class="preset-chips" style="margin-bottom:8px">
+                  <button type="button" class="preset-chip" onclick="setFaqPreset('capital')">💡 الحد الأدنى لرأس المال</button>
+                  <button type="button" class="preset-chip" onclick="setFaqPreset('split')">💡 نسبة وتقاسم الأرباح</button>
+                  <button type="button" class="preset-chip" onclick="setFaqPreset('risk')">💡 نسبة المخاطرة والـ Drawdown</button>
+                  <button type="button" class="preset-chip" onclick="setFaqPreset('brokers')">💡 المنصات والوسطاء</button>
+                  <button type="button" class="preset-chip" onclick="setFaqPreset('signals')">💡 توصيات الذهب VIP</button>
+                </div>
                 <input type="text" id="faqQ" required placeholder="e.g. ما هو رأس المال الأدنى المطلوب لإدارة المحافظ؟">
               </div>
 
               <div class="form-group full">
-                <label>Answer (Detailed Explanation) *</label>
+                <label>Answer (Detailed Explanation) * <span>(الإجابة النموذجية الشاملة)</span></label>
                 <textarea id="faqA" rows="4" required placeholder="الحد الأدنى المقترح للبدء في خدمة إدارة الحسابات هو 1,000 دولار لضمان توزيع متوازن..."></textarea>
               </div>
 
               <div class="form-group full">
-                <label>Category (Optional, e.g. General, Managed Accounts, Signals)</label>
+                <label>Category <span>(تصنيف السؤال)</span></label>
                 <input type="text" id="faqCategory" placeholder="e.g. General / Terms">
+                <div class="preset-chips">
+                  <button type="button" class="preset-chip" onclick="setPreset('faqCategory', 'Managed Accounts')">إدارة المحافظ</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('faqCategory', 'Signals &amp; VIP')">توصيات VIP</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('faqCategory', 'NewsX AI')">منصة NewsX</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('faqCategory', 'Risk Management')">إدارة المخاطر</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('faqCategory', 'General / Terms')">عام وشروط</button>
+                </div>
               </div>
 
               <button type="submit" id="btnSaveFaq" class="btn-primary" style="margin-top:12px">
@@ -2030,8 +2198,14 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
               <h3 style="font-size:14px;color:var(--neon);margin:24px 0 10px;font-family:var(--font-mono)">📢 Top Announcement Banner &amp; Footer</h3>
 
               <div class="form-group full">
-                <label>Announcement Banner Text (Top of website)</label>
+                <label>Announcement Banner Text <span>(شريط التنبيهات العلوي في الموقع)</span></label>
                 <input type="text" id="set_announcement_banner_text" placeholder="Special promotion or market notice text">
+                <div class="preset-chips">
+                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text', '🔥 فتح باب قبول محافظ جديدة لشهر أكتوبر بأماكن محدودة!')">🔥 قبول محافظ جديدة</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text', '⚡ خصم خاص 20% على اشتراكات منصة NewsX وقناة التوصيات VIP!')">⚡ خصم 20% NewsX و VIP</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text', '💼 مرحباً بكم في الموقع الرسمي لسيف الدين بوعمازة - إدارة محافظ وتداول احترافي')">💼 ترحيب رسمي</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text', '🔴 تنبيه: اكتملت السعة الاستيعابية لإدارة المحافظ مؤقتاً - تابع القناة لحين فتح مقاعد جديدة')">🔴 اكتمال المقاعد</button>
+                </div>
               </div>
 
               <div class="form-grid">
@@ -2043,8 +2217,12 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
                   </select>
                 </div>
                 <div class="form-group">
-                  <label>Footer Copyright Notice</label>
-                  <input type="text" id="set_footer_copyright" placeholder="© Saifeddine Boumaza - Forex & Crypto Trading Manager - All rights reserved">
+                  <label>Footer Copyright Notice <span>(حقوق الملكية في الفوتر)</span></label>
+                  <input type="text" id="set_footer_copyright" placeholder="© Saifeddine Boumaza - Forex &amp; Crypto Trading Manager - All rights reserved">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('set_footer_copyright', '© 2026 Saifeddine Boumaza · All rights reserved.')">© 2026 Saifeddine Boumaza</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('set_footer_copyright', '© Saifeddine Boumaza - Forex &amp; Crypto Trading Manager - All rights reserved')">الافتراضي الكامل</button>
+                  </div>
                 </div>
               </div>
 
@@ -3147,6 +3325,79 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       descEl.value = 'TRADING ACCOUNT MANAGEMENT TIERS — Starting from $100+, $200+, $300+, $500+. Dedicated risk management on Gold & Forex. Profit Split: 50/50.';
       if (badgeEl) badgeEl.value = 'TIERS OPEN 💼';
       if (depositEl) depositEl.value = 'Deposit: $100 - $500+';
+    }
+  };
+
+  window.setPayoutCurrentDate = function(targetId) {
+    var el = document.getElementById(targetId);
+    if (!el) return;
+    var now = new Date();
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var day = now.getDate();
+    var month = months[now.getMonth()];
+    var year = now.getFullYear();
+    var hours = String(now.getHours()).padStart(2, '0');
+    var mins = String(now.getMinutes()).padStart(2, '0');
+    el.value = day + ' ' + month + ' ' + year + ', ' + hours + ':' + mins;
+  };
+
+  window.generateRandomInvoice = function(targetId) {
+    var el = document.getElementById(targetId);
+    if (!el) return;
+    var rand = '8' + Math.floor(10000000000 + Math.random() * 90000000000);
+    el.value = rand;
+  };
+
+  window.setReviewTextPreset = function(type) {
+    var textEl = document.getElementById('rText');
+    var serviceEl = document.getElementById('rService');
+    var profitEl = document.getElementById('rProfit');
+    if (!textEl) return;
+    if (type === 'managed') {
+      textEl.value = 'أفضل تجربة إدارة محفظة خضتها بحياتي، التزام صارم بوقف الخسارة وسحب أرباح منتظم أسبوعياً بدون أي تأخير.';
+      if (serviceEl) serviceEl.value = 'managed';
+      if (profitEl && !profitEl.value) profitEl.value = '+42.8% ROI (5 أشهر)';
+    } else if (type === 'signals') {
+      textEl.value = 'دقة التوصيات في قناة VIP مذهلة خصوصاً على الذهب (XAUUSD)، نسبة نجاح الصفقات وإدارة المخاطر هي الأفضل.';
+      if (serviceEl) serviceEl.value = 'signals';
+      if (profitEl && !profitEl.value) profitEl.value = '89.4% Win Rate';
+    } else if (type === 'newsx') {
+      textEl.value = 'منصة نيوز إكس خرافية في قراءة الأخبار اللحظية وتحديد مناطق السيولة قبل الانفجارات السعرية.';
+      if (serviceEl) serviceEl.value = 'newsx';
+      if (profitEl && !profitEl.value) profitEl.value = 'NewsX AI Pro';
+    } else if (type === 'indicators') {
+      textEl.value = 'المؤشر يعطي إشارات دقيقة لمناطق السيولة المؤسسية بدقة عالية جداً على فريم الدقيقة والـ 5 دقائق.';
+      if (serviceEl) serviceEl.value = 'indicators';
+      if (profitEl && !profitEl.value) profitEl.value = '+150% ROI';
+    }
+  };
+
+  window.setFaqPreset = function(type) {
+    var qEl = document.getElementById('faqQ');
+    var aEl = document.getElementById('faqA');
+    var cEl = document.getElementById('faqCategory');
+    if (!qEl || !aEl) return;
+
+    if (type === 'capital') {
+      qEl.value = 'ما هو رأس المال الأدنى المطلوب لإدارة المحافظ؟';
+      aEl.value = 'الحد الأدنى للبدء في خدمة إدارة الحسابات يبدأ من 100$ كحساب تجريبي مباشر، وصولاً إلى 1,000$ فما فوق للمحافظ الأكبر لضمان إدارة مخاطر صارمة وموازنة الهامش.';
+      if (cEl) cEl.value = 'Managed Accounts';
+    } else if (type === 'split') {
+      qEl.value = 'كيف يتم تقاسم الأرباح وطريقة تسويتها وسحبها؟';
+      aEl.value = 'نسبة تقاسم الأرباح هي 50% للعميل و 50% للمدير من صافي الأرباح المحققة فقط. تتم التسوية أسبوعياً أو نصف شهرياً، ويسحب العميل أرباحه مباشرة من حسابه لدى الوسيط.';
+      if (cEl) cEl.value = 'Profit Split';
+    } else if (type === 'risk') {
+      qEl.value = 'ما هي نسبة المخاطرة المسموحة وأقصى تراجع (Drawdown)؟';
+      aEl.value = 'نعتمد على نموذج إدارة مخاطر صارم لا يتجاوز فيه أقصى تراجع 8.5% إلى 10%، مع وقف خسارة محدد لكل صفقة ودون أي تداول عشوائي وقت الأخبار العنيفة.';
+      if (cEl) cEl.value = 'Risk Management';
+    } else if (type === 'brokers') {
+      qEl.value = 'ما هي شركات الوساطة والمنصات التي تدعمونها؟';
+      aEl.value = 'ندعم العمل على منصة MetaTrader 5 (MT5) مع كبرى شركات الوساطة المرخصة والموثوقة مثل Exness و IC Markets و Tickmill لضمان سرعة التنفيذ وسهولة السحب والإيداع.';
+      if (cEl) cEl.value = 'Brokers & Platforms';
+    } else if (type === 'signals') {
+      qEl.value = 'ما الذي يميز قناة توصيات الذهب والعملات VIP؟';
+      aEl.value = 'نقدم يومياً من 2 إلى 5 توصيات مدروسة بنقاط دخول دقيقة ووقف خسارة وهدفين للأرباح، مع متابعة حية للصفقات وإرشادات تحريك وقف الخسارة لحجز الأرباح.';
+      if (cEl) cEl.value = 'VIP Signals';
     }
   };
 
