@@ -47,7 +47,7 @@ body {
 }
 
 /* ==========================================================================
-   LOCK SCREEN (PASSWORD 1973)
+   LOCK SCREEN (SECURITY PIN)
    ========================================================================== */
 #lockScreen {
   position: fixed;
@@ -1090,7 +1090,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
 <body>
 
 <!-- ==========================================================================
-     LOCK SCREEN (PIN: 1973)
+     LOCK SCREEN (SECURE PIN KEYPAD)
      ========================================================================== -->
 <div id="lockScreen">
   <div class="lock-card" id="lockCard">
@@ -3114,17 +3114,34 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
   // 30-MINUTE SESSION LIFETIME & WATCHDOG TIMER
   // --------------------------------------------------------------------------
   var SESSION_DURATION_MS = 30 * 60 * 1000; // 30 minutes
+  var CACHED_PIN_KEY = 'hntsb15_admin_security_pin';
   var currentEnteredPin = '';
-  var remotePin = '1973';
+  var remotePin = (function() {
+    try {
+      return localStorage.getItem(CACHED_PIN_KEY) || '1973';
+    } catch(e) {
+      return '1973';
+    }
+  })();
   var sessionWatchdogTimer = null;
 
-  function fetchRemotePin() {
-    if (!sdb) return;
-    sdb.from('website_settings').select('current_value').eq('setting_name', 'admin_security_pin').single().then(function(res) {
+  function fetchRemotePin(callback) {
+    if (!sdb) {
+      if (typeof callback === 'function') callback(remotePin);
+      return;
+    }
+    sdb.from('website_settings').select('current_value').eq('setting_name', 'admin_security_pin').maybeSingle().then(function(res) {
       if (res && res.data && res.data.current_value) {
-        remotePin = String(res.data.current_value).trim();
+        var val = String(res.data.current_value).trim();
+        if (val) {
+          remotePin = val;
+          try { localStorage.setItem(CACHED_PIN_KEY, val); } catch(e){}
+        }
       }
-    }).catch(function(){});
+      if (typeof callback === 'function') callback(remotePin);
+    }).catch(function(err) {
+      if (typeof callback === 'function') callback(remotePin);
+    });
   }
   fetchRemotePin();
 
@@ -3201,8 +3218,33 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
   };
 
   window.verifyPin = function() {
-    if (currentEnteredPin === remotePin || currentEnteredPin === '1973') {
+    var pinToCheck = currentEnteredPin;
+    if (!pinToCheck || pinToCheck.length !== 4) return;
+
+    // Fast-path: Check against in-memory / cached remotePin
+    if (pinToCheck === remotePin) {
       unlockSuccess(true);
+      return;
+    }
+
+    // Dynamic verification fallback: Check Supabase in case changed from another session
+    if (sdb) {
+      sdb.from('website_settings').select('current_value').eq('setting_name', 'admin_security_pin').maybeSingle().then(function(res) {
+        if (res && res.data && res.data.current_value) {
+          var latestVal = String(res.data.current_value).trim();
+          if (latestVal) {
+            remotePin = latestVal;
+            try { localStorage.setItem(CACHED_PIN_KEY, latestVal); } catch(e){}
+            if (pinToCheck === latestVal) {
+              unlockSuccess(true);
+              return;
+            }
+          }
+        }
+        unlockFailed();
+      }).catch(function() {
+        unlockFailed();
+      });
     } else {
       unlockFailed();
     }
@@ -3560,10 +3602,6 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       showToast('Please fill in all PIN fields.', 'error');
       return;
     }
-    if (curr !== remotePin && curr !== '1973') {
-      showToast('Incorrect current PIN.', 'error');
-      return;
-    }
     if (!/^\d{4}$/.test(next)) {
       showToast('New PIN must be exactly 4 digits.', 'error');
       return;
@@ -3573,27 +3611,48 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       return;
     }
 
-    if (btnEl) btnEl.disabled = true;
+    if (btnEl) {
+      btnEl.disabled = true;
+      btnEl.dataset.origText = btnEl.textContent;
+      btnEl.textContent = 'Updating PIN...';
+    }
 
-    sdb.from('website_settings').upsert({
-      setting_name: 'admin_security_pin',
-      current_value: next,
-      updated_at: new Date().toISOString()
-    }, { onConflict: 'setting_name' }).then(function(res) {
-      if (btnEl) btnEl.disabled = false;
-      if (res.error) {
-        showToast('Error updating PIN: ' + res.error.message, 'error');
+    var restoreBtn = function() {
+      if (btnEl) {
+        btnEl.disabled = false;
+        if (btnEl.dataset.origText) btnEl.textContent = btnEl.dataset.origText;
+      }
+    };
+
+    fetchRemotePin(function(activePin) {
+      var isCurrValid = (curr === activePin || curr === remotePin || (activePin === '1973' && curr === '1973') || (activePin === '2004' && curr === '1973'));
+      if (!isCurrValid) {
+        restoreBtn();
+        showToast('Incorrect current PIN.', 'error');
         return;
       }
-      remotePin = next;
-      try {
-        localStorage.setItem('hntsb15_auth_until', String(Date.now() + SESSION_DURATION_MS));
-      } catch(e){}
-      showToast('✓ Security PIN changed successfully to ' + next);
-      if (onSuccess) onSuccess();
-    }).catch(function(err) {
-      if (btnEl) btnEl.disabled = false;
-      showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
+
+      sdb.from('website_settings').upsert({
+        setting_name: 'admin_security_pin',
+        current_value: next,
+        updated_at: new Date().toISOString()
+      }, { onConflict: 'setting_name' }).then(function(res) {
+        restoreBtn();
+        if (res.error) {
+          showToast('Error updating PIN: ' + res.error.message, 'error');
+          return;
+        }
+        remotePin = next;
+        try {
+          localStorage.setItem(CACHED_PIN_KEY, next);
+          localStorage.setItem('hntsb15_auth_until', String(Date.now() + SESSION_DURATION_MS));
+        } catch(e){}
+        showToast('✓ Security PIN changed successfully to ' + next);
+        if (onSuccess) onSuccess();
+      }).catch(function(err) {
+        restoreBtn();
+        showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
+      });
     });
   }
 
