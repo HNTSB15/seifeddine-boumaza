@@ -8233,24 +8233,58 @@ html, body {
       });
 
       function renderDynamicTrades(trades) {
-        var track = document.getElementById('cvxStreamTrack') || document.querySelector('.cvx-x-slides-track');
+        var track = document.getElementById('cvxXStream') || document.querySelector('.cvx-x-stream');
         if (!track) return;
         var activeTrades = trades.filter(function(t){ return t.is_active !== false; });
         if (!activeTrades.length) return;
 
         var html = '';
+        var newGalleries = [];
+
         activeTrades.forEach(function(t, idx) {
           var badgeClass = (t.badge_type === 'gold' || (t.badge && (t.badge.indexOf('PROFIT') > -1 || t.badge.indexOf('VIDEO') > -1))) ? 'gold' : 'neon';
           var rawImgs = t.images || t.photos || [];
           var imgs = Array.isArray(rawImgs) ? rawImgs.filter(Boolean) : (typeof rawImgs === 'string' && rawImgs ? [rawImgs] : []);
-          var gridClass = 'grid-' + Math.min(Math.max(imgs.length, 1), 4);
+
+          var isVideo = (imgs.length === 1 && imgs[0].match(/\.(mp4|webm|mov)(\?|$)/i)) || (t.badge && t.badge.indexOf('VIDEO') > -1);
+          var descText = t.description || t.desc || '';
+
+          // Lightbox gallery entry for this post
+          if (isVideo) {
+            newGalleries.push([{
+              src: imgs[0] || 'video-proof-1.mp4',
+              cap: descText || 'Live Video Proof'
+            }]);
+          } else {
+            newGalleries.push(imgs.map(function(src, i) {
+              return {
+                src: src,
+                cap: descText ? (descText.slice(0, 80) + '... (Photo ' + (i + 1) + ')') : ('Trade Proof #' + (i + 1))
+              };
+            }));
+          }
 
           var galleryHtml = '';
-          if (imgs.length > 0) {
+          if (isVideo) {
+            var videoSrc = imgs[0] || 'video-proof-1.mp4';
+            var thumbSrc = t.thumb || (videoSrc.match(/\.(mp4|webm|mov)/i) ? 'video-proof-thumb-1.webp' : videoSrc);
+            galleryHtml = '<div class="cvx-gallery-grid grid-1">' +
+              '<div class="cvx-gallery-item" onclick="if(window.cvxOpenLightbox) window.cvxOpenLightbox(' + idx + ', 0);" style="cursor:pointer;">' +
+                '<img src="' + thumbSrc + '" alt="Live Account Management Video Proof" loading="lazy">' +
+                '<div class="cvx-play-overlay">' +
+                  '<div class="cvx-play-btn">' +
+                    '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>' +
+                  '</div>' +
+                '</div>' +
+                '<span class="cvx-zoom-hint" style="opacity:1;transform:none;">▶ Watch Video</span>' +
+              '</div>' +
+            '</div>';
+          } else if (imgs.length > 0) {
+            var gridClass = 'grid-' + Math.min(Math.max(imgs.length, 1), 4);
             galleryHtml = '<div class="cvx-gallery-grid ' + gridClass + '">';
-            imgs.forEach(function(imgSrc) {
-              galleryHtml += '<div class="cvx-gallery-item" onclick="var m=this.querySelector(\'img\');if(m&amp;&amp;m.src&amp;&amp;window.cvxOpenLightbox)window.cvxOpenLightbox(m.src);">' +
-                '<img src="' + imgSrc + '" alt="Trade Proof" loading="lazy">' +
+            imgs.forEach(function(imgSrc, imgIdx) {
+              galleryHtml += '<div class="cvx-gallery-item" onclick="if(window.cvxOpenLightbox) window.cvxOpenLightbox(' + idx + ', ' + imgIdx + ');">' +
+                '<img src="' + imgSrc + '" alt="Trade Proof ' + (imgIdx + 1) + '" loading="lazy">' +
                 '<span class="cvx-zoom-hint">🔍 Zoom</span>' +
               '</div>';
             });
@@ -8262,7 +8296,11 @@ html, body {
             tagsHtml = '<div class="cvx-slide-tags">';
             var tagsArr = Array.isArray(t.tags) ? t.tags : (typeof t.tags === 'string' ? t.tags.split(/[\s,]+/) : []);
             tagsArr.forEach(function(tg) {
-              if (tg && typeof tg === 'string' && tg.trim()) tagsHtml += '<span>' + tg.trim() + '</span>';
+              if (tg && typeof tg === 'string' && tg.trim()) {
+                var cleanTag = tg.trim();
+                if (!cleanTag.startsWith('#')) cleanTag = '#' + cleanTag;
+                tagsHtml += '<span>' + cleanTag + '</span>';
+              }
             });
             tagsHtml += '</div>';
           }
@@ -8274,7 +8312,6 @@ html, body {
           }
 
           var dateText = t.date_text || t.date || '@seifeddin06';
-          var descText = t.description || t.desc || '';
           var depositText = t.deposit || '';
           var profitText = t.profit || '';
           var splitText = t.split || 'Profit Split: 50/50';
@@ -8312,10 +8349,27 @@ html, body {
         });
 
         track.innerHTML = html;
-        var counter = document.getElementById('cvxStreamCounter');
+
+        // Update global lightbox galleries array
+        window.cvxGalleries = newGalleries;
+        if (typeof cvxGalleries !== 'undefined') {
+          cvxGalleries = newGalleries;
+        }
+
+        // Update counter & active slide class
+        var counter = document.getElementById('cvxTlCounter') || document.getElementById('cvxStreamCounter');
         if (counter) counter.textContent = '1 / ' + activeTrades.length;
         var firstSlide = track.querySelector('.cvx-x-slide');
         if (firstSlide) firstSlide.classList.add('active-slide');
+
+        // Re-initialize carousel scroll listeners and navigation controls
+        if (typeof window.cvxInitCarousel === 'function') {
+          window.cvxInitCarousel();
+        } else {
+          setTimeout(function() {
+            if (typeof window.cvxInitCarousel === 'function') window.cvxInitCarousel();
+          }, 150);
+        }
       }
 
       function renderDynamicFaqs(faqs, overrideLang) {
@@ -12034,7 +12088,8 @@ html, body {
     var nextBtn = document.getElementById('cvxLbNext');
     if(!lb) return;
 
-    var post = cvxGalleries[curPost];
+    var galleries = window.cvxGalleries || cvxGalleries;
+    var post = galleries ? galleries[curPost] : null;
     if(!post || !post.length) return;
     if(curImg < 0) curImg = 0;
     if(curImg >= post.length) curImg = post.length - 1;
@@ -12135,7 +12190,8 @@ html, body {
   };
 
   window.cvxLbStep = function(dir) {
-    var post = cvxGalleries[curPost];
+    var galleries = window.cvxGalleries || cvxGalleries;
+    var post = galleries ? galleries[curPost] : null;
     if(!post || post.length <= 1) return;
     var newIdx = curImg + dir;
     if(newIdx < 0) {
