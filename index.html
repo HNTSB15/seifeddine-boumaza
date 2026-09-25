@@ -9537,6 +9537,197 @@ html, body {
     indicators: { ar: '🤖 المؤشرات',     en: '🤖 MT5 Indicator',   cls: 'indicators' }
   };
 
+  var revStatDict = {
+    // Arabic to English
+    'ترجيح الذهب XAUUSD · تنبيهات': 'Gold Bias · Instant Alerts',
+    'ترجيح الذهب xauusd · تنبيهات': 'Gold Bias · Instant Alerts',
+    'ترجيح الذهب XAUUSD': 'Gold Bias · Instant Alerts',
+    'مؤشر MT5 · 0 Repaint': 'MT5 Indicator · 0 Repaint',
+    'مؤشر mt5 · 0 repaint': 'MT5 Indicator · 0 Repaint',
+    'مؤشر MT5': 'MT5 Indicator · 0 Repaint',
+    'دقة 86% على الذهب XAUUSD': '86% Winrate on Gold XAUUSD',
+    'دقة 86% على الذهب': '86% Winrate on Gold',
+    'Winrate 86% على الذهب XAUUSD': '86% Winrate on Gold XAUUSD',
+    'اشتراك NewsX AI · ترجيح دقيق': 'NewsX AI License · Accurate Bias',
+    'اشتراك NewsX AI': 'NewsX AI License',
+    'سحب أرباح شهري منتظم': 'Regular Monthly Withdrawals',
+    'سحب أرباح شهري منتظم 💼': 'Regular Monthly Withdrawals 💼',
+    'سحب أرباح شهري': 'Regular Monthly Withdrawals',
+    '+42.8% ROI (5 أشهر)': '+42.8% ROI (5 Months)',
+    '+120% ROI (3 أشهر)': '+120% ROI (3 Months)',
+    '+$5,400 أرباح صافية': '+$5,400 Net Profit',
+    '+$5,400 أرباح': '+$5,400 Net Profit',
+    '+$16,000 سحب أرباح': '+$16,000 Withdrawn',
+    '+$16,000 سحب': '+$16,000 Withdrawn',
+    '+15X نمو المحفظة': '+15X Portfolio Growth',
+    'تنبيهات فورية قبل الخبر ⚡': 'Instant Pre-News Alerts ⚡',
+    'تنبيهات قبل الخبر': 'Instant Pre-News Alerts ⚡',
+    'تنبيهات انعكاس الاتجاه 📊': 'Trend Reversal Alerts 📊',
+    'تنبيهات انعكاس الاتجاه': 'Trend Reversal Alerts',
+    'ترخيص دائم مدى الحياة 🧰': 'Lifetime License 🧰',
+    'ترخيص دائم مدى الحياة': 'Lifetime License 🧰',
+    'نقاط دخول وخروج دقيقة 🎯': 'Accurate Entry & TP/SL 🎯',
+    'نقاط دخول وخروج دقيقة': 'Accurate Entry & TP/SL 🎯',
+    'إدارة رأس مال 1:3 R:R': '1:3 R:R Risk Management',
+    'اجتياز اختبار Prop Firm': 'Passed Prop Firm Challenge',
+    'اجتياز اختبار Prop Firm 🏆': 'Passed Prop Firm Challenge 🏆',
+    'اجتياز Prop Firm': 'Passed Prop Firm Challenge 🏆',
+
+    // English to Arabic
+    'Gold Bias · Instant Alerts': 'ترجيح الذهب XAUUSD · تنبيهات',
+    'MT5 Indicator · 0 Repaint': 'مؤشر MT5 · 0 Repaint',
+    '86% Winrate on Gold XAUUSD': 'دقة 86% على الذهب XAUUSD',
+    '86% Winrate on Gold': 'دقة 86% على الذهب',
+    'NewsX AI License · Accurate Bias': 'اشتراك NewsX AI · ترجيح دقيق',
+    'NewsX AI License': 'اشتراك NewsX AI',
+    'Regular Monthly Withdrawals': 'سحب أرباح شهري منتظم',
+    'Regular Monthly Withdrawals 💼': 'سحب أرباح شهري منتظم 💼',
+    '+42.8% ROI (5 Months)': '+42.8% ROI (5 أشهر)',
+    '+120% ROI (3 Months)': '+120% ROI (3 أشهر)',
+    '+$5,400 Net Profit': '+$5,400 أرباح صافية',
+    '+$16,000 Withdrawn': '+$16,000 سحب أرباح',
+    '+15X Portfolio Growth': '+15X نمو المحفظة',
+    'Instant Pre-News Alerts ⚡': 'تنبيهات فورية قبل الخبر ⚡',
+    'Trend Reversal Alerts 📊': 'تنبيهات انعكاس الاتجاه 📊',
+    'Trend Reversal Alerts': 'تنبيهات انعكاس الاتجاه 📊',
+    'Lifetime License 🧰': 'ترخيص دائم مدى الحياة 🧰',
+    'Accurate Entry & TP/SL 🎯': 'نقاط دخول وخروج دقيقة 🎯',
+    '1:3 R:R Risk Management': 'إدارة رأس مال 1:3 R:R',
+    'Passed Prop Firm Challenge': 'اجتياز اختبار Prop Firm',
+    'Passed Prop Firm Challenge 🏆': 'اجتياز اختبار Prop Firm 🏆'
+  };
+
+  var revCountryDict = {
+    // Flag-first / Flag-last Arabic to English
+    '🇩🇿 الجزائر': 'Algeria 🇩🇿',
+    'الجزائر 🇩🇿': 'Algeria 🇩🇿',
+    'الجزائر': 'Algeria 🇩🇿',
+    '🇸🇦 السعودية': 'Saudi Arabia 🇸🇦',
+    'السعودية 🇸🇦': 'Saudi Arabia 🇸🇦',
+    'السعودية': 'Saudi Arabia 🇸🇦',
+    '🇦🇪 الإمارات': 'UAE 🇦🇪',
+    'الإمارات 🇦🇪': 'UAE 🇦🇪',
+    'الإمارات': 'UAE 🇦🇪',
+    '🇪🇬 مصر': 'Egypt 🇪🇬',
+    'مصر 🇪🇬': 'Egypt 🇪🇬',
+    'مصر': 'Egypt 🇪🇬',
+    '🇲🇦 المغرب': 'Morocco 🇲🇦',
+    'المغرب 🇲🇦': 'Morocco 🇲🇦',
+    'المغرب': 'Morocco 🇲🇦',
+    '🇫🇷 فرنسا': 'France 🇫🇷',
+    'فرنسا 🇫🇷': 'France 🇫🇷',
+    'فرنسا': 'France 🇫🇷',
+    '🇬🇧 بريطانيا': 'United Kingdom 🇬🇧',
+    'بريطانيا 🇬🇧': 'United Kingdom 🇬🇧',
+    '🇬🇧 المملكة المتحدة': 'United Kingdom 🇬🇧',
+    'المملكة المتحدة 🇬🇧': 'United Kingdom 🇬🇧',
+    '🇺🇸 أمريكا': 'USA 🇺🇸',
+    'أمريكا 🇺🇸': 'USA 🇺🇸',
+    '🇺🇸 الولايات المتحدة': 'USA 🇺🇸',
+    'الولايات المتحدة 🇺🇸': 'USA 🇺🇸',
+    '🇶🇦 قطر': 'Qatar 🇶🇦',
+    'قطر 🇶🇦': 'Qatar 🇶🇦',
+    '🇰🇼 الكويت': 'Kuwait 🇰🇼',
+    'الكويت 🇰🇼': 'Kuwait 🇰🇼',
+    '🇩🇪 ألمانيا': 'Germany 🇩🇪',
+    'ألمانيا 🇩🇪': 'Germany 🇩🇪',
+    '🇹🇳 تونس': 'Tunisia 🇹🇳',
+    'تونس 🇹🇳': 'Tunisia 🇹🇳',
+    '🇹🇷 تركيا': 'Turkey 🇹🇷',
+    'تركيا 🇹🇷': 'Turkey 🇹🇷',
+    '🇴🇲 عُمان': 'Oman 🇴🇲',
+    'عُمان 🇴🇲': 'Oman 🇴🇲',
+    '🇧🇭 البحرين': 'Bahrain 🇧🇭',
+    'البحرين 🇧🇭': 'Bahrain 🇧🇭',
+    '🇯🇴 الأردن': 'Jordan 🇯🇴',
+    'الأردن 🇯🇴': 'Jordan 🇯🇴',
+    '🇮🇶 العراق': 'Iraq 🇮🇶',
+    'العراق 🇮🇶': 'Iraq 🇮🇶',
+    '🇱🇧 لبنان': 'Lebanon 🇱🇧',
+    'لبنان 🇱🇧': 'Lebanon 🇱🇧',
+    '🇨🇭 سويسرا': 'Switzerland 🇨🇭',
+    'سويسرا 🇨🇭': 'Switzerland 🇨🇭',
+    '🇨🇦 كندا': 'Canada 🇨🇦',
+    'كندا 🇨🇦': 'Canada 🇨🇦',
+
+    // English to Arabic
+    'Algeria 🇩🇿': 'الجزائر 🇩🇿',
+    '🇩🇿 Algeria': 'الجزائر 🇩🇿',
+    'Algeria': 'الجزائر 🇩🇿',
+    'Saudi Arabia 🇸🇦': 'السعودية 🇸🇦',
+    '🇸🇦 Saudi Arabia': 'السعودية 🇸🇦',
+    'Saudi Arabia': 'السعودية 🇸🇦',
+    'France 🇫🇷': 'فرنسا 🇫🇷',
+    '🇫🇷 France': 'فرنسا 🇫🇷',
+    'France': 'فرنسا 🇫🇷',
+    'UAE 🇦🇪': 'الإمارات 🇦🇪',
+    '🇦🇪 UAE': 'الإمارات 🇦🇪',
+    'UAE': 'الإمارات 🇦🇪',
+    'United Kingdom 🇬🇧': 'بريطانيا 🇬🇧',
+    '🇬🇧 United Kingdom': 'بريطانيا 🇬🇧',
+    'UK': 'بريطانيا 🇬🇧',
+    'Morocco 🇲🇦': 'المغرب 🇲🇦',
+    '🇲🇦 Morocco': 'المغرب 🇲🇦',
+    'Morocco': 'المغرب 🇲🇦',
+    'Egypt 🇪🇬': 'مصر 🇪🇬',
+    '🇪🇬 Egypt': 'مصر 🇪🇬',
+    'Egypt': 'مصر 🇪🇬',
+    'Qatar 🇶🇦': 'قطر 🇶🇦',
+    '🇶🇦 Qatar': 'قطر 🇶🇦',
+    'Kuwait 🇰🇼': 'الكويت 🇰🇼',
+    '🇰🇼 Kuwait': 'الكويت 🇰🇼',
+    'Germany 🇩🇪': 'ألمانيا 🇩🇪',
+    '🇩🇪 Germany': 'ألمانيا 🇩🇪',
+    'USA 🇺🇸': 'أمريكا 🇺🇸',
+    '🇺🇸 USA': 'أمريكا 🇺🇸',
+    'Tunisia 🇹🇳': 'تونس 🇹🇳',
+    '🇹🇳 Tunisia': 'تونس 🇹🇳',
+    'Turkey 🇹🇷': 'تركيا 🇹🇷',
+    '🇹🇷 Turkey': 'تركيا 🇹🇷',
+    'Oman 🇴🇲': 'عُمان 🇴🇲',
+    'Bahrain 🇧🇭': 'البحرين 🇧🇭',
+    'Jordan 🇯🇴': 'الأردن 🇯🇴',
+    'Iraq 🇮🇶': 'العراق 🇮🇶',
+    'Lebanon 🇱🇧': 'لبنان 🇱🇧',
+    'Switzerland 🇨🇭': 'سويسرا 🇨🇭',
+    'Canada 🇨🇦': 'كندا 🇨🇦'
+  };
+
+  function normalizeKey(str) {
+    return (str || '').replace(/[\uD83C-\uDBFF\uDC00-\uDFFF\u2600-\u27BF]+/g, '').replace(/[\s\-_·.]+/g, ' ').trim().toLowerCase();
+  }
+
+  function resolveBilingual(valAr, valEn, dict, isAr) {
+    var vAr = (valAr || '').trim();
+    var vEn = (valEn || '').trim();
+
+    function findInDict(val) {
+      if (!val) return '';
+      if (dict[val]) return dict[val];
+      var cleanVal = normalizeKey(val);
+      for (var k in dict) {
+        if (normalizeKey(k) === cleanVal) return dict[k];
+      }
+      return '';
+    }
+
+    if (isAr) {
+      if (vAr && /[\u0600-\u06FF]/.test(vAr)) return vAr;
+      var transEn = findInDict(vEn);
+      if (transEn && /[\u0600-\u06FF]/.test(transEn)) return transEn;
+      var transAr = findInDict(vAr);
+      if (transAr && /[\u0600-\u06FF]/.test(transAr)) return transAr;
+      return vAr || vEn || '';
+    } else {
+      if (vEn && !/[\u0600-\u06FF]/.test(vEn)) return vEn;
+      var transAr = findInDict(vAr);
+      if (transAr && !/[\u0600-\u06FF]/.test(transAr)) return transAr;
+      var transEn = findInDict(vEn);
+      if (transEn && !/[\u0600-\u06FF]/.test(transEn)) return transEn;
+      return vEn || vAr || '';
+    }
+  }
+
   function escapeRevHtml(str) {
     return (str || '').replace(/[&<>"']/g, function(m) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
@@ -9584,9 +9775,9 @@ html, body {
     itemsToShow.forEach(function(r) {
       var sMeta = revServiceLabels[r.service] || revServiceLabels.managed;
       var sLabel = isAr ? sMeta.ar : sMeta.en;
-      var country = isAr ? (r.country || r.country_en || '') : (r.country_en || r.country || '');
+      var country = resolveBilingual(r.country, r.country_en, revCountryDict, isAr);
       var quote = isAr ? (r.text || r.text_en || '') : (r.text_en || r.text || '');
-      var stat = isAr ? (r.stat || r.stat_en || '') : (r.stat_en || r.stat || '');
+      var stat = resolveBilingual(r.stat, r.stat_en, revStatDict, isAr);
       var stars = '★★★★★'.substring(0, r.rating || 5) + '☆☆☆☆☆'.substring(0, Math.max(0, 5 - (r.rating || 5)));
       var cleanName = (r.name || '').replace(/\s*\([\u0600-\u06FF\s.]+\)/g, '').trim();
       var initials = getInitials(cleanName || r.name);
@@ -9760,14 +9951,19 @@ html, body {
         var list = (res && res.data && res.data.length) ? res.data : [];
         if (!list.length) return;
         var liveItems = list.map(function(r) {
+          var rawCountry = (r.client_country || '').trim();
+          var rawStat = (r.profit_stat || '').trim();
+          var isCountryAr = /[\u0600-\u06FF]/.test(rawCountry);
+          var isStatAr = /[\u0600-\u06FF]/.test(rawStat);
+
           return {
             name: r.client_name,
-            country: r.client_country,
-            country_en: r.client_country,
+            country: isCountryAr ? rawCountry : (revCountryDict[rawCountry] || rawCountry),
+            country_en: !isCountryAr ? rawCountry : (revCountryDict[rawCountry] || rawCountry),
             rating: r.rating || 5,
             service: r.service_type || 'managed',
-            stat: r.profit_stat || '',
-            stat_en: r.profit_stat || '',
+            stat: isStatAr ? rawStat : (revStatDict[rawStat] || rawStat),
+            stat_en: !isStatAr ? rawStat : (revStatDict[rawStat] || rawStat),
             text: r.review_text,
             text_en: r.review_text_en || r.review_text
           };

@@ -2210,14 +2210,38 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
               </div>
 
               <div class="form-group full">
-                <label>Profit / Performance Tag <span>(وسم الأرباح أو العائد)</span></label>
-                <input type="text" id="rProfit" placeholder="+42.8% ROI (5 أشهر)">
-                <div class="preset-chips">
-                  <button type="button" class="preset-chip" onclick="setPreset('rProfit', '+42.8% ROI (5 أشهر)')">+42.8% ROI</button>
-                  <button type="button" class="preset-chip" onclick="setPreset('rProfit', '+120% ROI (3 أشهر)')">+120% ROI</button>
-                  <button type="button" class="preset-chip" onclick="setPreset('rProfit', '+$5,400 أرباح صافية')">+$5,400 أرباح</button>
-                  <button type="button" class="preset-chip" onclick="setPreset('rProfit', '+$16,000 سحب أرباح')">+$16,000 سحب</button>
-                  <button type="button" class="preset-chip" onclick="setPreset('rProfit', '+15X نمو المحفظة')">+15X تضاعف</button>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;flex-wrap:wrap;gap:4px">
+                  <label style="margin:0">Profit / Performance Tag <span>(وسم التقييم / الأداء / المنتج)</span></label>
+                  <span style="font-size:11px;color:var(--cyan)">💡 مقترحات سريعة بنقرة واحدة:</span>
+                </div>
+                <input type="text" id="rProfit" placeholder="مثال: ترجيح الذهب XAUUSD · تنبيهات">
+                <div class="preset-chips-grouped" style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
+                  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px">
+                    <span style="font-size:11px;color:var(--cyan);font-weight:700">⚡ NewsX AI:</span>
+                    <button type="button" class="preset-chip" onclick="setPreset('rProfit', 'ترجيح الذهب XAUUSD · تنبيهات')">⚡ ترجيح الذهب XAUUSD</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('rProfit', 'اشتراك NewsX AI · ترجيح دقيق')">⚡ اشتراك NewsX AI</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('rProfit', 'تنبيهات فورية قبل الخبر ⚡')">⚡ تنبيهات قبل الخبر</button>
+                  </div>
+                  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px">
+                    <span style="font-size:11px;color:#c084fc;font-weight:700">📊 مؤشر MT5:</span>
+                    <button type="button" class="preset-chip" onclick="setPreset('rProfit', 'مؤشر MT5 · 0 Repaint')">📊 مؤشر MT5 · 0 Repaint</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('rProfit', 'تنبيهات انعكاس الاتجاه 📊')">📊 تنبيهات انعكاس الاتجاه</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('rProfit', 'ترخيص دائم مدى الحياة 🧰')">🧰 ترخيص دائم مدى الحياة</button>
+                  </div>
+                  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px">
+                    <span style="font-size:11px;color:var(--gold);font-weight:700">📡 توصيات VIP:</span>
+                    <button type="button" class="preset-chip" onclick="setPreset('rProfit', 'دقة 86% على الذهب XAUUSD')">🎯 دقة 86% على الذهب</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('rProfit', 'نقاط دخول وخروج دقيقة 🎯')">🎯 نقاط دخول وخروج دقيقة</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('rProfit', 'إدارة رأس مال 1:3 R:R')">🎯 إدارة رأس مال 1:3 R:R</button>
+                  </div>
+                  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px">
+                    <span style="font-size:11px;color:var(--neon);font-weight:700">💼 إدارة المحافظ:</span>
+                    <button type="button" class="preset-chip" onclick="setPreset('rProfit', 'سحب أرباح شهري منتظم 💼')">💼 سحب أرباح شهري</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('rProfit', '+42.8% ROI (5 أشهر)')">+42.8% ROI</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('rProfit', '+$5,400 أرباح صافية')">+$5,400 أرباح</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('rProfit', '+$16,000 سحب أرباح')">+$16,000 سحب</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('rProfit', 'اجتياز اختبار Prop Firm 🏆')">🏆 اجتياز Prop Firm</button>
+                  </div>
                 </div>
               </div>
 
@@ -2841,8 +2865,39 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       </div>
 
       <div class="form-group full">
-        <label>Profit / Performance Tag</label>
-        <input type="text" id="edit_rProfit" placeholder="+42.8% ROI (5 أشهر)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;flex-wrap:wrap;gap:4px">
+          <label style="margin:0">Profit / Performance Tag <span>(وسم التقييم / الأداء / المنتج)</span></label>
+          <span style="font-size:11px;color:var(--cyan)">💡 مقترحات سريعة بنقرة واحدة:</span>
+        </div>
+        <input type="text" id="edit_rProfit" placeholder="+42.8% ROI (5 أشهر) أو ترجيح الذهب XAUUSD">
+        <div class="preset-chips-grouped" style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px">
+            <span style="font-size:11px;color:var(--cyan);font-weight:700">⚡ NewsX AI:</span>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_rProfit', 'ترجيح الذهب XAUUSD · تنبيهات')">⚡ ترجيح الذهب XAUUSD</button>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_rProfit', 'اشتراك NewsX AI · ترجيح دقيق')">⚡ اشتراك NewsX AI</button>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_rProfit', 'تنبيهات فورية قبل الخبر ⚡')">⚡ تنبيهات قبل الخبر</button>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px">
+            <span style="font-size:11px;color:#c084fc;font-weight:700">📊 مؤشر MT5:</span>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_rProfit', 'مؤشر MT5 · 0 Repaint')">📊 مؤشر MT5 · 0 Repaint</button>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_rProfit', 'تنبيهات انعكاس الاتجاه 📊')">📊 تنبيهات انعكاس الاتجاه</button>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_rProfit', 'ترخيص دائم مدى الحياة 🧰')">🧰 ترخيص دائم مدى الحياة</button>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px">
+            <span style="font-size:11px;color:var(--gold);font-weight:700">📡 توصيات VIP:</span>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_rProfit', 'دقة 86% على الذهب XAUUSD')">🎯 دقة 86% على الذهب</button>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_rProfit', 'نقاط دخول وخروج دقيقة 🎯')">🎯 نقاط دخول وخروج دقيقة</button>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_rProfit', 'إدارة رأس مال 1:3 R:R')">🎯 إدارة رأس مال 1:3 R:R</button>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px">
+            <span style="font-size:11px;color:var(--neon);font-weight:700">💼 إدارة المحافظ:</span>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_rProfit', 'سحب أرباح شهري منتظم 💼')">💼 سحب أرباح شهري</button>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_rProfit', '+42.8% ROI (5 أشهر)')">+42.8% ROI</button>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_rProfit', '+$5,400 أرباح صافية')">+$5,400 أرباح</button>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_rProfit', '+$16,000 سحب أرباح')">+$16,000 سحب</button>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_rProfit', 'اجتياز اختبار Prop Firm 🏆')">🏆 اجتياز Prop Firm</button>
+          </div>
+        </div>
       </div>
 
       <div class="form-group full">
@@ -3917,19 +3972,19 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     if (type === 'managed') {
       textEl.value = 'أفضل تجربة إدارة محفظة خضتها بحياتي، التزام صارم بوقف الخسارة وسحب أرباح منتظم أسبوعياً بدون أي تأخير.';
       if (serviceEl) serviceEl.value = 'managed';
-      if (profitEl && !profitEl.value) profitEl.value = '+42.8% ROI (5 أشهر)';
+      if (profitEl) profitEl.value = '+42.8% ROI (5 أشهر)';
     } else if (type === 'signals') {
       textEl.value = 'دقة التوصيات في قناة VIP مذهلة خصوصاً على الذهب (XAUUSD)، نسبة نجاح الصفقات وإدارة المخاطر هي الأفضل.';
       if (serviceEl) serviceEl.value = 'signals';
-      if (profitEl && !profitEl.value) profitEl.value = '89.4% Win Rate';
+      if (profitEl) profitEl.value = 'دقة 86% على الذهب XAUUSD';
     } else if (type === 'newsx') {
-      textEl.value = 'منصة نيوز إكس خرافية في قراءة الأخبار اللحظية وتحديد مناطق السيولة قبل الانفجارات السعرية.';
+      textEl.value = 'منصة نيوز إكس خرافية في قراءة الأخبار اللحظية وترجيح حركة الذهب والعملات قبل الانفجارات السعرية.';
       if (serviceEl) serviceEl.value = 'newsx';
-      if (profitEl && !profitEl.value) profitEl.value = 'NewsX AI Pro';
+      if (profitEl) profitEl.value = 'ترجيح الذهب XAUUSD · تنبيهات';
     } else if (type === 'indicators') {
-      textEl.value = 'المؤشر يعطي إشارات دقيقة لمناطق السيولة المؤسسية بدقة عالية جداً على فريم الدقيقة والـ 5 دقائق.';
+      textEl.value = 'المؤشر يعطي إشارات دقيقة لمناطق السيولة المؤسسية وبدون أي إعادة رسم (Zero Repaint) بدقة عالية جداً.';
       if (serviceEl) serviceEl.value = 'indicators';
-      if (profitEl && !profitEl.value) profitEl.value = '+150% ROI';
+      if (profitEl) profitEl.value = 'مؤشر MT5 · 0 Repaint';
     }
   };
 
@@ -4894,17 +4949,34 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       'newsx': '⚡ NewsX AI (منصة نيوز إكس)',
       'indicators': '📊 MT5 Indicator (مؤشر التداول)'
     };
+    var serviceColors = {
+      'managed': 'var(--neon)',
+      'signals': 'var(--gold)',
+      'newsx': 'var(--cyan)',
+      'indicators': '#c084fc'
+    };
     var srvText = serviceLabels[r.service_type] || r.service_type || '💼 Managed Accounts';
+    var srvColor = serviceColors[r.service_type] || 'var(--neon)';
 
-    var html = '<div class="item-card' + (isPending ? ' is-hidden' : '') + '" style="border-left:3px solid ' + (isPending ? 'var(--gold)' : 'var(--neon)') + ';margin-bottom:12px;background:' + (isPending ? 'rgba(242,193,78,0.03)' : 'rgba(255,255,255,0.02)') + '">' +
+    var html = '<div class="item-card' + (isPending ? ' is-hidden' : '') + '" style="border-left:4px solid ' + (isPending ? 'var(--gold)' : srvColor) + ';margin-bottom:12px;background:' + (isPending ? 'rgba(242,193,78,0.03)' : 'rgba(255,255,255,0.02)') + '">' +
       '<div class="item-info" style="width:100%">' +
         '<div class="item-title" style="display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-bottom:6px">' +
           '<span style="color:var(--gold);font-size:13px;letter-spacing:1px">' + stars + '</span> ' +
           '<b style="color:#fff;font-size:14px">' + escapeAdminHtml(r.client_name || 'Anonymous') + '</b>' +
-          '<span class="tag" style="font-size:10px;color:#cbd5e1">' + escapeAdminHtml(srvText) + '</span>' +
-          (stat ? ('<span class="tag" style="font-size:10px;color:var(--neon);border-color:rgba(0,255,156,0.3)">' + escapeAdminHtml(stat) + '</span>') : '') +
+          '<span class="tag" style="font-size:10px;color:' + srvColor + ';border-color:' + srvColor + '">' + escapeAdminHtml(srvText) + '</span>' +
           '<span class="tag" style="font-size:10px;color:' + (isPending ? 'var(--gold)' : 'var(--neon)') + ';border-color:' + (isPending ? 'var(--gold)' : 'var(--neon)') + '">' + (isPending ? '⏳ بانتظار الموافقة' : '✓ معتمد ومنشور') + '</span>' +
           (r.client_country ? ('<span style="font-size:11px;color:var(--muted);margin-inline-start:auto">📍 ' + escapeAdminHtml(r.client_country) + '</span>') : '') +
+        '</div>' +
+        '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;padding:6px 10px;background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.22);border-radius:6px;flex-wrap:wrap">' +
+          '<span style="font-size:11px;font-weight:700;color:var(--cyan);display:inline-flex;align-items:center;gap:4px">' +
+            '<span>🎯 تقييم على:</span>' +
+          '</span>' +
+          '<span style="font-size:12px;font-weight:700;color:' + (stat ? '#ffffff' : 'var(--muted)') + ';background:' + (stat ? 'rgba(0,255,156,0.12)' : 'rgba(255,255,255,0.05)') + ';padding:2px 8px;border-radius:4px;border:1px solid ' + (stat ? 'rgba(0,255,156,0.35)' : 'rgba(255,255,255,0.1)') + '">' +
+            escapeAdminHtml(stat || 'عام / بدون وسم محدد') +
+          '</span>' +
+          '<span style="font-size:11px;color:var(--muted);margin-inline-start:auto">' +
+            'القسم: <b style="color:' + srvColor + '">' + escapeAdminHtml(srvText) + '</b>' +
+          '</span>' +
         '</div>' +
         '<div class="rev-quote-box" id="rev_content_' + r.id + '">' +
           (isLong ? (
