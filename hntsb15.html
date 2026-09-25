@@ -1002,10 +1002,89 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
 }
 #adminToast.error { border-color: var(--red); box-shadow: 0 0 15px rgba(255, 77, 109, 0.3); }
 
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
-@keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
+/* Floating Collapse Action Widget (يتبع المستخدم أينما فتح أي قسم) */
+.floating-collapse-widget {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9995;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(9, 14, 23, 0.92);
+  border: 1px solid rgba(0, 255, 156, 0.45);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.75), 0 0 16px rgba(0, 255, 156, 0.2);
+  border-radius: 50px;
+  padding: 6px 10px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: slideInLeft .25s ease-out;
+  transition: all .25s ease;
+}
+.floating-collapse-widget:hover {
+  border-color: var(--neon);
+  box-shadow: 0 8px 36px rgba(0, 0, 0, 0.85), 0 0 24px rgba(0, 255, 156, 0.35);
+  transform: translateY(-2px);
+}
+.btn-floating-collapse {
+  background: var(--neon);
+  color: #000;
+  border: none;
+  border-radius: 30px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 800;
+  padding: 8px 16px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all .2s;
+  box-shadow: 0 0 10px rgba(0, 255, 156, 0.3);
+}
+.btn-floating-collapse:hover {
+  filter: brightness(1.15);
+  transform: scale(1.03);
+}
+.btn-floating-collapse-all {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--muted);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 30px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-floating-collapse-all:hover {
+  color: #fff;
+  border-color: rgba(255, 77, 109, 0.5);
+  background: rgba(255, 77, 109, 0.15);
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-40px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .floating-collapse-widget {
+    bottom: 18px;
+    left: 12px;
+    padding: 5px 8px;
+    gap: 4px;
+  }
+  .btn-floating-collapse {
+    font-size: 11px;
+    padding: 7px 12px;
+  }
+  .btn-floating-collapse-all {
+    font-size: 10px;
+    padding: 7px 9px;
+  }
+}
 </style>
 </head>
 <body>
@@ -1951,7 +2030,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
                   <label>Country / Flag * <span>(الدولة والعلم - اختر من القائمة أو الأزرار)</span></label>
                   <select id="rCountry" required style="cursor:pointer;font-size:13.5px">
                     <option value="" disabled>🌍 اختر الدولة والعلم (Choose Country &amp; Flag)...</option>
-                    <optgroup label="🌍 الشرق الأوسط وشمال إفريقيا (MENA / Arab World)">
+                    <optgroup label="🌍 الشرق الأوسط والدول العربية (Arab World &amp; MENA)">
                       <option value="🇩🇿 الجزائر" selected>🇩🇿 الجزائر (Algeria)</option>
                       <option value="🇸🇦 السعودية">🇸🇦 السعودية (Saudi Arabia)</option>
                       <option value="🇦🇪 الإمارات">🇦🇪 الإمارات (UAE)</option>
@@ -1967,8 +2046,13 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
                       <option value="🇹🇳 تونس">🇹🇳 تونس (Tunisia)</option>
                       <option value="🇱🇾 ليبيا">🇱🇾 ليبيا (Libya)</option>
                       <option value="🇵🇸 فلسطين">🇵🇸 فلسطين (Palestine)</option>
-                      <option value="🇸🇩 السودان">🇸🇩 السودان (Sudan)</option>
+                      <option value="🇸🇾 سوريا">🇸🇾 سوريا (Syria)</option>
                       <option value="🇾🇪 اليمن">🇾🇪 اليمن (Yemen)</option>
+                      <option value="🇸🇩 السودان">🇸🇩 السودان (Sudan)</option>
+                      <option value="🇲🇷 موريتانيا">🇲🇷 موريتانيا (Mauritania)</option>
+                      <option value="🇸🇴 الصومال">🇸🇴 الصومال (Somalia)</option>
+                      <option value="🇩🇯 جيبوتي">🇩🇯 جيبوتي (Djibouti)</option>
+                      <option value="🇰🇲 جزر القمر">🇰🇲 جزر القمر (Comoros)</option>
                     </optgroup>
                     <optgroup label="🌍 أوروبا (Europe)">
                       <option value="🇬🇧 المملكة المتحدة">🇬🇧 المملكة المتحدة (United Kingdom)</option>
@@ -1978,14 +2062,31 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
                       <option value="🇮🇹 إيطاليا">🇮🇹 إيطاليا (Italy)</option>
                       <option value="🇨🇭 سويسرا">🇨🇭 سويسرا (Switzerland)</option>
                       <option value="🇳🇱 هولندا">🇳🇱 هولندا (Netherlands)</option>
-                      <option value="🇹🇷 تركيا">🇹🇷 تركيا (Turkey)</option>
-                      <option value="🇸🇪 السويد">🇸🇪 السويد (Sweden)</option>
                       <option value="🇧🇪 بلجيكا">🇧🇪 بلجيكا (Belgium)</option>
                       <option value="🇦🇹 النمسا">🇦🇹 النمسا (Austria)</option>
-                      <option value="🇵🇱 بولندا">🇵🇱 بولندا (Poland)</option>
+                      <option value="🇸🇪 السويد">🇸🇪 السويد (Sweden)</option>
                       <option value="🇳🇴 النرويج">🇳🇴 النرويج (Norway)</option>
+                      <option value="🇩🇰 الدنمارك">🇩🇰 الدنمارك (Denmark)</option>
+                      <option value="🇫🇮 فنلندا">🇫🇮 فنلندا (Finland)</option>
                       <option value="🇮🇪 أيرلندا">🇮🇪 أيرلندا (Ireland)</option>
                       <option value="🇵🇹 البرتغال">🇵🇹 البرتغال (Portugal)</option>
+                      <option value="🇬🇷 اليونان">🇬🇷 اليونان (Greece)</option>
+                      <option value="🇹🇷 تركيا">🇹🇷 تركيا (Turkey)</option>
+                      <option value="🇵🇱 بولندا">🇵🇱 بولندا (Poland)</option>
+                      <option value="🇨🇿 جمهورية التشيك">🇨🇿 جمهورية التشيك (Czech Republic)</option>
+                      <option value="🇭🇺 المجر">🇭🇺 المجر (Hungary)</option>
+                      <option value="🇷🇴 رومانيا">🇷🇴 رومانيا (Romania)</option>
+                      <option value="🇧🇬 بلغاريا">🇧🇬 بلغاريا (Bulgaria)</option>
+                      <option value="🇭🇷 كرواتيا">🇭🇷 كرواتيا (Croatia)</option>
+                      <option value="🇸🇰 سلوفاكيا">🇸🇰 سلوفاكيا (Slovakia)</option>
+                      <option value="🇸🇮 سلوفينيا">🇸🇮 سلوفينيا (Slovenia)</option>
+                      <option value="🇷🇸 صربيا">🇷🇸 صربيا (Serbia)</option>
+                      <option value="🇨🇾 قبرص">🇨🇾 قبرص (Cyprus)</option>
+                      <option value="🇲🇹 مالطا">🇲🇹 مالطا (Malta)</option>
+                      <option value="🇱🇺 لوكسمبورغ">🇱🇺 لوكسمبورغ (Luxembourg)</option>
+                      <option value="🇮🇸 أيسلندا">🇮🇸 أيسلندا (Iceland)</option>
+                      <option value="🇺🇦 أوكرانيا">🇺🇦 أوكرانيا (Ukraine)</option>
+                      <option value="🇷🇺 روسيا">🇷🇺 روسيا (Russia)</option>
                     </optgroup>
                     <optgroup label="🌍 الأمريكتين (Americas)">
                       <option value="🇺🇸 الولايات المتحدة">🇺🇸 الولايات المتحدة (USA)</option>
@@ -1999,6 +2100,16 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
                       <option value="🇵🇦 بنما">🇵🇦 بنما (Panama)</option>
                       <option value="🇪🇨 الإكوادور">🇪🇨 الإكوادور (Ecuador)</option>
                       <option value="🇺🇾 أوروغواي">🇺🇾 أوروغواي (Uruguay)</option>
+                      <option value="🇵🇾 باراغواي">🇵🇾 باراغواي (Paraguay)</option>
+                      <option value="🇧🇴 بوليفيا">🇧🇴 بوليفيا (Bolivia)</option>
+                      <option value="🇻🇪 فنزويلا">🇻🇪 فنزويلا (Venezuela)</option>
+                      <option value="🇨🇷 كوستاريكا">🇨🇷 كوستاريكا (Costa Rica)</option>
+                      <option value="🇩🇴 جمهورية الدومينيكان">🇩🇴 جمهورية الدومينيكان (Dominican Republic)</option>
+                      <option value="🇬🇹 غواتيمالا">🇬🇹 غواتيمالا (Guatemala)</option>
+                      <option value="🇭🇳 هندوراس">🇭🇳 هندوراس (Honduras)</option>
+                      <option value="🇸🇻 السلفادور">🇸🇻 السلفادور (El Salvador)</option>
+                      <option value="🇯🇲 جامايكا">🇯🇲 جامايكا (Jamaica)</option>
+                      <option value="🇵🇷 بورتوريكو">🇵🇷 بورتوريكو (Puerto Rico)</option>
                     </optgroup>
                     <optgroup label="🌍 آسيا والمحيط الهادئ (Asia &amp; Pacific)">
                       <option value="🇯🇵 اليابان">🇯🇵 اليابان (Japan)</option>
@@ -2014,6 +2125,18 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
                       <option value="🇻🇳 فيتنام">🇻🇳 فيتنام (Vietnam)</option>
                       <option value="🇵🇭 الفلبين">🇵🇭 الفلبين (Philippines)</option>
                       <option value="🇭🇰 هونغ كونغ">🇭🇰 هونغ كونغ (Hong Kong)</option>
+                      <option value="🇹🇼 تايوان">🇹🇼 تايوان (Taiwan)</option>
+                      <option value="🇧🇩 بنغلاديش">🇧🇩 بنغلاديش (Bangladesh)</option>
+                      <option value="🇱🇰 سريلانكا">🇱🇰 سريلانكا (Sri Lanka)</option>
+                      <option value="🇳🇵 نيبال">🇳🇵 نيبال (Nepal)</option>
+                      <option value="🇰🇿 كازاخستان">🇰🇿 كازاخستان (Kazakhstan)</option>
+                      <option value="🇺🇿 أوزبكستان">🇺🇿 أوزبكستان (Uzbekistan)</option>
+                      <option value="🇦🇿 أذربيجان">🇦🇿 أذربيجان (Azerbaijan)</option>
+                      <option value="🇬🇪 جورجيا">🇬🇪 جورجيا (Georgia)</option>
+                      <option value="🇦🇲 أرمينيا">🇦🇲 أرمينيا (Armenia)</option>
+                      <option value="🇲🇳 منغوليا">🇲🇳 منغوليا (Mongolia)</option>
+                      <option value="🇲🇻 جزر المالديف">🇲🇻 جزر المالديف (Maldives)</option>
+                      <option value="🇧🇳 بروناي">🇧🇳 بروناي (Brunei)</option>
                     </optgroup>
                     <optgroup label="🌍 إفريقيا (Sub-Saharan Africa)">
                       <option value="🇿🇦 جنوب إفريقيا">🇿🇦 جنوب إفريقيا (South Africa)</option>
@@ -2026,6 +2149,16 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
                       <option value="🇹🇿 تنزانيا">🇹🇿 تنزانيا (Tanzania)</option>
                       <option value="🇪🇹 إثيوبيا">🇪🇹 إثيوبيا (Ethiopia)</option>
                       <option value="🇺🇬 أوغندا">🇺🇬 أوغندا (Uganda)</option>
+                      <option value="🇷🇼 رواندا">🇷🇼 رواندا (Rwanda)</option>
+                      <option value="🇲🇺 موريشيوس">🇲🇺 موريشيوس (Mauritius)</option>
+                      <option value="🇳🇦 ناميبيا">🇳🇦 ناميبيا (Namibia)</option>
+                      <option value="🇦🇴 أنغولا">🇦🇴 أنغولا (Angola)</option>
+                      <option value="🇿🇲 زامبيا">🇿🇲 زامبيا (Zambia)</option>
+                      <option value="🇿🇼 زيمبابوي">🇿🇼 زيمبابوي (Zimbabwe)</option>
+                      <option value="🇧🇼 بوتسوانا">🇧🇼 بوتسوانا (Botswana)</option>
+                      <option value="🇲🇬 مدغشقر">🇲🇬 مدغشقر (Madagascar)</option>
+                      <option value="🇲🇿 موزمبيق">🇲🇿 موزمبيق (Mozambique)</option>
+                      <option value="🇬🇳 غينيا">🇬🇳 غينيا (Guinea)</option>
                     </optgroup>
                   </select>
                   <div class="preset-chips">
@@ -2551,8 +2684,8 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         <div class="form-group">
           <label>Country / Flag * <span>(الدولة والعلم)</span></label>
           <select id="edit_rCountry" required style="cursor:pointer;font-size:13.5px">
-            <option value="" disabled>🌍 اختر الدولة والعلم (Choose Country &amp; Flag)...</option>
-            <optgroup label="🌍 الشرق الأوسط وشمال إفريقيا (MENA / Arab World)">
+            <option value="" disabled selected>🌍 اختر الدولة والعلم (Choose Country &amp; Flag)...</option>
+            <optgroup label="🌍 الشرق الأوسط والدول العربية (Arab World &amp; MENA)">
               <option value="🇩🇿 الجزائر">🇩🇿 الجزائر (Algeria)</option>
               <option value="🇸🇦 السعودية">🇸🇦 السعودية (Saudi Arabia)</option>
               <option value="🇦🇪 الإمارات">🇦🇪 الإمارات (UAE)</option>
@@ -2568,8 +2701,13 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
               <option value="🇹🇳 تونس">🇹🇳 تونس (Tunisia)</option>
               <option value="🇱🇾 ليبيا">🇱🇾 ليبيا (Libya)</option>
               <option value="🇵🇸 فلسطين">🇵🇸 فلسطين (Palestine)</option>
-              <option value="🇸🇩 السودان">🇸🇩 السودان (Sudan)</option>
+              <option value="🇸🇾 سوريا">🇸🇾 سوريا (Syria)</option>
               <option value="🇾🇪 اليمن">🇾🇪 اليمن (Yemen)</option>
+              <option value="🇸🇩 السودان">🇸🇩 السودان (Sudan)</option>
+              <option value="🇲🇷 موريتانيا">🇲🇷 موريتانيا (Mauritania)</option>
+              <option value="🇸🇴 الصومال">🇸🇴 الصومال (Somalia)</option>
+              <option value="🇩🇯 جيبوتي">🇩🇯 جيبوتي (Djibouti)</option>
+              <option value="🇰🇲 جزر القمر">🇰🇲 جزر القمر (Comoros)</option>
             </optgroup>
             <optgroup label="🌍 أوروبا (Europe)">
               <option value="🇬🇧 المملكة المتحدة">🇬🇧 المملكة المتحدة (United Kingdom)</option>
@@ -2579,14 +2717,31 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
               <option value="🇮🇹 إيطاليا">🇮🇹 إيطاليا (Italy)</option>
               <option value="🇨🇭 سويسرا">🇨🇭 سويسرا (Switzerland)</option>
               <option value="🇳🇱 هولندا">🇳🇱 هولندا (Netherlands)</option>
-              <option value="🇹🇷 تركيا">🇹🇷 تركيا (Turkey)</option>
-              <option value="🇸🇪 السويد">🇸🇪 السويد (Sweden)</option>
               <option value="🇧🇪 بلجيكا">🇧🇪 بلجيكا (Belgium)</option>
               <option value="🇦🇹 النمسا">🇦🇹 النمسا (Austria)</option>
-              <option value="🇵🇱 بولندا">🇵🇱 بولندا (Poland)</option>
+              <option value="🇸🇪 السويد">🇸🇪 السويد (Sweden)</option>
               <option value="🇳🇴 النرويج">🇳🇴 النرويج (Norway)</option>
+              <option value="🇩🇰 الدنمارك">🇩🇰 الدنمارك (Denmark)</option>
+              <option value="🇫🇮 فنلندا">🇫🇮 فنلندا (Finland)</option>
               <option value="🇮🇪 أيرلندا">🇮🇪 أيرلندا (Ireland)</option>
               <option value="🇵🇹 البرتغال">🇵🇹 البرتغال (Portugal)</option>
+              <option value="🇬🇷 اليونان">🇬🇷 اليونان (Greece)</option>
+              <option value="🇹🇷 تركيا">🇹🇷 تركيا (Turkey)</option>
+              <option value="🇵🇱 بولندا">🇵🇱 بولندا (Poland)</option>
+              <option value="🇨🇿 جمهورية التشيك">🇨🇿 جمهورية التشيك (Czech Republic)</option>
+              <option value="🇭🇺 المجر">🇭🇺 المجر (Hungary)</option>
+              <option value="🇷🇴 رومانيا">🇷🇴 رومانيا (Romania)</option>
+              <option value="🇧🇬 بلغاريا">🇧🇬 بلغاريا (Bulgaria)</option>
+              <option value="🇭🇷 كرواتيا">🇭🇷 كرواتيا (Croatia)</option>
+              <option value="🇸🇰 سلوفاكيا">🇸🇰 سلوفاكيا (Slovakia)</option>
+              <option value="🇸🇮 سلوفينيا">🇸🇮 سلوفينيا (Slovenia)</option>
+              <option value="🇷🇸 صربيا">🇷🇸 صربيا (Serbia)</option>
+              <option value="🇨🇾 قبرص">🇨🇾 قبرص (Cyprus)</option>
+              <option value="🇲🇹 مالطا">🇲🇹 مالطا (Malta)</option>
+              <option value="🇱🇺 لوكسمبورغ">🇱🇺 لوكسمبورغ (Luxembourg)</option>
+              <option value="🇮🇸 أيسلندا">🇮🇸 أيسلندا (Iceland)</option>
+              <option value="🇺🇦 أوكرانيا">🇺🇦 أوكرانيا (Ukraine)</option>
+              <option value="🇷🇺 روسيا">🇷🇺 روسيا (Russia)</option>
             </optgroup>
             <optgroup label="🌍 الأمريكتين (Americas)">
               <option value="🇺🇸 الولايات المتحدة">🇺🇸 الولايات المتحدة (USA)</option>
@@ -2600,6 +2755,16 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
               <option value="🇵🇦 بنما">🇵🇦 بنما (Panama)</option>
               <option value="🇪🇨 الإكوادور">🇪🇨 الإكوادور (Ecuador)</option>
               <option value="🇺🇾 أوروغواي">🇺🇾 أوروغواي (Uruguay)</option>
+              <option value="🇵🇾 باراغواي">🇵🇾 باراغواي (Paraguay)</option>
+              <option value="🇧🇴 بوليفيا">🇧🇴 بوليفيا (Bolivia)</option>
+              <option value="🇻🇪 فنزويلا">🇻🇪 فنزويلا (Venezuela)</option>
+              <option value="🇨🇷 كوستاريكا">🇨🇷 كوستاريكا (Costa Rica)</option>
+              <option value="🇩🇴 جمهورية الدومينيكان">🇩🇴 جمهورية الدومينيكان (Dominican Republic)</option>
+              <option value="🇬🇹 غواتيمالا">🇬🇹 غواتيمالا (Guatemala)</option>
+              <option value="🇭🇳 هندوراس">🇭🇳 هندوراس (Honduras)</option>
+              <option value="🇸🇻 السلفادور">🇸🇻 السلفادور (El Salvador)</option>
+              <option value="🇯🇲 جامايكا">🇯🇲 جامايكا (Jamaica)</option>
+              <option value="🇵🇷 بورتوريكو">🇵🇷 بورتوريكو (Puerto Rico)</option>
             </optgroup>
             <optgroup label="🌍 آسيا والمحيط الهادئ (Asia &amp; Pacific)">
               <option value="🇯🇵 اليابان">🇯🇵 اليابان (Japan)</option>
@@ -2615,6 +2780,18 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
               <option value="🇻🇳 فيتنام">🇻🇳 فيتنام (Vietnam)</option>
               <option value="🇵🇭 الفلبين">🇵🇭 الفلبين (Philippines)</option>
               <option value="🇭🇰 هونغ كونغ">🇭🇰 هونغ كونغ (Hong Kong)</option>
+              <option value="🇹🇼 تايوان">🇹🇼 تايوان (Taiwan)</option>
+              <option value="🇧🇩 بنغلاديش">🇧🇩 بنغلاديش (Bangladesh)</option>
+              <option value="🇱🇰 سريلانكا">🇱🇰 سريلانكا (Sri Lanka)</option>
+              <option value="🇳🇵 نيبال">🇳🇵 نيبال (Nepal)</option>
+              <option value="🇰🇿 كازاخستان">🇰🇿 كازاخستان (Kazakhstan)</option>
+              <option value="🇺🇿 أوزبكستان">🇺🇿 أوزبكستان (Uzbekistan)</option>
+              <option value="🇦🇿 أذربيجان">🇦🇿 أذربيجان (Azerbaijan)</option>
+              <option value="🇬🇪 جورجيا">🇬🇪 جورجيا (Georgia)</option>
+              <option value="🇦🇲 أرمينيا">🇦🇲 أرمينيا (Armenia)</option>
+              <option value="🇲🇳 منغوليا">🇲🇳 منغوليا (Mongolia)</option>
+              <option value="🇲🇻 جزر المالديف">🇲🇻 جزر المالديف (Maldives)</option>
+              <option value="🇧🇳 بروناي">🇧🇳 بروناي (Brunei)</option>
             </optgroup>
             <optgroup label="🌍 إفريقيا (Sub-Saharan Africa)">
               <option value="🇿🇦 جنوب إفريقيا">🇿🇦 جنوب إفريقيا (South Africa)</option>
@@ -2627,6 +2804,16 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
               <option value="🇹🇿 تنزانيا">🇹🇿 تنزانيا (Tanzania)</option>
               <option value="🇪🇹 إثيوبيا">🇪🇹 إثيوبيا (Ethiopia)</option>
               <option value="🇺🇬 أوغندا">🇺🇬 أوغندا (Uganda)</option>
+              <option value="🇷🇼 رواندا">🇷🇼 رواندا (Rwanda)</option>
+              <option value="🇲🇺 موريشيوس">🇲🇺 موريشيوس (Mauritius)</option>
+              <option value="🇳🇦 ناميبيا">🇳🇦 ناميبيا (Namibia)</option>
+              <option value="🇦🇴 أنغولا">🇦🇴 أنغولا (Angola)</option>
+              <option value="🇿🇲 زامبيا">🇿🇲 زامبيا (Zambia)</option>
+              <option value="🇿🇼 زيمبابوي">🇿🇼 زيمبابوي (Zimbabwe)</option>
+              <option value="🇧🇼 بوتسوانا">🇧🇼 بوتسوانا (Botswana)</option>
+              <option value="🇲🇬 مدغشقر">🇲🇬 مدغشقر (Madagascar)</option>
+              <option value="🇲🇿 موزمبيق">🇲🇿 موزمبيق (Mozambique)</option>
+              <option value="🇬🇳 غينيا">🇬🇳 غينيا (Guinea)</option>
             </optgroup>
           </select>
         </div>
@@ -2892,7 +3079,16 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
   </div>
 </div>
 
-
+<!-- FLOATING ACTION WIDGET: زر طي ذكي يتبعك أينما تفتح أي قسم -->
+<div id="floatingCollapseBar" class="floating-collapse-widget" style="display:none">
+  <button type="button" class="btn-floating-collapse" onclick="collapseCurrentSection()" title="طي هذا القسم المفتوح فوراً">
+    <span class="collapse-icon">▲</span>
+    <span class="collapse-label">طي القسم</span>
+  </button>
+  <button type="button" class="btn-floating-collapse-all" onclick="collapseAllModules()" title="طي جميع الأقسام">
+    ✕ الكل
+  </button>
+</div>
 
 <script>
 (function() {
@@ -3115,8 +3311,54 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         sessionStorage.removeItem('hntsb15_last_active_module');
       }
       sessionStorage.setItem('hntsb15_scroll_y', String(window.scrollY || window.pageYOffset || 0));
+      updateFloatingCollapseVisibility();
     } catch(e){}
   }
+
+  window.collapseCurrentSection = function() {
+    var openCards = document.querySelectorAll('.module-card.is-open');
+    if (!openCards.length) return;
+
+    var bestCard = null;
+    var bestDist = Infinity;
+    var viewCenter = window.scrollY + (window.innerHeight / 2);
+
+    openCards.forEach(function(card) {
+      var rect = card.getBoundingClientRect();
+      var cardCenter = window.scrollY + rect.top + (rect.height / 2);
+      var dist = Math.abs(viewCenter - cardCenter);
+      if (dist < bestDist) {
+        bestDist = dist;
+        bestCard = card;
+      }
+    });
+
+    if (!bestCard) bestCard = openCards[0];
+    var modName = bestCard.id.replace('module-', '');
+    toggleModule(modName);
+
+    setTimeout(function() {
+      bestCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 60);
+
+    showToast('✓ تم طي القسم');
+    updateFloatingCollapseVisibility();
+  };
+
+  window.updateFloatingCollapseVisibility = function() {
+    var bar = document.getElementById('floatingCollapseBar');
+    if (!bar) return;
+    var openCount = document.querySelectorAll('.module-card.is-open').length;
+    if (openCount > 0) {
+      bar.style.display = 'flex';
+      var lbl = bar.querySelector('.collapse-label');
+      if (lbl) {
+        lbl.textContent = openCount > 1 ? ('طي القسم (' + openCount + ' مفتوح)') : 'طي القسم ▲';
+      }
+    } else {
+      bar.style.display = 'none';
+    }
+  };
 
   window.addEventListener('beforeunload', function() {
     saveModulesState();
@@ -3183,6 +3425,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       sessionStorage.removeItem('hntsb15_last_active_module');
       sessionStorage.removeItem('hntsb15_scroll_y');
     } catch(e){}
+    updateFloatingCollapseVisibility();
     showToast('✓ تم طي جميع الأقسام');
   };
 
@@ -3275,6 +3518,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       });
       window.scrollTo(0, 0);
     }
+    updateFloatingCollapseVisibility();
   }
 
   // --------------------------------------------------------------------------
