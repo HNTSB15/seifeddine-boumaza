@@ -796,6 +796,104 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   background: rgba(255, 77, 109, 0.03);
 }
 
+/* Quick Presets & Suggestion Chips */
+.preset-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+  margin-bottom: 8px;
+}
+.preset-chip {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.preset-chip:hover {
+  background: rgba(0, 255, 156, 0.14);
+  border-color: var(--neon);
+  color: var(--neon);
+}
+.preset-chip.gold:hover {
+  background: rgba(242, 193, 78, 0.16);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.preset-chip.desc-chip {
+  white-space: normal;
+  text-align: left;
+  line-height: 1.35;
+  font-size: 11px;
+  padding: 6px 10px;
+  background: rgba(18, 214, 255, 0.05);
+  border-color: rgba(18, 214, 255, 0.2);
+  width: 100%;
+}
+.preset-chip.desc-chip:hover {
+  background: rgba(18, 214, 255, 0.15);
+  border-color: var(--cyan);
+  color: #fff;
+}
+
+/* Review Card Mobile-Optimized Styling */
+.rev-quote-box {
+  background: rgba(0, 0, 0, 0.28);
+  border-right: 3px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #cbd5e1;
+  line-height: 1.5;
+  margin: 8px 0;
+}
+.rev-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--cyan);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 2px 0;
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+@media (max-width: 768px) {
+  .item-card {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+  .item-title {
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    line-height: 1.4 !important;
+  }
+  .item-actions {
+    width: 100% !important;
+    display: flex !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-end !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 8px;
+  }
+  .item-actions button {
+    flex: 1 1 auto;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
 /* Modals */
 .modal-backdrop {
   position: fixed;
@@ -1290,98 +1388,199 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
             </div>
 
             <form id="tradeForm" onsubmit="submitNewTrade(event)">
+              <!-- OPTION 1: AUTO-FETCH FROM TWITTER / X -->
+              <div style="background:rgba(0,255,156,0.04);border:1px solid rgba(0,255,156,0.25);border-radius:10px;padding:14px;margin-bottom:18px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:6px">
+                  <span style="font-weight:700;color:var(--neon);font-size:13px">⚡ الخيار 1: جلب الصفقة والصور تلقائياً من تويتر / X</span>
+                  <span class="tag green" style="font-size:10px">AUTO-FETCH ⚡</span>
+                </div>
+                <p style="font-size:12px;color:var(--muted);margin:0 0 10px;line-height:1.4">
+                  ضع رابط التغريدة وسنقوم بجلب الصور، نسبة الأرباح، رأس المال، والشرح وتعبئة كل الحقول تلقائياً في ثانية واحدة!
+                </p>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                  <input type="text" id="tLink" placeholder="https://x.com/seifeddin06/status/..." style="flex:1;min-width:240px">
+                  <button type="button" id="btnFetchTweet" class="btn-primary" onclick="fetchTweetData()" style="padding:8px 16px;font-size:12px;white-space:nowrap;background:var(--neon);color:#000;font-weight:700">
+                    ⚡ جلب البيانات والصور (Fetch Tweet)
+                  </button>
+                </div>
+              </div>
+
+              <!-- BASIC INFO & PRESETS -->
               <div class="form-grid">
                 <div class="form-group">
-                  <label>Trading Pair / Asset *</label>
-                  <input type="text" id="tPair" required placeholder="e.g. XAUUSD (Gold) or EUR/USD">
+                  <label>Trading Pair / Asset * <span>(الأداة المالية)</span></label>
+                  <input type="text" id="tPair" required placeholder="e.g. XAUUSD (Gold) or EUR/USD" value="XAUUSD (Gold)">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('tPair', 'XAUUSD (Gold)')">Gold (XAUUSD)</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tPair', 'EUR/USD')">EUR/USD</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tPair', 'GBP/USD')">GBP/USD</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tPair', 'US30 (Dow Jones)')">US30</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tPair', 'NAS100')">NAS100</button>
+                  </div>
                 </div>
+
                 <div class="form-group">
-                  <label>Performance Badge *</label>
-                  <input type="text" id="tBadge" required placeholder="e.g. RECORD PROFIT ⚡ or 15X RETURN 🚀">
+                  <label>Performance Badge * <span>(شارة الصفقة المميزة)</span></label>
+                  <input type="text" id="tBadge" required placeholder="e.g. RECORD PROFIT ⚡ or VIDEO PROOF 🎥" value="RECORD PROFIT ⚡">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('tBadge', 'RECORD PROFIT ⚡')">RECORD PROFIT ⚡</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tBadge', 'VIDEO PROOF 🎥')">VIDEO PROOF 🎥</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tBadge', '15X RETURN 🚀')">15X RETURN 🚀</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tBadge', '11X RETURN 🎯')">11X RETURN 🎯</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tBadge', 'TIERS OPEN 💼')">TIERS OPEN 💼</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tBadge', 'HIGH ACCURACY 🎯')">HIGH ACCURACY 🎯</button>
+                  </div>
                 </div>
               </div>
 
               <div class="form-grid">
                 <div class="form-group">
-                  <label>Starting Deposit / Capital</label>
-                  <input type="text" id="tDeposit" placeholder="e.g. Deposit: $430">
+                  <label>Starting Deposit / Capital <span>(المبلغ المودع / رأس المال)</span></label>
+                  <input type="text" id="tDeposit" placeholder="e.g. Deposit: $100" value="Deposit: $100">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('tDeposit', 'Deposit: $100')">Deposit: $100</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tDeposit', 'Deposit: $200')">Deposit: $200</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tDeposit', 'Deposit: $430')">Deposit: $430</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tDeposit', 'Deposit: $500')">Deposit: $500</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tDeposit', 'Deposit: $1,000')">Deposit: $1,000</button>
+                  </div>
                 </div>
+
                 <div class="form-group">
-                  <label>Net Profit *</label>
-                  <input type="text" id="tProfit" required placeholder="e.g. +$16,000">
+                  <label>Net Profit / Return * <span>(صافي الربح المحقق)</span></label>
+                  <input type="text" id="tProfit" required placeholder="e.g. +$16,000" value="+$1,500">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('tProfit', '+$1,500')">+$1,500</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tProfit', '+$3,200')">+$3,200</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tProfit', '+$5,700')">+$5,700</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tProfit', '+$6,300')">+$6,300</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tProfit', '+$16,000')">+$16,000</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tProfit', '+150% ROI')">+150% ROI</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tProfit', '+300% ROI')">+300% ROI</button>
+                  </div>
                 </div>
               </div>
 
               <div class="form-grid">
                 <div class="form-group">
                   <label>Date / Subtitle</label>
-                  <input type="text" id="tDate" placeholder="e.g. @seifeddin06 · Sep 16, 2026">
+                  <input type="text" id="tDate" placeholder="e.g. @seifeddin06 · Sep 18, 2026">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPresetCurrentDate('tDate')">📅 تاريخ اليوم (Today)</button>
+                  </div>
                 </div>
+
                 <div class="form-group">
                   <label>Profit Split Tag</label>
-                  <input type="text" id="tSplit" placeholder="e.g. Profit Split: 50/50">
+                  <input type="text" id="tSplit" placeholder="e.g. Profit Split: 50/50" value="Profit Split: 50/50">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setPreset('tSplit', 'Profit Split: 50/50')">50/50 Split</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tSplit', 'Weekly Settlement')">Weekly</button>
+                    <button type="button" class="preset-chip" onclick="setPreset('tSplit', 'Telegram: @HNTSB15')">Telegram</button>
+                  </div>
                 </div>
+              </div>
+
+              <!-- DESCRIPTION & SUGGESTIONS -->
+              <div class="form-group full">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;flex-wrap:wrap;gap:4px">
+                  <label style="margin:0">Trade Execution Description * <span>(الشرح والتفاصيل)</span></label>
+                  <span style="font-size:11px;color:var(--cyan)">💡 انقر على أحد الاقتراحات الجاهزة لتعبئتها فوراً:</span>
+                </div>
+                
+                <div class="preset-chips" style="margin-bottom:8px">
+                  <button type="button" class="preset-chip" onclick="setTradeDescPreset('acc100')">💡 Managing $100 Account</button>
+                  <button type="button" class="preset-chip" onclick="setTradeDescPreset('acc200')">💡 Managing $200 Account</button>
+                  <button type="button" class="preset-chip" onclick="setTradeDescPreset('acc430')">💡 Managing $430 Account ($16K)</button>
+                  <button type="button" class="preset-chip" onclick="setTradeDescPreset('video')">💡 Video Proof &amp; Payout</button>
+                  <button type="button" class="preset-chip" onclick="setTradeDescPreset('record')">💡 Record Profit Execution</button>
+                  <button type="button" class="preset-chip" onclick="setTradeDescPreset('tiers')">💡 Account Management Tiers</button>
+                </div>
+
+                <textarea id="tDesc" rows="3" required placeholder="MANAGING A NEW ACCOUNT OF $100 — Live verified trading execution with disciplined drawdown control on Gold..."></textarea>
               </div>
 
               <div class="form-group full">
-                <label>Trade Execution Description *</label>
-                <textarea id="tDesc" rows="3" required placeholder="MANAGING A NEW ACCOUNT — Live verified trading execution with disciplined drawdown control on Gold..."></textarea>
-              </div>
-
-              <div class="form-grid">
-                <div class="form-group">
-                  <label>Tags / Hashtags</label>
-                  <input type="text" id="tTags" placeholder="e.g. #Gold #XAUUSD #Forex #ManagedAccount">
-                </div>
-                <div class="form-group">
-                  <label>Proof Link / Tweet URL</label>
-                  <input type="text" id="tLink" placeholder="https://x.com/seifeddin06/status/...">
+                <label>Tags / Hashtags</label>
+                <input type="text" id="tTags" placeholder="e.g. #Gold #XAUUSD #Forex #AccountManagement" value="#Gold #XAUUSD #Forex">
+                <div class="preset-chips">
+                  <button type="button" class="preset-chip" onclick="setPreset('tTags', '#Gold #XAUUSD #Forex')">#Gold #XAUUSD #Forex</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('tTags', '#AccountManagement #Trading #Forex')">#AccountManagement</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('tTags', '#PropFirm #FundedAccount #Gold')">#PropFirm</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('tTags', '#Crypto #Binance #USDT')">#Crypto #Binance</button>
                 </div>
               </div>
 
-              <h4 style="font-size:12px;color:var(--gold);margin:14px 0 8px;font-family:var(--font-mono)">📷 Trade Proof Screenshots (Up to 4)</h4>
-              <div class="form-grid">
-                <div class="form-group">
-                  <label>Screenshot 1</label>
-                  <input type="text" id="tImg1" placeholder="Image URL or pick photo">
-                  <div class="file-drop-zone" onclick="document.getElementById('tFileInp1').click()">
-                    <span>📷 Pick Photo 1</span>
-                    <input type="file" id="tFileInp1" accept="image/*" onchange="handleImagePick(this, 'tImg1', 'tPrev1')">
-                  </div>
-                  <img id="tPrev1" class="file-preview" alt="Preview 1">
+              <!-- OPTION 2: DIRECT PHOTO UPLOAD (NO LINK NEEDED) -->
+              <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;margin:18px 0">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px">
+                  <h4 style="font-size:13px;color:var(--gold);margin:0;font-family:var(--font-mono);display:flex;align-items:center;gap:6px">
+                    <span>📷</span> الخيار 2: رفع الصور مباشرة من جهازك (بدون الحاجة لرابط)
+                  </h4>
+                  <span class="tag gold" style="font-size:10px">DIRECT UPLOAD 📁</span>
                 </div>
-                <div class="form-group">
-                  <label>Screenshot 2 (Optional)</label>
-                  <input type="text" id="tImg2" placeholder="Image URL or pick photo">
-                  <div class="file-drop-zone" onclick="document.getElementById('tFileInp2').click()">
-                    <span>📷 Pick Photo 2</span>
-                    <input type="file" id="tFileInp2" accept="image/*" onchange="handleImagePick(this, 'tImg2', 'tPrev2')">
+                <p style="font-size:12px;color:var(--muted);margin:0 0 14px;line-height:1.4">
+                  يمكنك اختيار لقطات الشاشة من هاتفك أو حاسوبك مباشرة، وسيقوم النظام بضغطها وحفظها وعرضها فوراً في المعرض!
+                </p>
+
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label>Screenshot 1 *</label>
+                    <input type="text" id="tImg1" placeholder="Image URL or pick photo">
+                    <div style="display:flex;gap:6px;margin-top:6px">
+                      <div class="file-drop-zone" onclick="document.getElementById('tFileInp1').click()" style="flex:1">
+                        <span>📷 Pick Photo 1</span>
+                        <input type="file" id="tFileInp1" accept="image/*" onchange="handleImagePick(this, 'tImg1', 'tPrev1')">
+                      </div>
+                      <button type="button" class="btn-cancel" onclick="clearPhotoInput('tImg1','tPrev1','tFileInp1')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
+                    </div>
+                    <img id="tPrev1" class="file-preview" alt="Preview 1">
                   </div>
-                  <img id="tPrev2" class="file-preview" alt="Preview 2">
+
+                  <div class="form-group">
+                    <label>Screenshot 2 (Optional)</label>
+                    <input type="text" id="tImg2" placeholder="Image URL or pick photo">
+                    <div style="display:flex;gap:6px;margin-top:6px">
+                      <div class="file-drop-zone" onclick="document.getElementById('tFileInp2').click()" style="flex:1">
+                        <span>📷 Pick Photo 2</span>
+                        <input type="file" id="tFileInp2" accept="image/*" onchange="handleImagePick(this, 'tImg2', 'tPrev2')">
+                      </div>
+                      <button type="button" class="btn-cancel" onclick="clearPhotoInput('tImg2','tPrev2','tFileInp2')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
+                    </div>
+                    <img id="tPrev2" class="file-preview" alt="Preview 2">
+                  </div>
                 </div>
-              </div>
-              <div class="form-grid">
-                <div class="form-group">
-                  <label>Screenshot 3 (Optional)</label>
-                  <input type="text" id="tImg3" placeholder="Image URL or pick photo">
-                  <div class="file-drop-zone" onclick="document.getElementById('tFileInp3').click()">
-                    <span>📷 Pick Photo 3</span>
-                    <input type="file" id="tFileInp3" accept="image/*" onchange="handleImagePick(this, 'tImg3', 'tPrev3')">
+
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label>Screenshot 3 (Optional)</label>
+                    <input type="text" id="tImg3" placeholder="Image URL or pick photo">
+                    <div style="display:flex;gap:6px;margin-top:6px">
+                      <div class="file-drop-zone" onclick="document.getElementById('tFileInp3').click()" style="flex:1">
+                        <span>📷 Pick Photo 3</span>
+                        <input type="file" id="tFileInp3" accept="image/*" onchange="handleImagePick(this, 'tImg3', 'tPrev3')">
+                      </div>
+                      <button type="button" class="btn-cancel" onclick="clearPhotoInput('tImg3','tPrev3','tFileInp3')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
+                    </div>
+                    <img id="tPrev3" class="file-preview" alt="Preview 3">
                   </div>
-                  <img id="tPrev3" class="file-preview" alt="Preview 3">
-                </div>
-                <div class="form-group">
-                  <label>Screenshot 4 (Optional)</label>
-                  <input type="text" id="tImg4" placeholder="Image URL or pick photo">
-                  <div class="file-drop-zone" onclick="document.getElementById('tFileInp4').click()">
-                    <span>📷 Pick Photo 4</span>
-                    <input type="file" id="tFileInp4" accept="image/*" onchange="handleImagePick(this, 'tImg4', 'tPrev4')">
+
+                  <div class="form-group">
+                    <label>Screenshot 4 (Optional)</label>
+                    <input type="text" id="tImg4" placeholder="Image URL or pick photo">
+                    <div style="display:flex;gap:6px;margin-top:6px">
+                      <div class="file-drop-zone" onclick="document.getElementById('tFileInp4').click()" style="flex:1">
+                        <span>📷 Pick Photo 4</span>
+                        <input type="file" id="tFileInp4" accept="image/*" onchange="handleImagePick(this, 'tImg4', 'tPrev4')">
+                      </div>
+                      <button type="button" class="btn-cancel" onclick="clearPhotoInput('tImg4','tPrev4','tFileInp4')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
+                    </div>
+                    <img id="tPrev4" class="file-preview" alt="Preview 4">
                   </div>
-                  <img id="tPrev4" class="file-preview" alt="Preview 4">
                 </div>
               </div>
 
-              <button type="submit" id="btnSaveTrade" class="btn-primary" style="margin-top:14px">
+              <button type="submit" id="btnSaveTrade" class="btn-primary" style="margin-top:14px;font-size:14px;padding:12px">
                 PUBLISH TRADE SETUP TO WEBSITE 🚀
               </button>
             </form>
@@ -2147,6 +2346,11 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         <div class="form-group">
           <label>Performance Badge *</label>
           <input type="text" id="edit_tBadge" required>
+          <div class="preset-chips">
+            <button type="button" class="preset-chip" onclick="setPreset('edit_tBadge', 'RECORD PROFIT ⚡')">RECORD PROFIT ⚡</button>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_tBadge', 'VIDEO PROOF 🎥')">VIDEO PROOF 🎥</button>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_tBadge', '15X RETURN 🚀')">15X RETURN 🚀</button>
+          </div>
         </div>
       </div>
 
@@ -2154,10 +2358,20 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         <div class="form-group">
           <label>Starting Deposit</label>
           <input type="text" id="edit_tDeposit">
+          <div class="preset-chips">
+            <button type="button" class="preset-chip" onclick="setPreset('edit_tDeposit', 'Deposit: $100')">$100</button>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_tDeposit', 'Deposit: $200')">$200</button>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_tDeposit', 'Deposit: $430')">$430</button>
+          </div>
         </div>
         <div class="form-group">
           <label>Net Profit *</label>
           <input type="text" id="edit_tProfit" required>
+          <div class="preset-chips">
+            <button type="button" class="preset-chip" onclick="setPreset('edit_tProfit', '+$1,500')">+$1,500</button>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_tProfit', '+$3,200')">+$3,200</button>
+            <button type="button" class="preset-chip" onclick="setPreset('edit_tProfit', '+$16,000')">+$16,000</button>
+          </div>
         </div>
       </div>
 
@@ -2188,23 +2402,37 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         </div>
       </div>
 
+      <div class="form-group full">
+        <label>Website Visibility Status</label>
+        <select id="edit_tActive">
+          <option value="true">🟢 Active (Visible on Live Website)</option>
+          <option value="false">🔴 Hidden (Draft / Inactive)</option>
+        </select>
+      </div>
+
       <h4 style="font-size:12px;color:var(--gold);margin:14px 0 8px;font-family:var(--font-mono)">📷 Trade Proof Screenshots (Up to 4)</h4>
       <div class="form-grid">
         <div class="form-group">
           <label>Screenshot 1</label>
           <input type="text" id="edit_tImg1">
-          <div class="file-drop-zone" onclick="document.getElementById('edit_tFile1').click()">
-            <span>📷 Pick Photo 1</span>
-            <input type="file" id="edit_tFile1" accept="image/*" onchange="handleImagePick(this, 'edit_tImg1', 'edit_tPrev1')">
+          <div style="display:flex;gap:6px;margin-top:6px">
+            <div class="file-drop-zone" onclick="document.getElementById('edit_tFile1').click()" style="flex:1">
+              <span>📷 Change Photo 1</span>
+              <input type="file" id="edit_tFile1" accept="image/*" onchange="handleImagePick(this, 'edit_tImg1', 'edit_tPrev1')">
+            </div>
+            <button type="button" class="btn-cancel" onclick="clearPhotoInput('edit_tImg1','edit_tPrev1','edit_tFile1')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
           </div>
           <img id="edit_tPrev1" class="file-preview" alt="Preview 1">
         </div>
         <div class="form-group">
           <label>Screenshot 2</label>
           <input type="text" id="edit_tImg2">
-          <div class="file-drop-zone" onclick="document.getElementById('edit_tFile2').click()">
-            <span>📷 Pick Photo 2</span>
-            <input type="file" id="edit_tFile2" accept="image/*" onchange="handleImagePick(this, 'edit_tImg2', 'edit_tPrev2')">
+          <div style="display:flex;gap:6px;margin-top:6px">
+            <div class="file-drop-zone" onclick="document.getElementById('edit_tFile2').click()" style="flex:1">
+              <span>📷 Change Photo 2</span>
+              <input type="file" id="edit_tFile2" accept="image/*" onchange="handleImagePick(this, 'edit_tImg2', 'edit_tPrev2')">
+            </div>
+            <button type="button" class="btn-cancel" onclick="clearPhotoInput('edit_tImg2','edit_tPrev2','edit_tFile2')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
           </div>
           <img id="edit_tPrev2" class="file-preview" alt="Preview 2">
         </div>
@@ -2213,18 +2441,24 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         <div class="form-group">
           <label>Screenshot 3</label>
           <input type="text" id="edit_tImg3">
-          <div class="file-drop-zone" onclick="document.getElementById('edit_tFile3').click()">
-            <span>📷 Pick Photo 3</span>
-            <input type="file" id="edit_tFile3" accept="image/*" onchange="handleImagePick(this, 'edit_tImg3', 'edit_tPrev3')">
+          <div style="display:flex;gap:6px;margin-top:6px">
+            <div class="file-drop-zone" onclick="document.getElementById('edit_tFile3').click()" style="flex:1">
+              <span>📷 Change Photo 3</span>
+              <input type="file" id="edit_tFile3" accept="image/*" onchange="handleImagePick(this, 'edit_tImg3', 'edit_tPrev3')">
+            </div>
+            <button type="button" class="btn-cancel" onclick="clearPhotoInput('edit_tImg3','edit_tPrev3','edit_tFile3')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
           </div>
           <img id="edit_tPrev3" class="file-preview" alt="Preview 3">
         </div>
         <div class="form-group">
           <label>Screenshot 4</label>
           <input type="text" id="edit_tImg4">
-          <div class="file-drop-zone" onclick="document.getElementById('edit_tFile4').click()">
-            <span>📷 Pick Photo 4</span>
-            <input type="file" id="edit_tFile4" accept="image/*" onchange="handleImagePick(this, 'edit_tImg4', 'edit_tPrev4')">
+          <div style="display:flex;gap:6px;margin-top:6px">
+            <div class="file-drop-zone" onclick="document.getElementById('edit_tFile4').click()" style="flex:1">
+              <span>📷 Change Photo 4</span>
+              <input type="file" id="edit_tFile4" accept="image/*" onchange="handleImagePick(this, 'edit_tImg4', 'edit_tPrev4')">
+            </div>
+            <button type="button" class="btn-cancel" onclick="clearPhotoInput('edit_tImg4','edit_tPrev4','edit_tFile4')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
           </div>
           <img id="edit_tPrev4" class="file-preview" alt="Preview 4">
         </div>
@@ -2818,7 +3052,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       var img = new Image();
       img.onload = function() {
         var canvas = document.createElement('canvas');
-        var maxDim = 1200;
+        var maxDim = 900;
         var width = img.width;
         var height = img.height;
         if (width > maxDim || height > maxDim) {
@@ -2834,7 +3068,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         canvas.height = height;
         var ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, width, height);
-        var compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+        var compressedDataUrl = canvas.toDataURL('image/jpeg', 0.78);
 
         var inp = document.getElementById(textTargetId);
         if (inp) inp.value = compressedDataUrl;
@@ -2845,7 +3079,6 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
         }
       };
       img.onerror = function() {
-        // Fallback to raw if canvas fails
         var inp = document.getElementById(textTargetId);
         if (inp) inp.value = rawResult;
         var prev = document.getElementById(previewImgId);
@@ -2857,6 +3090,217 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       img.src = rawResult;
     };
     reader.readAsDataURL(file);
+  };
+
+  window.clearPhotoInput = function(textId, prevId, fileId) {
+    var t = document.getElementById(textId);
+    var p = document.getElementById(prevId);
+    var f = document.getElementById(fileId);
+    if (t) t.value = '';
+    if (p) { p.src = ''; p.style.display = 'none'; }
+    if (f) f.value = '';
+  };
+
+  window.setPreset = function(targetId, val) {
+    var el = document.getElementById(targetId);
+    if (el) el.value = val;
+  };
+
+  window.setPresetCurrentDate = function(targetId) {
+    var el = document.getElementById(targetId);
+    if (el) {
+      var now = new Date();
+      var dStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      el.value = '@seifeddin06 · ' + dStr;
+    }
+  };
+
+  window.setTradeDescPreset = function(type) {
+    var descEl = document.getElementById('tDesc');
+    var badgeEl = document.getElementById('tBadge');
+    var depositEl = document.getElementById('tDeposit');
+    var profitEl = document.getElementById('tProfit');
+    if (!descEl) return;
+
+    if (type === 'acc100') {
+      descEl.value = 'MANAGING A NEW ACCOUNT OF $100 — Small account scalability proof with disciplined risk management on Gold (XAUUSD). Micro-lot compounding execution with strict drawdown limits.';
+      if (depositEl) depositEl.value = 'Deposit: $100';
+      if (profitEl && !profitEl.value) profitEl.value = '+$1,500';
+      if (badgeEl && !badgeEl.value) badgeEl.value = '15X RETURN 🚀';
+    } else if (type === 'acc200') {
+      descEl.value = 'MANAGING A NEW ACCOUNT OF $200 — Conservative risk management and sniper entries on Gold (XAUUSD). Net profit target reached with disciplined lot scaling.';
+      if (depositEl) depositEl.value = 'Deposit: $200';
+      if (profitEl && !profitEl.value) profitEl.value = '+$3,200';
+      if (badgeEl && !badgeEl.value) badgeEl.value = '11X RETURN 🎯';
+    } else if (type === 'acc430') {
+      descEl.value = 'MANAGING A NEW ACCOUNT OF $430 — Live verified trading execution with disciplined drawdown control on Gold & Forex. Deposit: $430 ➡️ Net Profit: +$16,000.';
+      if (depositEl) depositEl.value = 'Deposit: $430';
+      if (profitEl) profitEl.value = '+$16,000';
+      if (badgeEl) badgeEl.value = 'RECORD PROFIT ⚡';
+    } else if (type === 'video') {
+      descEl.value = 'VIDEO PROOF 🎥 & RECORD PROFIT ⚡ — Live terminal execution verification and instant payout withdrawals on MetaTrader 5 (MT5). Disciplined risk and zero slippage.';
+      if (badgeEl) badgeEl.value = 'VIDEO PROOF 🎥';
+    } else if (type === 'record') {
+      descEl.value = 'RECORD PROFIT ⚡ — High-probability intraday liquidity sweeps on Gold (XAUUSD). Live verified execution with strict risk management.';
+      if (badgeEl) badgeEl.value = 'RECORD PROFIT ⚡';
+    } else if (type === 'tiers') {
+      descEl.value = 'TRADING ACCOUNT MANAGEMENT TIERS — Starting from $100+, $200+, $300+, $500+. Dedicated risk management on Gold & Forex. Profit Split: 50/50.';
+      if (badgeEl) badgeEl.value = 'TIERS OPEN 💼';
+      if (depositEl) depositEl.value = 'Deposit: $100 - $500+';
+    }
+  };
+
+  window.fetchTweetData = function() {
+    var linkInput = document.getElementById('tLink');
+    var url = linkInput ? linkInput.value.trim() : '';
+    if (!url) {
+      showToast('⚠️ يرجى لصق رابط التغريدة من منصة X / Twitter أولاً', 'error');
+      if (linkInput) linkInput.focus();
+      return;
+    }
+
+    var match = url.match(/(?:x\.com|twitter\.com)\/([^\/]+)\/status\/(\d+)/i);
+    if (!match) {
+      showToast('⚠️ تنسيق الرابط غير صحيح. يجب أن يكون رابط تغريدة مثل: https://x.com/seifeddin06/status/...', 'error');
+      return;
+    }
+    var username = match[1];
+    var tweetId = match[2];
+
+    var btn = document.getElementById('btnFetchTweet');
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spin">🔄</span> جاري جلب التغريدة والصور...';
+    }
+
+    var apiUrl = 'https://api.fxtwitter.com/' + encodeURIComponent(username) + '/status/' + tweetId;
+
+    fetch(apiUrl)
+      .then(function(res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function(data) {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = '⚡ جلب البيانات والصور (Fetch Tweet)';
+        }
+        if (!data || !data.tweet) {
+          showToast('❌ لم يتم العثور على التغريدة أو أنها خاصة/محذوفة.', 'error');
+          return;
+        }
+        var tw = data.tweet;
+
+        // 1. Text & Description
+        if (tw.text) {
+          var descEl = document.getElementById('tDesc');
+          if (descEl) descEl.value = tw.text;
+
+          // Auto-detect Deposit from text
+          var depMatch = tw.text.match(/(?:deposit|dep|capital)[:\s]*([$]?\s*\d+[\d,]*(?:\.\d+)?\s*[$]?)/i);
+          if (depMatch && depMatch[1]) {
+            var depVal = depMatch[1].replace(/[$]/g, '').trim();
+            var depEl = document.getElementById('tDeposit');
+            if (depEl && depVal) depEl.value = 'Deposit: $' + depVal;
+          }
+
+          // Auto-detect Profit from text
+          var pftMatch = tw.text.match(/(?:profit|net profit|pft)[:\s]*([+$]?\s*\d+[\d,]*(?:\.\d+)?\s*[$]?|\+\s*[$]?\d+[\d,]*)/i);
+          if (pftMatch && pftMatch[1]) {
+            var pftVal = pftMatch[1].replace(/[+$]/g, '').trim();
+            var pftEl = document.getElementById('tProfit');
+            if (pftEl && pftVal) {
+              var pNum = parseFloat(pftVal.replace(/,/g, ''));
+              pftEl.value = (!isNaN(pNum) && pNum > 0) ? ('+$' + pNum.toLocaleString('en-US')) : ('+' + pftVal);
+            }
+          }
+
+          // Auto-detect Pair
+          var pairEl = document.getElementById('tPair');
+          if (pairEl) {
+            if (/gold|xauusd/i.test(tw.text)) pairEl.value = 'XAUUSD (Gold)';
+            else if (/eurusd|eur\/usd/i.test(tw.text)) pairEl.value = 'EUR/USD';
+            else if (/gbpusd|gbp\/usd/i.test(tw.text)) pairEl.value = 'GBP/USD';
+          }
+
+          // Auto-detect Tags
+          var hashMatches = tw.text.match(/#[a-zA-Z0-9_]+/g);
+          if (hashMatches && hashMatches.length) {
+            var tagsEl = document.getElementById('tTags');
+            if (tagsEl) tagsEl.value = hashMatches.join(' ');
+          }
+        }
+
+        // 2. Date
+        if (tw.created_at || tw.created_timestamp) {
+          var d = tw.created_timestamp ? new Date(tw.created_timestamp * 1000) : new Date(tw.created_at);
+          var dateFormatted = '@' + (tw.author ? tw.author.screen_name : username) + ' · ' +
+            d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+          var dateEl = document.getElementById('tDate');
+          if (dateEl) dateEl.value = dateFormatted;
+        }
+
+        // 3. Media (Photos / Videos)
+        var photos = [];
+        if (tw.media) {
+          if (tw.media.photos && Array.isArray(tw.media.photos)) {
+            tw.media.photos.forEach(function(p) { if (p && p.url) photos.push(p.url); });
+          }
+          if (tw.media.videos && Array.isArray(tw.media.videos)) {
+            tw.media.videos.forEach(function(v) {
+              if (v && v.thumbnail_url) photos.push(v.thumbnail_url);
+              else if (v && v.url) photos.push(v.url);
+            });
+          }
+          if (tw.media.all && Array.isArray(tw.media.all) && !photos.length) {
+            tw.media.all.forEach(function(m) {
+              if (m.url) photos.push(m.url);
+              else if (m.thumbnail_url) photos.push(m.thumbnail_url);
+            });
+          }
+        }
+
+        // Badge auto-selection
+        var badgeEl = document.getElementById('tBadge');
+        if (badgeEl) {
+          if (tw.media && tw.media.videos && tw.media.videos.length) {
+            badgeEl.value = 'VIDEO PROOF 🎥';
+          } else {
+            var curPft = (document.getElementById('tProfit') ? document.getElementById('tProfit').value : '');
+            if (curPft.indexOf('16,000') > -1 || curPft.indexOf('6,300') > -1 || curPft.indexOf('10,000') > -1) {
+              badgeEl.value = 'RECORD PROFIT ⚡';
+            } else {
+              badgeEl.value = '15X RETURN 🚀';
+            }
+          }
+        }
+
+        // Fill photo inputs and previews
+        for (var i = 1; i <= 4; i++) {
+          var photoUrl = photos[i - 1] || '';
+          var inp = document.getElementById('tImg' + i);
+          var prev = document.getElementById('tPrev' + i);
+          if (inp) inp.value = photoUrl;
+          if (prev) {
+            if (photoUrl) {
+              prev.src = photoUrl;
+              prev.style.display = 'block';
+            } else {
+              prev.src = '';
+              prev.style.display = 'none';
+            }
+          }
+        }
+
+        showToast('✅ تم جلب بيانات التغريدة و (' + photos.length + ') صور بنجاح!', 'success');
+      })
+      .catch(function(err) {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = '⚡ جلب البيانات والصور (Fetch Tweet)';
+        }
+        showToast('❌ تعذر جلب التغريدة تلقائياً (' + err.message + '). يمكنك رفع الصور وإدخال البيانات يدوياً.', 'error');
+      });
   };
 
   // --------------------------------------------------------------------------
@@ -3087,15 +3531,30 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       var html = '';
       list.forEach(function(t, idx) {
         var id = t.id !== undefined ? t.id : idx;
-        var photosCount = (t.photos && Array.isArray(t.photos)) ? t.photos.filter(Boolean).length : (t.photo ? 1 : 0);
-        html += '<div class="item-card">' +
-          '<div class="item-info">' +
-            '<div class="item-title">' +
-              '<span style="color:var(--neon)">' + (t.badge || t.title || 'Trade Setup') + '</span>' +
-              '<span class="tag" style="font-size:10px;color:var(--gold);border-color:rgba(242,193,78,0.4)">' + (t.profit || '') + '</span>' +
+        var rawImgs = t.images || t.photos || [];
+        var photosCount = Array.isArray(rawImgs) ? rawImgs.filter(Boolean).length : (rawImgs ? 1 : 0);
+        var badge = t.badge || t.title || 'Trade Setup';
+        var profit = t.profit || '';
+        var deposit = t.deposit || '';
+        var date = t.date_text || t.date || '';
+        var desc = t.description || t.desc || '';
+        var link = t.proof_link || t.link || '';
+        var isActive = (t.is_active !== false);
+
+        html += '<div class="item-card' + (isActive ? '' : ' is-hidden') + '" style="border-left:3px solid ' + (isActive ? 'var(--neon)' : 'var(--muted)') + ';margin-bottom:12px">' +
+          '<div class="item-info" style="width:100%">' +
+            '<div class="item-title" style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">' +
+              '<span style="color:var(--neon);font-weight:700">' + escapeAdminHtml(badge) + '</span>' +
+              (profit ? ('<span class="tag" style="font-size:10px;color:var(--gold);border-color:rgba(242,193,78,0.4)">' + escapeAdminHtml(profit) + '</span>') : '') +
+              (deposit ? ('<span class="tag" style="font-size:10px;color:#cbd5e1">' + escapeAdminHtml(deposit) + '</span>') : '') +
               '<span class="tag" style="font-size:10px">' + photosCount + ' Photos</span>' +
+              (link ? ('<a href="' + escapeAdminHtml(link) + '" target="_blank" rel="noopener" class="tag" style="font-size:10px;color:var(--cyan);text-decoration:none">🔗 Tweet</a>') : '') +
+              (!isActive ? '<span class="tag" style="font-size:10px;color:var(--red);border-color:var(--red)">HIDDEN</span>' : '') +
             '</div>' +
-            '<div class="item-sub">' + (t.deposit || '') + ' · ' + (t.date || '') + ' · ' + (t.desc ? (t.desc.slice(0, 70) + '...') : '') + '</div>' +
+            '<div class="item-sub" style="color:#94a3b8;margin-top:6px;line-height:1.4">' +
+              (date ? ('<b style="color:#cbd5e1">' + escapeAdminHtml(date) + '</b> · ') : '') +
+              escapeAdminHtml(desc ? (desc.slice(0, 90) + (desc.length > 90 ? '...' : '')) : '') +
+            '</div>' +
           '</div>' +
           '<div class="item-actions">' +
             '<button type="button" class="btn-edit" onclick="openEditTradeModal(' + id + ')">Edit ✏️</button>' +
@@ -3137,18 +3596,27 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
 
     var tagList = tags ? tags.split(/[\s,]+/).filter(function(x){ return x.length > 0; }) : [];
 
+    var dNow = new Date();
+    var formattedDate = date || ('@seifeddin06 · ' + dNow.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }));
+
     var newTrade = {
       id: Date.now(),
       badge: badge || pair,
+      badge_type: (badge.indexOf('PROFIT') > -1 || badge.indexOf('VIDEO') > -1) ? 'gold' : 'neon',
       title: pair,
-      deposit: deposit || 'Live Managed Account',
+      deposit: deposit || 'Deposit: $100',
       profit: profit || '+$0.00',
-      date: date || new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
-      split: split || '50/50 Share',
+      date: formattedDate,
+      date_text: formattedDate,
+      split: split || 'Profit Split: 50/50',
       desc: desc || (pair + ' - Live verified trade execution.'),
+      description: desc || (pair + ' - Live verified trade execution.'),
       tags: tagList,
       link: link,
-      photos: photos
+      proof_link: link,
+      photos: photos,
+      images: photos,
+      is_active: true
     };
 
     if (btn) {
@@ -3229,13 +3697,16 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     document.getElementById('edit_tBadge').value = t.badge || '';
     document.getElementById('edit_tDeposit').value = t.deposit || '';
     document.getElementById('edit_tProfit').value = t.profit || '';
-    document.getElementById('edit_tDate').value = t.date || '';
+    document.getElementById('edit_tDate').value = t.date_text || t.date || '';
     document.getElementById('edit_tSplit').value = t.split || '';
-    document.getElementById('edit_tDesc').value = t.desc || '';
+    document.getElementById('edit_tDesc').value = t.description || t.desc || '';
     document.getElementById('edit_tTags').value = Array.isArray(t.tags) ? t.tags.join(' ') : (t.tags || '');
-    document.getElementById('edit_tLink').value = t.link || '';
+    document.getElementById('edit_tLink').value = t.proof_link || t.link || '';
+    if (document.getElementById('edit_tActive')) {
+      document.getElementById('edit_tActive').value = (t.is_active === false) ? 'false' : 'true';
+    }
 
-    var pList = t.photos || (t.photo ? [t.photo] : []);
+    var pList = t.images || t.photos || (t.photo ? [t.photo] : []);
     for (var i = 1; i <= 4; i++) {
       var val = pList[i - 1] || '';
       var inp = document.getElementById('edit_tImg' + i);
@@ -3277,6 +3748,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     var desc = (document.getElementById('edit_tDesc').value || '').trim();
     var tags = (document.getElementById('edit_tTags').value || '').trim();
     var link = (document.getElementById('edit_tLink').value || '').trim();
+    var isActive = document.getElementById('edit_tActive') ? (document.getElementById('edit_tActive').value === 'true') : true;
 
     var photos = [
       (document.getElementById('edit_tImg1').value || '').trim(),
@@ -3290,15 +3762,21 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     list[idx] = {
       id: list[idx].id !== undefined ? list[idx].id : Number(id),
       badge: badge || pair,
+      badge_type: (badge.indexOf('PROFIT') > -1 || badge.indexOf('VIDEO') > -1) ? 'gold' : 'neon',
       title: pair,
       deposit: deposit,
       profit: profit,
       date: date,
+      date_text: date,
       split: split,
       desc: desc,
+      description: desc,
       tags: tagList,
       link: link,
-      photos: photos
+      proof_link: link,
+      photos: photos,
+      images: photos,
+      is_active: isActive
     };
 
     btn.disabled = true;
@@ -3575,6 +4053,71 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
   // --------------------------------------------------------------------------
   window._reviewsCache = [];
 
+  window.toggleReviewExpand = function(id) {
+    var snip = document.getElementById('rev_snip_' + id);
+    var full = document.getElementById('rev_full_' + id);
+    var btnText = document.getElementById('rev_btn_text_' + id);
+    if (!snip || !full) return;
+    if (full.style.display === 'none') {
+      snip.style.display = 'none';
+      full.style.display = 'inline';
+      if (btnText) btnText.textContent = 'إخفاء التقييم ▴';
+    } else {
+      snip.style.display = 'inline';
+      full.style.display = 'none';
+      if (btnText) btnText.textContent = 'قراءة التقييم كاملاً ▾';
+    }
+  };
+
+  function renderReviewCard(r, isPending) {
+    var stars = '★'.repeat(Math.max(1, Math.min(5, r.rating || 5)));
+    var stat = r.profit_stat || r.profit_tag || '';
+    var fullText = r.review_text || '';
+    var isLong = fullText.length > 110;
+    var snippet = isLong ? fullText.slice(0, 95) : fullText;
+
+    var serviceLabels = {
+      'managed': '💼 Managed Accounts (إدارة المحافظ)',
+      'signals': '📡 VIP Signals (قناة التوصيات)',
+      'newsx': '⚡ NewsX AI (منصة نيوز إكس)',
+      'indicators': '📊 MT5 Indicator (مؤشر التداول)'
+    };
+    var srvText = serviceLabels[r.service_type] || r.service_type || '💼 Managed Accounts';
+
+    var html = '<div class="item-card' + (isPending ? ' is-hidden' : '') + '" style="border-left:3px solid ' + (isPending ? 'var(--gold)' : 'var(--neon)') + ';margin-bottom:12px;background:' + (isPending ? 'rgba(242,193,78,0.03)' : 'rgba(255,255,255,0.02)') + '">' +
+      '<div class="item-info" style="width:100%">' +
+        '<div class="item-title" style="display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-bottom:6px">' +
+          '<span style="color:var(--gold);font-size:13px;letter-spacing:1px">' + stars + '</span> ' +
+          '<b style="color:#fff;font-size:14px">' + escapeAdminHtml(r.client_name || 'Anonymous') + '</b>' +
+          '<span class="tag" style="font-size:10px;color:#cbd5e1">' + escapeAdminHtml(srvText) + '</span>' +
+          (stat ? ('<span class="tag" style="font-size:10px;color:var(--neon);border-color:rgba(0,255,156,0.3)">' + escapeAdminHtml(stat) + '</span>') : '') +
+          '<span class="tag" style="font-size:10px;color:' + (isPending ? 'var(--gold)' : 'var(--neon)') + ';border-color:' + (isPending ? 'var(--gold)' : 'var(--neon)') + '">' + (isPending ? '⏳ بانتظار الموافقة' : '✓ معتمد ومنشور') + '</span>' +
+          (r.client_country ? ('<span style="font-size:11px;color:var(--muted);margin-inline-start:auto">📍 ' + escapeAdminHtml(r.client_country) + '</span>') : '') +
+        '</div>' +
+        '<div class="rev-quote-box" id="rev_content_' + r.id + '">' +
+          (isLong ? (
+            '<span class="rev-snippet" id="rev_snip_' + r.id + '">' + escapeAdminHtml(snippet) + '...</span>' +
+            '<span class="rev-full" id="rev_full_' + r.id + '" style="display:none">' + escapeAdminHtml(fullText) + '</span>' +
+            '<div><button type="button" class="rev-toggle-btn" onclick="toggleReviewExpand(' + r.id + ')"><span id="rev_btn_text_' + r.id + '">قراءة التقييم كاملاً ▾</span></button></div>'
+          ) : (
+            '<span>' + escapeAdminHtml(fullText) + '</span>'
+          )) +
+        '</div>' +
+      '</div>' +
+      '<div class="item-actions">' +
+        (isPending ? (
+          '<button type="button" class="btn-primary" style="padding:6px 14px;font-size:12px;background:var(--neon);color:#000;border:none;font-weight:700" onclick="toggleReviewActive(' + r.id + ', true)" title="نشر التقييم فوراً على الموقع">اعتماد ونشر ✅</button>'
+        ) : (
+          '<button type="button" class="btn-secondary" style="font-size:11px;color:var(--gold);border-color:rgba(242,193,78,0.4)" onclick="toggleReviewActive(' + r.id + ', false)" title="إخفاء التقييم من الموقع مؤقتاً">إخفاء من الموقع 👁️</button>'
+        )) +
+        '<button type="button" class="btn-edit" onclick="openEditReviewModal(' + r.id + ')">تعديل ✏️</button>' +
+        '<button type="button" class="btn-delete" onclick="deleteReview(' + r.id + ')">حذف 🗑️</button>' +
+      '</div>' +
+    '</div>';
+
+    return html;
+  }
+
   window.loadReviewsList = function(btn) {
     if (!sdb) return;
     if (btn) btn.classList.add('loading');
@@ -3604,26 +4147,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
           pendingListEl.innerHTML = '<div style="text-align:center;color:var(--muted);padding:20px;border:1px dashed rgba(255,255,255,0.08);border-radius:8px">✓ لا توجد أي تقييمات جديدة معلقة حالياً. كل التقييمات معتمدة ومنشورة.</div>';
         } else {
           var pHtml = '';
-          pendingList.forEach(function(r) {
-            var stars = '★'.repeat(r.rating || 5);
-            pHtml += '<div class="item-card is-hidden" style="border-left:3px solid var(--gold);background:rgba(242,193,78,0.03);margin-bottom:12px">' +
-              '<div class="item-info">' +
-                '<div class="item-title">' +
-                  '<span style="color:var(--gold)">' + stars + '</span> ' +
-                  '<b style="color:#fff;font-size:14px">' + (r.client_name || 'Anonymous') + '</b>' +
-                  '<span class="tag" style="font-size:10px">' + (r.service_type || 'managed') + '</span>' +
-                  (r.profit_tag ? ('<span class="tag" style="font-size:10px;color:var(--neon)">' + r.profit_tag + '</span>') : '') +
-                  '<span class="tag" style="font-size:10px;color:var(--gold);border-color:var(--gold)">⏳ PENDING REVIEW</span>' +
-                '</div>' +
-                '<div class="item-sub" style="color:#e2e8f0;margin-top:6px;line-height:1.5"><b style="color:var(--gold)">📍 ' + (r.client_country || '') + ':</b> ' + (r.review_text || '') + '</div>' +
-              '</div>' +
-              '<div class="item-actions" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">' +
-                '<button type="button" class="btn-primary" style="padding:6px 14px;font-size:12px;background:var(--neon);color:#000;border:none;font-weight:700" onclick="toggleReviewActive(' + r.id + ', true)" title="نشر التقييم فوراً على الموقع">نشر التقييم ✅</button>' +
-                '<button type="button" class="btn-edit" onclick="openEditReviewModal(' + r.id + ')">تعديل ✏️</button>' +
-                '<button type="button" class="btn-delete" onclick="deleteReview(' + r.id + ')">حذف 🗑️</button>' +
-              '</div>' +
-            '</div>';
-          });
+          pendingList.forEach(function(r) { pHtml += renderReviewCard(r, true); });
           pendingListEl.innerHTML = pHtml;
         }
       }
@@ -3634,26 +4158,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
           liveListEl.innerHTML = '<div style="text-align:center;color:var(--muted);padding:20px;border:1px dashed rgba(255,255,255,0.08);border-radius:8px">No live published reviews found.</div>';
         } else {
           var lHtml = '';
-          liveList.forEach(function(r) {
-            var stars = '★'.repeat(r.rating || 5);
-            lHtml += '<div class="item-card" style="border-left:3px solid var(--neon);margin-bottom:12px">' +
-              '<div class="item-info">' +
-                '<div class="item-title">' +
-                  '<span style="color:var(--gold)">' + stars + '</span> ' +
-                  '<b style="color:#fff;font-size:14px">' + (r.client_name || 'Anonymous') + '</b>' +
-                  '<span class="tag" style="font-size:10px">' + (r.service_type || 'managed') + '</span>' +
-                  (r.profit_tag ? ('<span class="tag" style="font-size:10px;color:var(--neon)">' + r.profit_tag + '</span>') : '') +
-                  '<span class="tag" style="font-size:10px;color:var(--neon);border-color:var(--neon)">✓ LIVE ON SITE</span>' +
-                '</div>' +
-                '<div class="item-sub" style="color:#cbd5e1;margin-top:6px;line-height:1.5"><b>📍 ' + (r.client_country || '') + ':</b> ' + (r.review_text || '') + '</div>' +
-              '</div>' +
-              '<div class="item-actions" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">' +
-                '<button type="button" class="btn-secondary" style="font-size:11px;color:var(--gold);border-color:rgba(242,193,78,0.4)" onclick="toggleReviewActive(' + r.id + ', false)" title="إخفاء التقييم من الموقع مؤقتاً">إخفاء 👁️</button>' +
-                '<button type="button" class="btn-edit" onclick="openEditReviewModal(' + r.id + ')">تعديل ✏️</button>' +
-                '<button type="button" class="btn-delete" onclick="deleteReview(' + r.id + ')">حذف 🗑️</button>' +
-              '</div>' +
-            '</div>';
-          });
+          liveList.forEach(function(r) { lHtml += renderReviewCard(r, false); });
           liveListEl.innerHTML = lHtml;
         }
       }
@@ -3673,7 +4178,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
     document.getElementById('edit_rCountry').value = r.client_country || '';
     document.getElementById('edit_rService').value = r.service_type || 'managed';
     document.getElementById('edit_rRating').value = r.rating || '5';
-    document.getElementById('edit_rProfit').value = r.profit_tag || '';
+    document.getElementById('edit_rProfit').value = r.profit_stat || r.profit_tag || '';
     document.getElementById('edit_rText').value = r.review_text || '';
     document.getElementById('edit_rActive').value = (r.is_active === false) ? 'false' : 'true';
 
@@ -3695,7 +4200,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       client_country: document.getElementById('rCountry').value.trim(),
       service_type: document.getElementById('rService').value,
       rating: parseInt(document.getElementById('rRating').value, 10) || 5,
-      profit_tag: document.getElementById('rProfit').value.trim(),
+      profit_stat: document.getElementById('rProfit').value.trim(),
       review_text: document.getElementById('rText').value.trim(),
       is_active: true,
       created_at: new Date().toISOString()
@@ -3726,7 +4231,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--neon); box-shado
       client_country: document.getElementById('edit_rCountry').value.trim(),
       service_type: document.getElementById('edit_rService').value,
       rating: parseInt(document.getElementById('edit_rRating').value, 10) || 5,
-      profit_tag: document.getElementById('edit_rProfit').value.trim(),
+      profit_stat: document.getElementById('edit_rProfit').value.trim(),
       review_text: document.getElementById('edit_rText').value.trim(),
       is_active: document.getElementById('edit_rActive').value === 'true'
     };
