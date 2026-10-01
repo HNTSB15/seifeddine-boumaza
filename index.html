@@ -9025,14 +9025,24 @@ body.theme-light .cvx-tv-text {
           var rawImgs = t.images || t.photos || [];
           var imgs = Array.isArray(rawImgs) ? rawImgs.filter(Boolean) : (typeof rawImgs === 'string' && rawImgs ? [rawImgs] : []);
 
-          var isVideo = (imgs.length === 1 && imgs[0].match(/\.(mp4|webm|mov)(\?|$)/i)) || (t.badge && t.badge.indexOf('VIDEO') > -1);
+          var isVideo = (t.is_video === true) ||
+            (t.media_type === 'video') ||
+            (t.video_url && t.video_url.length > 0) ||
+            (t.badge && t.badge.indexOf('VIDEO') > -1) ||
+            (imgs.length === 1 && (String(imgs[0]).match(/\.(mp4|webm|mov)(\?|$)/i) || String(imgs[0]).indexOf('video.twimg.com') > -1 || String(imgs[0]).indexOf('data:video') === 0));
+
           var descText = t.description || t.desc || '';
 
           // Lightbox gallery entry for this post
           if (isVideo) {
+            var videoSrc = t.video_url || (imgs[0] && (String(imgs[0]).match(/\.(mp4|webm|mov)/i) || String(imgs[0]).indexOf('video.twimg.com') > -1 || String(imgs[0]).indexOf('data:video') === 0) ? imgs[0] : '') || 'video-proof-1.mp4';
+            var thumbSrc = t.thumb || t.poster || (imgs[0] && !String(imgs[0]).match(/\.(mp4|webm|mov)/i) && String(imgs[0]).indexOf('video.twimg.com') === -1 && String(imgs[0]).indexOf('data:video') !== 0 ? imgs[0] : 'video-proof-thumb-1.webp');
+
             newGalleries.push([{
-              src: imgs[0] || 'video-proof-1.mp4',
-              cap: descText || 'Live Video Proof'
+              src: videoSrc,
+              thumb: thumbSrc,
+              cap: descText || 'Live Video Proof',
+              isVideo: true
             }]);
           } else {
             newGalleries.push(imgs.map(function(src, i) {
@@ -9045,17 +9055,18 @@ body.theme-light .cvx-tv-text {
 
           var galleryHtml = '';
           if (isVideo) {
-            var videoSrc = imgs[0] || 'video-proof-1.mp4';
-            var thumbSrc = t.thumb || (videoSrc.match(/\.(mp4|webm|mov)/i) ? 'video-proof-thumb-1.webp' : videoSrc);
+            var videoSrc = t.video_url || (imgs[0] && (String(imgs[0]).match(/\.(mp4|webm|mov)/i) || String(imgs[0]).indexOf('video.twimg.com') > -1 || String(imgs[0]).indexOf('data:video') === 0) ? imgs[0] : '') || 'video-proof-1.mp4';
+            var thumbSrc = t.thumb || t.poster || (imgs[0] && !String(imgs[0]).match(/\.(mp4|webm|mov)/i) && String(imgs[0]).indexOf('video.twimg.com') === -1 && String(imgs[0]).indexOf('data:video') !== 0 ? imgs[0] : 'video-proof-thumb-1.webp');
+
             galleryHtml = '<div class="cvx-gallery-grid grid-1">' +
               '<div class="cvx-gallery-item" onclick="if(window.cvxOpenLightbox) window.cvxOpenLightbox(' + idx + ', 0);" style="cursor:pointer;">' +
-                '<img src="' + thumbSrc + '" alt="Live Account Management Video Proof" loading="lazy">' +
+                '<img src="' + thumbSrc + '" alt="Live Video Proof" loading="lazy" onerror="this.src=\'video-proof-thumb-1.webp\'">' +
                 '<div class="cvx-play-overlay">' +
                   '<div class="cvx-play-btn">' +
                     '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>' +
                   '</div>' +
                 '</div>' +
-                '<span class="cvx-zoom-hint" style="opacity:1;transform:none;">▶ Watch Video</span>' +
+                '<span class="cvx-zoom-hint" style="opacity:1;transform:none;">▶ Watch Video Proof</span>' +
               '</div>' +
             '</div>';
           } else if (imgs.length > 0) {
@@ -13688,13 +13699,13 @@ body.theme-light .cvx-tv-text {
     if(curImg >= post.length) curImg = post.length - 1;
 
     var item = post[curImg];
-    var isVid = item.src && item.src.match(/\.(mp4|webm|mov)(\?|$)/i);
+    var isVid = (item.isVideo === true) || (item.src && (item.src.match(/\.(mp4|webm|mov)(\?|$)/i) || item.src.indexOf('video.twimg.com') > -1 || item.src.indexOf('data:video') === 0));
 
     if(isVid) {
       if(img) img.style.display = 'none';
       if(vid) {
         vid.style.display = 'block';
-        if (!vid.src || !vid.src.endsWith(item.src)) {
+        if (!vid.src || (vid.src !== item.src && !vid.src.endsWith(item.src))) {
           vid.src = item.src;
           vid.load();
         }
@@ -13739,12 +13750,12 @@ body.theme-light .cvx-tv-text {
       var prevBtn = document.getElementById('cvxLbPrev');
       var nextBtn = document.getElementById('cvxLbNext');
       if(!lb) return;
-      var isVid = postIdx.match(/\.(mp4|webm|mov)(\?|$)/i);
+      var isVid = postIdx.match(/\.(mp4|webm|mov)(\?|$)/i) || postIdx.indexOf('video.twimg.com') > -1 || postIdx.indexOf('data:video') === 0;
       if(isVid) {
         if(img) img.style.display = 'none';
         if(vid) {
           vid.style.display = 'block';
-          if (!vid.src || !vid.src.endsWith(postIdx)) {
+          if (!vid.src || (vid.src !== postIdx && !vid.src.endsWith(postIdx))) {
             vid.src = postIdx;
             vid.load();
           }

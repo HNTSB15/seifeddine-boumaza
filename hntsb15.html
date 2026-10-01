@@ -845,6 +845,42 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
   color: #fff;
 }
 
+/* Media Type Switcher (Photos vs Video) */
+.media-type-btn {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all .2s ease;
+}
+.media-type-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+.media-type-btn.active.photos {
+  background: rgba(0, 255, 156, 0.12);
+  border-color: var(--neon);
+  color: var(--neon);
+  box-shadow: 0 0 16px rgba(0, 255, 156, 0.25);
+}
+.media-type-btn.active.video {
+  background: rgba(242, 193, 78, 0.12);
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 16px rgba(242, 193, 78, 0.25);
+}
+
 /* Review Card Mobile-Optimized Styling */
 .rev-quote-box {
   background: rgba(0, 0, 0, 0.28);
@@ -1656,38 +1692,49 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
               </div>
 
               <!-- ================================================================
-                   UNIFIED MEDIA & PROOF HUB: BOTH OPTIONS TOGETHER IN ONE PLACE
+                   UNIFIED MEDIA & PROOF HUB: PHOTOS OR LIVE VIDEO SUPPORT
                    ================================================================ -->
               <div id="tradeMediaHub" style="background:rgba(255,255,255,0.02);border:1px solid rgba(0,255,156,0.25);border-radius:12px;padding:16px;margin:22px 0 16px;box-shadow:0 4px 20px rgba(0,0,0,0.3)">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.08)">
                   <h3 style="font-size:13.5px;color:var(--neon);margin:0;font-family:var(--font-mono);display:flex;align-items:center;gap:8px">
-                    <span>📷</span> خيارات صور وإثباتات الصفقة (Trade Proof &amp; Media)
+                    <span>🎬</span> نوع إثبات الصفقة ومصادر الوسائط (Trade Proof Media)
                   </h3>
-                  <span class="tag green" style="font-size:10.5px">2 IN 1 MEDIA OPTIONS</span>
+                  <span class="tag green" style="font-size:10.5px">PHOTOS &amp; VIDEO PROOF</span>
                 </div>
 
-                <!-- OPTION 1: AUTO-FETCH FROM TWITTER / X -->
+                <!-- MEDIA TYPE SELECTOR (PHOTOS VS VIDEO) -->
+                <div style="display:flex;gap:10px;margin-bottom:16px;background:rgba(0,0,0,0.3);padding:6px;border-radius:10px;border:1px solid rgba(255,255,255,0.08)">
+                  <button type="button" id="tabMediaTypePhotos" class="media-type-btn active photos" onclick="switchTradeMediaType('photos')">
+                    <span>📸</span> صور ولقطات شاشة (Photos &amp; Screenshots)
+                  </button>
+                  <button type="button" id="tabMediaTypeVideo" class="media-type-btn video" onclick="switchTradeMediaType('video')">
+                    <span>🎥</span> فيديو إثبات حي (Live Video Proof ⚡)
+                  </button>
+                </div>
+                <input type="hidden" id="tMediaType" value="photos">
+
+                <!-- OPTION 1: AUTO-FETCH FROM TWITTER / X (HANDLES BOTH PHOTOS AND VIDEOS AUTOMATICALLY) -->
                 <div style="background:rgba(0,255,156,0.04);border:1px solid rgba(0,255,156,0.22);border-radius:10px;padding:12px 14px;margin-bottom:16px">
                   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
-                    <span style="font-weight:700;color:var(--neon);font-size:12.5px">⚡ الخيار الأول: جلب الصفقة والصور تلقائياً من تويتر / X</span>
-                    <span class="tag green" style="font-size:10px">AUTO-FETCH</span>
+                    <span style="font-weight:700;color:var(--neon);font-size:12.5px">⚡ جلب الصفقة والصور أو الفيديو تلقائياً من تويتر / X</span>
+                    <span class="tag green" style="font-size:10px">AUTO-DETECTS VIDEO &amp; PHOTOS</span>
                   </div>
                   <p style="font-size:11.5px;color:var(--muted);margin:0 0 10px;line-height:1.4">
-                    ضع رابط التغريدة وسيقوم النظام بجلب الصور ونسبة الأرباح وتعبئة كل الحقول تلقائياً في ثانية واحدة!
+                    ضع رابط التغريدة وسيقوم النظام تلقائياً بكشف ما إذا كانت صوراً أو فيديو بدقة عالية، وتعبئة كافة البيانات ونسبة الأرباح في ثانية واحدة!
                   </p>
                   <div style="display:flex;gap:8px;flex-wrap:wrap">
                     <input type="text" id="tLink" placeholder="https://x.com/seifeddin06/status/..." style="flex:1;min-width:230px;font-size:13px">
                     <button type="button" id="btnFetchTweet" class="btn-primary" onclick="fetchTweetData()" style="padding:8px 16px;font-size:12px;white-space:nowrap;background:var(--neon);color:#000;font-weight:700">
-                      ⚡ جلب البيانات والصور (Fetch Tweet)
+                      ⚡ جلب البيانات والوسائط (Fetch Tweet)
                     </button>
                   </div>
                 </div>
 
-                <!-- OPTION 2: DIRECT PHOTO UPLOAD & PREVIEWS (NO LINK NEEDED) -->
-                <div style="background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px">
+                <!-- SECTION A: PHOTOS CONTAINER -->
+                <div id="tradePhotosContainer" style="background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px">
                   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
-                    <span style="font-weight:700;color:var(--gold);font-size:12.5px">📷 الخيار الثاني: رفع الصور مباشرة أو معاينتها (Direct Upload &amp; Previews)</span>
-                    <span class="tag gold" style="font-size:10px">4 SCREENSHOT SLOTS</span>
+                    <span style="font-weight:700;color:var(--cyan);font-size:12.5px">📸 لقطات الشاشة والصور (Direct Upload &amp; Previews)</span>
+                    <span class="tag" style="font-size:10px">4 SCREENSHOT SLOTS</span>
                   </div>
                   <p style="font-size:11.5px;color:var(--muted);margin:0 0 12px;line-height:1.4">
                     اختر لقطات الشاشة من هاتفك أو حاسوبك مباشرة (بدون رابط)، أو عاين وعدّل الصور المجلوبة من التغريدة أعلاه قبل النشر:
@@ -1746,6 +1793,70 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
                         <button type="button" class="btn-cancel" onclick="clearPhotoInput('tImg4','tPrev4','tFileInp4')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
                       </div>
                       <img id="tPrev4" class="file-preview" alt="Preview 4">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- SECTION B: VIDEO PROOF CONTAINER -->
+                <div id="tradeVideoContainer" style="display:none;background:rgba(242,193,78,0.03);border:1px solid rgba(242,193,78,0.25);border-radius:10px;padding:14px">
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
+                    <span style="font-weight:700;color:var(--gold);font-size:13px">🎥 إعدادات فيديو الإثبات الحي (Live Video Proof Settings)</span>
+                    <span class="tag gold" style="font-size:10px">MP4 / WEBM / MOV / TWITTER VIDEO</span>
+                  </div>
+                  <p style="font-size:11.5px;color:var(--muted);margin:0 0 12px;line-height:1.4">
+                    الآن يمكنك إضافة فيديو إثبات حقيقي يتم تشغيله على الموقع بصوت ومؤثرات! أدخل رابط الفيديو المباشر، أو اختر ملف فيديو من جهازك:
+                  </p>
+
+                  <div class="form-grid">
+                    <!-- VIDEO URL & FILE UPLOAD -->
+                    <div class="form-group">
+                      <label>Video File URL * <span>(رابط الفيديو المباشر .mp4 أو رابط تويتر)</span></label>
+                      <input type="text" id="tVideoUrl" placeholder="https://.../video.mp4 or tweet video URL" oninput="updateVideoPreview('tVideoUrl','tVideoPrev','tVideoThumb')">
+                      <div class="preset-chips" style="margin-top:6px">
+                        <button type="button" class="preset-chip" onclick="setPresetVideoUrl('video-proof-1.mp4')">🎬 الفيديو الافتراضي (Default Proof)</button>
+                        <button type="button" class="preset-chip" onclick="clearVideoInput('tVideoUrl','tVideoPrev','tVideoFileInp')">✕ مسح</button>
+                      </div>
+
+                      <div style="margin-top:8px">
+                        <div class="file-drop-zone" onclick="document.getElementById('tVideoFileInp').click()" style="border-color:rgba(242,193,78,0.4);background:rgba(242,193,78,0.04)">
+                          <span style="color:var(--gold)">🎥 أو اختر ملف فيديو من هاتفك/جهازك (Pick Video File)</span>
+                          <input type="file" id="tVideoFileInp" accept="video/mp4,video/webm,video/quicktime,video/*" onchange="handleVideoPick(this, 'tVideoUrl', 'tVideoPrev', 'tVideoThumb', 'tVideoThumbPrev')">
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- VIDEO POSTER / THUMBNAIL -->
+                    <div class="form-group">
+                      <label>Video Thumbnail / Cover <span>(صورة غلاف الفيديو للمعاينة)</span></label>
+                      <input type="text" id="tVideoThumb" placeholder="Image URL or pick cover photo" oninput="updateThumbPreview('tVideoThumb','tVideoThumbPrev')">
+                      <div style="display:flex;gap:6px;margin-top:6px">
+                        <div class="file-drop-zone" onclick="document.getElementById('tVideoThumbFileInp').click()" style="flex:1">
+                          <span>🖼️ اختيار صورة غلاف (Cover)</span>
+                          <input type="file" id="tVideoThumbFileInp" accept="image/*" onchange="handleImagePick(this, 'tVideoThumb', 'tVideoThumbPrev')">
+                        </div>
+                        <button type="button" class="btn-cancel" onclick="clearPhotoInput('tVideoThumb','tVideoThumbPrev','tVideoThumbFileInp')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
+                      </div>
+                      <div class="preset-chips" style="margin-top:6px">
+                        <button type="button" class="preset-chip" onclick="setPresetVideoThumb('video-proof-thumb-1.webp')">🖼️ الغلاف الافتراضي</button>
+                      </div>
+                      <img id="tVideoThumbPrev" class="file-preview" alt="Video Cover Preview">
+                    </div>
+                  </div>
+
+                  <!-- LIVE VIDEO PREVIEW IN ADMIN DASHBOARD -->
+                  <div style="margin-top:14px;background:rgba(0,0,0,0.5);border-radius:10px;padding:12px;border:1px dashed rgba(242,193,78,0.3)">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                      <span style="font-size:12px;font-weight:700;color:var(--gold)">🎬 مشغل المعاينة الحي داخل لوحة التحكم (Live Admin Preview):</span>
+                      <span id="videoStatusHint" style="font-size:11px;color:var(--muted)">مشغل الفيديو المباشر</span>
+                    </div>
+                    <div style="position:relative;max-width:440px;margin:0 auto;border-radius:8px;overflow:hidden;background:#000;text-align:center">
+                      <video id="tVideoPrev" controls playsinline preload="metadata" style="display:none;width:100%;max-height:260px;border-radius:8px;background:#000" poster="video-proof-thumb-1.webp">
+                        Your browser does not support HTML5 video.
+                      </video>
+                      <div id="videoPlaceholder" style="padding:32px 16px;text-align:center;color:var(--muted);font-size:12px">
+                        <span style="font-size:26px;display:block;margin-bottom:6px">🎥</span>
+                        لم يتم تحديد فيديو بعد. الصق رابط فيديو أو اختر ملف أو اضغط "جلب من تويتر" لمعاينته وتشغيله هنا مباشرة قبل النشر!
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -3084,57 +3195,126 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         </select>
       </div>
 
-      <h4 style="font-size:12px;color:var(--gold);margin:14px 0 8px;font-family:var(--font-mono)">📷 Trade Proof Screenshots (Up to 4)</h4>
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Screenshot 1</label>
-          <input type="text" id="edit_tImg1">
-          <div style="display:flex;gap:6px;margin-top:6px">
-            <div class="file-drop-zone" onclick="document.getElementById('edit_tFile1').click()" style="flex:1">
-              <span>📷 Change Photo 1</span>
-              <input type="file" id="edit_tFile1" accept="image/*" onchange="handleImagePick(this, 'edit_tImg1', 'edit_tPrev1')">
-            </div>
-            <button type="button" class="btn-cancel" onclick="clearPhotoInput('edit_tImg1','edit_tPrev1','edit_tFile1')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
-          </div>
-          <img id="edit_tPrev1" class="file-preview" alt="Preview 1">
+      <!-- MEDIA TYPE SELECTOR (EDIT MODAL) -->
+      <div style="margin-top:14px">
+        <label style="margin-bottom:6px">Media Proof Type * <span>(نوع وسائط الإثبات)</span></label>
+        <div style="display:flex;gap:10px;margin-bottom:12px;background:rgba(0,0,0,0.3);padding:6px;border-radius:10px;border:1px solid rgba(255,255,255,0.08)">
+          <button type="button" id="edit_tabMediaTypePhotos" class="media-type-btn active photos" onclick="switchEditTradeMediaType('photos')">
+            <span>📸</span> صور ولقطات شاشة (Photos)
+          </button>
+          <button type="button" id="edit_tabMediaTypeVideo" class="media-type-btn video" onclick="switchEditTradeMediaType('video')">
+            <span>🎥</span> فيديو إثبات حي (Live Video ⚡)
+          </button>
         </div>
-        <div class="form-group">
-          <label>Screenshot 2</label>
-          <input type="text" id="edit_tImg2">
-          <div style="display:flex;gap:6px;margin-top:6px">
-            <div class="file-drop-zone" onclick="document.getElementById('edit_tFile2').click()" style="flex:1">
-              <span>📷 Change Photo 2</span>
-              <input type="file" id="edit_tFile2" accept="image/*" onchange="handleImagePick(this, 'edit_tImg2', 'edit_tPrev2')">
+        <input type="hidden" id="edit_tMediaType" value="photos">
+      </div>
+
+      <!-- EDIT PHOTOS CONTAINER -->
+      <div id="edit_tradePhotosContainer">
+        <h4 style="font-size:12px;color:var(--cyan);margin:10px 0 8px;font-family:var(--font-mono)">📷 Trade Proof Screenshots (Up to 4)</h4>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Screenshot 1</label>
+            <input type="text" id="edit_tImg1">
+            <div style="display:flex;gap:6px;margin-top:6px">
+              <div class="file-drop-zone" onclick="document.getElementById('edit_tFile1').click()" style="flex:1">
+                <span>📷 Change Photo 1</span>
+                <input type="file" id="edit_tFile1" accept="image/*" onchange="handleImagePick(this, 'edit_tImg1', 'edit_tPrev1')">
+              </div>
+              <button type="button" class="btn-cancel" onclick="clearPhotoInput('edit_tImg1','edit_tPrev1','edit_tFile1')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
             </div>
-            <button type="button" class="btn-cancel" onclick="clearPhotoInput('edit_tImg2','edit_tPrev2','edit_tFile2')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
+            <img id="edit_tPrev1" class="file-preview" alt="Preview 1">
           </div>
-          <img id="edit_tPrev2" class="file-preview" alt="Preview 2">
+          <div class="form-group">
+            <label>Screenshot 2</label>
+            <input type="text" id="edit_tImg2">
+            <div style="display:flex;gap:6px;margin-top:6px">
+              <div class="file-drop-zone" onclick="document.getElementById('edit_tFile2').click()" style="flex:1">
+                <span>📷 Change Photo 2</span>
+                <input type="file" id="edit_tFile2" accept="image/*" onchange="handleImagePick(this, 'edit_tImg2', 'edit_tPrev2')">
+              </div>
+              <button type="button" class="btn-cancel" onclick="clearPhotoInput('edit_tImg2','edit_tPrev2','edit_tFile2')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
+            </div>
+            <img id="edit_tPrev2" class="file-preview" alt="Preview 2">
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Screenshot 3</label>
+            <input type="text" id="edit_tImg3">
+            <div style="display:flex;gap:6px;margin-top:6px">
+              <div class="file-drop-zone" onclick="document.getElementById('edit_tFile3').click()" style="flex:1">
+                <span>📷 Change Photo 3</span>
+                <input type="file" id="edit_tFile3" accept="image/*" onchange="handleImagePick(this, 'edit_tImg3', 'edit_tPrev3')">
+              </div>
+              <button type="button" class="btn-cancel" onclick="clearPhotoInput('edit_tImg3','edit_tPrev3','edit_tFile3')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
+            </div>
+            <img id="edit_tPrev3" class="file-preview" alt="Preview 3">
+          </div>
+          <div class="form-group">
+            <label>Screenshot 4</label>
+            <input type="text" id="edit_tImg4">
+            <div style="display:flex;gap:6px;margin-top:6px">
+              <div class="file-drop-zone" onclick="document.getElementById('edit_tFile4').click()" style="flex:1">
+                <span>📷 Change Photo 4</span>
+                <input type="file" id="edit_tFile4" accept="image/*" onchange="handleImagePick(this, 'edit_tImg4', 'edit_tPrev4')">
+              </div>
+              <button type="button" class="btn-cancel" onclick="clearPhotoInput('edit_tImg4','edit_tPrev4','edit_tFile4')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
+            </div>
+            <img id="edit_tPrev4" class="file-preview" alt="Preview 4">
+          </div>
         </div>
       </div>
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Screenshot 3</label>
-          <input type="text" id="edit_tImg3">
-          <div style="display:flex;gap:6px;margin-top:6px">
-            <div class="file-drop-zone" onclick="document.getElementById('edit_tFile3').click()" style="flex:1">
-              <span>📷 Change Photo 3</span>
-              <input type="file" id="edit_tFile3" accept="image/*" onchange="handleImagePick(this, 'edit_tImg3', 'edit_tPrev3')">
+
+      <!-- EDIT VIDEO CONTAINER -->
+      <div id="edit_tradeVideoContainer" style="display:none;background:rgba(242,193,78,0.03);border:1px solid rgba(242,193,78,0.25);border-radius:10px;padding:14px;margin-top:10px">
+        <h4 style="font-size:12px;color:var(--gold);margin:0 0 10px;font-family:var(--font-mono)">🎥 Live Video Proof Settings</h4>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Video File URL * <span>(رابط الفيديو المباشر .mp4 أو رابط تويتر)</span></label>
+            <input type="text" id="edit_tVideoUrl" placeholder="https://.../video.mp4 or tweet video URL" oninput="updateVideoPreview('edit_tVideoUrl','edit_tVideoPrev','edit_tVideoThumb')">
+            <div class="preset-chips" style="margin-top:6px">
+              <button type="button" class="preset-chip" onclick="document.getElementById('edit_tVideoUrl').value='video-proof-1.mp4';updateVideoPreview('edit_tVideoUrl','edit_tVideoPrev','edit_tVideoThumb');">🎬 الفيديو الافتراضي</button>
+              <button type="button" class="preset-chip" onclick="clearVideoInput('edit_tVideoUrl','edit_tVideoPrev','edit_tVideoFileInp')">✕ مسح</button>
             </div>
-            <button type="button" class="btn-cancel" onclick="clearPhotoInput('edit_tImg3','edit_tPrev3','edit_tFile3')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
+            <div style="margin-top:8px">
+              <div class="file-drop-zone" onclick="document.getElementById('edit_tVideoFileInp').click()" style="border-color:rgba(242,193,78,0.4);background:rgba(242,193,78,0.04)">
+                <span style="color:var(--gold)">🎥 أو اختر ملف فيديو من جهازك (Pick Video File)</span>
+                <input type="file" id="edit_tVideoFileInp" accept="video/mp4,video/webm,video/quicktime,video/*" onchange="handleVideoPick(this, 'edit_tVideoUrl', 'edit_tVideoPrev', 'edit_tVideoThumb', 'edit_tVideoThumbPrev')">
+              </div>
+            </div>
           </div>
-          <img id="edit_tPrev3" class="file-preview" alt="Preview 3">
+
+          <div class="form-group">
+            <label>Video Thumbnail / Cover <span>(صورة غلاف الفيديو للمعاينة)</span></label>
+            <input type="text" id="edit_tVideoThumb" placeholder="Image URL or pick cover photo" oninput="updateThumbPreview('edit_tVideoThumb','edit_tVideoThumbPrev')">
+            <div style="display:flex;gap:6px;margin-top:6px">
+              <div class="file-drop-zone" onclick="document.getElementById('edit_tVideoThumbFileInp').click()" style="flex:1">
+                <span>🖼️ اختيار صورة غلاف (Cover)</span>
+                <input type="file" id="edit_tVideoThumbFileInp" accept="image/*" onchange="handleImagePick(this, 'edit_tVideoThumb', 'edit_tVideoThumbPrev')">
+              </div>
+              <button type="button" class="btn-cancel" onclick="clearPhotoInput('edit_tVideoThumb','edit_tVideoThumbPrev','edit_tVideoThumbFileInp')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
+            </div>
+            <div class="preset-chips" style="margin-top:6px">
+              <button type="button" class="preset-chip" onclick="document.getElementById('edit_tVideoThumb').value='video-proof-thumb-1.webp';updateThumbPreview('edit_tVideoThumb','edit_tVideoThumbPrev');">🖼️ الغلاف الافتراضي</button>
+            </div>
+            <img id="edit_tVideoThumbPrev" class="file-preview" alt="Video Cover Preview">
+          </div>
         </div>
-        <div class="form-group">
-          <label>Screenshot 4</label>
-          <input type="text" id="edit_tImg4">
-          <div style="display:flex;gap:6px;margin-top:6px">
-            <div class="file-drop-zone" onclick="document.getElementById('edit_tFile4').click()" style="flex:1">
-              <span>📷 Change Photo 4</span>
-              <input type="file" id="edit_tFile4" accept="image/*" onchange="handleImagePick(this, 'edit_tImg4', 'edit_tPrev4')">
-            </div>
-            <button type="button" class="btn-cancel" onclick="clearPhotoInput('edit_tImg4','edit_tPrev4','edit_tFile4')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
+
+        <div style="margin-top:12px;background:rgba(0,0,0,0.5);border-radius:10px;padding:12px;border:1px dashed rgba(242,193,78,0.3)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span style="font-size:12px;font-weight:700;color:var(--gold)">🎬 مشغل المعاينة الحي:</span>
           </div>
-          <img id="edit_tPrev4" class="file-preview" alt="Preview 4">
+          <div style="position:relative;max-width:440px;margin:0 auto;border-radius:8px;overflow:hidden;background:#000;text-align:center">
+            <video id="edit_tVideoPrev" controls playsinline preload="metadata" style="display:none;width:100%;max-height:240px;border-radius:8px;background:#000" poster="video-proof-thumb-1.webp">
+              Your browser does not support HTML5 video.
+            </video>
+            <div id="edit_videoPlaceholder" style="padding:28px 16px;text-align:center;color:var(--muted);font-size:12px">
+              <span style="font-size:24px;display:block;margin-bottom:4px">🎥</span>
+              لم يتم تحديد فيديو بعد
+            </div>
+          </div>
         </div>
       </div>
 
@@ -3963,6 +4143,200 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     if (f) f.value = '';
   };
 
+  // --------------------------------------------------------------------------
+  // TRADE MEDIA TYPE SWITCHER & VIDEO PROOF HANDLERS
+  // --------------------------------------------------------------------------
+  window.switchTradeMediaType = function(type) {
+    var btnPhotos = document.getElementById('tabMediaTypePhotos');
+    var btnVideo = document.getElementById('tabMediaTypeVideo');
+    var boxPhotos = document.getElementById('tradePhotosContainer');
+    var boxVideo = document.getElementById('tradeVideoContainer');
+    var hiddenInp = document.getElementById('tMediaType');
+
+    if (hiddenInp) hiddenInp.value = type;
+
+    if (type === 'video') {
+      if (btnPhotos) btnPhotos.classList.remove('active');
+      if (btnVideo) btnVideo.classList.add('active');
+      if (boxPhotos) boxPhotos.style.display = 'none';
+      if (boxVideo) boxVideo.style.display = 'block';
+
+      var b = document.getElementById('tBadge');
+      if (b && (!b.value || b.value === 'RECORD PROFIT ⚡' || b.value === '15X RETURN 🚀')) {
+        b.value = 'VIDEO PROOF 🎥';
+      }
+    } else {
+      if (btnVideo) btnVideo.classList.remove('active');
+      if (btnPhotos) btnPhotos.classList.add('active');
+      if (boxVideo) boxVideo.style.display = 'none';
+      if (boxPhotos) boxPhotos.style.display = 'block';
+    }
+  };
+
+  window.switchEditTradeMediaType = function(type) {
+    var btnPhotos = document.getElementById('edit_tabMediaTypePhotos');
+    var btnVideo = document.getElementById('edit_tabMediaTypeVideo');
+    var boxPhotos = document.getElementById('edit_tradePhotosContainer');
+    var boxVideo = document.getElementById('edit_tradeVideoContainer');
+    var hiddenInp = document.getElementById('edit_tMediaType');
+
+    if (hiddenInp) hiddenInp.value = type;
+
+    if (type === 'video') {
+      if (btnPhotos) btnPhotos.classList.remove('active');
+      if (btnVideo) btnVideo.classList.add('active');
+      if (boxPhotos) boxPhotos.style.display = 'none';
+      if (boxVideo) boxVideo.style.display = 'block';
+
+      var b = document.getElementById('edit_tBadge');
+      if (b && (!b.value || b.value === 'RECORD PROFIT ⚡' || b.value === '15X RETURN 🚀')) {
+        b.value = 'VIDEO PROOF 🎥';
+      }
+    } else {
+      if (btnVideo) btnVideo.classList.remove('active');
+      if (btnPhotos) btnPhotos.classList.add('active');
+      if (boxVideo) boxVideo.style.display = 'none';
+      if (boxPhotos) boxPhotos.style.display = 'block';
+    }
+  };
+
+  window.handleVideoPick = function(inputEl, urlTargetId, previewVideoId, thumbTargetId, thumbPrevId) {
+    if (!inputEl || !inputEl.files || !inputEl.files[0]) return;
+    var file = inputEl.files[0];
+
+    if (file.size > 35 * 1024 * 1024) {
+      showToast('⚠️ تنبيه: حجم الفيديو (' + (file.size / (1024 * 1024)).toFixed(1) + 'MB) كبير. يفضل استخدام رابط مباشر لتسريع التحميل.', 'warning');
+    }
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var dataUrl = e.target.result;
+      var inp = document.getElementById(urlTargetId);
+      if (inp) inp.value = dataUrl;
+
+      var vid = document.getElementById(previewVideoId);
+      var phId = (previewVideoId === 'edit_tVideoPrev') ? 'edit_videoPlaceholder' : 'videoPlaceholder';
+      var ph = document.getElementById(phId);
+
+      if (vid) {
+        vid.src = dataUrl;
+        vid.style.display = 'block';
+        if (ph) ph.style.display = 'none';
+        vid.load();
+      }
+
+      // Auto-extract thumbnail frame from video if thumbnail is empty
+      var thumbInp = document.getElementById(thumbTargetId);
+      var thumbPrev = document.getElementById(thumbPrevId);
+      if (thumbInp && !thumbInp.value) {
+        var tempVid = document.createElement('video');
+        tempVid.preload = 'auto';
+        tempVid.muted = true;
+        tempVid.src = dataUrl;
+        tempVid.onloadeddata = function() {
+          try {
+            tempVid.currentTime = Math.min(0.5, (tempVid.duration || 1) / 2);
+          } catch(err){}
+        };
+        tempVid.onseeked = function() {
+          try {
+            var canvas = document.createElement('canvas');
+            canvas.width = Math.min(tempVid.videoWidth || 640, 720);
+            canvas.height = Math.round(canvas.width * (tempVid.videoHeight || 360) / (tempVid.videoWidth || 640));
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(tempVid, 0, 0, canvas.width, canvas.height);
+            var frameUrl = canvas.toDataURL('image/jpeg', 0.8);
+            if (thumbInp && !thumbInp.value) thumbInp.value = frameUrl;
+            if (thumbPrev) {
+              thumbPrev.src = frameUrl;
+              thumbPrev.style.display = 'block';
+            }
+          } catch(err){}
+        };
+      }
+
+      showToast('✓ تم تحميل ملف الفيديو بنجاح وجاهز للعرض!', 'success');
+    };
+    reader.readAsDataURL(file);
+  };
+
+  window.clearVideoInput = function(urlId, prevId, fileId) {
+    var u = document.getElementById(urlId);
+    var p = document.getElementById(prevId);
+    var f = document.getElementById(fileId);
+    var phId = (prevId === 'edit_tVideoPrev') ? 'edit_videoPlaceholder' : 'videoPlaceholder';
+    var ph = document.getElementById(phId);
+
+    if (u) u.value = '';
+    if (f) f.value = '';
+    if (p) {
+      p.pause();
+      p.removeAttribute('src');
+      p.load();
+      p.style.display = 'none';
+    }
+    if (ph) ph.style.display = 'block';
+  };
+
+  window.updateVideoPreview = function(urlId, prevId, thumbId) {
+    var u = document.getElementById(urlId);
+    var p = document.getElementById(prevId);
+    var t = document.getElementById(thumbId);
+    var phId = (prevId === 'edit_tVideoPrev') ? 'edit_videoPlaceholder' : 'videoPlaceholder';
+    var ph = document.getElementById(phId);
+
+    var url = u ? u.value.trim() : '';
+    if (!url) {
+      if (p) {
+        p.pause();
+        p.removeAttribute('src');
+        p.load();
+        p.style.display = 'none';
+      }
+      if (ph) ph.style.display = 'block';
+      return;
+    }
+
+    if (p) {
+      p.src = url;
+      if (t && t.value.trim()) p.poster = t.value.trim();
+      p.style.display = 'block';
+      p.load();
+      if (ph) ph.style.display = 'none';
+    }
+  };
+
+  window.updateThumbPreview = function(thumbId, prevId) {
+    var t = document.getElementById(thumbId);
+    var p = document.getElementById(prevId);
+    var url = t ? t.value.trim() : '';
+    if (p) {
+      if (url) {
+        p.src = url;
+        p.style.display = 'block';
+      } else {
+        p.src = '';
+        p.style.display = 'none';
+      }
+    }
+  };
+
+  window.setPresetVideoUrl = function(url) {
+    var u = document.getElementById('tVideoUrl');
+    if (u) {
+      u.value = url;
+      updateVideoPreview('tVideoUrl', 'tVideoPrev', 'tVideoThumb');
+    }
+  };
+
+  window.setPresetVideoThumb = function(thumb) {
+    var t = document.getElementById('tVideoThumb');
+    if (t) {
+      t.value = thumb;
+      updateThumbPreview('tVideoThumb', 'tVideoThumbPrev');
+    }
+  };
+
   window.setPreset = function(targetId, val) {
     var el = document.getElementById(targetId);
     if (!el) return;
@@ -4208,32 +4582,90 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
           if (dateEl) dateEl.value = dateFormatted;
         }
 
-        // 3. Media (Photos / Videos)
-        var photos = [];
+        // 3. Media (Smart Detection: Live Video vs Photos)
+        var foundVideo = null;
         if (tw.media) {
-          if (tw.media.photos && Array.isArray(tw.media.photos)) {
-            tw.media.photos.forEach(function(p) { if (p && p.url) photos.push(p.url); });
-          }
-          if (tw.media.videos && Array.isArray(tw.media.videos)) {
-            tw.media.videos.forEach(function(v) {
-              if (v && v.thumbnail_url) photos.push(v.thumbnail_url);
-              else if (v && v.url) photos.push(v.url);
-            });
-          }
-          if (tw.media.all && Array.isArray(tw.media.all) && !photos.length) {
-            tw.media.all.forEach(function(m) {
-              if (m.url) photos.push(m.url);
-              else if (m.thumbnail_url) photos.push(m.thumbnail_url);
-            });
+          if (tw.media.videos && Array.isArray(tw.media.videos) && tw.media.videos.length > 0) {
+            foundVideo = tw.media.videos[0];
+          } else if (tw.media.all && Array.isArray(tw.media.all)) {
+            foundVideo = tw.media.all.find(function(m) { return m && (m.type === 'video' || m.type === 'animated_gif'); });
           }
         }
 
-        // Badge auto-selection
-        var badgeEl = document.getElementById('tBadge');
-        if (badgeEl) {
-          if (tw.media && tw.media.videos && tw.media.videos.length) {
-            badgeEl.value = 'VIDEO PROOF 🎥';
-          } else {
+        if (foundVideo) {
+          // Switch tab to Video mode
+          switchTradeMediaType('video');
+
+          // Extract best quality MP4
+          var vidUrl = foundVideo.url || '';
+          if (foundVideo.formats && Array.isArray(foundVideo.formats)) {
+            var mp4s = foundVideo.formats.filter(function(f){ return f && f.container === 'mp4' && f.url; });
+            if (mp4s.length) {
+              mp4s.sort(function(a,b){ return (b.bitrate || 0) - (a.bitrate || 0); });
+              vidUrl = mp4s[0].url;
+            }
+          } else if (foundVideo.variants && Array.isArray(foundVideo.variants)) {
+            var mp4vars = foundVideo.variants.filter(function(v){ return v && (v.content_type === 'video/mp4' || v.container === 'mp4') && v.url; });
+            if (mp4vars.length) {
+              mp4vars.sort(function(a,b){ return (b.bitrate || 0) - (a.bitrate || 0); });
+              vidUrl = mp4vars[0].url;
+            }
+          }
+
+          var thumbUrl = foundVideo.thumbnail_url || (tw.media.photos && tw.media.photos[0] ? tw.media.photos[0].url : '') || '';
+
+          var vUrlEl = document.getElementById('tVideoUrl');
+          var vThumbEl = document.getElementById('tVideoThumb');
+          var vPrevEl = document.getElementById('tVideoPrev');
+          var vPhEl = document.getElementById('videoPlaceholder');
+          var vThumbPrev = document.getElementById('tVideoThumbPrev');
+
+          if (vUrlEl) vUrlEl.value = vidUrl;
+          if (vThumbEl) vThumbEl.value = thumbUrl;
+
+          if (vThumbPrev) {
+            if (thumbUrl) {
+              vThumbPrev.src = thumbUrl;
+              vThumbPrev.style.display = 'block';
+            } else {
+              vThumbPrev.src = '';
+              vThumbPrev.style.display = 'none';
+            }
+          }
+
+          if (vPrevEl) {
+            vPrevEl.src = vidUrl;
+            if (thumbUrl) vPrevEl.poster = thumbUrl;
+            vPrevEl.style.display = 'block';
+            vPrevEl.load();
+            if (vPhEl) vPhEl.style.display = 'none';
+          }
+
+          // Auto-set badge to VIDEO PROOF 🎥
+          var badgeEl = document.getElementById('tBadge');
+          if (badgeEl) badgeEl.value = 'VIDEO PROOF 🎥';
+
+          showToast('🎥 تم بنجاح جلب فيديو الإثبات الحي وصورة الغلاف من التغريدة!', 'success');
+        } else {
+          // Photo mode
+          switchTradeMediaType('photos');
+
+          var photos = [];
+          if (tw.media) {
+            if (tw.media.photos && Array.isArray(tw.media.photos)) {
+              tw.media.photos.forEach(function(p) { if (p && p.url) photos.push(p.url); });
+            }
+            if (tw.media.all && Array.isArray(tw.media.all) && !photos.length) {
+              tw.media.all.forEach(function(m) {
+                if (m.url) photos.push(m.url);
+                else if (m.thumbnail_url) photos.push(m.thumbnail_url);
+              });
+            }
+          }
+
+          // Badge auto-selection
+          var badgeEl = document.getElementById('tBadge');
+          if (badgeEl) {
             var curPft = (document.getElementById('tProfit') ? document.getElementById('tProfit').value : '');
             if (curPft.indexOf('16,000') > -1 || curPft.indexOf('6,300') > -1 || curPft.indexOf('10,000') > -1) {
               badgeEl.value = 'RECORD PROFIT ⚡';
@@ -4241,26 +4673,26 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
               badgeEl.value = '15X RETURN 🚀';
             }
           }
-        }
 
-        // Fill photo inputs and previews
-        for (var i = 1; i <= 4; i++) {
-          var photoUrl = photos[i - 1] || '';
-          var inp = document.getElementById('tImg' + i);
-          var prev = document.getElementById('tPrev' + i);
-          if (inp) inp.value = photoUrl;
-          if (prev) {
-            if (photoUrl) {
-              prev.src = photoUrl;
-              prev.style.display = 'block';
-            } else {
-              prev.src = '';
-              prev.style.display = 'none';
+          // Fill photo inputs and previews
+          for (var i = 1; i <= 4; i++) {
+            var photoUrl = photos[i - 1] || '';
+            var inp = document.getElementById('tImg' + i);
+            var prev = document.getElementById('tPrev' + i);
+            if (inp) inp.value = photoUrl;
+            if (prev) {
+              if (photoUrl) {
+                prev.src = photoUrl;
+                prev.style.display = 'block';
+              } else {
+                prev.src = '';
+                prev.style.display = 'none';
+              }
             }
           }
-        }
 
-        showToast('✅ تم جلب بيانات التغريدة و (' + photos.length + ') صور بنجاح!', 'success');
+          showToast('✅ تم جلب بيانات التغريدة و (' + photos.length + ') صور بنجاح!', 'success');
+        }
       })
       .catch(function(err) {
         if (btn) {
@@ -4501,6 +4933,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         var id = t.id !== undefined ? t.id : idx;
         var rawImgs = t.images || t.photos || [];
         var photosCount = Array.isArray(rawImgs) ? rawImgs.filter(Boolean).length : (rawImgs ? 1 : 0);
+        var isVid = (t.is_video === true) || (t.media_type === 'video') || (t.video_url && t.video_url.length > 0) || (t.badge && t.badge.indexOf('VIDEO') > -1) || (rawImgs.length === 1 && String(rawImgs[0]).match(/\.(mp4|webm|mov)/i));
         var badge = t.badge || t.title || 'Trade Setup';
         var profit = t.profit || '';
         var deposit = t.deposit || '';
@@ -4515,7 +4948,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
               '<span style="color:var(--neon);font-weight:700">' + escapeAdminHtml(badge) + '</span>' +
               (profit ? ('<span class="tag" style="font-size:10px;color:var(--gold);border-color:rgba(242,193,78,0.4)">' + escapeAdminHtml(profit) + '</span>') : '') +
               (deposit ? ('<span class="tag" style="font-size:10px;color:#cbd5e1">' + escapeAdminHtml(deposit) + '</span>') : '') +
-              '<span class="tag" style="font-size:10px">' + photosCount + ' Photos</span>' +
+              (isVid ? '<span class="tag gold" style="font-size:10px;color:var(--gold);border-color:rgba(242,193,78,0.5)">🎥 Video Proof</span>' : ('<span class="tag" style="font-size:10px">' + photosCount + ' Photos</span>')) +
               (link ? ('<a href="' + escapeAdminHtml(link) + '" target="_blank" rel="noopener" class="tag" style="font-size:10px;color:var(--cyan);text-decoration:none">🔗 Tweet</a>') : '') +
               (!isActive ? '<span class="tag" style="font-size:10px;color:var(--red);border-color:var(--red)">HIDDEN</span>' : '') +
             '</div>' +
@@ -4555,12 +4988,32 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       return;
     }
 
+    var mediaType = (document.getElementById('tMediaType') ? document.getElementById('tMediaType').value : 'photos');
+    var videoUrl = (document.getElementById('tVideoUrl') ? document.getElementById('tVideoUrl').value : '').trim();
+    var videoThumb = (document.getElementById('tVideoThumb') ? document.getElementById('tVideoThumb').value : '').trim();
+
     var photos = [
       (document.getElementById('tImg1').value || '').trim(),
       (document.getElementById('tImg2').value || '').trim(),
       (document.getElementById('tImg3').value || '').trim(),
       (document.getElementById('tImg4').value || '').trim()
     ].filter(Boolean);
+
+    var isVideoDeal = (mediaType === 'video') || (videoUrl.length > 0) || (badge && badge.indexOf('VIDEO') > -1);
+
+    if (isVideoDeal) {
+      if (!videoUrl) {
+        showToast('⚠️ يرجى إدخال رابط الفيديو أو اختيار ملف فيديو للإثبات', 'error');
+        return;
+      }
+      if (!videoThumb) videoThumb = 'video-proof-thumb-1.webp';
+      if (!badge || badge === 'RECORD PROFIT ⚡') badge = 'VIDEO PROOF 🎥';
+    } else {
+      if (!photos.length) {
+        showToast('⚠️ يرجى رفع لقطة شاشة واحدة على الأقل أو جلب التغريدة تلقائياً', 'error');
+        return;
+      }
+    }
 
     var tagList = tags ? tags.split(/[\s,]+/).filter(function(x){ return x.length > 0; }) : [];
 
@@ -4570,7 +5023,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     var newTrade = {
       id: Date.now(),
       badge: badge || pair,
-      badge_type: (badge.indexOf('PROFIT') > -1 || badge.indexOf('VIDEO') > -1) ? 'gold' : 'neon',
+      badge_type: (badge.indexOf('PROFIT') > -1 || badge.indexOf('VIDEO') > -1 || isVideoDeal) ? 'gold' : 'neon',
       title: pair,
       deposit: deposit || 'Deposit: $100',
       profit: profit || '+$0.00',
@@ -4582,8 +5035,13 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       tags: tagList,
       link: link,
       proof_link: link,
-      photos: photos,
-      images: photos,
+      media_type: isVideoDeal ? 'video' : 'photos',
+      is_video: isVideoDeal,
+      video_url: isVideoDeal ? videoUrl : '',
+      thumb: isVideoDeal ? videoThumb : '',
+      poster: isVideoDeal ? videoThumb : '',
+      photos: isVideoDeal ? [videoThumb || videoUrl] : photos,
+      images: isVideoDeal ? [videoThumb || videoUrl] : photos,
       is_active: true
     };
 
@@ -4619,10 +5077,12 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         }
         showToast('✓ تم نشر الصفقة بنجاح على الموقع الحي! 🚀', 'success');
         document.getElementById('tradeForm').reset();
-        ['tPrev1','tPrev2','tPrev3','tPrev4'].forEach(function(pid){
+        ['tPrev1','tPrev2','tPrev3','tPrev4','tVideoThumbPrev'].forEach(function(pid){
           var el = document.getElementById(pid);
           if (el) { el.src = ''; el.style.display = 'none'; }
         });
+        clearVideoInput('tVideoUrl', 'tVideoPrev', 'tVideoFileInp');
+        switchTradeMediaType('photos');
         loadTradesList();
       }).catch(function(err){
         if (btn) {
@@ -4647,6 +5107,8 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         else {
           showToast('✓ تم نشر الصفقة بنجاح على الموقع الحي! 🚀', 'success');
           document.getElementById('tradeForm').reset();
+          clearVideoInput('tVideoUrl', 'tVideoPrev', 'tVideoFileInp');
+          switchTradeMediaType('photos');
           loadTradesList();
         }
       });
@@ -4674,15 +5136,57 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       document.getElementById('edit_tActive').value = (t.is_active === false) ? 'false' : 'true';
     }
 
-    var pList = t.images || t.photos || (t.photo ? [t.photo] : []);
-    for (var i = 1; i <= 4; i++) {
-      var val = pList[i - 1] || '';
-      var inp = document.getElementById('edit_tImg' + i);
-      var prev = document.getElementById('edit_tPrev' + i);
-      if (inp) inp.value = val;
-      if (prev) {
-        if (val) { prev.src = val; prev.style.display = 'block'; }
-        else { prev.src = ''; prev.style.display = 'none'; }
+    var isVid = (t.is_video === true) || (t.media_type === 'video') || (t.video_url && t.video_url.length > 0) || (t.badge && t.badge.indexOf('VIDEO') > -1);
+
+    if (isVid) {
+      switchEditTradeMediaType('video');
+      var vidUrl = t.video_url || (t.photos && t.photos[0] && (String(t.photos[0]).match(/\.(mp4|webm|mov)/i) || String(t.photos[0]).indexOf('video.twimg.com') > -1) ? t.photos[0] : '');
+      var thumbUrl = t.thumb || t.poster || (t.photos && t.photos[0] && !String(t.photos[0]).match(/\.(mp4|webm|mov)/i) ? t.photos[0] : '');
+
+      var editVidUrl = document.getElementById('edit_tVideoUrl');
+      var editVidThumb = document.getElementById('edit_tVideoThumb');
+      var editVidPrev = document.getElementById('edit_tVideoPrev');
+      var editVidThumbPrev = document.getElementById('edit_tVideoThumbPrev');
+      var editVidPh = document.getElementById('edit_videoPlaceholder');
+
+      if (editVidUrl) editVidUrl.value = vidUrl;
+      if (editVidThumb) editVidThumb.value = thumbUrl;
+
+      if (editVidPrev) {
+        if (vidUrl) {
+          editVidPrev.src = vidUrl;
+          if (thumbUrl) editVidPrev.poster = thumbUrl;
+          editVidPrev.style.display = 'block';
+          editVidPrev.load();
+          if (editVidPh) editVidPh.style.display = 'none';
+        } else {
+          editVidPrev.src = '';
+          editVidPrev.style.display = 'none';
+          if (editVidPh) editVidPh.style.display = 'block';
+        }
+      }
+
+      if (editVidThumbPrev) {
+        if (thumbUrl) {
+          editVidThumbPrev.src = thumbUrl;
+          editVidThumbPrev.style.display = 'block';
+        } else {
+          editVidThumbPrev.src = '';
+          editVidThumbPrev.style.display = 'none';
+        }
+      }
+    } else {
+      switchEditTradeMediaType('photos');
+      var pList = t.images || t.photos || (t.photo ? [t.photo] : []);
+      for (var i = 1; i <= 4; i++) {
+        var val = pList[i - 1] || '';
+        var inp = document.getElementById('edit_tImg' + i);
+        var prev = document.getElementById('edit_tPrev' + i);
+        if (inp) inp.value = val;
+        if (prev) {
+          if (val) { prev.src = val; prev.style.display = 'block'; }
+          else { prev.src = ''; prev.style.display = 'none'; }
+        }
       }
     }
 
@@ -4718,6 +5222,11 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     var link = (document.getElementById('edit_tLink').value || '').trim();
     var isActive = document.getElementById('edit_tActive') ? (document.getElementById('edit_tActive').value === 'true') : true;
 
+    var editMediaType = (document.getElementById('edit_tMediaType') ? document.getElementById('edit_tMediaType').value : 'photos');
+    var editVidUrl = (document.getElementById('edit_tVideoUrl') ? document.getElementById('edit_tVideoUrl').value : '').trim();
+    var editVidThumb = (document.getElementById('edit_tVideoThumb') ? document.getElementById('edit_tVideoThumb').value : '').trim();
+    var isEditVideo = (editMediaType === 'video') || (editVidUrl.length > 0) || (badge && badge.indexOf('VIDEO') > -1);
+
     var photos = [
       (document.getElementById('edit_tImg1').value || '').trim(),
       (document.getElementById('edit_tImg2').value || '').trim(),
@@ -4727,10 +5236,15 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
 
     var tagList = tags ? tags.split(/[\s,]+/).filter(function(x){ return x.length > 0; }) : [];
 
+    if (isEditVideo) {
+      if (!editVidThumb) editVidThumb = 'video-proof-thumb-1.webp';
+      if (!badge || badge === 'RECORD PROFIT ⚡') badge = 'VIDEO PROOF 🎥';
+    }
+
     list[idx] = {
       id: list[idx].id !== undefined ? list[idx].id : Number(id),
       badge: badge || pair,
-      badge_type: (badge.indexOf('PROFIT') > -1 || badge.indexOf('VIDEO') > -1) ? 'gold' : 'neon',
+      badge_type: (badge.indexOf('PROFIT') > -1 || badge.indexOf('VIDEO') > -1 || isEditVideo) ? 'gold' : 'neon',
       title: pair,
       deposit: deposit,
       profit: profit,
@@ -4742,8 +5256,13 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       tags: tagList,
       link: link,
       proof_link: link,
-      photos: photos,
-      images: photos,
+      media_type: isEditVideo ? 'video' : 'photos',
+      is_video: isEditVideo,
+      video_url: isEditVideo ? editVidUrl : '',
+      thumb: isEditVideo ? editVidThumb : '',
+      poster: isEditVideo ? editVidThumb : '',
+      photos: isEditVideo ? [editVidThumb || editVidUrl] : photos,
+      images: isEditVideo ? [editVidThumb || editVidUrl] : photos,
       is_active: isActive
     };
 
