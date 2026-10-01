@@ -6777,6 +6777,9 @@ html, body {
   .cvx-foot-copy {
     font-size: 11.5px !important;
     line-height: 1.5 !important;
+  }
+}
+
 /* ==========================================================================
    📺 BROADCAST TV NEWS LED TICKER (شريط الأخبار التلفزيوني المتوهج LED)
    ========================================================================== */
@@ -9296,15 +9299,12 @@ body.theme-light .cvx-tv-text {
           bEl.className = 'cvx-top-banner';
           bEl.setAttribute('role', 'region');
           bEl.setAttribute('aria-label', 'Broadcast TV News');
-          if (navEl && navEl.firstChild) {
-            navEl.insertBefore(bEl, navEl.firstChild);
-          } else {
-            document.body.prepend(bEl);
-          }
         }
-
-        var isAr = (document.documentElement ? document.documentElement.getAttribute('lang') : null) === 'ar';
-        var badgeTitle = isAr ? 'عاجل • بث حي' : 'BREAKING • LIVE';
+        if (navEl && bEl.parentNode !== navEl) {
+          navEl.insertBefore(bEl, navEl.firstChild);
+        } else if (!navEl && !bEl.parentNode) {
+          document.body.prepend(bEl);
+        }
 
         function escapeBanner(str) {
           return (str || '').replace(/[&<>"']/g, function(m) {
@@ -9313,6 +9313,10 @@ body.theme-light .cvx-tv-text {
         }
 
         var cleanText = escapeBanner(text.trim());
+        var isAr = (document.documentElement && document.documentElement.getAttribute('lang') === 'ar') ||
+                   (function(){ try { return localStorage.getItem('cvx_lang') === 'ar'; } catch(e){ return false; } })() ||
+                   /[\u0600-\u06FF]/.test(cleanText);
+        var badgeTitle = isAr ? 'عاجل • بث حي' : 'BREAKING • LIVE';
 
         // TV Broadcast Separator & Badges
         var tvPill1 = isAr ? '⚡ إدارة محافظ باحترافية' : '⚡ VIP PORTFOLIO MANAGEMENT';
@@ -12793,6 +12797,9 @@ body.theme-light .cvx-tv-text {
       }
       if (window.updateManagedAccountStatus) {
         window.updateManagedAccountStatus(lang);
+      }
+      if (window.renderTopBanner && window.cvxBannerText && window.cvxBannerActive) {
+        window.renderTopBanner(window.cvxBannerText, window.cvxBannerActive);
       }
     };
 
