@@ -9366,7 +9366,6 @@ body.theme-light .cvx-tv-text {
         }
 
         var cleanText = escapeBanner(bannerString.trim());
-        var badgeTitle = isAr ? 'عاجل • بث حي' : 'BREAKING • LIVE';
         var sepSymbol = isAr ? '◄◄' : '►►';
 
         // TV Broadcast Separator & Badges
@@ -9392,15 +9391,6 @@ body.theme-light .cvx-tv-text {
         var fullTrack = halfTrack + halfTrack;
 
         bEl.innerHTML = '<div class="cvx-banner-inner">' +
-          '<div class="cvx-tv-badge">' +
-            '<span class="cvx-tv-rec-dot"></span>' +
-            '<span class="cvx-tv-badge-text" id="cvxTvBadgeTitle">' + badgeTitle + '</span>' +
-            '<div class="cvx-tv-eq">' +
-              '<span class="cvx-tv-bar"></span>' +
-              '<span class="cvx-tv-bar"></span>' +
-              '<span class="cvx-tv-bar"></span>' +
-            '</div>' +
-          '</div>' +
           '<div class="cvx-tv-screen">' +
             '<div class="cvx-tv-track">' +
               fullTrack +
