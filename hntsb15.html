@@ -5882,6 +5882,57 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
        });
   };
 
+  var KNOWN_COUNTRY_CODES = {
+    'algeria': 'DZ', 'morocco': 'MA', 'tunisia': 'TN', 'egypt': 'EG',
+    'saudi arabia': 'SA', 'uae': 'AE', 'united arab emirates': 'AE',
+    'qatar': 'QA', 'kuwait': 'KW', 'oman': 'OM', 'bahrain': 'BH',
+    'iraq': 'IQ', 'jordan': 'JO', 'lebanon': 'LB', 'libya': 'LY',
+    'palestine': 'PS', 'syria': 'SY', 'yemen': 'YE', 'sudan': 'SD',
+    'france': 'FR', 'germany': 'DE', 'united kingdom': 'GB', 'uk': 'GB',
+    'united states': 'US', 'usa': 'US', 'canada': 'CA', 'turkey': 'TR',
+    'spain': 'ES', 'italy': 'IT', 'russia': 'RU', 'china': 'CN',
+    'netherlands': 'NL', 'belgium': 'BE', 'switzerland': 'CH', 'sweden': 'SE'
+  };
+
+  function parseCountryWithFlag(rawCountry, countryCode) {
+    var flag = '';
+    var code = (countryCode || '').trim().toUpperCase();
+
+    if (!code) {
+      var codeMatch = (rawCountry || '').match(/\(([A-Z]{2})\)/i);
+      if (codeMatch) code = codeMatch[1].toUpperCase();
+    }
+
+    var flagRegex = /(?:\uD83C[\uDDE6-\uDDFF]){2}/g;
+    var flagMatch = (rawCountry || '').match(flagRegex);
+    if (flagMatch && flagMatch.length > 0) {
+      flag = flagMatch[0];
+    }
+
+    var cleanName = (rawCountry || 'Online')
+      .replace(/(?:\uD83C[\uDDE6-\uDDFF]){2}/g, '')
+      .replace(/\s*\([A-Z]{2}\)/i, '')
+      .trim();
+
+    if (!code && cleanName) {
+      var mappedCode = KNOWN_COUNTRY_CODES[cleanName.toLowerCase()];
+      if (mappedCode) code = mappedCode;
+    }
+
+    if (!flag && code.length === 2 && /^[A-Z]{2}$/.test(code)) {
+      flag = String.fromCodePoint(127397 + code.charCodeAt(0), 127397 + code.charCodeAt(1));
+    }
+
+    if (!cleanName || cleanName.toLowerCase() === 'online') {
+      cleanName = 'Online Visitor';
+      if (!flag) flag = '🌐';
+    } else if (!flag) {
+      flag = '🌍';
+    }
+
+    return { flag: flag, name: cleanName, code: code };
+  }
+
   function updateVisitorKPIs(list, total) {
     var kpiTotal = document.getElementById('kpiTotalVisitors');
     var kpiCity = document.getElementById('kpiTopCity');
@@ -5902,9 +5953,9 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       if (v.city && v.city !== 'Active Session' && v.city !== 'Unknown') {
         cityCounts[v.city] = (cityCounts[v.city] || 0) + 1;
       }
-      var cName = (v.country || 'Online').replace(/\s*\([A-Z]{2}\)/i, '').replace(/[\uD83C-\uDBFF\uDC00-\uDFFF]+/g, '').trim();
-      if (cName) {
-        countryCounts[cName] = (countryCounts[cName] || 0) + 1;
+      var loc = parseCountryWithFlag(v.country, v.country_code);
+      if (loc.name && loc.name !== 'Online Visitor') {
+        countryCounts[loc.name] = (countryCounts[loc.name] || 0) + 1;
       }
 
       var isMobile = (v.device_type === 'Mobile' || (v.operating_system && /Android|iOS/i.test(v.operating_system)) || (v.device_model && /Phone|Galaxy|iPhone|K$/i.test(v.device_model)));
@@ -5916,10 +5967,11 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     });
 
     var topCity = Object.keys(cityCounts).sort(function(a, b){ return cityCounts[b] - cityCounts[a]; })[0] || 'Algiers';
-    var topCountry = Object.keys(countryCounts).sort(function(a, b){ return countryCounts[b] - countryCounts[a]; })[0] || 'Algeria';
+    var topCountryName = Object.keys(countryCounts).sort(function(a, b){ return countryCounts[b] - countryCounts[a]; })[0] || 'Algeria';
+    var topCountryLoc = parseCountryWithFlag(topCountryName, '');
 
     if (kpiCity) kpiCity.textContent = topCity;
-    if (kpiCountry) kpiCountry.textContent = topCountry + ' (Top Country)';
+    if (kpiCountry) kpiCountry.textContent = topCountryLoc.flag + ' ' + topCountryLoc.name + ' (Top Country)';
 
     var totalSample = mobileCount + desktopCount;
     var mobilePct = totalSample > 0 ? Math.round((mobileCount / totalSample) * 100) : 75;
@@ -5939,7 +5991,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     if (q) {
       filtered = list.filter(function(v) {
         var str = [
-          v.ip_address, v.country, v.city, v.region, v.isp_provider,
+          v.ip_address, v.country, v.country_code, v.city, v.region, v.isp_provider,
           v.device_model, v.device_type, v.operating_system, v.browser,
           v.source_referrer, v.landing_page
         ].filter(Boolean).join(' ').toLowerCase();
@@ -5978,7 +6030,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       var ispClean = v.isp_provider || 'ISP';
       var cityClean = v.city || 'Algiers';
       var regionClean = v.region || '';
-      var countryClean = v.country || 'Online';
+      var loc = parseCountryWithFlag(v.country, v.country_code);
 
       var visits = v.visit_count || 1;
       var visitBadge = visits > 1 
@@ -5996,10 +6048,17 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
           '</div>' +
           (ispClean ? ('<div style="color:var(--muted);font-size:10.5px;margin-top:2px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + escapeAdminHtml(ispClean) + '">' + escapeAdminHtml(ispClean) + '</div>') : '') +
         '</td>' +
-        // 3. Location (City & Country)
+        // 3. Location (Country Flag & City)
         '<td>' +
-          '<div style="font-size:12.5px;font-weight:700;color:#fff">' + escapeAdminHtml(cityClean) + '</div>' +
-          '<div style="color:var(--neon);font-size:11px;margin-top:1px">' + escapeAdminHtml(countryClean) + (regionClean ? (' <span style="color:var(--muted)">· ' + escapeAdminHtml(regionClean) + '</span>') : '') + '</div>' +
+          '<div style="font-size:13px;font-weight:700;color:#fff;display:flex;align-items:center;gap:6px">' +
+            '<span style="font-size:17px;line-height:1" title="' + escapeAdminHtml(loc.name) + '">' + loc.flag + '</span>' +
+            '<span style="color:#fff;font-weight:800">' + escapeAdminHtml(loc.name) + '</span>' +
+            (loc.code ? ('<span class="tag" style="font-size:9.5px;padding:1px 5px;background:rgba(255,255,255,0.06);color:var(--muted)">' + escapeAdminHtml(loc.code) + '</span>') : '') +
+          '</div>' +
+          '<div style="color:var(--cyan);font-size:11px;margin-top:2px;display:flex;align-items:center;gap:4px">' +
+            '<span>📍 ' + escapeAdminHtml(cityClean) + '</span>' +
+            (regionClean ? ('<span style="color:var(--muted)">· ' + escapeAdminHtml(regionClean) + '</span>') : '') +
+          '</div>' +
         '</td>' +
         // 4. Device & Screen
         '<td>' +
@@ -6091,6 +6150,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     var content = document.getElementById('visitorModalContent');
     if (!modal || !content) return;
 
+    var loc = parseCountryWithFlag(v.country, v.country_code);
     var relTime = getRelativeVisitorTime(v.last_seen);
     var fullTime = v.last_seen ? new Date(v.last_seen).toLocaleString('en-US', {
       weekday: 'short', year: 'numeric', month: 'short', day: 'numeric',
@@ -6116,7 +6176,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         '<div style="background:rgba(15,23,36,0.8);border:1px solid rgba(255,255,255,0.08);padding:14px;border-radius:8px">' +
           '<div style="font-weight:700;color:var(--neon);margin-bottom:8px;display:flex;align-items:center;gap:6px"><span>📍</span> Geolocation &amp; Network (الموقع والشبكة)</div>' +
           '<div style="display:flex;flex-direction:column;gap:6px;font-size:12px">' +
-            '<div><span style="color:var(--muted)">الدولة (Country):</span> <b>' + escapeAdminHtml(v.country || 'N/A') + '</b>' + (v.country_code ? (' (' + escapeAdminHtml(v.country_code) + ')') : '') + '</div>' +
+            '<div><span style="color:var(--muted)">الدولة (Country):</span> <span style="font-size:18px;margin-inline-end:5px">' + loc.flag + '</span> <b style="color:var(--neon);font-size:13.5px">' + escapeAdminHtml(loc.name) + '</b>' + (loc.code ? (' <span class="tag" style="font-size:9.5px;padding:1px 5px;margin-inline-start:4px">' + escapeAdminHtml(loc.code) + '</span>') : '') + '</div>' +
             '<div><span style="color:var(--muted)">المدينة (City):</span> <b style="color:var(--cyan)">' + escapeAdminHtml(v.city || 'N/A') + '</b></div>' +
             '<div><span style="color:var(--muted)">المنطقة / الولاية (Region):</span> <b>' + escapeAdminHtml(v.region || 'N/A') + '</b></div>' +
             '<div><span style="color:var(--muted)">مزود الإنترنت (ISP):</span> <b>' + escapeAdminHtml(v.isp_provider || 'N/A') + '</b></div>' +

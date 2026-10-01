@@ -6777,9 +6777,210 @@ html, body {
   .cvx-foot-copy {
     font-size: 11.5px !important;
     line-height: 1.5 !important;
-  }
+/* ==========================================================================
+   💎 ULTRA-PRESTIGIOUS CYBER TOP ANNOUNCEMENT BANNER (شريط التنبيهات الفخم المتحرك)
+   ========================================================================== */
+.cvx-top-banner {
+  position: relative;
+  z-index: 10000;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(3, 7, 18, 0.98) 0%, rgba(8, 20, 36, 0.97) 35%, rgba(12, 28, 48, 0.97) 50%, rgba(8, 20, 36, 0.97) 65%, rgba(3, 7, 18, 0.98) 100%);
+  border-bottom: 1px solid rgba(0, 255, 156, 0.35);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 16px rgba(0, 255, 156, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  height: 38px;
+  overflow: hidden;
+  user-select: none;
 }
 
+.cvx-top-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 255, 156, 0.6) 25%, rgba(18, 214, 255, 0.8) 50%, rgba(255, 190, 26, 0.6) 75%, transparent 100%);
+  animation: rgbFlow 6s linear infinite;
+  background-size: 200% auto;
+  pointer-events: none;
+}
+
+.cvx-banner-inner {
+  max-width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.cvx-banner-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 14px;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(0, 255, 156, 0.15), rgba(18, 214, 255, 0.08));
+  border-inline-end: 1px solid rgba(0, 255, 156, 0.3);
+  flex-shrink: 0;
+  z-index: 3;
+}
+
+.cvx-banner-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--neon);
+  box-shadow: 0 0 10px var(--neon), 0 0 16px var(--neon);
+  animation: pulse 1.5s infinite;
+}
+
+.cvx-banner-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.8px;
+  text-shadow: 0 0 8px rgba(0, 255, 156, 0.5);
+  white-space: nowrap;
+}
+
+.cvx-banner-track-wrap {
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 24px, #000 calc(100% - 24px), transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 24px, #000 calc(100% - 24px), transparent 100%);
+}
+
+.cvx-banner-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  width: max-content;
+  will-change: transform;
+  animation: cvxTickerMove 35s linear infinite;
+}
+
+.cvx-banner-track:hover {
+  animation-play-state: paused;
+  cursor: pointer;
+}
+
+.cvx-banner-item {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.cvx-banner-text {
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: 0.2px;
+  display: inline-flex;
+  align-items: center;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.cvx-banner-sep {
+  display: inline-block;
+  margin: 0 22px;
+  color: var(--neon);
+  font-size: 12px;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 6px var(--neon));
+}
+
+.cvx-banner-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 100%;
+  background: transparent;
+  border: none;
+  border-inline-start: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all .2s ease;
+  flex-shrink: 0;
+  z-index: 3;
+}
+
+.cvx-banner-close:hover {
+  color: var(--neon);
+  background: rgba(0, 255, 156, 0.12);
+}
+
+@keyframes cvxTickerMove {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+[dir="rtl"] .cvx-banner-track,
+html[lang="ar"] .cvx-banner-track {
+  animation-name: cvxTickerMoveRTL;
+}
+
+@keyframes cvxTickerMoveRTL {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(50%, 0, 0); }
+}
+
+/* Light Theme Support */
+body.theme-light .cvx-top-banner {
+  background: linear-gradient(90deg, #ffffff 0%, #f0fdf4 35%, #ecfeff 50%, #f0fdf4 65%, #ffffff 100%);
+  border-bottom: 1px solid rgba(0, 180, 100, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+body.theme-light .cvx-banner-badge {
+  background: linear-gradient(90deg, rgba(0, 200, 120, 0.12), rgba(18, 180, 220, 0.08));
+  border-inline-end-color: rgba(0, 180, 100, 0.25);
+}
+body.theme-light .cvx-banner-tag {
+  color: #0f172a;
+  text-shadow: none;
+}
+body.theme-light .cvx-banner-text {
+  color: #0f172a;
+  text-shadow: none;
+}
+body.theme-light .cvx-banner-close {
+  color: #64748b;
+  border-inline-start-color: rgba(0, 0, 0, 0.08);
+}
+body.theme-light .cvx-banner-close:hover {
+  color: #059669;
+  background: rgba(5, 150, 105, 0.08);
+}
+
+@media (max-width: 600px) {
+  .cvx-top-banner {
+    height: 34px;
+  }
+  .cvx-banner-badge {
+    padding: 0 10px;
+  }
+  .cvx-banner-tag {
+    font-size: 10px;
+    letter-spacing: 0.4px;
+  }
+  .cvx-banner-text {
+    font-size: 11.5px;
+  }
+  .cvx-banner-sep {
+    margin: 0 14px;
+    font-size: 10px;
+  }
+}
 </style>
 <div class="cvx" id="cvtop">
 
@@ -9011,21 +9212,75 @@ html, body {
       }
       window.renderDynamicFaqs = renderDynamicFaqs;
 
-      // Render Announcement Banner if Active
-      if (bannerActive && bannerText) {
+      // Render Announcement Banner if Active (شريط التنبيهات الفخم المتحرك)
+      window.cvxBannerActive = bannerActive;
+      window.cvxBannerText = bannerText;
+
+      function renderTopBanner(text, active) {
         var bEl = document.getElementById('cvxTopBanner');
+        if (!active || !text || !text.trim()) {
+          if (bEl) bEl.style.display = 'none';
+          return;
+        }
+
         if (!bEl) {
           bEl = document.createElement('div');
           bEl.id = 'cvxTopBanner';
-          bEl.style.cssText = 'background:linear-gradient(90deg,var(--neon-2),var(--neon));color:#000;font-weight:700;font-size:13px;padding:8px 16px;text-align:center;position:relative;z-index:9999;box-shadow:0 2px 10px rgba(0,0,0,0.3);letter-spacing:.3px;';
+          bEl.className = 'cvx-top-banner';
+          bEl.setAttribute('role', 'region');
+          bEl.setAttribute('aria-label', 'Announcement');
           document.body.prepend(bEl);
         }
-        bEl.textContent = bannerText;
+
+        var isAr = (document.documentElement ? document.documentElement.getAttribute('lang') : null) === 'ar';
+        var badgeTitle = isAr ? 'تنبيه مباشر' : 'LIVE NOTICE';
+
+        function escapeBanner(str) {
+          return (str || '').replace(/[&<>"']/g, function(m) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+          });
+        }
+
+        var cleanText = escapeBanner(text.trim());
+
+        // Build seamless multi-item looping marquee track
+        var repeatedItems = '';
+        for (var i = 0; i < 6; i++) {
+          repeatedItems += '<div class="cvx-banner-item">' +
+            '<span class="cvx-banner-text">' + cleanText + '</span>' +
+            '<span class="cvx-banner-sep">✦</span>' +
+          '</div>';
+        }
+
+        bEl.innerHTML = '<div class="cvx-banner-inner">' +
+          '<div class="cvx-banner-badge">' +
+            '<span class="cvx-banner-dot"></span>' +
+            '<span class="cvx-banner-tag" id="cvxBannerTag">' + badgeTitle + '</span>' +
+          '</div>' +
+          '<div class="cvx-banner-track-wrap">' +
+            '<div class="cvx-banner-track">' +
+              repeatedItems +
+            '</div>' +
+          '</div>' +
+          '<button type="button" class="cvx-banner-close" onclick="dismissTopBanner(event)" title="' + (isAr ? 'إغلاق التنبيه' : 'Dismiss') + '">✕</button>' +
+        '</div>';
+
         bEl.style.display = 'block';
-      } else {
-        var existingB = document.getElementById('cvxTopBanner');
-        if (existingB) existingB.style.display = 'none';
       }
+
+      window.renderTopBanner = renderTopBanner;
+      renderTopBanner(bannerText, bannerActive);
+
+      window.dismissTopBanner = function(e) {
+        if (e && e.stopPropagation) e.stopPropagation();
+        var b = document.getElementById('cvxTopBanner');
+        if (b) {
+          b.style.transition = 'all .35s ease';
+          b.style.opacity = '0';
+          b.style.transform = 'translateY(-100%)';
+          setTimeout(function(){ b.style.display = 'none'; }, 350);
+        }
+      };
     }).catch(function(){});
   }
   loadLiveSettings();
