@@ -9840,40 +9840,8 @@ body.theme-light .cvx-tv-text {
   // ==========================================================================
   var defaultReviews = [
     {
-      name: 'Tariq B.',
-      country: '🇩🇿 الجزائر',
-      country_en: '🇩🇿 Algeria',
-      rating: 5,
-      service: 'managed',
-      stat: '+42.8% ROI (5 أشهر)',
-      stat_en: '+42.8% ROI (5 Months)',
-      text: 'بدأت مع سيف الدين بمحفظة تجريبية ثم قمت برفع رأس المال. الالتزام بإدارة المخاطر ووقف الخسارة لا مثيل له، لا مغامرات ولا عشوائية، تقارير أسبوعية تفصيلية واحترافية عالية جداً.',
-      text_en: 'Started with Saifeddine on a test portfolio then scaled my capital. The risk management and stop-loss discipline are second to none—zero reckless gambling. Detailed weekly reports and immense professionalism.'
-    },
-    {
-      name: 'Faisal Al-Otaibi',
-      country: '🇸🇦 السعودية',
-      country_en: '🇸🇦 Saudi Arabia',
-      rating: 5,
-      service: 'signals',
-      stat: 'دقة 86% على الذهب XAUUSD',
-      stat_en: '86% Winrate on Gold XAUUSD',
-      text: 'أفضل قناة توصيات دخلت فيها من 3 سنوات. نقاط الدخول دقيقة جداً مع وقف خسارة صغير وأهداف محددة. قناة سيف الدين أنقذت حسابي من الخسائر المتراكمة وعوضت رأس مالي.',
-      text_en: 'Hands down the best signal channel I have joined in 3 years. Precision entry points, tight stop-losses, and well-defined targets. Saifeddine VIP channel turned my losses into consistent profits.'
-    },
-    {
-      name: 'Karim Mansouri',
-      country: '🇫🇷 فرنسا',
-      country_en: '🇫🇷 France',
-      rating: 5,
-      service: 'newsx',
-      stat: 'اشتراك NewsX AI · ترجيح دقيق',
-      stat_en: 'NewsX AI License · Accurate Bias',
-      text: 'منصة NewsX AI رائعة جداً في وقت صدور أخبار الـ CPI والـ NFP. الترجيح المسبق لاتجاه الذهب وفر علي ساعات من التحليل وساعدني في تحقيق صفقات موفقة جداً.',
-      text_en: 'The NewsX AI platform is exceptional during high-impact CPI and NFP news releases. Pre-release directional bias on Gold saved me hours of analysis and led to outstanding trade executions.'
-    },
-    {
       name: 'Omar Al-Shammari',
+      rawCountry: 'الإمارات 🇦🇪',
       country: '🇦🇪 الإمارات',
       country_en: '🇦🇪 UAE',
       rating: 5,
@@ -9884,7 +9852,44 @@ body.theme-light .cvx-tv-text {
       text_en: 'Transparency is unmatched with brother Saifeddine. My Exness account is linked directly; I watch every trade open and close in real-time with strict 1-2% risk discipline per trade.'
     },
     {
+      name: 'Shahzod.',
+      rawCountry: '🇺🇿 أوزبكستان',
+      country: '🇺🇿 أوزبكستان',
+      country_en: '🇺🇿 Uzbekistan',
+      rating: 5,
+      service: 'managed',
+      stat: '+42.8% ROI (5 أشهر)',
+      stat_en: '+42.8% ROI (5 Months)',
+      text: 'خدمة رائعة حقا تعاملت معه و كانت نتائج اقسم انها مبهرة حقا واستلمت أرباحي بدون أي تعقيد.',
+      text_en: 'Truly an outstanding service. I worked with him and the results were genuinely impressive, with seamless profit withdrawals.'
+    },
+    {
+      name: 'JULLIËNE',
+      rawCountry: 'فرنسا 🇫🇷',
+      country: '🇫🇷 فرنسا',
+      country_en: '🇫🇷 France',
+      rating: 5,
+      service: 'newsx',
+      stat: 'اشتراك NewsX AI · ترجيح دقيق',
+      stat_en: 'NewsX AI License · Accurate Bias',
+      text: 'منصة NewsX AI رائعة جداً في وقت صدور أخبار الـ CPI والـ NFP. الترجيح المسبق لاتجاه الذهب وفر علي ساعات من التحليل وساعدني في تحقيق صفقات موفقة جداً.',
+      text_en: 'The NewsX AI platform is exceptional during high-impact CPI and NFP news releases. Pre-release directional bias on Gold saved me hours of analysis and led to outstanding trade executions.'
+    },
+    {
+      name: 'Pamela Marx',
+      rawCountry: '🇷🇺 روسيا',
+      country: '🇷🇺 روسيا',
+      country_en: '🇷🇺 Russia',
+      rating: 5,
+      service: 'signals',
+      stat: 'دقة 86% على الذهب XAUUSD',
+      stat_en: '86% Winrate on Gold XAUUSD',
+      text: 'أفضل قناة توصيات دخلت فيها من 3 سنوات. نقاط الدخول دقيقة جداً مع وقف خسارة صغير وأهداف محددة. قناة سيف الدين أنقذت حسابي من الخسائر المتراكمة وعوضت رأس مالي.',
+      text_en: 'Hands down the best signal channel I have joined in 3 years. Precision entry points, tight stop-losses, and well-defined targets. Saifeddine VIP channel turned my losses into consistent profits.'
+    },
+    {
       name: 'David Henderson',
+      rawCountry: 'UK 🇬🇧',
       country: '🇬🇧 بريطانيا',
       country_en: '🇬🇧 United Kingdom',
       rating: 5,
@@ -9895,15 +9900,16 @@ body.theme-light .cvx-tv-text {
       text_en: 'The custom MT5 volatility break indicator works flawlessly without repainting. Clean setup instructions and instant delivery on Windows. Excellent quantitative coding.'
     },
     {
-      name: 'Youssef Benali',
-      country: '🇲🇦 المغرب',
-      country_en: '🇲🇦 Morocco',
+      name: 'Daya',
+      rawCountry: 'GERMANY',
+      country: '🇩🇪 ألمانيا',
+      country_en: '🇩🇪 Germany',
       rating: 5,
-      service: 'newsx',
+      service: 'managed',
       stat: 'ترجيح الذهب XAUUSD · تنبيهات',
       stat_en: 'Gold Bias · Instant Alerts',
-      text: 'تطبيق NewsX AI سريع وخفيف على الهاتف، إشعارات الأخبار تصل قبل حركة السوق بثوانٍ حاسمة. احترافية عالية ودعم فني متواصل من الأخ سيف الدين.',
-      text_en: 'The NewsX AI app is lightning fast on mobile. Push alerts arrive right before explosive market volatility. True quantitative edge and continuous support from Saifeddine.'
+      text: 'كل شيء في هذا الموقع مجنون ومذهل، شكراً لك.',
+      text_en: 'Everything on this site is insane, thank you!'
     }
   ];
 
