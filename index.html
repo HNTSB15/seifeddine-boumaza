@@ -8937,57 +8937,59 @@ html, body {
 
           var qText = '';
           if (isAr) {
-            qText = f.question_ar || f.q_ar || f.questionAr;
-            if (!qText && /[\u0600-\u06FF]/.test(f.question || f.q || '')) {
-              qText = f.question || f.q;
-            }
-            if (!qText && dict && dict['faq_q' + slotNum]) {
+            if (f.question_ar && f.question_ar.trim()) {
+              qText = f.question_ar.trim();
+            } else if (f.q_ar && f.q_ar.trim()) {
+              qText = f.q_ar.trim();
+            } else if ((f.question || f.q) && /[\u0600-\u06FF]/.test(f.question || f.q)) {
+              qText = (f.question || f.q).trim();
+            } else if (dict && dict['faq_q' + slotNum]) {
               qText = dict['faq_q' + slotNum];
-            }
-            if (!qText && defaultArFaqs['faq_q' + slotNum]) {
+            } else if (defaultArFaqs['faq_q' + slotNum]) {
               qText = defaultArFaqs['faq_q' + slotNum];
-            }
-            if (!qText) {
-              qText = f.question || f.q || '';
+            } else {
+              qText = (f.question || f.q || f.question_en || '').trim();
             }
           } else {
-            qText = f.question_en || f.q_en || f.questionEn;
-            if (!qText && dict && dict['faq_q' + slotNum] && !/[\u0600-\u06FF]/.test(dict['faq_q' + slotNum])) {
-              if (/[\u0600-\u06FF]/.test(f.question || f.q || '')) {
-                qText = dict['faq_q' + slotNum];
-              } else {
-                qText = f.question || f.q || dict['faq_q' + slotNum];
-              }
-            } else if (!qText) {
-              qText = f.question || f.q || '';
+            if (f.question_en && f.question_en.trim()) {
+              qText = f.question_en.trim();
+            } else if (f.q_en && f.q_en.trim()) {
+              qText = f.q_en.trim();
+            } else if ((f.question || f.q) && !/[\u0600-\u06FF]/.test(f.question || f.q)) {
+              qText = (f.question || f.q).trim();
+            } else if (dict && dict['faq_q' + slotNum] && !/[\u0600-\u06FF]/.test(dict['faq_q' + slotNum])) {
+              qText = dict['faq_q' + slotNum];
+            } else {
+              qText = (f.question || f.q || f.question_ar || '').trim();
             }
           }
 
           var aText = '';
           if (isAr) {
-            aText = f.answer_ar || f.a_ar || f.answerAr;
-            if (!aText && /[\u0600-\u06FF]/.test(f.answer || f.a || '')) {
-              aText = f.answer || f.a;
-            }
-            if (!aText && dict && dict['faq_a' + slotNum]) {
+            if (f.answer_ar && f.answer_ar.trim()) {
+              aText = f.answer_ar.trim();
+            } else if (f.a_ar && f.a_ar.trim()) {
+              aText = f.a_ar.trim();
+            } else if ((f.answer || f.a) && /[\u0600-\u06FF]/.test(f.answer || f.a)) {
+              aText = (f.answer || f.a).trim();
+            } else if (dict && dict['faq_a' + slotNum]) {
               aText = dict['faq_a' + slotNum];
-            }
-            if (!aText && defaultArFaqs['faq_a' + slotNum]) {
+            } else if (defaultArFaqs['faq_a' + slotNum]) {
               aText = defaultArFaqs['faq_a' + slotNum];
-            }
-            if (!aText) {
-              aText = f.answer || f.a || '';
+            } else {
+              aText = (f.answer || f.a || f.answer_en || '').trim();
             }
           } else {
-            aText = f.answer_en || f.a_en || f.answerEn;
-            if (!aText && dict && dict['faq_a' + slotNum] && !/[\u0600-\u06FF]/.test(dict['faq_a' + slotNum])) {
-              if (/[\u0600-\u06FF]/.test(f.answer || f.a || '')) {
-                aText = dict['faq_a' + slotNum];
-              } else {
-                aText = f.answer || f.a || dict['faq_a' + slotNum];
-              }
-            } else if (!aText) {
-              aText = f.answer || f.a || '';
+            if (f.answer_en && f.answer_en.trim()) {
+              aText = f.answer_en.trim();
+            } else if (f.a_en && f.a_en.trim()) {
+              aText = f.a_en.trim();
+            } else if ((f.answer || f.a) && !/[\u0600-\u06FF]/.test(f.answer || f.a)) {
+              aText = (f.answer || f.a).trim();
+            } else if (dict && dict['faq_a' + slotNum] && !/[\u0600-\u06FF]/.test(dict['faq_a' + slotNum])) {
+              aText = dict['faq_a' + slotNum];
+            } else {
+              aText = (f.answer || f.a || f.answer_ar || '').trim();
             }
           }
 
@@ -8997,7 +8999,7 @@ html, body {
                 '<span class="faq-num">' + (f.num || numStr) + '</span>' +
                 '<span class="faq-q-text" id="faqQ' + slotNum + '">' + qText + '</span>' +
               '</div>' +
-              '<span class="faq-icon">' + (isActive ? '−' : '+') + '</span>' +
+              '<span class="faq-icon">+</span>' +
             '</button>' +
             '<div class="cvx-faq-answer">' +
               '<div class="cvx-faq-answer-inner" id="faqA' + slotNum + '">' + aText + '</div>' +

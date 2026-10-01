@@ -2288,7 +2288,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
             <form id="faqForm" onsubmit="submitNewFaq(event)">
               <div class="form-group full">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;flex-wrap:wrap;gap:4px">
-                  <label style="margin:0">Question (Arabic or English) * <span>(نص السؤال)</span></label>
+                  <label style="margin:0">Question (Arabic or Main) * <span>(نص السؤال بالعربية)</span></label>
                   <span style="font-size:11px;color:var(--cyan)">💡 انقر لاختيار سؤال وجواب نموذجي جاهز:</span>
                 </div>
                 <div class="preset-chips" style="margin-bottom:8px">
@@ -2298,17 +2298,28 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
                   <button type="button" class="preset-chip" onclick="setFaqPreset('brokers')">💡 المنصات والوسطاء</button>
                   <button type="button" class="preset-chip" onclick="setFaqPreset('signals')">💡 توصيات الذهب VIP</button>
                 </div>
-                <input type="text" id="faqQ" required placeholder="e.g. ما هو رأس المال الأدنى المطلوب لإدارة المحافظ؟">
+                <input type="text" id="faqQ" required placeholder="e.g. ما هو رأس المال الأدنى المطلوب لإدارة المحافظ؟" dir="rtl">
               </div>
 
               <div class="form-group full">
-                <label>Answer (Detailed Explanation) * <span>(الإجابة النموذجية الشاملة)</span></label>
-                <textarea id="faqA" rows="4" required placeholder="الحد الأدنى المقترح للبدء في خدمة إدارة الحسابات هو 1,000 دولار لضمان توزيع متوازن..."></textarea>
+                <label>Answer (Arabic Explanation) * <span>(الإجابة بالعربية بالتفصيل)</span></label>
+                <textarea id="faqA" rows="4" required placeholder="الحد الأدنى المقترح للبدء في خدمة إدارة الحسابات هو 100$..." dir="rtl"></textarea>
+              </div>
+
+              <div class="form-grid" style="margin-top:4px">
+                <div class="form-group">
+                  <label>Question in English <span>(السؤال بالإنجليزية - اختياري)</span></label>
+                  <input type="text" id="faqQ_en" placeholder="e.g. What is the minimum capital required?" dir="ltr">
+                </div>
+                <div class="form-group">
+                  <label>Answer in English <span>(الإجابة بالإنجليزية - اختياري)</span></label>
+                  <textarea id="faqA_en" rows="3" placeholder="e.g. The minimum recommended capital starts from $100+..." dir="ltr"></textarea>
+                </div>
               </div>
 
               <div class="form-group full">
                 <label>Category <span>(تصنيف السؤال)</span></label>
-                <input type="text" id="faqCategory" placeholder="e.g. General / Terms">
+                <input type="text" id="faqCategory" placeholder="e.g. Managed Accounts">
                 <div class="preset-chips">
                   <button type="button" class="preset-chip" onclick="setPreset('faqCategory', 'Managed Accounts')">إدارة المحافظ</button>
                   <button type="button" class="preset-chip" onclick="setPreset('faqCategory', 'Signals &amp; VIP')">توصيات VIP</button>
@@ -3031,32 +3042,42 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
      EDIT FAQ MODAL (تعديل الأسئلة الشائعة)
      ========================================================================== -->
 <div id="editFaqModal" class="modal-backdrop" style="display:none">
-  <div class="modal-card">
+  <div class="modal-card" style="max-width:650px">
     <div class="modal-header">
-      <div class="modal-title">✏️ Edit FAQ Item</div>
+      <div class="modal-title">✏️ Edit FAQ Item (تعديل السؤال الشائع)</div>
       <button type="button" class="modal-close" onclick="closeEditFaqModal()">✕</button>
     </div>
     <form id="editFaqForm" onsubmit="saveEditedFaq(event)">
       <input type="hidden" id="edit_faqId">
       
       <div class="form-group full">
-        <label>Question (Arabic or English) *</label>
-        <input type="text" id="edit_faqQ" required>
+        <label>السؤال بالعربية (Arabic Question) *</label>
+        <input type="text" id="edit_faqQ" required dir="rtl" placeholder="نص السؤال بالعربية...">
       </div>
 
       <div class="form-group full">
-        <label>Answer (Detailed Explanation) *</label>
-        <textarea id="edit_faqA" rows="4" required></textarea>
+        <label>الإجابة بالعربية (Arabic Answer) *</label>
+        <textarea id="edit_faqA" rows="4" required dir="rtl" placeholder="الإجابة النموذجية بالعربية..."></textarea>
       </div>
 
       <div class="form-group full">
-        <label>Category (Optional)</label>
-        <input type="text" id="edit_faqCategory">
+        <label>Question in English <span>(السؤال بالإنجليزية - اختياري)</span></label>
+        <input type="text" id="edit_faqQ_en" placeholder="Question in English for English mode" dir="ltr">
+      </div>
+
+      <div class="form-group full">
+        <label>Answer in English <span>(الإجابة بالإنجليزية - اختياري)</span></label>
+        <textarea id="edit_faqA_en" rows="3" placeholder="Answer in English for English mode" dir="ltr"></textarea>
+      </div>
+
+      <div class="form-group full">
+        <label>Category (التصنيف)</label>
+        <input type="text" id="edit_faqCategory" placeholder="e.g. Managed Accounts / Profit Split">
       </div>
 
       <div style="display:flex;gap:10px;margin-top:16px">
-        <button type="button" class="btn-cancel" onclick="closeEditFaqModal()" style="flex:1">Cancel</button>
-        <button type="submit" id="btnUpdateFaq" class="btn-primary" style="flex:2">UPDATE FAQ ITEM 💾</button>
+        <button type="button" class="btn-cancel" onclick="closeEditFaqModal()" style="flex:1">Cancel (إلغاء)</button>
+        <button type="submit" id="btnUpdateFaq" class="btn-primary" style="flex:2">UPDATE FAQ ITEM 💾 حفظ التعديل</button>
       </div>
     </form>
   </div>
@@ -3951,28 +3972,40 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
   window.setFaqPreset = function(type) {
     var qEl = document.getElementById('faqQ');
     var aEl = document.getElementById('faqA');
+    var qEnEl = document.getElementById('faqQ_en');
+    var aEnEl = document.getElementById('faqA_en');
     var cEl = document.getElementById('faqCategory');
     if (!qEl || !aEl) return;
 
     if (type === 'capital') {
       qEl.value = 'ما هو رأس المال الأدنى المطلوب لإدارة المحافظ؟';
       aEl.value = 'الحد الأدنى للبدء في خدمة إدارة الحسابات يبدأ من 100$ كحساب تجريبي مباشر، وصولاً إلى 1,000$ فما فوق للمحافظ الأكبر لضمان إدارة مخاطر صارمة وموازنة الهامش.';
+      if (qEnEl) qEnEl.value = 'What is the minimum capital required, and how is drawdown controlled?';
+      if (aEnEl) aEnEl.value = 'The minimum starting capital begins from $100+ for initial testing, scaling to institutional accounts ($1,000 to $10,000+) with drawdown capped below 8.5%.';
       if (cEl) cEl.value = 'Managed Accounts';
     } else if (type === 'split') {
       qEl.value = 'كيف يتم تقاسم الأرباح وطريقة تسويتها وسحبها؟';
       aEl.value = 'نسبة تقاسم الأرباح هي 50% للعميل و 50% للمدير من صافي الأرباح المحققة فقط. تتم التسوية أسبوعياً أو نصف شهرياً، ويسحب العميل أرباحه مباشرة من حسابه لدى الوسيط.';
+      if (qEnEl) qEnEl.value = 'How does the 50/50 Profit Split work, and when are withdrawals processed?';
+      if (aEnEl) aEnEl.value = 'Our system operates on a 50% client / 50% manager net profit split with zero upfront management fees. You withdraw profits directly from your broker and transfer the split via USDT.';
       if (cEl) cEl.value = 'Profit Split';
     } else if (type === 'risk') {
       qEl.value = 'ما هي نسبة المخاطرة المسموحة وأقصى تراجع (Drawdown)؟';
       aEl.value = 'نعتمد على نموذج إدارة مخاطر صارم لا يتجاوز فيه أقصى تراجع 8.5% إلى 10%، مع وقف خسارة محدد لكل صفقة ودون أي تداول عشوائي وقت الأخبار العنيفة.';
+      if (qEnEl) qEnEl.value = 'What is the maximum risk tolerance and drawdown limit?';
+      if (aEnEl) aEnEl.value = 'We maintain strict institutional risk management keeping maximum drawdown capped under 8.5%, with mandatory stop-losses on every execution.';
       if (cEl) cEl.value = 'Risk Management';
     } else if (type === 'brokers') {
       qEl.value = 'ما هي شركات الوساطة والمنصات التي تدعمونها؟';
       aEl.value = 'ندعم العمل على منصة MetaTrader 5 (MT5) مع كبرى شركات الوساطة المرخصة والموثوقة مثل Exness و IC Markets و Tickmill لضمان سرعة التنفيذ وسهولة السحب والإيداع.';
+      if (qEnEl) qEnEl.value = 'Which forex and crypto brokers can I use for account management?';
+      if (aEnEl) aEnEl.value = 'We support all regulated MT4 and MT5 brokers worldwide including Exness, IC Markets, XM, Pepperstone, and FXTM.';
       if (cEl) cEl.value = 'Brokers & Platforms';
     } else if (type === 'signals') {
       qEl.value = 'ما الذي يميز قناة توصيات الذهب والعملات VIP؟';
       aEl.value = 'نقدم يومياً من 2 إلى 5 توصيات مدروسة بنقاط دخول دقيقة ووقف خسارة وهدفين للأرباح، مع متابعة حية للصفقات وإرشادات تحريك وقف الخسارة لحجز الأرباح.';
+      if (qEnEl) qEnEl.value = 'How are VIP Trading Signals delivered, and which pairs are covered?';
+      if (aEnEl) aEnEl.value = 'Signals are broadcast in real-time to VIP Telegram and NewsX AI, focusing heavily on Gold (XAUUSD), US30, and high-impact macro news releases.';
       if (cEl) cEl.value = 'VIP Signals';
     }
   };
@@ -5153,15 +5186,18 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       var html = '';
       list.forEach(function(item, idx) {
         var id = item.id !== undefined ? item.id : idx;
-        var qText = item.q || item.question || ('FAQ Item ' + (idx + 1));
-        var aText = (item.a || item.answer || '').replace(/<[^>]+>/g, '');
+        var numStr = item.num || ((idx + 1 < 10 ? '0' : '') + (idx + 1));
+        var qAr = item.question_ar || (item.question && /[\u0600-\u06FF]/.test(item.question) ? item.question : '') || item.question || item.q || ('FAQ Item ' + (idx + 1));
+        var qEn = item.question_en || (!/[\u0600-\u06FF]/.test(item.question || '') ? item.question : '') || '';
+        var aText = (item.answer_ar || item.answer || item.a || '').replace(/<[^>]+>/g, '');
         html += '<div class="item-card">' +
           '<div class="item-info">' +
             '<div class="item-title">' +
-              '<span style="color:var(--neon)">' + qText + '</span>' +
+              '<span style="color:var(--neon)">[' + numStr + '] ' + qAr + '</span>' +
               (item.category ? ('<span class="tag" style="font-size:10px">' + item.category + '</span>') : '') +
             '</div>' +
-            '<div class="item-sub">' + (aText ? (aText.slice(0, 90) + '...') : '') + '</div>' +
+            (qEn ? ('<div style="font-size:12px;color:var(--cyan);margin:3px 0 4px;font-family:var(--font-mono)">🇬🇧 EN: ' + qEn + '</div>') : '') +
+            '<div class="item-sub">' + (aText ? (aText.slice(0, 110) + '...') : '') + '</div>' +
           '</div>' +
           '<div class="item-actions">' +
             '<button type="button" class="btn-edit" onclick="openEditFaqModal(' + id + ')">Edit ✏️</button>' +
@@ -5180,15 +5216,42 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     var btn = document.getElementById('btnSaveFaq');
     var q = (document.getElementById('faqQ').value || '').trim();
     var a = (document.getElementById('faqA').value || '').trim();
+    var qEnEl = document.getElementById('faqQ_en');
+    var aEnEl = document.getElementById('faqA_en');
+    var qEn = qEnEl ? qEnEl.value.trim() : '';
+    var aEn = aEnEl ? aEnEl.value.trim() : '';
     var cat = (document.getElementById('faqCategory').value || '').trim();
+
+    if (!q) {
+      showToast('⚠️ يرجى كتابة السؤال أولاً', 'error');
+      return;
+    }
+    if (!a) {
+      showToast('⚠️ يرجى كتابة الإجابة أولاً', 'error');
+      return;
+    }
+
+    var currentList = window._faqsCache || [];
+    var nextNum = currentList.length + 1;
+    var numStr = (nextNum < 10 ? '0' : '') + nextNum;
+
+    var isAr = /[\u0600-\u06FF]/.test(q);
+    var finalQ_Ar = isAr ? q : (qEn || q);
+    var finalA_Ar = isAr ? a : (aEn || a);
+    var finalQ_En = qEn || (!isAr ? q : q);
+    var finalA_En = aEn || (!isAr ? a : a);
 
     var newFaq = {
       id: Date.now(),
-      num: ((currentList.length + 1) < 10 ? '0' : '') + (currentList.length + 1),
-      q: q,
-      question: q,
-      a: a,
-      answer: a,
+      num: numStr,
+      question: finalQ_Ar,
+      question_ar: finalQ_Ar,
+      question_en: finalQ_En,
+      answer: finalA_Ar,
+      answer_ar: finalA_Ar,
+      answer_en: finalA_En,
+      q: finalQ_Ar,
+      a: finalA_Ar,
       category: cat || 'General',
       is_active: true
     };
@@ -5196,7 +5259,6 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     btn.disabled = true;
     btn.textContent = 'ADDING FAQ...';
 
-    var currentList = window._faqsCache || [];
     var updatedList = currentList.concat([newFaq]);
 
     sdb.from('website_settings').upsert({
@@ -5210,7 +5272,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         showToast('Error saving FAQ: ' + res.error.message, 'error');
         return;
       }
-      showToast('FAQ item added successfully! 📖');
+      showToast('تمت إضافة السؤال بنجاح ونشره على الموقع! 📖', 'success');
       document.getElementById('faqForm').reset();
       loadFaqsList();
     }).catch(function(err){
@@ -5227,12 +5289,27 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     });
     if (!item) return;
 
-    document.getElementById('edit_faqId').value = (item.id !== undefined ? item.id : id);
-    document.getElementById('edit_faqQ').value = item.q || item.question || '';
-    document.getElementById('edit_faqA').value = item.a || item.answer || '';
-    document.getElementById('edit_faqCategory').value = item.category || '';
+    var qAr = item.question_ar || (item.question && /[\u0600-\u06FF]/.test(item.question) ? item.question : '') || item.question || item.q || '';
+    var aAr = item.answer_ar || (item.answer && /[\u0600-\u06FF]/.test(item.answer) ? item.answer : '') || item.answer || item.a || '';
+    var qEn = item.question_en || (!/[\u0600-\u06FF]/.test(item.question || '') ? item.question : '') || '';
+    var aEn = item.answer_en || (!/[\u0600-\u06FF]/.test(item.answer || '') ? item.answer : '') || '';
 
-    document.getElementById('editFaqModal').style.display = 'flex';
+    var idEl = document.getElementById('edit_faqId');
+    var qEl = document.getElementById('edit_faqQ');
+    var aEl = document.getElementById('edit_faqA');
+    var qEnEl = document.getElementById('edit_faqQ_en');
+    var aEnEl = document.getElementById('edit_faqA_en');
+    var catEl = document.getElementById('edit_faqCategory');
+
+    if (idEl) idEl.value = (item.id !== undefined ? item.id : id);
+    if (qEl) qEl.value = qAr;
+    if (aEl) aEl.value = aAr;
+    if (qEnEl) qEnEl.value = qEn;
+    if (aEnEl) aEnEl.value = aEn;
+    if (catEl) catEl.value = item.category || '';
+
+    var modal = document.getElementById('editFaqModal');
+    if (modal) modal.style.display = 'flex';
   };
 
   window.closeEditFaqModal = function() {
@@ -5253,17 +5330,41 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       return;
     }
 
-    var q = (document.getElementById('edit_faqQ').value || '').trim();
-    var a = (document.getElementById('edit_faqA').value || '').trim();
+    var qAr = (document.getElementById('edit_faqQ').value || '').trim();
+    var aAr = (document.getElementById('edit_faqA').value || '').trim();
+    var qEnEl = document.getElementById('edit_faqQ_en');
+    var aEnEl = document.getElementById('edit_faqA_en');
+    var qEn = qEnEl ? qEnEl.value.trim() : '';
+    var aEn = aEnEl ? aEnEl.value.trim() : '';
     var cat = (document.getElementById('edit_faqCategory').value || '').trim();
+
+    if (!qAr && !qEn) {
+      showToast('⚠️ يرجى كتابة السؤال أولاً', 'error');
+      return;
+    }
+    if (!aAr && !aEn) {
+      showToast('⚠️ يرجى كتابة الإجابة أولاً', 'error');
+      return;
+    }
+
+    var isAr = /[\u0600-\u06FF]/.test(qAr);
+    var finalQ_Ar = qAr || qEn;
+    var finalA_Ar = aAr || aEn;
+    var finalQ_En = qEn || (!isAr ? qAr : (list[idx].question_en || qAr));
+    var finalA_En = aEn || (!isAr ? aAr : (list[idx].answer_en || aAr));
 
     list[idx] = Object.assign({}, list[idx], {
       id: list[idx].id !== undefined ? list[idx].id : Number(id),
-      q: q,
-      question: q,
-      a: a,
-      answer: a,
-      category: cat || 'General'
+      question: finalQ_Ar,
+      question_ar: finalQ_Ar,
+      question_en: finalQ_En,
+      answer: finalA_Ar,
+      answer_ar: finalA_Ar,
+      answer_en: finalA_En,
+      q: finalQ_Ar,
+      a: finalA_Ar,
+      category: cat || list[idx].category || 'General',
+      is_active: list[idx].is_active !== false
     });
 
     btn.disabled = true;
@@ -5280,7 +5381,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         showToast('Error: ' + res.error.message, 'error');
         return;
       }
-      showToast('FAQ updated successfully! 💾');
+      showToast('تم حفظ وتحديث السؤال الشائع بنجاح! 💾', 'success');
       closeEditFaqModal();
       loadFaqsList();
     }).catch(function(err){
@@ -5291,7 +5392,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
   };
 
   window.deleteFaq = function(id) {
-    if (!confirm('Are you sure you want to delete this FAQ item?')) return;
+    if (!confirm('هل أنت متأكد من حذف هذا السؤال من قائمة الأسئلة الشائعة؟')) return;
     var list = window._faqsCache || [];
     var updated = list.filter(function(item, idx){
       return String(item.id !== undefined ? item.id : idx) !== String(id);
@@ -5306,7 +5407,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         showToast('Error deleting FAQ: ' + res.error.message, 'error');
         return;
       }
-      showToast('FAQ deleted successfully!');
+      showToast('تم حذف السؤال بنجاح من الموقع! 🗑️', 'success');
       loadFaqsList();
     }).catch(function(err){
       showToast('Error: ' + (err ? err.message : 'Network error'), 'error');
