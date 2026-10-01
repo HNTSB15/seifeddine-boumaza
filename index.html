@@ -8809,7 +8809,7 @@ body.theme-light .cvx-tv-text {
     sdb.from('website_settings').select('*').then(function(res) {
       var list = (res && res.data && res.data.length) ? res.data : [];
       if (!list.length) return;
-      var bannerText = '', bannerActive = false;
+      var bannerText = '', bannerTextEn = '', bannerActive = false;
 
       list.forEach(function(s) {
         var k = s.setting_name || s.key;
@@ -8896,6 +8896,7 @@ body.theme-light .cvx-tv-text {
 
         // Banner
         if (k === 'announcement_banner_text') bannerText = val;
+        if (k === 'announcement_banner_text_en') bannerTextEn = val;
         if (k === 'announcement_banner_active') bannerActive = (val === 'true' || val === true);
 
         // Crypto Wallets
@@ -9281,13 +9282,65 @@ body.theme-light .cvx-tv-text {
       }
       window.renderDynamicFaqs = renderDynamicFaqs;
 
-      // Render Announcement Banner if Active (شريط الأخبار التلفزيوني LED المتحرك من اليمين إلى اليسار)
+      // Render Announcement Banner if Active (شريط الأخبار التلفزيوني LED المتحرك باللغتين العربية والإنجليزية)
       window.cvxBannerActive = bannerActive;
       window.cvxBannerText = bannerText;
+      window.cvxBannerTextEn = bannerTextEn;
 
-      function renderTopBanner(text, active) {
+      function getLocalizedBannerText(rawTextAr, rawTextEn, lang) {
+        if (lang === 'en') {
+          if (rawTextEn && rawTextEn.trim() && !/[\u0600-\u06FF]/.test(rawTextEn)) return rawTextEn.trim();
+          if (!rawTextAr) return '💼 Welcome to Saifeddine Boumaza VIP Portfolio Management & Algo Trading System';
+          if (!/[\u0600-\u06FF]/.test(rawTextAr)) return rawTextAr.trim();
+
+          if (rawTextAr.indexOf('اكتملت السعة') > -1 || rawTextAr.indexOf('السعة الاستيعابية') > -1) {
+            return '🔴 Notice: Managed Accounts capacity is temporarily full — Stay tuned for upcoming slot openings';
+          }
+          if (rawTextAr.indexOf('قبول محافظ جديدة') > -1 || rawTextAr.indexOf('فتح باب قبول') > -1) {
+            return '🔥 New Managed Accounts Enrollment Open with Limited VIP Slots!';
+          }
+          if (rawTextAr.indexOf('خصم خاص 20%') > -1 || rawTextAr.indexOf('20%') > -1) {
+            return '⚡ Special 20% Discount on NewsX AI Platform & VIP Signals Memberships!';
+          }
+          if (rawTextAr.indexOf('مرحباً بكم') > -1 || rawTextAr.indexOf('الموقع الرسمي') > -1) {
+            return '💼 Welcome to the official website of Saifeddine Boumaza — VIP Portfolio Management & Professional Trading';
+          }
+
+          var translated = rawTextAr
+            .replace(/🔴\s*تنبيه\s*:\s*/g, '🔴 Notice: ')
+            .replace(/💼\s*مرحباً بكم في الموقع الرسمي لسيف الدين بوعمازة/g, '💼 Welcome to the official website of Saifeddine Boumaza')
+            .replace(/إدارة محافظ وتداول احترافي/g, 'VIP Portfolio Management & Professional Trading')
+            .replace(/إدارة محافظ/g, 'Managed Accounts')
+            .replace(/تداول احترافي/g, 'Professional Trading')
+            .replace(/منصة NewsX/g, 'NewsX AI Platform')
+            .replace(/توصيات VIP/g, 'VIP Signals Channel')
+            .replace(/سحب فوري/g, 'Instant Payouts')
+            .replace(/حماية رأس المال/g, 'Capital Protection')
+            .replace(/تابع القناة لحين فتح مقاعد جديدة/g, 'Follow our official channel for new slot openings');
+
+          if (!/[\u0600-\u06FF]/.test(translated)) {
+            return translated;
+          }
+          return '💼 Welcome to Saifeddine Boumaza VIP Portfolio Management & Algo Trading System';
+        } else {
+          if (rawTextAr && rawTextAr.trim()) return rawTextAr.trim();
+          if (rawTextEn && rawTextEn.trim()) return rawTextEn.trim();
+          return '💼 مرحباً بكم في الموقع الرسمي لسيف الدين بوعمازة - إدارة محافظ وتداول احترافي';
+        }
+      }
+
+      function renderTopBanner(text, active, textEnOverride) {
+        var activeState = (active !== undefined) ? active : window.cvxBannerActive;
+        var currentLang = (document.documentElement && document.documentElement.getAttribute('lang')) ||
+                          (function(){ try { return localStorage.getItem('cvx_lang'); } catch(e){ return 'ar'; } })() || 'ar';
+        var isAr = (currentLang === 'ar');
+
+        var rawAr = text || window.cvxBannerText || '';
+        var rawEn = textEnOverride || window.cvxBannerTextEn || '';
+        var bannerString = getLocalizedBannerText(rawAr, rawEn, isAr ? 'ar' : 'en');
+
         var bEl = document.getElementById('cvxTopBanner');
-        if (!active || !text || !text.trim()) {
+        if (!activeState || !bannerString || !bannerString.trim()) {
           if (bEl) bEl.style.display = 'none';
           return;
         }
@@ -9298,7 +9351,7 @@ body.theme-light .cvx-tv-text {
           bEl.id = 'cvxTopBanner';
           bEl.className = 'cvx-top-banner';
           bEl.setAttribute('role', 'region');
-          bEl.setAttribute('aria-label', 'Broadcast TV News');
+          bEl.setAttribute('aria-label', isAr ? 'شريط الأخبار والتنبيهات المباشر' : 'Broadcast TV News Live Ticker');
         }
         if (navEl && bEl.parentNode !== navEl) {
           navEl.insertBefore(bEl, navEl.firstChild);
@@ -9312,11 +9365,9 @@ body.theme-light .cvx-tv-text {
           });
         }
 
-        var cleanText = escapeBanner(text.trim());
-        var isAr = (document.documentElement && document.documentElement.getAttribute('lang') === 'ar') ||
-                   (function(){ try { return localStorage.getItem('cvx_lang') === 'ar'; } catch(e){ return false; } })() ||
-                   /[\u0600-\u06FF]/.test(cleanText);
+        var cleanText = escapeBanner(bannerString.trim());
         var badgeTitle = isAr ? 'عاجل • بث حي' : 'BREAKING • LIVE';
+        var sepSymbol = isAr ? '◄◄' : '►►';
 
         // TV Broadcast Separator & Badges
         var tvPill1 = isAr ? '⚡ إدارة محافظ باحترافية' : '⚡ VIP PORTFOLIO MANAGEMENT';
@@ -9326,13 +9377,13 @@ body.theme-light .cvx-tv-text {
         // Single rich broadcast segment
         var singleSegment = '<div class="cvx-tv-unit">' +
           '<span class="cvx-tv-text">' + cleanText + '</span>' +
-          '<span class="cvx-tv-sep">◄◄</span>' +
+          '<span class="cvx-tv-sep">' + sepSymbol + '</span>' +
           '<span class="cvx-tv-pill green">' + tvPill1 + '</span>' +
-          '<span class="cvx-tv-sep">◄◄</span>' +
+          '<span class="cvx-tv-sep">' + sepSymbol + '</span>' +
           '<span class="cvx-tv-pill gold">' + tvPill2 + '</span>' +
-          '<span class="cvx-tv-sep">◄◄</span>' +
+          '<span class="cvx-tv-sep">' + sepSymbol + '</span>' +
           '<span class="cvx-tv-pill cyan">' + tvPill3 + '</span>' +
-          '<span class="cvx-tv-sep">◄◄</span>' +
+          '<span class="cvx-tv-sep">' + sepSymbol + '</span>' +
         '</div>';
 
         // Duplicate segments into 2 identical halves for mathematically seamless 100% loop
@@ -9362,7 +9413,7 @@ body.theme-light .cvx-tv-text {
       }
 
       window.renderTopBanner = renderTopBanner;
-      renderTopBanner(bannerText, bannerActive);
+      renderTopBanner(bannerText, bannerActive, bannerTextEn);
 
       window.dismissTopBanner = function(e) {
         if (e && e.stopPropagation) e.stopPropagation();
@@ -9800,8 +9851,8 @@ body.theme-light .cvx-tv-text {
   var defaultReviews = [
     {
       name: 'Tariq B.',
-      country: 'الجزائر 🇩🇿',
-      country_en: 'Algeria 🇩🇿',
+      country: '🇩🇿 الجزائر',
+      country_en: '🇩🇿 Algeria',
       rating: 5,
       service: 'managed',
       stat: '+42.8% ROI (5 أشهر)',
@@ -9811,8 +9862,8 @@ body.theme-light .cvx-tv-text {
     },
     {
       name: 'Faisal Al-Otaibi',
-      country: 'السعودية 🇸🇦',
-      country_en: 'Saudi Arabia 🇸🇦',
+      country: '🇸🇦 السعودية',
+      country_en: '🇸🇦 Saudi Arabia',
       rating: 5,
       service: 'signals',
       stat: 'دقة 86% على الذهب XAUUSD',
@@ -9822,8 +9873,8 @@ body.theme-light .cvx-tv-text {
     },
     {
       name: 'Karim Mansouri',
-      country: 'فرنسا 🇫🇷',
-      country_en: 'France 🇫🇷',
+      country: '🇫🇷 فرنسا',
+      country_en: '🇫🇷 France',
       rating: 5,
       service: 'newsx',
       stat: 'اشتراك NewsX AI · ترجيح دقيق',
@@ -9833,8 +9884,8 @@ body.theme-light .cvx-tv-text {
     },
     {
       name: 'Omar Al-Shammari',
-      country: 'الإمارات 🇦🇪',
-      country_en: 'UAE 🇦🇪',
+      country: '🇦🇪 الإمارات',
+      country_en: '🇦🇪 UAE',
       rating: 5,
       service: 'managed',
       stat: 'سحب أرباح شهري منتظم',
@@ -9844,8 +9895,8 @@ body.theme-light .cvx-tv-text {
     },
     {
       name: 'David Henderson',
-      country: 'بريطانيا 🇬🇧',
-      country_en: 'United Kingdom 🇬🇧',
+      country: '🇬🇧 بريطانيا',
+      country_en: '🇬🇧 United Kingdom',
       rating: 5,
       service: 'indicators',
       stat: 'مؤشر MT5 · 0 Repaint',
@@ -9855,8 +9906,8 @@ body.theme-light .cvx-tv-text {
     },
     {
       name: 'Youssef Benali',
-      country: 'المغرب 🇲🇦',
-      country_en: 'Morocco 🇲🇦',
+      country: '🇲🇦 المغرب',
+      country_en: '🇲🇦 Morocco',
       rating: 5,
       service: 'newsx',
       stat: 'ترجيح الذهب XAUUSD · تنبيهات',
@@ -9949,101 +10000,158 @@ body.theme-light .cvx-tv-text {
     'Passed Prop Firm Challenge 🏆': 'اجتياز اختبار Prop Firm 🏆'
   };
 
-  var revCountryDict = {
-    // Flag-first / Flag-last Arabic to English
-    '🇩🇿 الجزائر': 'Algeria 🇩🇿',
-    'الجزائر 🇩🇿': 'Algeria 🇩🇿',
-    'الجزائر': 'Algeria 🇩🇿',
-    '🇸🇦 السعودية': 'Saudi Arabia 🇸🇦',
-    'السعودية 🇸🇦': 'Saudi Arabia 🇸🇦',
-    'السعودية': 'Saudi Arabia 🇸🇦',
-    '🇦🇪 الإمارات': 'UAE 🇦🇪',
-    'الإمارات 🇦🇪': 'UAE 🇦🇪',
-    'الإمارات': 'UAE 🇦🇪',
-    '🇪🇬 مصر': 'Egypt 🇪🇬',
-    'مصر 🇪🇬': 'Egypt 🇪🇬',
-    'مصر': 'Egypt 🇪🇬',
-    '🇲🇦 المغرب': 'Morocco 🇲🇦',
-    'المغرب 🇲🇦': 'Morocco 🇲🇦',
-    'المغرب': 'Morocco 🇲🇦',
-    '🇫🇷 فرنسا': 'France 🇫🇷',
-    'فرنسا 🇫🇷': 'France 🇫🇷',
-    'فرنسا': 'France 🇫🇷',
-    '🇬🇧 بريطانيا': 'United Kingdom 🇬🇧',
-    'بريطانيا 🇬🇧': 'United Kingdom 🇬🇧',
-    '🇬🇧 المملكة المتحدة': 'United Kingdom 🇬🇧',
-    'المملكة المتحدة 🇬🇧': 'United Kingdom 🇬🇧',
-    '🇺🇸 أمريكا': 'USA 🇺🇸',
-    'أمريكا 🇺🇸': 'USA 🇺🇸',
-    '🇺🇸 الولايات المتحدة': 'USA 🇺🇸',
-    'الولايات المتحدة 🇺🇸': 'USA 🇺🇸',
-    '🇶🇦 قطر': 'Qatar 🇶🇦',
-    'قطر 🇶🇦': 'Qatar 🇶🇦',
-    '🇰🇼 الكويت': 'Kuwait 🇰🇼',
-    'الكويت 🇰🇼': 'Kuwait 🇰🇼',
-    '🇩🇪 ألمانيا': 'Germany 🇩🇪',
-    'ألمانيا 🇩🇪': 'Germany 🇩🇪',
-    '🇹🇳 تونس': 'Tunisia 🇹🇳',
-    'تونس 🇹🇳': 'Tunisia 🇹🇳',
-    '🇹🇷 تركيا': 'Turkey 🇹🇷',
-    'تركيا 🇹🇷': 'Turkey 🇹🇷',
-    '🇴🇲 عُمان': 'Oman 🇴🇲',
-    'عُمان 🇴🇲': 'Oman 🇴🇲',
-    '🇧🇭 البحرين': 'Bahrain 🇧🇭',
-    'البحرين 🇧🇭': 'Bahrain 🇧🇭',
-    '🇯🇴 الأردن': 'Jordan 🇯🇴',
-    'الأردن 🇯🇴': 'Jordan 🇯🇴',
-    '🇮🇶 العراق': 'Iraq 🇮🇶',
-    'العراق 🇮🇶': 'Iraq 🇮🇶',
-    '🇱🇧 لبنان': 'Lebanon 🇱🇧',
-    'لبنان 🇱🇧': 'Lebanon 🇱🇧',
-    '🇨🇭 سويسرا': 'Switzerland 🇨🇭',
-    'سويسرا 🇨🇭': 'Switzerland 🇨🇭',
-    '🇨🇦 كندا': 'Canada 🇨🇦',
-    'كندا 🇨🇦': 'Canada 🇨🇦',
+  // ==========================================================================
+  // 🌍 COMPREHENSIVE BILINGUAL COUNTRY & FLAG RESOLUTION ENGINE
+  // Formats any country string into Flag + Arabic Name (when ar) or Flag + English Name (when en)
+  // ==========================================================================
+  var MASTER_COUNTRIES = [
+    // 🌍 الشرق الأوسط والدول العربية (Arab World & MENA)
+    { flag: '🇩🇿', ar: 'الجزائر', en: 'Algeria', aliases: ['algeria', 'algerie', 'الجزائر', 'algiers', 'dz'] },
+    { flag: '🇸🇦', ar: 'السعودية', en: 'Saudi Arabia', aliases: ['saudi arabia', 'saudi', 'ksa', 'السعودية', 'المملكة العربية السعودية', 'riyadh', 'jeddah', 'sa'] },
+    { flag: '🇦🇪', ar: 'الإمارات', en: 'UAE', aliases: ['uae', 'united arab emirates', 'emirates', 'الإمارات', 'الامارات', 'دبي', 'dubai', 'ابوظبي', 'abu dhabi', 'ae'] },
+    { flag: '🇪🇬', ar: 'مصر', en: 'Egypt', aliases: ['egypt', 'egypte', 'مصر', 'جمهورية مصر العربية', 'cairo', 'القاهرة', 'alexandria', 'eg'] },
+    { flag: '🇲🇦', ar: 'المغرب', en: 'Morocco', aliases: ['morocco', 'maroc', 'المغرب', 'المملكة المغربية', 'casablanca', 'rabat', 'ma'] },
+    { flag: '🇶🇦', ar: 'قطر', en: 'Qatar', aliases: ['qatar', 'قطر', 'دولة قطر', 'doha', 'الدوحة', 'qa'] },
+    { flag: '🇰🇼', ar: 'الكويت', en: 'Kuwait', aliases: ['kuwait', 'الكويت', 'دولة الكويت', 'kuwait city', 'kw'] },
+    { flag: '🇴🇲', ar: 'عُمان', en: 'Oman', aliases: ['oman', 'عمان', 'عُمان', 'سلطنة عمان', 'muscat', 'مسقط', 'om'] },
+    { flag: '🇧🇭', ar: 'البحرين', en: 'Bahrain', aliases: ['bahrain', 'البحرين', 'مملكة البحرين', 'manama', 'المنامة', 'bh'] },
+    { flag: '🇯🇴', ar: 'الأردن', en: 'Jordan', aliases: ['jordan', 'الاردن', 'الأردن', 'المملكة الأردنية', 'amman', 'عمان الأردن', 'jo'] },
+    { flag: '🇮🇶', ar: 'العراق', en: 'Iraq', aliases: ['iraq', 'العراق', 'جمهورية العراق', 'baghdad', 'بغداد', 'erbil', 'iq'] },
+    { flag: '🇱🇧', ar: 'لبنان', en: 'Lebanon', aliases: ['lebanon', 'لبنان', 'beirut', 'بيروت', 'lb'] },
+    { flag: '🇹🇳', ar: 'تونس', en: 'Tunisia', aliases: ['tunisia', 'tunisie', 'تونس', 'tunez', 'tunis', 'tn'] },
+    { flag: '🇱🇾', ar: 'ليبيا', en: 'Libya', aliases: ['libya', 'ليبيا', 'tripoli', 'طرابلس', 'benghazi', 'ly'] },
+    { flag: '🇵🇸', ar: 'فلسطين', en: 'Palestine', aliases: ['palestine', 'فلسطين', 'القدس', 'jerusalem', 'gaza', 'ps'] },
+    { flag: '🇸🇾', ar: 'سوريا', en: 'Syria', aliases: ['syria', 'سوريا', 'دمشق', 'damascus', 'sy'] },
+    { flag: '🇾🇪', ar: 'اليمن', en: 'Yemen', aliases: ['yemen', 'اليمن', 'صنعاء', 'sanaa', 'aden', 'عدن', 'ye'] },
+    { flag: '🇸🇩', ar: 'السودان', en: 'Sudan', aliases: ['sudan', 'السودان', 'khartoum', 'الخرطوم', 'sd'] },
+    { flag: '🇲🇷', ar: 'موريتانيا', en: 'Mauritania', aliases: ['mauritania', 'موريتانيا', 'nouakchott', 'نواكشوط', 'mr'] },
+    { flag: '🇸🇴', ar: 'الصومال', en: 'Somalia', aliases: ['somalia', 'الصومال', 'mogadishu', 'so'] },
+    { flag: '🇩🇯', ar: 'جيبوتي', en: 'Djibouti', aliases: ['djibouti', 'جيبوتي', 'dj'] },
+    { flag: '🇰🇲', ar: 'جزر القمر', en: 'Comoros', aliases: ['comoros', 'جزر القمر', 'km'] },
 
-    // English to Arabic
-    'Algeria 🇩🇿': 'الجزائر 🇩🇿',
-    '🇩🇿 Algeria': 'الجزائر 🇩🇿',
-    'Algeria': 'الجزائر 🇩🇿',
-    'Saudi Arabia 🇸🇦': 'السعودية 🇸🇦',
-    '🇸🇦 Saudi Arabia': 'السعودية 🇸🇦',
-    'Saudi Arabia': 'السعودية 🇸🇦',
-    'France 🇫🇷': 'فرنسا 🇫🇷',
-    '🇫🇷 France': 'فرنسا 🇫🇷',
-    'France': 'فرنسا 🇫🇷',
-    'UAE 🇦🇪': 'الإمارات 🇦🇪',
-    '🇦🇪 UAE': 'الإمارات 🇦🇪',
-    'UAE': 'الإمارات 🇦🇪',
-    'United Kingdom 🇬🇧': 'بريطانيا 🇬🇧',
-    '🇬🇧 United Kingdom': 'بريطانيا 🇬🇧',
-    'UK': 'بريطانيا 🇬🇧',
-    'Morocco 🇲🇦': 'المغرب 🇲🇦',
-    '🇲🇦 Morocco': 'المغرب 🇲🇦',
-    'Morocco': 'المغرب 🇲🇦',
-    'Egypt 🇪🇬': 'مصر 🇪🇬',
-    '🇪🇬 Egypt': 'مصر 🇪🇬',
-    'Egypt': 'مصر 🇪🇬',
-    'Qatar 🇶🇦': 'قطر 🇶🇦',
-    '🇶🇦 Qatar': 'قطر 🇶🇦',
-    'Kuwait 🇰🇼': 'الكويت 🇰🇼',
-    '🇰🇼 Kuwait': 'الكويت 🇰🇼',
-    'Germany 🇩🇪': 'ألمانيا 🇩🇪',
-    '🇩🇪 Germany': 'ألمانيا 🇩🇪',
-    'USA 🇺🇸': 'أمريكا 🇺🇸',
-    '🇺🇸 USA': 'أمريكا 🇺🇸',
-    'Tunisia 🇹🇳': 'تونس 🇹🇳',
-    '🇹🇳 Tunisia': 'تونس 🇹🇳',
-    'Turkey 🇹🇷': 'تركيا 🇹🇷',
-    '🇹🇷 Turkey': 'تركيا 🇹🇷',
-    'Oman 🇴🇲': 'عُمان 🇴🇲',
-    'Bahrain 🇧🇭': 'البحرين 🇧🇭',
-    'Jordan 🇯🇴': 'الأردن 🇯🇴',
-    'Iraq 🇮🇶': 'العراق 🇮🇶',
-    'Lebanon 🇱🇧': 'لبنان 🇱🇧',
-    'Switzerland 🇨🇭': 'سويسرا 🇨🇭',
-    'Canada 🇨🇦': 'كندا 🇨🇦'
-  };
+    // 🌍 أوروبا (Europe)
+    { flag: '🇬🇧', ar: 'بريطانيا', en: 'United Kingdom', aliases: ['uk', 'united kingdom', 'great britain', 'britain', 'england', 'المملكة المتحدة', 'بريطانيا', 'انجلترا', 'london', 'gb'] },
+    { flag: '🇫🇷', ar: 'فرنسا', en: 'France', aliases: ['france', 'فرنسا', 'paris', 'fr'] },
+    { flag: '🇩🇪', ar: 'ألمانيا', en: 'Germany', aliases: ['germany', 'deutschland', 'allemagne', 'ألمانيا', 'المانيا', 'berlin', 'munich', 'frankfurt', 'de'] },
+    { flag: '🇪🇸', ar: 'إسبانيا', en: 'Spain', aliases: ['spain', 'espana', 'espagne', 'إسبانيا', 'اسبانيا', 'madrid', 'barcelona', 'es'] },
+    { flag: '🇮🇹', ar: 'إيطاليا', en: 'Italy', aliases: ['italy', 'italia', 'italie', 'إيطاليا', 'ايطاليا', 'rome', 'milan', 'it'] },
+    { flag: '🇨🇭', ar: 'سويسرا', en: 'Switzerland', aliases: ['switzerland', 'suisse', 'schweiz', 'سويسرا', 'geneva', 'zurich', 'ch'] },
+    { flag: '🇳🇱', ar: 'هولندا', en: 'Netherlands', aliases: ['netherlands', 'holland', 'pays-bas', 'هولندا', 'amsterdam', 'nl'] },
+    { flag: '🇧🇪', ar: 'بلجيكا', en: 'Belgium', aliases: ['belgium', 'belgique', 'بلجيكا', 'brussels', 'be'] },
+    { flag: '🇦🇹', ar: 'النمسا', en: 'Austria', aliases: ['austria', 'österreich', 'النمسا', 'vienna', 'at'] },
+    { flag: '🇸🇪', ar: 'السويد', en: 'Sweden', aliases: ['sweden', 'sverige', 'السويد', 'stockholm', 'se'] },
+    { flag: '🇳🇴', ar: 'النرويج', en: 'Norway', aliases: ['norway', 'norge', 'النرويج', 'oslo', 'no'] },
+    { flag: '🇩🇰', ar: 'الدنمارك', en: 'Denmark', aliases: ['denmark', 'danmark', 'الدنمارك', 'copenhagen', 'dk'] },
+    { flag: '🇫🇮', ar: 'فنلندا', en: 'Finland', aliases: ['finland', 'suomi', 'فنلندا', 'helsinki', 'fi'] },
+    { flag: '🇮🇪', ar: 'أيرلندا', en: 'Ireland', aliases: ['ireland', 'أيرلندا', 'ايرلندا', 'dublin', 'ie'] },
+    { flag: '🇵🇹', ar: 'البرتغال', en: 'Portugal', aliases: ['portugal', 'البرتغال', 'lisbon', 'pt'] },
+    { flag: '🇬🇷', ar: 'اليونان', en: 'Greece', aliases: ['greece', 'اليونان', 'athens', 'gr'] },
+    { flag: '🇹🇷', ar: 'تركيا', en: 'Turkey', aliases: ['turkey', 'turkiye', 'türkiye', 'تركيا', 'istanbul', 'ankara', 'tr'] },
+    { flag: '🇵🇱', ar: 'بولندا', en: 'Poland', aliases: ['poland', 'polska', 'بولندا', 'warsaw', 'pl'] },
+    { flag: '🇨🇿', ar: 'التشيك', en: 'Czech Republic', aliases: ['czech republic', 'czechia', 'التشيك', 'جمهورية التشيك', 'prague', 'cz'] },
+    { flag: '🇭🇺', ar: 'المجر', en: 'Hungary', aliases: ['hungary', 'magyarorszag', 'المجر', 'budapest', 'hu'] },
+    { flag: '🇷🇴', ar: 'رومانيا', en: 'Romania', aliases: ['romania', 'رومانيا', 'bucharest', 'ro'] },
+    { flag: '🇧🇬', ar: 'بلغاريا', en: 'Bulgaria', aliases: ['bulgaria', 'بلغاريا', 'sofia', 'bg'] },
+    { flag: '🇭🇷', ar: 'كرواتيا', en: 'Croatia', aliases: ['croatia', 'hrvatska', 'كرواتيا', 'zagreb', 'hr'] },
+    { flag: '🇸🇰', ar: 'سلوفاكيا', en: 'Slovakia', aliases: ['slovakia', 'سلوفاكيا', 'bratislava', 'sk'] },
+    { flag: '🇸🇮', ar: 'سلوفينيا', en: 'Slovenia', aliases: ['slovenia', 'سلوفينيا', 'si'] },
+    { flag: '🇷🇸', ar: 'صربيا', en: 'Serbia', aliases: ['serbia', 'صربيا', 'belgrade', 'rs'] },
+    { flag: '🇨🇾', ar: 'قبرص', en: 'Cyprus', aliases: ['cyprus', 'قبرص', 'cy'] },
+    { flag: '🇲🇹', ar: 'مالطا', en: 'Malta', aliases: ['malta', 'مالطا', 'mt'] },
+    { flag: '🇱🇺', ar: 'لوكسمبورغ', en: 'Luxembourg', aliases: ['luxembourg', 'لوكسمبورغ', 'lu'] },
+    { flag: '🇮🇸', ar: 'أيسلندا', en: 'Iceland', aliases: ['iceland', 'أيسلندا', 'ايسلندا', 'is'] },
+    { flag: '🇺🇦', ar: 'أوكرانيا', en: 'Ukraine', aliases: ['ukraine', 'أوكرانيا', 'اوكرانيا', 'kyiv', 'kiev', 'ua'] },
+    { flag: '🇷🇺', ar: 'روسيا', en: 'Russia', aliases: ['russia', 'russian federation', 'روسيا', 'الاتحاد الروسي', 'moscow', 'ru'] },
+
+    // 🌍 الأمريكتين (Americas)
+    { flag: '🇺🇸', ar: 'الولايات المتحدة', en: 'United States', aliases: ['usa', 'us', 'united states', 'united states of america', 'america', 'الولايات المتحدة', 'امريكا', 'أمريكا', 'new york', 'california', 'texas', 'florida'] },
+    { flag: '🇨🇦', ar: 'كندا', en: 'Canada', aliases: ['canada', 'كندا', 'toronto', 'montreal', 'vancouver', 'ca'] },
+    { flag: '🇧🇷', ar: 'البرازيل', en: 'Brazil', aliases: ['brazil', 'brasil', 'البرازيل', 'sao paulo', 'rio', 'br'] },
+    { flag: '🇲🇽', ar: 'المكسيك', en: 'Mexico', aliases: ['mexico', 'المكسيك', 'mx'] },
+    { flag: '🇦🇷', ar: 'الأرجنتين', en: 'Argentina', aliases: ['argentina', 'الأرجنتين', 'الارجنتين', 'buenos aires', 'ar'] },
+    { flag: '🇨🇴', ar: 'كولومبيا', en: 'Colombia', aliases: ['colombia', 'كولومبيا', 'bogota', 'co'] },
+    { flag: '🇨🇱', ar: 'تشيلي', en: 'Chile', aliases: ['chile', 'تشيلي', 'santiago', 'cl'] },
+    { flag: '🇵🇪', ar: 'بيرو', en: 'Peru', aliases: ['peru', 'بيرو', 'lima', 'pe'] },
+    { flag: '🇵🇦', ar: 'بنما', en: 'Panama', aliases: ['panama', 'بنما', 'pa'] },
+    { flag: '🇪🇨', ar: 'الإكوادور', en: 'Ecuador', aliases: ['ecuador', 'الإكوادور', 'الاكوادور', 'ec'] },
+    { flag: '🇺🇾', ar: 'أوروغواي', en: 'Uruguay', aliases: ['uruguay', 'أوروغواي', 'اوروغواي', 'uy'] },
+    { flag: '🇵🇾', ar: 'باراغواي', en: 'Paraguay', aliases: ['paraguay', 'باراغواي', 'py'] },
+    { flag: '🇧🇴', ar: 'بوليفيا', en: 'Bolivia', aliases: ['bolivia', 'بوليفيا', 'bo'] },
+    { flag: '🇻🇪', ar: 'فنزويلا', en: 'Venezuela', aliases: ['venezuela', 'فنزويلا', 'caracas', 've'] },
+
+    // 🌍 آسيا ورابطة الدول المستقلة (Asia & CIS)
+    { flag: '🇺🇿', ar: 'أوزبكستان', en: 'Uzbekistan', aliases: ['uzbekistan', 'ouzbekistan', 'أوزبكستان', 'اوزبكستان', 'tashkent', 'طشقند', 'uz'] },
+    { flag: '🇰🇿', ar: 'كازاخستان', en: 'Kazakhstan', aliases: ['kazakhstan', 'كازاخستان', 'almaty', 'astana', 'kz'] },
+    { flag: '🇦🇿', ar: 'أذربيجان', en: 'Azerbaijan', aliases: ['azerbaijan', 'أذربيجان', 'اذربيجان', 'baku', 'az'] },
+    { flag: '🇬🇪', ar: 'جورجيا', en: 'Georgia', aliases: ['georgia', 'جورجيا', 'tbilisi', 'ge'] },
+    { flag: '🇦🇲', ar: 'أرمينيا', en: 'Armenia', aliases: ['armenia', 'أرمينيا', 'ارمينيا', 'am'] },
+    { flag: '🇯🇵', ar: 'اليابان', en: 'Japan', aliases: ['japan', 'اليابان', 'tokyo', 'jp'] },
+    { flag: '🇸🇬', ar: 'سنغافورة', en: 'Singapore', aliases: ['singapore', 'سنغافورة', 'sg'] },
+    { flag: '🇲🇾', ar: 'ماليزيا', en: 'Malaysia', aliases: ['malaysia', 'ماليزيا', 'kuala lumpur', 'my'] },
+    { flag: '🇮🇩', ar: 'إندونيسيا', en: 'Indonesia', aliases: ['indonesia', 'إندونيسيا', 'اندونيسيا', 'jakarta', 'id'] },
+    { flag: '🇦🇺', ar: 'أستراليا', en: 'Australia', aliases: ['australia', 'أستراليا', 'استراليا', 'sydney', 'melbourne', 'au'] },
+    { flag: '🇳🇿', ar: 'نيوزيلندا', en: 'New Zealand', aliases: ['new zealand', 'نيوزيلندا', 'auckland', 'nz'] },
+    { flag: '🇮🇳', ar: 'الهند', en: 'India', aliases: ['india', 'الهند', 'delhi', 'mumbai', 'in'] },
+    { flag: '🇵🇰', ar: 'باكستان', en: 'Pakistan', aliases: ['pakistan', 'باكستان', 'islamabad', 'karachi', 'pk'] },
+    { flag: '🇰🇷', ar: 'كوريا الجنوبية', en: 'South Korea', aliases: ['south korea', 'korea', 'كوريا الجنوبية', 'كوريا', 'seoul', 'kr'] },
+    { flag: '🇨🇳', ar: 'الصين', en: 'China', aliases: ['china', 'الصين', 'beijing', 'shanghai', 'cn'] },
+    { flag: '🇹🇭', ar: 'تايلاند', en: 'Thailand', aliases: ['thailand', 'تايلاند', 'bangkok', 'th'] },
+    { flag: '🇻🇳', ar: 'فيتنام', en: 'Vietnam', aliases: ['vietnam', 'فيتنام', 'hanoi', 'vn'] },
+    { flag: '🇵🇭', ar: 'الفلبين', en: 'Philippines', aliases: ['philippines', 'الفلبين', 'manila', 'ph'] },
+    { flag: '🇭🇰', ar: 'هونغ كونغ', en: 'Hong Kong', aliases: ['hong kong', 'هونغ كونغ', 'hk'] },
+    { flag: '🇿🇦', ar: 'جنوب إفريقيا', en: 'South Africa', aliases: ['south africa', 'جنوب إفريقيا', 'جنوب افريقيا', 'za'] },
+    { flag: '🇳🇬', ar: 'نيجيريا', en: 'Nigeria', aliases: ['nigeria', 'نيجيريا', 'ng'] }
+  ];
+
+  function normalizeCountryKey(str) {
+    if (!str) return '';
+    return str
+      .replace(/[\uD83C][\uDDE6-\uDDFF][\uD83C][\uDDE6-\uDDFF]/g, '')
+      .replace(/[^\p{L}\p{N}\s]/gu, '')
+      .replace(/[أإآ]/g, 'ا')
+      .replace(/ة/g, 'ه')
+      .replace(/ى/g, 'ي')
+      .replace(/[\u064B-\u065F]/g, '')
+      .toLowerCase()
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function extractFlagEmoji(str) {
+    var match = (str || '').match(/[\uD83C][\uDDE6-\uDDFF][\uD83C][\uDDE6-\uDDFF]/);
+    return match ? match[0] : '';
+  }
+
+  function formatReviewCountry(rawCountry, lang) {
+    if (!rawCountry) return '';
+    var existingFlag = extractFlagEmoji(rawCountry);
+    var cleanKey = normalizeCountryKey(rawCountry);
+
+    var matched = null;
+    for (var i = 0; i < MASTER_COUNTRIES.length; i++) {
+      var item = MASTER_COUNTRIES[i];
+      if (normalizeCountryKey(item.ar) === cleanKey || normalizeCountryKey(item.en) === cleanKey) {
+        matched = item;
+        break;
+      }
+      if (item.aliases && item.aliases.some(function(alias) { return normalizeCountryKey(alias) === cleanKey; })) {
+        matched = item;
+        break;
+      }
+    }
+
+    if (matched) {
+      var flag = matched.flag || existingFlag || '🌍';
+      return (lang === 'ar') ? (flag + ' ' + matched.ar) : (flag + ' ' + matched.en);
+    }
+
+    // Fallback if country is not listed in master catalog
+    var flagPrefix = existingFlag ? (existingFlag + ' ') : '🌍 ';
+    var strippedText = rawCountry.replace(/[\uD83C][\uDDE6-\uDDFF][\uD83C][\uDDE6-\uDDFF]/g, '').trim();
+    return flagPrefix + strippedText;
+  }
+
+  var revCountryDict = {};
 
   function normalizeKey(str) {
     return (str || '').replace(/[\uD83C-\uDBFF\uDC00-\uDFFF\u2600-\u27BF]+/g, '').replace(/[\s\-_·.]+/g, ' ').trim().toLowerCase();
@@ -10055,9 +10163,9 @@ body.theme-light .cvx-tv-text {
 
     function findInDict(val) {
       if (!val) return '';
-      if (dict[val]) return dict[val];
+      if (dict && dict[val]) return dict[val];
       var cleanVal = normalizeKey(val);
-      for (var k in dict) {
+      for (var k in (dict || {})) {
         if (normalizeKey(k) === cleanVal) return dict[k];
       }
       return '';
@@ -10127,7 +10235,7 @@ body.theme-light .cvx-tv-text {
     itemsToShow.forEach(function(r) {
       var sMeta = revServiceLabels[r.service] || revServiceLabels.managed;
       var sLabel = isAr ? sMeta.ar : sMeta.en;
-      var country = resolveBilingual(r.country, r.country_en, revCountryDict, isAr);
+      var country = formatReviewCountry(r.rawCountry || (isAr ? r.country : (r.country_en || r.country)), isAr ? 'ar' : 'en');
       var quote = isAr ? (r.text || r.text_en || '') : (r.text_en || r.text || '');
       var stat = resolveBilingual(r.stat, r.stat_en, revStatDict, isAr);
       var stars = '★★★★★'.substring(0, r.rating || 5) + '☆☆☆☆☆'.substring(0, Math.max(0, 5 - (r.rating || 5)));
@@ -10305,19 +10413,25 @@ body.theme-light .cvx-tv-text {
         var liveItems = list.map(function(r) {
           var rawCountry = (r.client_country || '').trim();
           var rawStat = (r.profit_stat || '').trim();
-          var isCountryAr = /[\u0600-\u06FF]/.test(rawCountry);
           var isStatAr = /[\u0600-\u06FF]/.test(rawStat);
+          var txtAr = r.review_text || '';
+          var txtEn = r.review_text_en || '';
+          if (!txtEn && txtAr === 'Alles auf dieser Seite ist verrückt, danke.') {
+            txtEn = 'Everything on this site is insane, thank you!';
+            txtAr = 'كل شيء في هذا الموقع مجنون ومذهل، شكراً لك.';
+          }
 
           return {
             name: r.client_name,
-            country: isCountryAr ? rawCountry : (revCountryDict[rawCountry] || rawCountry),
-            country_en: !isCountryAr ? rawCountry : (revCountryDict[rawCountry] || rawCountry),
+            rawCountry: rawCountry,
+            country: formatReviewCountry(rawCountry, 'ar'),
+            country_en: formatReviewCountry(rawCountry, 'en'),
             rating: r.rating || 5,
             service: r.service_type || 'managed',
             stat: isStatAr ? rawStat : (revStatDict[rawStat] || rawStat),
             stat_en: !isStatAr ? rawStat : (revStatDict[rawStat] || rawStat),
-            text: r.review_text,
-            text_en: r.review_text_en || r.review_text
+            text: txtAr,
+            text_en: txtEn || txtAr
           };
         });
         // Smart deduplication: ensure every review appears only once
@@ -12798,8 +12912,11 @@ body.theme-light .cvx-tv-text {
       if (window.updateManagedAccountStatus) {
         window.updateManagedAccountStatus(lang);
       }
-      if (window.renderTopBanner && window.cvxBannerText && window.cvxBannerActive) {
-        window.renderTopBanner(window.cvxBannerText, window.cvxBannerActive);
+      if (window.renderTopBanner && window.cvxBannerActive) {
+        window.renderTopBanner(window.cvxBannerText, window.cvxBannerActive, window.cvxBannerTextEn);
+      }
+      if (window.renderReviews) {
+        window.renderReviews();
       }
     };
 

@@ -2443,13 +2443,24 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
               <h3 style="font-size:14px;color:var(--neon);margin:24px 0 10px;font-family:var(--font-mono)">📢 Top Announcement Banner &amp; Footer</h3>
 
               <div class="form-group full">
-                <label>Announcement Banner Text <span>(شريط التنبيهات العلوي في الموقع)</span></label>
-                <input type="text" id="set_announcement_banner_text" placeholder="Special promotion or market notice text">
+                <label>Announcement Banner Text (Arabic) <span>(شريط التنبيهات باللغة العربية)</span></label>
+                <input type="text" id="set_announcement_banner_text" placeholder="نص الإعلان أو التنبيه باللغة العربية">
                 <div class="preset-chips">
-                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text', '🔥 فتح باب قبول محافظ جديدة لشهر أكتوبر بأماكن محدودة!')">🔥 قبول محافظ جديدة</button>
-                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text', '⚡ خصم خاص 20% على اشتراكات منصة NewsX وقناة التوصيات VIP!')">⚡ خصم 20% NewsX و VIP</button>
-                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text', '💼 مرحباً بكم في الموقع الرسمي لسيف الدين بوعمازة - إدارة محافظ وتداول احترافي')">💼 ترحيب رسمي</button>
-                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text', '🔴 تنبيه: اكتملت السعة الاستيعابية لإدارة المحافظ مؤقتاً - تابع القناة لحين فتح مقاعد جديدة')">🔴 اكتمال المقاعد</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text', '🔥 فتح باب قبول محافظ جديدة لشهر أكتوبر بأماكن محدودة!'); setPreset('set_announcement_banner_text_en', '🔥 New Managed Accounts Enrollment Open with Limited VIP Slots!')">🔥 قبول محافظ جديدة</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text', '⚡ خصم خاص 20% على اشتراكات منصة NewsX وقناة التوصيات VIP!'); setPreset('set_announcement_banner_text_en', '⚡ Special 20% Discount on NewsX AI Platform & VIP Signals Memberships!')">⚡ خصم 20% NewsX و VIP</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text', '💼 مرحباً بكم في الموقع الرسمي لسيف الدين بوعمازة - إدارة محافظ وتداول احترافي'); setPreset('set_announcement_banner_text_en', '💼 Welcome to the official website of Saifeddine Boumaza — VIP Portfolio Management & Professional Trading')">💼 ترحيب رسمي</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text', '🔴 تنبيه: اكتملت السعة الاستيعابية لإدارة المحافظ مؤقتاً - تابع القناة لحين فتح مقاعد جديدة'); setPreset('set_announcement_banner_text_en', '🔴 Notice: Managed Accounts capacity is temporarily full — Stay tuned for upcoming slot openings')">🔴 اكتمال المقاعد</button>
+                </div>
+              </div>
+
+              <div class="form-group full">
+                <label>Announcement Banner Text (English) <span>(شريط التنبيهات باللغة الإنجليزية)</span></label>
+                <input type="text" id="set_announcement_banner_text_en" placeholder="Announcement banner text in English">
+                <div class="preset-chips">
+                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text_en', '🔥 New Managed Accounts Enrollment Open with Limited VIP Slots!')">🔥 New Slots Open</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text_en', '⚡ Special 20% Discount on NewsX AI Platform & VIP Signals Memberships!')">⚡ 20% Discount</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text_en', '💼 Welcome to the official website of Saifeddine Boumaza — VIP Portfolio Management & Professional Trading')">💼 Official Welcome</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text_en', '🔴 Notice: Managed Accounts capacity is temporarily full — Stay tuned for upcoming slot openings')">🔴 Capacity Full</button>
                 </div>
               </div>
 
@@ -5521,7 +5532,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       'telegram_username', 'telegram_channel', 'whatsapp_number', 'support_email',
       'instagram_profile', 'x_profile', 'tradingview_profile', 'youtube_channel',
       'bep20_deposit_wallet', 'trc20_deposit_wallet', 'binance_pay_id',
-      'announcement_banner_text', 'announcement_banner_active', 'footer_copyright'
+      'announcement_banner_text', 'announcement_banner_text_en', 'announcement_banner_active', 'footer_copyright'
     ];
     sdb.from('website_settings').select('*').in('setting_name', keys).then(function(res) {
       var list = (res && res.data) ? res.data : [];
@@ -5555,7 +5566,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       'telegram_username', 'telegram_channel', 'whatsapp_number', 'support_email',
       'instagram_profile', 'x_profile', 'tradingview_profile', 'youtube_channel',
       'bep20_deposit_wallet', 'trc20_deposit_wallet', 'binance_pay_id',
-      'announcement_banner_text', 'announcement_banner_active', 'footer_copyright'
+      'announcement_banner_text', 'announcement_banner_text_en', 'announcement_banner_active', 'footer_copyright'
     ];
 
     var updates = keys.map(function(k) {
