@@ -2531,31 +2531,111 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       </button>
       <div class="module-body">
         <section id="tab-visitors" class="tab-pane">
+
+          <!-- Telemetry KPI Summary Cards -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-bottom:16px">
+            <div class="card" style="padding:14px;margin-bottom:0;background:rgba(14,24,42,0.85);border:1px solid rgba(0,255,156,0.25)">
+              <div style="font-size:11px;color:var(--muted);margin-bottom:4px;display:flex;align-items:center;justify-content:space-between">
+                <span>👥 إجمالي الزوار الكلي</span>
+                <span style="color:var(--neon)">ALL-TIME</span>
+              </div>
+              <div style="font-size:24px;font-weight:800;color:var(--neon);font-family:var(--font-mono)" id="kpiTotalVisitors">--</div>
+              <div style="font-size:10.5px;color:var(--muted);margin-top:2px">مسجل بقاعدة البيانات بالكامل</div>
+            </div>
+
+            <div class="card" style="padding:14px;margin-bottom:0;background:rgba(14,24,42,0.85);border:1px solid rgba(18,214,255,0.25)">
+              <div style="font-size:11px;color:var(--muted);margin-bottom:4px;display:flex;align-items:center;justify-content:space-between">
+                <span>📍 أكثر المدن والدول</span>
+                <span style="color:var(--cyan)">LOCATIONS</span>
+              </div>
+              <div style="font-size:16px;font-weight:700;color:var(--cyan);font-family:var(--font-mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="kpiTopCity">--</div>
+              <div style="font-size:10.5px;color:var(--muted);margin-top:2px" id="kpiTopCountry">جاري التحليل...</div>
+            </div>
+
+            <div class="card" style="padding:14px;margin-bottom:0;background:rgba(14,24,42,0.85);border:1px solid rgba(255,190,26,0.25)">
+              <div style="font-size:11px;color:var(--muted);margin-bottom:4px;display:flex;align-items:center;justify-content:space-between">
+                <span>📱 نسبة أجهزة الجوال</span>
+                <span style="color:var(--gold)">DEVICES</span>
+              </div>
+              <div style="font-size:24px;font-weight:800;color:var(--gold);font-family:var(--font-mono)" id="kpiMobilePercent">--%</div>
+              <div style="font-size:10.5px;color:var(--muted);margin-top:2px" id="kpiDeviceSplit">Mobile vs Desktop</div>
+            </div>
+
+            <div class="card" style="padding:14px;margin-bottom:0;background:rgba(14,24,42,0.85);border:1px solid rgba(168,85,247,0.25)">
+              <div style="font-size:11px;color:var(--muted);margin-bottom:4px;display:flex;align-items:center;justify-content:space-between">
+                <span>🔄 زوار متكررون (Return)</span>
+                <span style="color:#c084fc">RETENTION</span>
+              </div>
+              <div style="font-size:24px;font-weight:800;color:#c084fc;font-family:var(--font-mono)" id="kpiReturningVisitors">--</div>
+              <div style="font-size:10.5px;color:var(--muted);margin-top:2px">دخلوا الموقع أكثر من مرة</div>
+            </div>
+          </div>
+
+          <!-- Main Visitors Card -->
           <div class="card">
-            <div class="card-title">
-              <h2><span>🌍</span> Live Visitors Analytics</h2>
-              <div style="display:flex;align-items:center;gap:10px">
-                <span class="tag" id="visitorsCountTag">0 Total</span>
-                <button type="button" class="btn-secondary btn-refresh" onclick="loadVisitors(this)"><span class="refresh-icon">↻</span> Refresh</button>
+            <div class="card-title" style="flex-wrap:wrap;gap:10px">
+              <div>
+                <h2><span>🌍</span> سجل الزوار والبيانات اللحظية الشاملة (Telemetry Logs)</h2>
+                <div style="font-size:11px;color:var(--muted);margin-top:3px">بيانات مفصلة: المدينة، الدولة، عنوان IP، مزود الإنترنت، ونوع الجهاز</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                <span class="tag" id="visitorsCountTag" style="font-size:11.5px">0 Total Visitors</span>
+                <button type="button" class="btn-secondary btn-refresh" id="btnRefreshVisitors" onclick="loadVisitors(this)"><span class="refresh-icon">↻</span> Refresh Live</button>
               </div>
             </div>
+
+            <!-- Toolbar: Search & Page Size -->
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;background:rgba(0,0,0,0.3);padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.06)">
+              <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:240px">
+                <span style="color:var(--neon);font-size:14px">🔍</span>
+                <input type="text" id="visitorSearchInput" placeholder="بحث فوري: الدولة، المدينة، IP، المزود، أو الجهاز..." oninput="handleVisitorSearch()" style="width:100%;padding:7px 12px;background:rgba(10,18,30,0.9);border:1px solid rgba(0,255,156,0.3);border-radius:6px;color:#fff;font-size:12px;font-family:var(--font-mono)">
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                <div style="display:flex;align-items:center;gap:6px">
+                  <span style="font-size:11px;color:var(--muted)">Show:</span>
+                  <select id="visitorPageSize" onchange="changeVisitorPageSize()" style="background:rgba(10,18,30,0.9);border:1px solid rgba(255,255,255,0.15);color:#fff;padding:5px 8px;border-radius:5px;font-size:11px">
+                    <option value="25">25 / page</option>
+                    <option value="50" selected>50 / page</option>
+                    <option value="100">100 / page</option>
+                    <option value="200">200 / page</option>
+                  </select>
+                </div>
+                <div id="visitorPagingInfoTop" style="font-size:11.5px;color:var(--cyan);font-family:var(--font-mono)">Page 1</div>
+              </div>
+            </div>
+
             <div class="data-table-wrap">
-              <table class="data-table">
+              <table class="data-table" style="font-size:11.5px">
                 <thead>
                   <tr>
-                    <th>Time</th>
-                    <th>Location</th>
-                    <th>Device &amp; Model</th>
-                    <th>OS / Browser</th>
-                    <th>Source / Referrer</th>
-                    <th>Visits</th>
+                    <th style="min-width:125px">Time (الوقت)</th>
+                    <th style="min-width:145px">IP &amp; Network (الشبكة)</th>
+                    <th style="min-width:160px">Location (المدينة والدولة)</th>
+                    <th style="min-width:150px">Device &amp; Screen (الجهاز)</th>
+                    <th style="min-width:130px">OS / Browser (النظام)</th>
+                    <th style="min-width:110px">Source / Page</th>
+                    <th style="min-width:60px;text-align:center">Visits</th>
+                    <th style="min-width:70px;text-align:center">Inspect</th>
                   </tr>
                 </thead>
                 <tbody id="visitorsTableBody">
-                  <tr><td colspan="6" style="text-align:center;color:var(--muted)">Loading visitors telemetry...</td></tr>
+                  <tr><td colspan="8" style="text-align:center;color:var(--muted);padding:24px">Loading visitors telemetry...</td></tr>
                 </tbody>
               </table>
             </div>
+
+            <!-- Pagination Bottom Bar -->
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;flex-wrap:wrap;gap:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06)">
+              <div id="visitorRangeText" style="font-size:11.5px;color:var(--muted);font-family:var(--font-mono)">
+                Showing 0 entries
+              </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <button type="button" class="btn-secondary" id="btnPrevVisitors" onclick="changeVisitorPage(-1)" style="font-size:11px;padding:5px 12px" disabled>◀ السابق (Prev)</button>
+                <span id="visitorPageNumberDisplay" style="font-size:11.5px;color:var(--neon);font-family:var(--font-mono);font-weight:700">Page 1</span>
+                <button type="button" class="btn-secondary" id="btnNextVisitors" onclick="changeVisitorPage(1)" style="font-size:11px;padding:5px 12px">التالي (Next) ▶</button>
+              </div>
+            </div>
+
           </div>
         </section>
       </div>
@@ -2579,6 +2659,23 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       <button type="button" class="modal-close" onclick="closeMessageDetailsModal()">✕</button>
     </div>
     <div id="messageDetailsContent" style="padding:10px 0">
+      <!-- Injected dynamically -->
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================================================
+     VISITOR DETAILS DOSSIER MODAL (عرض تفاصيل الزائر الكاملة بستايل سوبابيس)
+     ========================================================================== -->
+<div id="visitorModal" class="modal-backdrop" style="display:none">
+  <div class="modal-card" style="max-width:680px;width:95%">
+    <div class="modal-header">
+      <div class="modal-title" style="color:var(--neon);display:flex;align-items:center;gap:8px">
+        <span>🌍</span> بطاقة الزائر التفصيلية (Visitor Dossier &amp; Geolocation)
+      </div>
+      <button type="button" class="modal-close" onclick="closeVisitorModal()">✕</button>
+    </div>
+    <div id="visitorModalContent" style="padding:10px 0">
       <!-- Injected dynamically -->
     </div>
   </div>
@@ -5691,59 +5788,380 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     }
   }
 
-  window.loadVisitors = function(btn) {
+  // --------------------------------------------------------------------------
+  // TAB 11: VISITORS LOG (تحليلات الزوار المباشرة والبيانات اللحظية الشاملة)
+  // --------------------------------------------------------------------------
+  window._visitorPage = 1;
+  window._visitorPageSize = 50;
+  window._visitorTotalCount = 0;
+  window._visitorCache = [];
+  window._visitorFilterQuery = '';
+
+  window.copyToClipboard = function(text, btn) {
+    if (!text) return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function(){
+        showToast('✓ تم نسخ ' + text + ' للحافظة بنجاح!');
+        if (btn) {
+          var orig = btn.innerHTML;
+          btn.innerHTML = '✓ Copied';
+          setTimeout(function(){ btn.innerHTML = orig; }, 1200);
+        }
+      }).catch(function(){
+        prompt('Copy IP Address:', text);
+      });
+    } else {
+      prompt('Copy IP Address:', text);
+    }
+  };
+
+  function getRelativeVisitorTime(isoStr) {
+    if (!isoStr) return '';
+    try {
+      var diffMs = Date.now() - new Date(isoStr).getTime();
+      var diffSec = Math.floor(diffMs / 1000);
+      if (diffSec < 45) return '<span style="color:var(--neon);font-weight:700">🟢 Just now (متصل الآن)</span>';
+      if (diffSec < 120) return '<span style="color:var(--neon)">1 min ago</span>';
+      var diffMin = Math.floor(diffSec / 60);
+      if (diffMin < 60) return diffMin + 'm ago';
+      var diffHours = Math.floor(diffMin / 60);
+      if (diffHours < 24) return diffHours + 'h ago';
+      return new Date(isoStr).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    } catch(e) {
+      return '';
+    }
+  }
+
+  window.loadVisitors = function(btn, targetPage) {
     if (!sdb) return;
     if (btn) btn.classList.add('loading');
     var tbody = document.getElementById('visitorsTableBody');
     var countTag = document.getElementById('visitorsCountTag');
 
-    sdb.from('website_visitors').select('*').order('last_seen', { ascending: false }).limit(80).then(function(res) {
-      if (btn) {
-        btn.classList.remove('loading');
-        flashButtonSuccess(btn, '✓ تم التحديث!');
-        showToast('🔄 تم تحديث وجلب بيانات الزوار المباشرة بنجاح!', 'success');
+    if (typeof targetPage === 'number') {
+      window._visitorPage = targetPage;
+    }
+
+    var pageSize = window._visitorPageSize || 50;
+    var page = window._visitorPage || 1;
+    var from = (page - 1) * pageSize;
+    var to = from + pageSize - 1;
+
+    // Use count: 'exact' to get accurate total count across the entire database!
+    sdb.from('website_visitors')
+       .select('*', { count: 'exact' })
+       .order('last_seen', { ascending: false })
+       .range(from, to)
+       .then(function(res) {
+          if (btn) {
+            btn.classList.remove('loading');
+            flashButtonSuccess(btn, '✓ تم التحديث!');
+            showToast('🔄 تم تحديث وجلب بيانات الزوار المباشرة بنجاح!', 'success');
+          }
+
+          var list = (res && res.data) ? res.data : [];
+          var total = (res && typeof res.count === 'number') ? res.count : list.length;
+          window._visitorTotalCount = total;
+          window._visitorCache = list;
+
+          if (countTag) {
+            countTag.textContent = total.toLocaleString() + ' Total Visitors';
+          }
+
+          // Update KPI Summary Metrics
+          updateVisitorKPIs(list, total);
+
+          // Render rows
+          renderVisitorsTable(list, total);
+
+       }).catch(function(err){
+          if (btn) btn.classList.remove('loading');
+          if (tbody) {
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--red);padding:20px">Error loading visitors: ' + (err ? err.message : 'Network error') + '</td></tr>';
+          }
+       });
+  };
+
+  function updateVisitorKPIs(list, total) {
+    var kpiTotal = document.getElementById('kpiTotalVisitors');
+    var kpiCity = document.getElementById('kpiTopCity');
+    var kpiCountry = document.getElementById('kpiTopCountry');
+    var kpiMobile = document.getElementById('kpiMobilePercent');
+    var kpiSplit = document.getElementById('kpiDeviceSplit');
+    var kpiReturning = document.getElementById('kpiReturningVisitors');
+
+    if (kpiTotal) kpiTotal.textContent = total.toLocaleString();
+
+    if (!list || !list.length) return;
+
+    var cityCounts = {}, countryCounts = {};
+    var mobileCount = 0, desktopCount = 0;
+    var returnCount = 0;
+
+    list.forEach(function(v) {
+      if (v.city && v.city !== 'Active Session' && v.city !== 'Unknown') {
+        cityCounts[v.city] = (cityCounts[v.city] || 0) + 1;
       }
-      var list = (res && res.data) ? res.data : [];
-      if (countTag) countTag.textContent = list.length + ' Telemetry Logs';
-      if (!list.length) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px">No visitors recorded yet. Visit index.html to record your first visit!</td></tr>';
-        return;
+      var cName = (v.country || 'Online').replace(/\s*\([A-Z]{2}\)/i, '').replace(/[\uD83C-\uDBFF\uDC00-\uDFFF]+/g, '').trim();
+      if (cName) {
+        countryCounts[cName] = (countryCounts[cName] || 0) + 1;
       }
 
-      var html = '';
-      list.forEach(function(v) {
-        var relTime = getRelativeVisitorTime(v.last_seen);
-        var timeStr = v.last_seen ? new Date(v.last_seen).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
-        var isMobile = (v.device_type === 'Mobile' || (v.operating_system && /Android|iOS/i.test(v.operating_system)) || (v.device_model && /Phone|Galaxy|iPhone|K$/i.test(v.device_model)));
-        
-        var cleanModel = v.device_model || v.device_type || (isMobile ? 'Mobile Smartphone' : 'Desktop PC');
-        if (cleanModel === 'K' || cleanModel === 'Mobile') {
-          cleanModel = '📱 Android Smartphone';
-        } else if (cleanModel.indexOf('iPhone') > -1) {
-          cleanModel = '📱 Apple iPhone';
-        } else if (cleanModel.indexOf('Windows') > -1) {
-          cleanModel = '💻 Windows PC';
-        } else if (cleanModel.indexOf('Mac') > -1) {
-          cleanModel = '💻 Apple Mac';
-        }
+      var isMobile = (v.device_type === 'Mobile' || (v.operating_system && /Android|iOS/i.test(v.operating_system)) || (v.device_model && /Phone|Galaxy|iPhone|K$/i.test(v.device_model)));
+      if (isMobile) mobileCount++; else desktopCount++;
 
-        var devBadge = isMobile
-          ? '<span class="tag green" style="font-size:9.5px;padding:2px 6px">📱 MOBILE</span>'
-          : '<span class="tag blue" style="font-size:9.5px;padding:2px 6px">💻 DESKTOP</span>';
-
-        html += '<tr>' +
-          '<td style="white-space:nowrap;color:var(--gold)">' + relTime + '<br><small style="color:var(--muted);font-size:10px">' + timeStr + '</small></td>' +
-          '<td><b>' + escapeAdminHtml(v.country || 'Online') + '</b>' + (v.city ? ('<br><span style="color:var(--muted);font-size:11px">' + escapeAdminHtml(v.city) + (v.isp_provider ? (' · ' + escapeAdminHtml(v.isp_provider)) : '') + '</span>') : '') + '</td>' +
-          '<td><div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">' + devBadge + (v.screen_size ? ('<span style="font-size:10px;color:var(--muted)">' + escapeAdminHtml(v.screen_size) + '</span>') : '') + '</div><b>' + escapeAdminHtml(cleanModel) + '</b></td>' +
-          '<td>' + escapeAdminHtml(v.operating_system || '') + '<br><span style="color:var(--neon-2)">' + escapeAdminHtml(v.browser || '') + '</span></td>' +
-          '<td style="color:var(--muted);font-size:11px">' + escapeAdminHtml(v.source_referrer || 'Direct Visit') + '</td>' +
-          '<td style="color:var(--neon);font-weight:700;text-align:center">' + (v.visit_count || 1) + '</td>' +
-        '</tr>';
-      });
-      tbody.innerHTML = html;
-    }).catch(function(err){
-      if (btn) btn.classList.remove('loading');
+      if ((v.visit_count || 1) > 1) {
+        returnCount++;
+      }
     });
+
+    var topCity = Object.keys(cityCounts).sort(function(a, b){ return cityCounts[b] - cityCounts[a]; })[0] || 'Algiers';
+    var topCountry = Object.keys(countryCounts).sort(function(a, b){ return countryCounts[b] - countryCounts[a]; })[0] || 'Algeria';
+
+    if (kpiCity) kpiCity.textContent = topCity;
+    if (kpiCountry) kpiCountry.textContent = topCountry + ' (Top Country)';
+
+    var totalSample = mobileCount + desktopCount;
+    var mobilePct = totalSample > 0 ? Math.round((mobileCount / totalSample) * 100) : 75;
+    if (kpiMobile) kpiMobile.textContent = mobilePct + '%';
+    if (kpiSplit) kpiSplit.textContent = mobileCount + ' Mobile / ' + desktopCount + ' Desktop';
+
+    if (kpiReturning) kpiReturning.textContent = returnCount + ' (in page)';
+  }
+
+  function renderVisitorsTable(list, total) {
+    var tbody = document.getElementById('visitorsTableBody');
+    if (!tbody) return;
+
+    // Filter if search query exists
+    var q = (window._visitorFilterQuery || '').toLowerCase().trim();
+    var filtered = list;
+    if (q) {
+      filtered = list.filter(function(v) {
+        var str = [
+          v.ip_address, v.country, v.city, v.region, v.isp_provider,
+          v.device_model, v.device_type, v.operating_system, v.browser,
+          v.source_referrer, v.landing_page
+        ].filter(Boolean).join(' ').toLowerCase();
+        return str.indexOf(q) > -1;
+      });
+    }
+
+    if (!filtered.length) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:30px">لا توجد سجلات زوار تطابق البحث أو لم يتم تسجيل زوار بعد.</td></tr>';
+      updatePaginationControls(0, total);
+      return;
+    }
+
+    var html = '';
+    filtered.forEach(function(v, idx) {
+      var relTime = getRelativeVisitorTime(v.last_seen);
+      var timeStr = v.last_seen ? new Date(v.last_seen).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
+      var isMobile = (v.device_type === 'Mobile' || (v.operating_system && /Android|iOS/i.test(v.operating_system)) || (v.device_model && /Phone|Galaxy|iPhone|K$/i.test(v.device_model)));
+      
+      var cleanModel = v.device_model || v.device_type || (isMobile ? 'Mobile Smartphone' : 'Desktop PC');
+      if (cleanModel === 'K' || cleanModel === 'Mobile') {
+        cleanModel = '📱 Android Smartphone';
+      } else if (cleanModel.indexOf('iPhone') > -1) {
+        cleanModel = '📱 Apple iPhone';
+      } else if (cleanModel.indexOf('Windows') > -1) {
+        cleanModel = '💻 Windows PC';
+      } else if (cleanModel.indexOf('Mac') > -1) {
+        cleanModel = '💻 Apple Mac';
+      }
+
+      var devBadge = isMobile
+        ? '<span class="tag green" style="font-size:9.5px;padding:2px 6px">📱 MOBILE</span>'
+        : '<span class="tag blue" style="font-size:9.5px;padding:2px 6px">💻 DESKTOP</span>';
+
+      var ipClean = v.ip_address || 'Unknown';
+      var ispClean = v.isp_provider || 'ISP';
+      var cityClean = v.city || 'Algiers';
+      var regionClean = v.region || '';
+      var countryClean = v.country || 'Online';
+
+      var visits = v.visit_count || 1;
+      var visitBadge = visits > 1 
+        ? '<span class="tag" style="color:var(--gold);border-color:rgba(255,190,26,0.4);font-weight:800;background:rgba(255,190,26,0.1)">' + visits + 'x 🔥</span>'
+        : '<span style="color:var(--neon);font-weight:700">' + visits + 'x</span>';
+
+      html += '<tr style="transition:background .2s">' +
+        // 1. Time
+        '<td style="white-space:nowrap;color:var(--gold)">' + relTime + '<br><small style="color:var(--muted);font-size:10px">' + timeStr + '</small></td>' +
+        // 2. IP & Network
+        '<td>' +
+          '<div style="display:flex;align-items:center;gap:6px">' +
+            '<span class="mono" style="color:var(--cyan);font-weight:700">' + escapeAdminHtml(ipClean) + '</span>' +
+            '<button type="button" class="btn-chip" onclick="copyToClipboard(\'' + escapeAdminHtml(ipClean) + '\', this)" style="padding:1px 5px;font-size:10px;cursor:pointer" title="Copy IP">📋</button>' +
+          '</div>' +
+          (ispClean ? ('<div style="color:var(--muted);font-size:10.5px;margin-top:2px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + escapeAdminHtml(ispClean) + '">' + escapeAdminHtml(ispClean) + '</div>') : '') +
+        '</td>' +
+        // 3. Location (City & Country)
+        '<td>' +
+          '<div style="font-size:12.5px;font-weight:700;color:#fff">' + escapeAdminHtml(cityClean) + '</div>' +
+          '<div style="color:var(--neon);font-size:11px;margin-top:1px">' + escapeAdminHtml(countryClean) + (regionClean ? (' <span style="color:var(--muted)">· ' + escapeAdminHtml(regionClean) + '</span>') : '') + '</div>' +
+        '</td>' +
+        // 4. Device & Screen
+        '<td>' +
+          '<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">' +
+            devBadge +
+            (v.screen_size ? ('<span style="font-size:10px;color:var(--muted)">' + escapeAdminHtml(v.screen_size) + '</span>') : '') +
+          '</div>' +
+          '<div style="font-weight:600;font-size:11.5px">' + escapeAdminHtml(cleanModel) + '</div>' +
+        '</td>' +
+        // 5. OS / Browser
+        '<td>' +
+          '<div style="color:#cbd5e1">' + escapeAdminHtml(v.operating_system || 'OS') + '</div>' +
+          '<div style="color:var(--neon-2);font-size:11px">' + escapeAdminHtml(v.browser || 'Browser') + (v.language ? (' <span style="color:var(--muted);font-size:9.5px">(' + escapeAdminHtml(v.language) + ')</span>') : '') + '</div>' +
+        '</td>' +
+        // 6. Source / Landing
+        '<td>' +
+          '<div style="color:var(--muted);font-size:11px">' + escapeAdminHtml(v.source_referrer || 'Direct Visit') + '</div>' +
+          '<div style="font-size:10px;color:var(--cyan);font-family:var(--font-mono)">' + escapeAdminHtml(v.landing_page || '/') + '</div>' +
+        '</td>' +
+        // 7. Visits
+        '<td style="text-align:center">' + visitBadge + '</td>' +
+        // 8. Actions
+        '<td style="text-align:center">' +
+          '<button type="button" class="btn-secondary" onclick="openVisitorModalByIndex(' + idx + ')" style="font-size:10.5px;padding:4px 8px;border-color:rgba(0,255,156,0.3);color:var(--neon)">👁️ فحص</button>' +
+        '</td>' +
+      '</tr>';
+    });
+
+    tbody.innerHTML = html;
+    updatePaginationControls(filtered.length, total);
+  }
+
+  function updatePaginationControls(renderedCount, total) {
+    var rangeText = document.getElementById('visitorRangeText');
+    var pageNum = document.getElementById('visitorPageNumberDisplay');
+    var topPage = document.getElementById('visitorPagingInfoTop');
+    var btnPrev = document.getElementById('btnPrevVisitors');
+    var btnNext = document.getElementById('btnNextVisitors');
+
+    var page = window._visitorPage || 1;
+    var pageSize = window._visitorPageSize || 50;
+    var maxPages = Math.ceil(total / pageSize) || 1;
+
+    var startNum = total === 0 ? 0 : ((page - 1) * pageSize) + 1;
+    var endNum = Math.min(page * pageSize, total);
+
+    if (rangeText) {
+      rangeText.textContent = 'Showing ' + startNum + '–' + endNum + ' of ' + total.toLocaleString() + ' visitors recorded';
+    }
+    if (pageNum) {
+      pageNum.textContent = 'Page ' + page + ' of ' + maxPages;
+    }
+    if (topPage) {
+      topPage.textContent = 'Page ' + page + ' / ' + maxPages + ' (' + total.toLocaleString() + ' total)';
+    }
+
+    if (btnPrev) btnPrev.disabled = (page <= 1);
+    if (btnNext) btnNext.disabled = (page >= maxPages);
+  }
+
+  window.changeVisitorPage = function(delta) {
+    var newPage = (window._visitorPage || 1) + delta;
+    if (newPage < 1) return;
+    var maxPages = Math.ceil((window._visitorTotalCount || 0) / (window._visitorPageSize || 50)) || 1;
+    if (newPage > maxPages) return;
+    window._visitorPage = newPage;
+    loadVisitors(document.getElementById('btnRefreshVisitors'), newPage);
+  };
+
+  window.changeVisitorPageSize = function() {
+    var sel = document.getElementById('visitorPageSize');
+    if (!sel) return;
+    window._visitorPageSize = parseInt(sel.value, 10) || 50;
+    window._visitorPage = 1;
+    loadVisitors(document.getElementById('btnRefreshVisitors'), 1);
+  };
+
+  window.handleVisitorSearch = function() {
+    var inp = document.getElementById('visitorSearchInput');
+    window._visitorFilterQuery = inp ? inp.value : '';
+    renderVisitorsTable(window._visitorCache || [], window._visitorTotalCount || 0);
+  };
+
+  window.openVisitorModalByIndex = function(idx) {
+    var v = (window._visitorCache || [])[idx];
+    if (!v) return;
+
+    var modal = document.getElementById('visitorModal');
+    var content = document.getElementById('visitorModalContent');
+    if (!modal || !content) return;
+
+    var relTime = getRelativeVisitorTime(v.last_seen);
+    var fullTime = v.last_seen ? new Date(v.last_seen).toLocaleString('en-US', {
+      weekday: 'short', year: 'numeric', month: 'short', day: 'numeric',
+      hour: '2-digit', minute: '2-digit', second: '2-digit'
+    }) : 'N/A';
+    var firstTime = v.first_visit ? new Date(v.first_visit).toLocaleString('en-US', {
+      month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit'
+    }) : 'Same session';
+
+    var html = '<div style="display:flex;flex-direction:column;gap:14px;font-size:13px">' +
+      // Header Dossier Row
+      '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:rgba(0,0,0,0.4);border-radius:8px;border:1px solid rgba(0,255,156,0.3)">' +
+        '<div>' +
+          '<div style="font-size:11px;color:var(--muted)">IP ADDRESS (معرف الشبكة)</div>' +
+          '<div style="font-size:18px;font-weight:800;color:var(--cyan);font-family:var(--font-mono)">' + escapeAdminHtml(v.ip_address || 'Unknown') + '</div>' +
+        '</div>' +
+        '<button type="button" class="btn-primary" onclick="copyToClipboard(\'' + escapeAdminHtml(v.ip_address || '') + '\', this)" style="padding:6px 14px;font-size:12px">📋 Copy IP</button>' +
+      '</div>' +
+
+      // Two Column Grid
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px">' +
+        // Geolocation Box
+        '<div style="background:rgba(15,23,36,0.8);border:1px solid rgba(255,255,255,0.08);padding:14px;border-radius:8px">' +
+          '<div style="font-weight:700;color:var(--neon);margin-bottom:8px;display:flex;align-items:center;gap:6px"><span>📍</span> Geolocation &amp; Network (الموقع والشبكة)</div>' +
+          '<div style="display:flex;flex-direction:column;gap:6px;font-size:12px">' +
+            '<div><span style="color:var(--muted)">الدولة (Country):</span> <b>' + escapeAdminHtml(v.country || 'N/A') + '</b>' + (v.country_code ? (' (' + escapeAdminHtml(v.country_code) + ')') : '') + '</div>' +
+            '<div><span style="color:var(--muted)">المدينة (City):</span> <b style="color:var(--cyan)">' + escapeAdminHtml(v.city || 'N/A') + '</b></div>' +
+            '<div><span style="color:var(--muted)">المنطقة / الولاية (Region):</span> <b>' + escapeAdminHtml(v.region || 'N/A') + '</b></div>' +
+            '<div><span style="color:var(--muted)">مزود الإنترنت (ISP):</span> <b>' + escapeAdminHtml(v.isp_provider || 'N/A') + '</b></div>' +
+            '<div><span style="color:var(--muted)">المنطقة الزمنية (Timezone):</span> <span class="mono">' + escapeAdminHtml(v.timezone || 'N/A') + '</span></div>' +
+          '</div>' +
+        '</div>' +
+
+        // Device & Tech Box
+        '<div style="background:rgba(15,23,36,0.8);border:1px solid rgba(255,255,255,0.08);padding:14px;border-radius:8px">' +
+          '<div style="font-weight:700;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:6px"><span>📱</span> Device &amp; System (الجهاز والنظام)</div>' +
+          '<div style="display:flex;flex-direction:column;gap:6px;font-size:12px">' +
+            '<div><span style="color:var(--muted)">نوع الجهاز (Type):</span> <b>' + escapeAdminHtml(v.device_type || 'N/A') + '</b></div>' +
+            '<div><span style="color:var(--muted)">موديل الجهاز (Model):</span> <b style="color:var(--gold)">' + escapeAdminHtml(v.device_model || 'N/A') + '</b></div>' +
+            '<div><span style="color:var(--muted)">نظام التشغيل (OS):</span> <b>' + escapeAdminHtml(v.operating_system || 'N/A') + '</b></div>' +
+            '<div><span style="color:var(--muted)">المتصفح (Browser):</span> <b>' + escapeAdminHtml(v.browser || 'N/A') + '</b></div>' +
+            '<div><span style="color:var(--muted)">أبعاد الشاشة (Screen):</span> <span class="mono">' + escapeAdminHtml(v.screen_size || 'N/A') + '</span></div>' +
+            '<div><span style="color:var(--muted)">لغة المتصفح (Language):</span> <span class="mono">' + escapeAdminHtml(v.language || 'N/A') + '</span></div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      // Session History Box
+      '<div style="background:rgba(15,23,36,0.8);border:1px solid rgba(255,255,255,0.08);padding:14px;border-radius:8px">' +
+        '<div style="font-weight:700;color:#c084fc;margin-bottom:8px;display:flex;align-items:center;gap:6px"><span>⏱️</span> Traffic &amp; Visit Timeline (تاريخ وسلوك الزيارة)</div>' +
+        '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;font-size:12px">' +
+          '<div><span style="color:var(--muted)">مرات الدخول (Visit Count):</span> <b style="color:var(--neon);font-size:14px">' + (v.visit_count || 1) + ' visits</b></div>' +
+          '<div><span style="color:var(--muted)">مصدر الزيارة (Source):</span> <b>' + escapeAdminHtml(v.source_referrer || 'Direct Visit') + '</b></div>' +
+          '<div><span style="color:var(--muted)">الصفحة المقصودة (Landing):</span> <span class="mono" style="color:var(--cyan)">' + escapeAdminHtml(v.landing_page || '/') + '</span></div>' +
+          '<div><span style="color:var(--muted)">آخر ظهور (Last Seen):</span> <span class="mono">' + fullTime + ' (' + relTime + ')</span></div>' +
+          '<div><span style="color:var(--muted)">أول زيارة (First Visit):</span> <span class="mono">' + firstTime + '</span></div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="display:flex;justify-content:flex-end;margin-top:4px">' +
+        '<button type="button" class="btn-secondary" onclick="closeVisitorModal()" style="padding:8px 20px">Close (إغلاق) ✕</button>' +
+      '</div>' +
+    '</div>';
+
+    content.innerHTML = html;
+    modal.style.display = 'flex';
+  };
+
+  window.closeVisitorModal = function() {
+    var modal = document.getElementById('visitorModal');
+    if (modal) modal.style.display = 'none';
   };
 
   // Auto-refresh visitors log every 20 seconds when the Visitors tab is open
