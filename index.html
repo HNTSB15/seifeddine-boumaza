@@ -1024,6 +1024,21 @@ html[dir="rtl"] .cvx-gallery-item .cvx-zoom-hint{right:auto;left:8px}
 .cvx-slide-link{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--neon);text-decoration:none;display:inline-flex;align-items:center;gap:4px;font-weight:600;transition:color .18s}
 .cvx-slide-link:hover{color:#fff;text-decoration:underline}
 
+/* Anti-copy image and card protection */
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+.cvx-x-slide, .cvx-payout-card, .cvx-rev-card, .cvx-gallery-item {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 /* Lightbox Modal with Next/Prev Arrow Controls */
 .cvx-lightbox{position:fixed;inset:0;z-index:999999;background:rgba(4,7,14,.94);backdrop-filter:blur(14px);display:none;align-items:center;justify-content:center;padding:20px;flex-direction:column}
 .cvx-lightbox.active{display:flex}
@@ -13839,6 +13854,87 @@ body.theme-light .cvx-tv-text {
       window.cvxLbStep(isRtl ? 1 : -1);
     }
   });
+
+  // ==========================================================================
+  // 🛡️ ADVANCED CONTENT & SOURCE PROTECTION (حماية المحتوى ومصدر الصفحة)
+  // ==========================================================================
+  (function() {
+    // 1. Console Warning Banner
+    try {
+      console.log('%c⚠️ STOP / تنبيه', 'color:#ff4757;font-size:32px;font-weight:900;text-shadow:0 0 10px rgba(255,71,87,0.5);');
+      console.log('%cجميع الحقوق محفوظة لسيف الدين بومعزة © HNTSB15. المحتوى والكود محمي بموجب قوانين الملكية الفكرية.', 'color:#00ff9c;font-size:13px;font-weight:700;');
+    } catch(e){}
+
+    // 2. Disable Right-Click Context Menu
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      showProtectionNotice('⚠️ المحتوى والصور محمية بحقوق الطبع والنشر © HNTSB15');
+      return false;
+    }, false);
+
+    // 3. Disable DevTools & View Source Shortcuts
+    document.addEventListener('keydown', function(e) {
+      // F12
+      if (e.keyCode === 123 || e.key === 'F12') {
+        e.preventDefault();
+        e.stopPropagation();
+        showProtectionNotice('🔒 أدوات فحص المطورين معطلة لحماية المحتوى.');
+        return false;
+      }
+      var isCtrlOrCmd = e.ctrlKey || e.metaKey;
+      if (isCtrlOrCmd) {
+        // Ctrl+Shift+I (DevTools), Ctrl+Shift+J (Console), Ctrl+Shift+C (Inspect)
+        if (e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67 || e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+          e.preventDefault();
+          e.stopPropagation();
+          showProtectionNotice('🔒 أدوات فحص المطورين معطلة لحماية المحتوى.');
+          return false;
+        }
+        // Ctrl+U (View Source)
+        if (e.keyCode === 85 || e.key === 'u' || e.key === 'U') {
+          e.preventDefault();
+          e.stopPropagation();
+          showProtectionNotice('🔒 عرض كود المصدر معطل لحماية الملكية الفكرية.');
+          return false;
+        }
+        // Ctrl+S (Save Web Page)
+        if (e.keyCode === 83 || e.key === 's' || e.key === 'S') {
+          e.preventDefault();
+          e.stopPropagation();
+          showProtectionNotice('🔒 حفظ الصفحة معطل.');
+          return false;
+        }
+      }
+    }, false);
+
+    // 4. Disable Image Dragging
+    document.addEventListener('dragstart', function(e) {
+      if (e.target && e.target.nodeName === 'IMG') {
+        e.preventDefault();
+        return false;
+      }
+    }, false);
+
+    // Notification Toast for Protection
+    var protTimer = null;
+    function showProtectionNotice(msg) {
+      var toast = document.getElementById('cvxProtNotice');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'cvxProtNotice';
+        toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translate(-50%,40px);z-index:9999999;background:rgba(8,16,24,0.95);color:#00ff9c;border:1px solid rgba(0,255,156,0.6);padding:10px 20px;border-radius:999px;font-size:12.5px;font-weight:700;font-family:inherit;box-shadow:0 8px 30px rgba(0,0,0,0.85);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:all .3s ease;text-align:center;direction:rtl;';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = msg;
+      toast.style.transform = 'translate(-50%, 0)';
+      toast.style.opacity = '1';
+      if (protTimer) clearTimeout(protTimer);
+      protTimer = setTimeout(function() {
+        toast.style.transform = 'translate(-50%, 40px)';
+        toast.style.opacity = '0';
+      }, 2500);
+    }
+  })();
 
 //]]>
 </script>
