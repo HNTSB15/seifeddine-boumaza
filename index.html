@@ -6778,240 +6778,273 @@ html, body {
     font-size: 11.5px !important;
     line-height: 1.5 !important;
 /* ==========================================================================
-   💎 ULTRA-LUXURY VIP TOP ANNOUNCEMENT BAR (شريط تنبيهات فخم وبليندي)
+   📺 BROADCAST TV NEWS LED TICKER (شريط الأخبار التلفزيوني المتوهج LED)
    ========================================================================== */
 .cvx-top-banner {
   position: relative;
-  z-index: 1001;
+  z-index: 10001;
   width: 100%;
-  background: linear-gradient(90deg, rgba(3, 7, 18, 0.98) 0%, rgba(8, 20, 36, 0.96) 50%, rgba(3, 7, 18, 0.98) 100%);
-  border-bottom: 1px solid rgba(0, 255, 156, 0.22);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 -1px 0 rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 8px 16px;
-  min-height: 38px;
+  height: 40px;
+  background: #02050b;
+  background-image: 
+    radial-gradient(ellipse 70% 120% at 50% 0%, rgba(0, 255, 156, 0.12), transparent 70%),
+    linear-gradient(180deg, rgba(8, 16, 32, 0.98) 0%, rgba(2, 5, 12, 0.99) 100%);
+  border-bottom: 2px solid #00ff9c;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.9), 0 0 16px rgba(0, 255, 156, 0.35);
   display: flex;
   align-items: center;
-  justify-content: center;
-  user-select: none;
-  transition: all .35s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
+  user-select: none;
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
 }
 
+/* 🟢 Top Animated Running LED Light Bar (شريط ضوء لاد متدفق) */
 .cvx-top-banner::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 1.5px;
-  background: linear-gradient(90deg, transparent 0%, rgba(0, 255, 156, 0.7) 25%, rgba(18, 214, 255, 0.9) 50%, rgba(242, 193, 78, 0.7) 75%, transparent 100%);
-  animation: cvxRgbFlow 6s linear infinite;
+  height: 2px;
+  background: linear-gradient(90deg, #ff0055 0%, #00ff9c 25%, #12d6ff 50%, #f2c14e 75%, #ff0055 100%);
   background-size: 200% auto;
+  animation: tvLedFlow 3s linear infinite;
+  box-shadow: 0 0 10px #00ff9c, 0 0 20px rgba(0, 255, 156, 0.7);
+  z-index: 10;
   pointer-events: none;
 }
 
-@keyframes cvxRgbFlow {
+@keyframes tvLedFlow {
   0% { background-position: 0% 50%; }
   100% { background-position: 200% 50%; }
 }
 
 .cvx-banner-inner {
   width: 100%;
-  max-width: 1560px;
-  margin: 0 auto;
+  height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
   position: relative;
-  gap: 12px;
 }
 
-.cvx-banner-center {
+/* 🔴 TV Studio Live Lower-Third Badge (شارة البث التلفزيوني الإخباري) */
+.cvx-tv-badge {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  text-align: center;
-  padding: 0 32px;
+  gap: 8px;
+  padding: 0 16px;
+  height: 100%;
+  background: linear-gradient(135deg, #d90429 0%, #7a001a 100%);
+  border-inline-end: 2.5px solid #ff2a55;
+  box-shadow: 4px 0 16px rgba(217, 4, 41, 0.5);
+  flex-shrink: 0;
+  z-index: 5;
+  position: relative;
 }
 
-.cvx-banner-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: rgba(0, 255, 156, 0.12);
-  border: 1px solid rgba(0, 255, 156, 0.35);
-  box-shadow: 0 0 10px rgba(0, 255, 156, 0.15);
+/* Glowing Pulsing Live LED Bulb (لمبة لاد حمراء متوهجة للبث المباشر) */
+.cvx-tv-rec-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 6px #ff0055, 0 0 14px #ff0055, 0 0 22px #ff0055;
+  animation: tvRecBlink 1s ease-in-out infinite alternate;
   flex-shrink: 0;
 }
 
-.cvx-banner-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--neon);
-  box-shadow: 0 0 8px var(--neon), 0 0 14px var(--neon);
-  animation: cvxDotPulse 1.8s ease-in-out infinite;
+@keyframes tvRecBlink {
+  0% { opacity: 0.35; transform: scale(0.85); box-shadow: 0 0 4px #ff0055; }
+  100% { opacity: 1; transform: scale(1.15); box-shadow: 0 0 8px #fff, 0 0 16px #ff0055, 0 0 24px #ff0055; }
 }
 
-@keyframes cvxDotPulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.3); opacity: 0.65; box-shadow: 0 0 12px var(--neon), 0 0 20px var(--neon); }
-}
-
-.cvx-banner-badge-text {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--neon);
-  letter-spacing: 0.6px;
+.cvx-tv-badge-text {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 11.5px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.8px;
   text-transform: uppercase;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 2px 4px rgba(0, 0, 0, 0.9);
+  white-space: nowrap;
 }
 
-.cvx-banner-text {
+/* TV Broadcast Audio/Signal Equalizer (مؤشر التردد التلفزيوني الحي) */
+.cvx-tv-eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 14px;
+  margin-inline-start: 2px;
+}
+.cvx-tv-bar {
+  width: 2.5px;
+  background: #00ff9c;
+  border-radius: 1px;
+  box-shadow: 0 0 6px #00ff9c;
+  animation: tvEqBounce 0.8s ease-in-out infinite alternate;
+}
+.cvx-tv-bar:nth-child(1) { height: 40%; animation-delay: 0.1s; }
+.cvx-tv-bar:nth-child(2) { height: 95%; animation-delay: 0.3s; }
+.cvx-tv-bar:nth-child(3) { height: 65%; animation-delay: 0.2s; }
+
+@keyframes tvEqBounce {
+  0% { height: 25%; }
+  100% { height: 100%; }
+}
+
+/* 📺 TV News Marquee Screen (شاشة التمرير من اليمين إلى اليسار) */
+.cvx-tv-screen {
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 24px, #000 calc(100% - 24px), transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 24px, #000 calc(100% - 24px), transparent 100%);
+}
+
+.cvx-tv-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  width: max-content;
+  will-change: transform;
+  /* 🚀 الحركة التلفزيونية الصريحة: يدخل من اليمين ويتجه نحو اليسار */
+  animation: tvNewsTickerRTL 32s linear infinite;
+}
+
+.cvx-tv-screen:hover .cvx-tv-track {
+  animation-play-state: paused;
+  cursor: pointer;
+}
+
+@keyframes tvNewsTickerRTL {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+/* TV Broadcast Segments & Items */
+.cvx-tv-unit {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.cvx-tv-text {
   font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: 0.2px;
-  color: #f8fafc;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+  text-shadow: 0 0 10px rgba(0, 255, 156, 0.45), 0 2px 6px rgba(0, 0, 0, 0.95);
+  display: inline-flex;
+  align-items: center;
+}
+
+.cvx-tv-sep {
   display: inline-block;
-  /* ✨ LUXURY METALLIC TEXT SHINE EFFECT */
-  background: linear-gradient(110deg, #f8fafc 15%, #ffffff 35%, #00ff9c 50%, #12d6ff 65%, #f8fafc 85%);
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: cvxLuxuryShine 4.5s ease-in-out infinite;
-  text-shadow: 0 0 20px rgba(0, 255, 156, 0.15);
+  margin: 0 20px;
+  color: #00ff9c;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  text-shadow: 0 0 8px #00ff9c, 0 0 14px #00ff9c;
+  animation: tvSepPulse 1.5s ease-in-out infinite alternate;
 }
 
-@keyframes cvxLuxuryShine {
-  0% { background-position: 120% 0; }
-  50% { background-position: -20% 0; }
-  100% { background-position: -20% 0; }
+@keyframes tvSepPulse {
+  0% { opacity: 0.7; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 6px #00ff9c); }
 }
 
-.cvx-banner-cta {
+.cvx-tv-pill {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 3px 12px;
-  border-radius: 999px;
-  background: rgba(18, 214, 255, 0.12);
-  border: 1px solid rgba(18, 214, 255, 0.35);
-  color: var(--neon-2);
-  font-size: 11.5px;
-  font-weight: 700;
-  text-decoration: none;
-  transition: all .2s ease;
-  flex-shrink: 0;
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
-.cvx-banner-cta:hover {
-  background: rgba(18, 214, 255, 0.22);
-  border-color: var(--neon-2);
-  color: #fff;
-  box-shadow: 0 0 12px rgba(18, 214, 255, 0.35);
-  transform: translateY(-1px);
+.cvx-tv-pill.green {
+  background: rgba(0, 255, 156, 0.15);
+  border: 1px solid rgba(0, 255, 156, 0.45);
+  color: #00ff9c;
+  box-shadow: 0 0 10px rgba(0, 255, 156, 0.25);
 }
 
-.cvx-banner-arrow {
-  display: inline-block;
-  transition: transform .2s ease;
+.cvx-tv-pill.gold {
+  background: rgba(242, 193, 78, 0.15);
+  border: 1px solid rgba(242, 193, 78, 0.45);
+  color: #f2c14e;
+  box-shadow: 0 0 10px rgba(242, 193, 78, 0.25);
 }
 
-.cvx-banner-cta:hover .cvx-banner-arrow {
-  transform: translateX(-3px);
-}
-[dir="ltr"] .cvx-banner-cta:hover .cvx-banner-arrow {
-  transform: translateX(3px);
+.cvx-tv-pill.cyan {
+  background: rgba(18, 214, 255, 0.15);
+  border: 1px solid rgba(18, 214, 255, 0.45);
+  color: #12d6ff;
+  box-shadow: 0 0 10px rgba(18, 214, 255, 0.25);
 }
 
-.cvx-banner-close {
-  position: absolute;
-  inset-inline-end: 4px;
-  top: 50%;
-  transform: translateY(-50%);
+/* Dismiss Button */
+.cvx-tv-close {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 32px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  border-inline-start: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.5);
-  font-size: 11px;
+  font-size: 13px;
   cursor: pointer;
   transition: all .2s ease;
+  flex-shrink: 0;
+  z-index: 5;
 }
 
-.cvx-banner-close:hover {
-  color: var(--neon);
-  background: rgba(0, 255, 156, 0.15);
-  border-color: rgba(0, 255, 156, 0.3);
+.cvx-tv-close:hover {
+  color: #ff0055;
+  background: rgba(255, 0, 85, 0.15);
 }
 
 /* Light Theme Support */
 body.theme-light .cvx-top-banner {
-  background: linear-gradient(90deg, #ffffff 0%, #f0fdf4 50%, #ffffff 100%);
-  border-bottom: 1px solid rgba(0, 180, 100, 0.25);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  background: #0f172a;
+  border-bottom: 2px solid #059669;
 }
-body.theme-light .cvx-banner-badge {
-  background: rgba(0, 180, 100, 0.1);
-  border-color: rgba(0, 180, 100, 0.3);
-}
-body.theme-light .cvx-banner-badge-text {
-  color: #059669;
-}
-body.theme-light .cvx-banner-text {
-  color: #0f172a;
-  background: linear-gradient(110deg, #0f172a 15%, #1e293b 35%, #059669 50%, #0284c7 65%, #0f172a 85%);
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-body.theme-light .cvx-banner-cta {
-  background: rgba(2, 132, 199, 0.08);
-  border-color: rgba(2, 132, 199, 0.25);
-  color: #0284c7;
-}
-body.theme-light .cvx-banner-close {
-  color: #64748b;
-  background: rgba(0, 0, 0, 0.04);
-  border-color: rgba(0, 0, 0, 0.08);
-}
-body.theme-light .cvx-banner-close:hover {
-  color: #059669;
-  background: rgba(5, 150, 105, 0.1);
+body.theme-light .cvx-tv-text {
+  color: #ffffff;
 }
 
 @media (max-width: 768px) {
   .cvx-top-banner {
-    padding: 6px 12px;
+    height: 36px;
   }
-  .cvx-banner-center {
-    gap: 8px;
-    padding: 0 20px;
+  .cvx-tv-badge {
+    padding: 0 10px;
+    gap: 5px;
   }
-  .cvx-banner-text {
+  .cvx-tv-badge-text {
+    font-size: 10.5px;
+  }
+  .cvx-tv-text {
     font-size: 12px;
   }
-  .cvx-banner-badge {
-    padding: 2px 7px;
+  .cvx-tv-sep {
+    margin: 0 12px;
+    font-size: 11px;
   }
-  .cvx-banner-badge-text {
-    font-size: 10px;
-  }
-  .cvx-banner-cta {
-    font-size: 10.5px;
-    padding: 2px 9px;
+  .cvx-tv-pill {
+    padding: 1px 6px;
+    font-size: 9.5px;
   }
 }
 </style>
@@ -9245,7 +9278,7 @@ body.theme-light .cvx-banner-close:hover {
       }
       window.renderDynamicFaqs = renderDynamicFaqs;
 
-      // Render Announcement Banner if Active (شريط التنبيهات الفخم وبليندي)
+      // Render Announcement Banner if Active (شريط الأخبار التلفزيوني LED المتحرك من اليمين إلى اليسار)
       window.cvxBannerActive = bannerActive;
       window.cvxBannerText = bannerText;
 
@@ -9262,7 +9295,7 @@ body.theme-light .cvx-banner-close:hover {
           bEl.id = 'cvxTopBanner';
           bEl.className = 'cvx-top-banner';
           bEl.setAttribute('role', 'region');
-          bEl.setAttribute('aria-label', 'Announcement');
+          bEl.setAttribute('aria-label', 'Broadcast TV News');
           if (navEl && navEl.firstChild) {
             navEl.insertBefore(bEl, navEl.firstChild);
           } else {
@@ -9271,9 +9304,7 @@ body.theme-light .cvx-banner-close:hover {
         }
 
         var isAr = (document.documentElement ? document.documentElement.getAttribute('lang') : null) === 'ar';
-        var badgeTitle = isAr ? 'تنبيه مباشر' : 'LIVE NOTICE';
-        var ctaTitle = isAr ? 'تواصل الآن' : 'Contact Now';
-        var ctaArrow = isAr ? '←' : '→';
+        var badgeTitle = isAr ? 'عاجل • بث حي' : 'BREAKING • LIVE';
 
         function escapeBanner(str) {
           return (str || '').replace(/[&<>"']/g, function(m) {
@@ -9283,19 +9314,44 @@ body.theme-light .cvx-banner-close:hover {
 
         var cleanText = escapeBanner(text.trim());
 
+        // TV Broadcast Separator & Badges
+        var tvPill1 = isAr ? '⚡ إدارة محافظ باحترافية' : '⚡ VIP PORTFOLIO MANAGEMENT';
+        var tvPill2 = isAr ? '📈 منصة NewsX AI للتداول' : '📈 NewsX AI TRADING SYSTEM';
+        var tvPill3 = isAr ? '🛡️ حماية رأس المال وسحوبات فورية' : '🛡️ CAPITAL PROTECTION & INSTANT PAYOUTS';
+
+        // Single rich broadcast segment
+        var singleSegment = '<div class="cvx-tv-unit">' +
+          '<span class="cvx-tv-text">' + cleanText + '</span>' +
+          '<span class="cvx-tv-sep">◄◄</span>' +
+          '<span class="cvx-tv-pill green">' + tvPill1 + '</span>' +
+          '<span class="cvx-tv-sep">◄◄</span>' +
+          '<span class="cvx-tv-pill gold">' + tvPill2 + '</span>' +
+          '<span class="cvx-tv-sep">◄◄</span>' +
+          '<span class="cvx-tv-pill cyan">' + tvPill3 + '</span>' +
+          '<span class="cvx-tv-sep">◄◄</span>' +
+        '</div>';
+
+        // Duplicate segments into 2 identical halves for mathematically seamless 100% loop
+        // Each half contains 2 segments so it easily spans ultra-wide monitors without any gap
+        var halfTrack = singleSegment + singleSegment;
+        var fullTrack = halfTrack + halfTrack;
+
         bEl.innerHTML = '<div class="cvx-banner-inner">' +
-          '<div class="cvx-banner-center">' +
-            '<span class="cvx-banner-badge">' +
-              '<span class="cvx-banner-dot"></span>' +
-              '<span class="cvx-banner-badge-text" id="cvxBannerTag">' + badgeTitle + '</span>' +
-            '</span>' +
-            '<span class="cvx-banner-text">' + cleanText + '</span>' +
-            '<a href="https://t.me/HNTSB15" target="_blank" rel="noopener" class="cvx-banner-cta">' +
-              '<span>' + ctaTitle + '</span>' +
-              '<span class="cvx-banner-arrow">' + ctaArrow + '</span>' +
-            '</a>' +
+          '<div class="cvx-tv-badge">' +
+            '<span class="cvx-tv-rec-dot"></span>' +
+            '<span class="cvx-tv-badge-text" id="cvxTvBadgeTitle">' + badgeTitle + '</span>' +
+            '<div class="cvx-tv-eq">' +
+              '<span class="cvx-tv-bar"></span>' +
+              '<span class="cvx-tv-bar"></span>' +
+              '<span class="cvx-tv-bar"></span>' +
+            '</div>' +
           '</div>' +
-          '<button type="button" class="cvx-banner-close" onclick="dismissTopBanner(event)" title="' + (isAr ? 'إغلاق التنبيه' : 'Dismiss') + '">✕</button>' +
+          '<div class="cvx-tv-screen">' +
+            '<div class="cvx-tv-track">' +
+              fullTrack +
+            '</div>' +
+          '</div>' +
+          '<button type="button" class="cvx-tv-close" onclick="dismissTopBanner(event)" title="' + (isAr ? 'إغلاق الشريط' : 'Dismiss') + '">✕</button>' +
         '</div>';
 
         bEl.style.display = 'flex';
