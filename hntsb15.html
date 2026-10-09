@@ -1645,7 +1645,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
               <div class="form-grid">
                 <div class="form-group">
                   <label>Date / Subtitle</label>
-                  <input type="text" id="tDate" placeholder="e.g. @seifeddin06 · Sep 18, 2026">
+                  <input type="text" id="tDate" placeholder="e.g. @HNTSB15 · Sep 18, 2026">
                   <div class="preset-chips">
                     <button type="button" class="preset-chip" onclick="setPresetCurrentDate('tDate')">📅 تاريخ اليوم (Today)</button>
                   </div>
@@ -4484,7 +4484,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     if (el) {
       var now = new Date();
       var dStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      el.value = '@seifeddin06 · ' + dStr;
+      el.value = '@HNTSB15 · ' + dStr;
     }
   };
 
@@ -5145,7 +5145,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     var tagList = tags ? tags.split(/[\s,]+/).filter(function(x){ return x.length > 0; }) : [];
 
     var dNow = new Date();
-    var formattedDate = date || ('@seifeddin06 · ' + dNow.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }));
+    var formattedDate = date || ('@HNTSB15 · ' + dNow.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }));
 
     var newTrade = {
       id: Date.now(),
