@@ -1714,21 +1714,13 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
                 </div>
                 <input type="hidden" id="tMediaType" value="photos">
 
-                <!-- OPTION 1: AUTO-FETCH FROM TWITTER / X (HANDLES BOTH PHOTOS AND VIDEOS AUTOMATICALLY) -->
-                <div style="background:rgba(0,255,156,0.04);border:1px solid rgba(0,255,156,0.22);border-radius:10px;padding:12px 14px;margin-bottom:16px">
-                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
-                    <span style="font-weight:700;color:var(--neon);font-size:12.5px">⚡ جلب الصفقة والصور أو الفيديو تلقائياً من تويتر / X</span>
-                    <span class="tag green" style="font-size:10px">AUTO-DETECTS VIDEO &amp; PHOTOS</span>
+                <!-- PROOF LINK INPUT -->
+                <div style="background:rgba(0,136,204,0.06);border:1px solid rgba(0,136,204,0.25);border-radius:10px;padding:12px 14px;margin-bottom:16px">
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+                    <span style="font-weight:700;color:#29b6f6;font-size:12.5px">✈️ رابط إثبات الصفقة / تيليجرام (Telegram Proof Link)</span>
+                    <span class="tag" style="color:#29b6f6;border-color:rgba(0,136,204,0.4);font-size:10px">TELEGRAM DIRECT</span>
                   </div>
-                  <p style="font-size:11.5px;color:var(--muted);margin:0 0 10px;line-height:1.4">
-                    ضع رابط التغريدة وسيقوم النظام تلقائياً بكشف ما إذا كانت صوراً أو فيديو بدقة عالية، وتعبئة كافة البيانات ونسبة الأرباح في ثانية واحدة!
-                  </p>
-                  <div style="display:flex;gap:8px;flex-wrap:wrap">
-                    <input type="text" id="tLink" placeholder="https://x.com/seifeddin06/status/..." style="flex:1;min-width:230px;font-size:13px">
-                    <button type="button" id="btnFetchTweet" class="btn-primary" onclick="fetchTweetData()" style="padding:8px 16px;font-size:12px;white-space:nowrap;background:var(--neon);color:#000;font-weight:700">
-                      ⚡ جلب البيانات والوسائط (Fetch Tweet)
-                    </button>
-                  </div>
+                  <input type="text" id="tLink" placeholder="https://t.me/HNTSB15" value="https://t.me/HNTSB15" style="width:100%;font-size:13px">
                 </div>
 
                 <!-- SECTION A: PHOTOS CONTAINER -->
@@ -3212,7 +3204,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
           <input type="text" id="edit_tTags">
         </div>
         <div class="form-group">
-          <label>Proof Link / Tweet URL</label>
+          <label>Proof Link / Telegram URL (رابط الإثبات أو التيليجرام)</label>
           <input type="text" id="edit_tLink">
         </div>
       </div>
@@ -5082,7 +5074,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
               (profit ? ('<span class="tag" style="font-size:10px;color:var(--gold);border-color:rgba(242,193,78,0.4)">' + escapeAdminHtml(profit) + '</span>') : '') +
               (deposit ? ('<span class="tag" style="font-size:10px;color:#cbd5e1">' + escapeAdminHtml(deposit) + '</span>') : '') +
               (isVid ? '<span class="tag gold" style="font-size:10px;color:var(--gold);border-color:rgba(242,193,78,0.5)">🎥 Video Proof</span>' : ('<span class="tag" style="font-size:10px">' + photosCount + ' Photos</span>')) +
-              (link ? ('<a href="' + escapeAdminHtml(link) + '" target="_blank" rel="noopener" class="tag" style="font-size:10px;color:var(--cyan);text-decoration:none">🔗 Tweet</a>') : '') +
+              (link ? ('<a href="' + escapeAdminHtml(link || 'https://t.me/HNTSB15') + '" target="_blank" rel="noopener" class="tag" style="font-size:10px;color:#29b6f6;text-decoration:none;border-color:rgba(0,136,204,0.4)">✈️ Telegram</a>') : '') +
               (!isActive ? '<span class="tag" style="font-size:10px;color:var(--red);border-color:var(--red)">HIDDEN</span>' : '') +
             '</div>' +
             '<div class="item-sub" style="color:#94a3b8;margin-top:6px;line-height:1.4">' +
