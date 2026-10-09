@@ -8836,7 +8836,52 @@ body.theme-light .cvx-tv-text {
         }
       });
 
+        function getTradeTimestamp(t) {
+    if (!t) return 0;
+    if (t.timestamp && !isNaN(Number(t.timestamp))) return Number(t.timestamp);
+    if (t.created_at && !isNaN(Date.parse(t.created_at))) return Date.parse(t.created_at);
+
+    var raw = (t.date_text || t.date || '').trim();
+    if (raw) {
+      var s = raw.replace(/^@\S+\s*[·\-\–\|]\s*/i, '').trim();
+      var p = Date.parse(s);
+      if (!isNaN(p)) return p;
+
+      var mText = s.match(/(?:(\d{1,2})\s+)?([A-Za-z]{3,9})\s+(\d{1,2})?,?\s*(\d{4})/);
+      if (mText) {
+        var day = mText[1] || mText[3] || '1';
+        var month = mText[2];
+        var year = mText[4];
+        var dp = Date.parse(month + ' ' + day + ', ' + year);
+        if (!isNaN(dp)) return dp;
+      }
+
+      var numDate = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
+      if (numDate) {
+        var d1 = new Date(Number(numDate[1]), Number(numDate[2]) - 1, Number(numDate[3]));
+        if (!isNaN(d1.getTime())) return d1.getTime();
+      }
+      var dmy = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+      if (dmy) {
+        var d2 = new Date(Number(dmy[3]), Number(dmy[2]) - 1, Number(dmy[1]));
+        if (!isNaN(d2.getTime())) return d2.getTime();
+      }
+    }
+
+    if (t.id) {
+      var nid = Number(t.id);
+      if (!isNaN(nid)) {
+        if (nid > 1000000000000 && nid < 3000000000000) return nid;
+        if (nid > 1000000000000000) return Math.floor(nid / 1000000);
+      }
+    }
+    return 0;
+  }
+
       function renderDynamicTrades(trades) {
+        if (Array.isArray(trades)) {
+          trades.sort(function(a, b){ return getTradeTimestamp(b) - getTradeTimestamp(a); });
+        }
         var track = document.getElementById('cvxXStream') || document.querySelector('.cvx-x-stream');
         if (!track) return;
         var activeTrades = trades.filter(function(t){ return t.is_active !== false; });

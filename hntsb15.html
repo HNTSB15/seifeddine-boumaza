@@ -1866,6 +1866,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
             <div class="card-title">
               <h2><span>📊</span> Published Live Results on Website</h2>
               <div style="display:flex;align-items:center;gap:10px">
+                <span class="tag neon" style="font-size:11px;font-weight:600">📅 مرتبة تلقائياً حسب التاريخ (الأحدث أولاً)</span>
                 <span class="tag" id="tradesCountTag">0 Trades</span>
                 <button type="button" class="btn-secondary btn-refresh" onclick="loadTradesList(this)" style="font-size:11px"><span class="refresh-icon">↻</span> Refresh</button>
               </div>
@@ -5028,6 +5029,48 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
   // --------------------------------------------------------------------------
   window._tradesCache = [];
 
+    function getTradeTimestamp(t) {
+    if (!t) return 0;
+    if (t.timestamp && !isNaN(Number(t.timestamp))) return Number(t.timestamp);
+    if (t.created_at && !isNaN(Date.parse(t.created_at))) return Date.parse(t.created_at);
+
+    var raw = (t.date_text || t.date || '').trim();
+    if (raw) {
+      var s = raw.replace(/^@\S+\s*[·\-\–\|]\s*/i, '').trim();
+      var p = Date.parse(s);
+      if (!isNaN(p)) return p;
+
+      var mText = s.match(/(?:(\d{1,2})\s+)?([A-Za-z]{3,9})\s+(\d{1,2})?,?\s*(\d{4})/);
+      if (mText) {
+        var day = mText[1] || mText[3] || '1';
+        var month = mText[2];
+        var year = mText[4];
+        var dp = Date.parse(month + ' ' + day + ', ' + year);
+        if (!isNaN(dp)) return dp;
+      }
+
+      var numDate = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
+      if (numDate) {
+        var d1 = new Date(Number(numDate[1]), Number(numDate[2]) - 1, Number(numDate[3]));
+        if (!isNaN(d1.getTime())) return d1.getTime();
+      }
+      var dmy = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+      if (dmy) {
+        var d2 = new Date(Number(dmy[3]), Number(dmy[2]) - 1, Number(dmy[1]));
+        if (!isNaN(d2.getTime())) return d2.getTime();
+      }
+    }
+
+    if (t.id) {
+      var nid = Number(t.id);
+      if (!isNaN(nid)) {
+        if (nid > 1000000000000 && nid < 3000000000000) return nid;
+        if (nid > 1000000000000000) return Math.floor(nid / 1000000);
+      }
+    }
+    return 0;
+  }
+
   window.loadTradesList = function(btn) {
     if (!sdb) return;
     if (btn) btn.classList.add('loading');
@@ -5046,6 +5089,9 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
           list = JSON.parse(res.data.current_value);
         }
       } catch(e){}
+      if (Array.isArray(list)) {
+        list.sort(function(a, b){ return getTradeTimestamp(b) - getTradeTimestamp(a); });
+      }
       window._tradesCache = list;
       if (countTag) countTag.textContent = list.length + ' Trades';
       if (!list || !list.length) {
@@ -5147,8 +5193,11 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     var dNow = new Date();
     var formattedDate = date || ('@HNTSB15 · ' + dNow.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }));
 
+    var tStamp = getTradeTimestamp({ date_text: formattedDate, date: formattedDate }) || Date.now();
     var newTrade = {
       id: Date.now(),
+      timestamp: tStamp,
+      created_at: new Date().toISOString(),
       badge: badge || pair,
       badge_type: (badge.indexOf('PROFIT') > -1 || badge.indexOf('VIDEO') > -1 || isVideoDeal) ? 'gold' : 'neon',
       title: pair,
@@ -5195,7 +5244,8 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         return t;
       });
 
-      var updatedList = [newTrade].concat(currentList).slice(0, 30);
+      var updatedList = [newTrade].concat(currentList).slice(0, 50);
+      updatedList.sort(function(a, b){ return getTradeTimestamp(b) - getTradeTimestamp(a); });
 
       sdb.from('website_settings').upsert({
         setting_name: 'trading_deals_json',
@@ -5385,8 +5435,11 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
 
     var cleanPhotos = photos.filter(function(p){ return p && p.indexOf('data:video') === -1; });
 
+    var editStamp = getTradeTimestamp({ date_text: date, date: date }) || list[idx].timestamp || Date.now();
     list[idx] = {
       id: list[idx].id !== undefined ? list[idx].id : Number(id),
+      timestamp: editStamp,
+      created_at: list[idx].created_at || new Date().toISOString(),
       badge: badge || pair,
       badge_type: (badge.indexOf('PROFIT') > -1 || badge.indexOf('VIDEO') > -1 || isEditVideo) ? 'gold' : 'neon',
       title: pair,
@@ -5409,6 +5462,8 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       images: isEditVideo ? [editVidThumb] : cleanPhotos,
       is_active: isActive
     };
+
+    list.sort(function(a, b){ return getTradeTimestamp(b) - getTradeTimestamp(a); });
 
     btn.disabled = true;
     btn.textContent = 'SAVING CHANGES...';
