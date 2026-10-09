@@ -61,7 +61,7 @@ VALUES
     ('whatsapp_number', '+213697114385', 'رقم الواتساب مع الرمز الدولي للشات المباشر', 'روابط التواصل'),
     ('support_email', 'saifeddine.jskyst15@gmail.com', 'البريد الإلكتروني الرسمي للاستفسارات', 'روابط التواصل'),
     ('instagram_profile', 'https://www.instagram.com/oo._.saifeddine._.oo/', 'رابط حساب انستغرام الرسمي', 'روابط التواصل'),
-    ('x_profile', 'https://x.com/seifeddin06', 'رابط حساب منصة X (تويتر) الرسمي', 'روابط التواصل'),
+    ('x_profile', 'https://x.com/HNTSB15', 'رابط حساب منصة X (تويتر) الرسمي', 'روابط التواصل'),
     
     -- محافظ الإيداع والدفع بالعملات الرقمية:
     ('bep20_deposit_wallet', '0x41f8a3a3a841cb3305bf1ebabe4ede7169a55bce', 'عنوان محفظة USDT (BEP20 - Binance Smart Chain)', 'المحافظ الرقمية'),
@@ -85,7 +85,7 @@ VALUES
     -- خدمات التوصيات والمنصات:
     ('signals_vip_schedule', '2 - 5 High-Probability Trades Daily', 'جدول وتفاصيل توصيات VIP اليومية', 'توصيات VIP'),
     ('newsx_platform_link', '#newsx', 'رابط منصة NewsX AI المباشر', 'المنصات والأدوات'),
-    ('tradingview_profile', 'https://www.tradingview.com/u/seifeddin06/', 'رابط حساب TradingView الرسمي', 'روابط التواصل'),
+    ('tradingview_profile', 'https://www.tradingview.com/u/HNTSB15/', 'رابط حساب TradingView الرسمي', 'روابط التواصل'),
     ('youtube_channel', '', 'رابط قناة اليوتيوب الرسمية', 'روابط التواصل'),
     ('binance_pay_id', '441672878', 'معرف Binance Pay ID', 'المحافظ الرقمية'),
     ('footer_copyright', '© Saifeddine Boumaza - Forex & Crypto Trading Manager - All rights reserved', 'نص حقوق الملكية في الفوتر', 'الواجهة الرئيسية'),
