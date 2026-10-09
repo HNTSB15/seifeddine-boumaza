@@ -3,22 +3,22 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://saifeddine-boumaza.com/</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://saifeddine-boumaza.com/og-image.png</image:loc>
-      <image:title>Saifeddine Boumaza — Forex and Crypto Trading Manager</image:title>
-      <image:caption>Official Technology and Financial Portfolio of Saifeddine Boumaza</image:caption>
+      <image:title>سيف الدين بومعزة — تداول الفوركس وإدارة الحسابات | Saifeddine Boumaza</image:title>
+      <image:caption>Official Portfolio of Saifeddine Boumaza — Forex, Gold &amp; Crypto Trading, Account Management</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://saifeddine-boumaza.com/SB.jpg</image:loc>
-      <image:title>Saifeddine Boumaza</image:title>
+      <image:title>سيف الدين بومعزة — Saifeddine Boumaza</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://saifeddine-boumaza.com/NewsXAIOfficial/</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

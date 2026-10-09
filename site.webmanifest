@@ -1,7 +1,7 @@
 {
-  "name": "Saifeddine Boumaza — Forex & Crypto Trading Manager",
-  "short_name": "Saifeddine",
-  "description": "Official portfolio and algorithmic technology website of Saifeddine Boumaza. Software engineering, NewsX AI analytics, financial market research, and verified track records.",
+  "name": "سيف الدين بومعزة — تداول وإدارة حسابات | Saifeddine Boumaza",
+  "short_name": "سيف الدين بومعزة",
+  "description": "الموقع الرسمي لسيف الدين بومعزة: خبير تداول الفوركس، الذهب والعملات الرقمية، إدارة حسابات التداول، وتحليلات أخبار الأسواق وتكنولوجيا NewsX AI.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#05070d",

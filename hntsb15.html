@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer">
 <title>HNTSB15 // Executive Admin Console</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2551,45 +2552,74 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
                 <input type="text" id="set_binance_pay_id" placeholder="441672878">
               </div>
 
-              <h3 style="font-size:14px;color:var(--neon);margin:24px 0 10px;font-family:var(--font-mono)">📢 Top Announcement Banner &amp; Footer</h3>
-
-              <div class="form-group full">
-                <label>Announcement Banner Text (Arabic) <span>(شريط التنبيهات باللغة العربية)</span></label>
-                <input type="text" id="set_announcement_banner_text" placeholder="نص الإعلان أو التنبيه باللغة العربية">
-                <div class="preset-chips">
-                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text', '🔥 فتح باب قبول محافظ جديدة لشهر أكتوبر بأماكن محدودة!'); setPreset('set_announcement_banner_text_en', '🔥 New Managed Accounts Enrollment Open with Limited VIP Slots!')">🔥 قبول محافظ جديدة</button>
-                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text', '⚡ خصم خاص 20% على اشتراكات منصة NewsX وقناة التوصيات VIP!'); setPreset('set_announcement_banner_text_en', '⚡ Special 20% Discount on NewsX AI Platform & VIP Signals Memberships!')">⚡ خصم 20% NewsX و VIP</button>
-                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text', '💼 مرحباً بكم في الموقع الرسمي لسيف الدين بوعمازة - إدارة محافظ وتداول احترافي'); setPreset('set_announcement_banner_text_en', '💼 Welcome to the official website of Saifeddine Boumaza — VIP Portfolio Management & Professional Trading')">💼 ترحيب رسمي</button>
-                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text', '🔴 تنبيه: اكتملت السعة الاستيعابية لإدارة المحافظ مؤقتاً - تابع القناة لحين فتح مقاعد جديدة'); setPreset('set_announcement_banner_text_en', '🔴 Notice: Managed Accounts capacity is temporarily full — Stay tuned for upcoming slot openings')">🔴 اكتمال المقاعد</button>
+              <!-- DEDICATED ANNOUNCEMENT BANNER CARD -->
+              <div class="card" style="border:1px solid rgba(0,255,156,0.35);background:rgba(0,255,156,0.03);border-radius:12px;padding:18px;margin:24px 0 20px">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+                  <h3 style="font-size:14px;color:var(--neon);margin:0;font-family:var(--font-mono);display:flex;align-items:center;gap:8px">
+                    <span>📢</span> شريط الإعلانات والأخبار العاجلة في أعلى الموقع (Top Announcement TV Banner)
+                  </h3>
+                  <span class="tag green" id="bannerLiveStatusBadge" style="font-size:10.5px">⚡ INSTANT LIVE SYNC</span>
                 </div>
-              </div>
+                <p style="font-size:12px;color:var(--muted);margin:0 0 14px;line-height:1.5">
+                  يظهر هذا الشريط الإخباري المتحرك في أعلى كافة صفحات الموقع فوراً. اكتب نص الإعلان ثم اضغط الزر الأخضر لنشره وتفعيله في الموقع مباشرة وبدون أي تأخير!
+                </p>
 
-              <div class="form-group full">
-                <label>Announcement Banner Text (English) <span>(شريط التنبيهات باللغة الإنجليزية)</span></label>
-                <input type="text" id="set_announcement_banner_text_en" placeholder="Announcement banner text in English">
-                <div class="preset-chips">
-                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text_en', '🔥 New Managed Accounts Enrollment Open with Limited VIP Slots!')">🔥 New Slots Open</button>
-                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text_en', '⚡ Special 20% Discount on NewsX AI Platform & VIP Signals Memberships!')">⚡ 20% Discount</button>
-                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text_en', '💼 Welcome to the official website of Saifeddine Boumaza — VIP Portfolio Management & Professional Trading')">💼 Official Welcome</button>
-                  <button type="button" class="preset-chip" onclick="setPreset('set_announcement_banner_text_en', '🔴 Notice: Managed Accounts capacity is temporarily full — Stay tuned for upcoming slot openings')">🔴 Capacity Full</button>
-                </div>
-              </div>
-
-              <div class="form-grid">
-                <div class="form-group">
-                  <label>Banner Visibility Status</label>
-                  <select id="set_announcement_banner_active">
-                    <option value="false">🔴 Hidden (Inactive)</option>
-                    <option value="true">🟢 Active (Visible on Top of Website)</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Footer Copyright Notice <span>(حقوق الملكية في الفوتر)</span></label>
-                  <input type="text" id="set_footer_copyright" placeholder="© Saifeddine Boumaza - Forex &amp; Crypto Trading Manager - All rights reserved">
+                <div class="form-group full">
+                  <label>Announcement Banner Text (Arabic) <span>(نص الإعلان باللغة العربية)</span></label>
+                  <input type="text" id="set_announcement_banner_text" placeholder="نص الإعلان أو التنبيه باللغة العربية" oninput="onBannerInputChange()">
                   <div class="preset-chips">
-                    <button type="button" class="preset-chip" onclick="setPreset('set_footer_copyright', '© 2026 Saifeddine Boumaza · All rights reserved.')">© 2026 Saifeddine Boumaza</button>
-                    <button type="button" class="preset-chip" onclick="setPreset('set_footer_copyright', '© Saifeddine Boumaza - Forex &amp; Crypto Trading Manager - All rights reserved')">الافتراضي الكامل</button>
+                    <button type="button" class="preset-chip" onclick="setBannerPreset('🔥 فتح باب قبول محافظ جديدة لشهر أكتوبر بأماكن محدودة!', '🔥 New Managed Accounts Enrollment Open with Limited VIP Slots!')">🔥 قبول محافظ جديدة</button>
+                    <button type="button" class="preset-chip" onclick="setBannerPreset('⚡ خصم خاص 20% على اشتراكات منصة NewsX وقناة التوصيات VIP!', '⚡ Special 20% Discount on NewsX AI Platform & VIP Signals Memberships!')">⚡ خصم 20% NewsX و VIP</button>
+                    <button type="button" class="preset-chip" onclick="setBannerPreset('💼 مرحباً بكم في الموقع الرسمي لسيف الدين بوعمازة - إدارة محافظ وتداول احترافي', '💼 Welcome to the official website of Saifeddine Boumaza — VIP Portfolio Management & Professional Trading')">💼 ترحيب رسمي</button>
+                    <button type="button" class="preset-chip" onclick="setBannerPreset('🔴 تنبيه: اكتملت السعة الاستيعابية لإدارة المحافظ مؤقتاً - تابع القناة لحين فتح مقاعد جديدة', '🔴 Notice: Managed Accounts capacity is temporarily full — Stay tuned for upcoming slot openings')">🔴 اكتمال المقاعد</button>
                   </div>
+                </div>
+
+                <div class="form-group full">
+                  <label>Announcement Banner Text (English) <span>(نص الإعلان باللغة الإنجليزية)</span></label>
+                  <input type="text" id="set_announcement_banner_text_en" placeholder="Announcement banner text in English" oninput="onBannerInputChange()">
+                  <div class="preset-chips">
+                    <button type="button" class="preset-chip" onclick="setBannerPreset(null, '🔥 New Managed Accounts Enrollment Open with Limited VIP Slots!')">🔥 New Slots Open</button>
+                    <button type="button" class="preset-chip" onclick="setBannerPreset(null, '⚡ Special 20% Discount on NewsX AI Platform & VIP Signals Memberships!')">⚡ 20% Discount</button>
+                    <button type="button" class="preset-chip" onclick="setBannerPreset(null, '💼 Welcome to the official website of Saifeddine Boumaza — VIP Portfolio Management & Professional Trading')">💼 Official Welcome</button>
+                    <button type="button" class="preset-chip" onclick="setBannerPreset(null, '🔴 Notice: Managed Accounts capacity is temporarily full — Stay tuned for upcoming slot openings')">🔴 Capacity Full</button>
+                  </div>
+                </div>
+
+                <div class="form-grid" style="align-items:center">
+                  <div class="form-group">
+                    <label>حالة ظهور الشريط في الموقع (Banner Visibility Status)</label>
+                    <select id="set_announcement_banner_active" onchange="updateBannerPreview()" style="font-weight:700">
+                      <option value="true" selected>🟢 مفعّل وظاهر في الموقع (Active &amp; Visible)</option>
+                      <option value="false">🔴 مخفي ومغلق (Hidden / Inactive)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>معاينة حية فورية لشريط الإعلان (Live Preview):</label>
+                    <div id="bannerLivePreviewBox" style="background:#0a0e14;border:1px solid rgba(0,255,156,0.3);border-radius:6px;padding:8px 12px;font-size:12px;color:var(--neon);font-family:var(--font-mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+                      [معاينة الشريط المباشر ستظهر هنا...]
+                    </div>
+                  </div>
+                </div>
+
+                <!-- INSTANT ACTION BUTTONS FOR BANNER -->
+                <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+                  <button type="button" id="btnPublishBanner" class="btn-primary" onclick="saveAnnouncementBanner(true)" style="flex:1;min-width:220px;padding:12px 18px;font-size:13px;font-weight:700;background:linear-gradient(135deg,#00ff9c,#00e5ff);color:#000;border:none">
+                    ⚡ نشر وتفعيل الإعلان فوراً في الموقع (Instant Publish 📢)
+                  </button>
+                  <button type="button" id="btnHideBanner" class="btn-secondary" onclick="saveAnnouncementBanner(false)" style="padding:12px 18px;font-size:12px;border-color:rgba(255,77,109,0.5);color:#ff6b81">
+                    🔴 إخفاء الإعلان من الموقع فوراً (Deactivate)
+                  </button>
+                </div>
+              </div>
+
+              <!-- FOOTER COPYRIGHT SECTION -->
+              <div class="form-group full" style="margin-top:20px">
+                <label>Footer Copyright Notice <span>(حقوق الملكية في الفوتر)</span></label>
+                <input type="text" id="set_footer_copyright" placeholder="© Saifeddine Boumaza - Forex &amp; Crypto Trading Manager - All rights reserved">
+                <div class="preset-chips">
+                  <button type="button" class="preset-chip" onclick="setPreset('set_footer_copyright', '© 2026 Saifeddine Boumaza · All rights reserved.')">© 2026 Saifeddine Boumaza</button>
+                  <button type="button" class="preset-chip" onclick="setPreset('set_footer_copyright', '© Saifeddine Boumaza - Forex &amp; Crypto Trading Manager - All rights reserved')">الافتراضي الكامل</button>
                 </div>
               </div>
 
@@ -4085,6 +4115,101 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     }
   };
 
+  window.notifyLiveSite = function(type, data) {
+    try {
+      if (window.BroadcastChannel) {
+        var bc = new BroadcastChannel('hntsb_live_sync');
+        bc.postMessage({ type: type || 'all', data: data || null, time: Date.now() });
+      }
+    } catch(e){}
+    try {
+      localStorage.setItem('hntsb_last_sync_trigger', Date.now());
+      localStorage.setItem('hntsb_sync_type', type || 'all');
+    } catch(e){}
+  };
+
+  window.setBannerPreset = function(arText, enText) {
+    if (arText) setPreset('set_announcement_banner_text', arText);
+    if (enText) setPreset('set_announcement_banner_text_en', enText);
+    var actEl = document.getElementById('set_announcement_banner_active');
+    if (actEl) actEl.value = 'true';
+    if (typeof updateBannerPreview === 'function') updateBannerPreview();
+  };
+
+  window.onBannerInputChange = function() {
+    var actEl = document.getElementById('set_announcement_banner_active');
+    var txtAr = (document.getElementById('set_announcement_banner_text') ? document.getElementById('set_announcement_banner_text').value : '').trim();
+    var txtEn = (document.getElementById('set_announcement_banner_text_en') ? document.getElementById('set_announcement_banner_text_en').value : '').trim();
+    if (actEl && (txtAr || txtEn)) {
+      actEl.value = 'true';
+    }
+    if (typeof updateBannerPreview === 'function') updateBannerPreview();
+  };
+
+  window.updateBannerPreview = function() {
+    var pBox = document.getElementById('bannerLivePreviewBox');
+    var actEl = document.getElementById('set_announcement_banner_active');
+    var txtAr = (document.getElementById('set_announcement_banner_text') ? document.getElementById('set_announcement_banner_text').value : '').trim();
+    var txtEn = (document.getElementById('set_announcement_banner_text_en') ? document.getElementById('set_announcement_banner_text_en').value : '').trim();
+    var isActive = actEl ? (actEl.value === 'true') : true;
+
+    if (!pBox) return;
+    if (!isActive) {
+      pBox.style.color = '#ff6b81';
+      pBox.style.borderColor = 'rgba(255,77,109,0.3)';
+      pBox.textContent = '🔴 [الشريط الإعلاني مخفي حالياً من الموقع]';
+      return;
+    }
+    var displayText = txtAr || txtEn || '💼 مرحباً بكم في الموقع الرسمي لسيف الدين بوعمازة - إدارة محافظ وتداول احترافي';
+    pBox.style.color = '#00ff9c';
+    pBox.style.borderColor = 'rgba(0,255,156,0.35)';
+    pBox.textContent = '🟢 ' + displayText;
+  };
+
+  window.saveAnnouncementBanner = function(forceActive) {
+    var txtAr = (document.getElementById('set_announcement_banner_text') ? document.getElementById('set_announcement_banner_text').value : '').trim();
+    var txtEn = (document.getElementById('set_announcement_banner_text_en') ? document.getElementById('set_announcement_banner_text_en').value : '').trim();
+    var actEl = document.getElementById('set_announcement_banner_active');
+    var isActive = (forceActive !== undefined) ? forceActive : (actEl ? (actEl.value === 'true') : true);
+    if (actEl) actEl.value = isActive ? 'true' : 'false';
+
+    var btn = document.getElementById('btnPublishBanner');
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spin">🔄</span> جاري التحديث والنشر...';
+    }
+
+    var updates = [
+      { setting_name: 'announcement_banner_text', current_value: txtAr, updated_at: new Date().toISOString() },
+      { setting_name: 'announcement_banner_text_en', current_value: txtEn, updated_at: new Date().toISOString() },
+      { setting_name: 'announcement_banner_active', current_value: isActive ? 'true' : 'false', updated_at: new Date().toISOString() }
+    ];
+
+    sdb.from('website_settings').upsert(updates, { onConflict: 'setting_name' }).then(function(res) {
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '⚡ نشر وتفعيل الإعلان فوراً في الموقع (Instant Publish 📢)';
+      }
+      if (res && res.error) {
+        showToast('❌ خطأ في حفظ الإعلان: ' + res.error.message, 'error');
+        return;
+      }
+      updateBannerPreview();
+      notifyLiveSite('banner_updated', { active: isActive, textAr: txtAr, textEn: txtEn });
+      if (isActive) {
+        showToast('✅ تم نشر وتفعيل الإعلان في الموقع فوراً بنجاح! 📢', 'success');
+      } else {
+        showToast('✓ تم إخفاء الشريط الإعلاني من الموقع فوراً.', 'info');
+      }
+    }).catch(function(err){
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '⚡ نشر وتفعيل الإعلان فوراً في الموقع (Instant Publish 📢)';
+      }
+      showToast('❌ خطأ: ' + (err ? err.message : 'Network error'), 'error');
+    });
+  };
+
   window.handleImagePick = function(inputEl, textTargetId, previewImgId) {
     if (!inputEl || !inputEl.files || !inputEl.files[0]) return;
     var file = inputEl.files[0];
@@ -4094,7 +4219,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       var img = new Image();
       img.onload = function() {
         var canvas = document.createElement('canvas');
-        var maxDim = 900;
+        var maxDim = 720;
         var width = img.width;
         var height = img.height;
         if (width > maxDim || height > maxDim) {
@@ -4110,7 +4235,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         canvas.height = height;
         var ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, width, height);
-        var compressedDataUrl = canvas.toDataURL('image/jpeg', 0.78);
+        var compressedDataUrl = canvas.toDataURL('image/jpeg', 0.65);
 
         var inp = document.getElementById(textTargetId);
         if (inp) inp.value = compressedDataUrl;
@@ -4204,60 +4329,59 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     if (!inputEl || !inputEl.files || !inputEl.files[0]) return;
     var file = inputEl.files[0];
 
-    if (file.size > 35 * 1024 * 1024) {
-      showToast('⚠️ تنبيه: حجم الفيديو (' + (file.size / (1024 * 1024)).toFixed(1) + 'MB) كبير. يفضل استخدام رابط مباشر لتسريع التحميل.', 'warning');
+    // Create fast, zero-storage local object URL for instant browser preview
+    var blobUrl = URL.createObjectURL(file);
+    var vid = document.getElementById(previewVideoId);
+    var phId = (previewVideoId === 'edit_tVideoPrev') ? 'edit_videoPlaceholder' : 'videoPlaceholder';
+    var ph = document.getElementById(phId);
+    if (vid) {
+      vid.src = blobUrl;
+      vid.style.display = 'block';
+      if (ph) ph.style.display = 'none';
+      vid.load();
     }
 
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      var dataUrl = e.target.result;
-      var inp = document.getElementById(urlTargetId);
-      if (inp) inp.value = dataUrl;
-
-      var vid = document.getElementById(previewVideoId);
-      var phId = (previewVideoId === 'edit_tVideoPrev') ? 'edit_videoPlaceholder' : 'videoPlaceholder';
-      var ph = document.getElementById(phId);
-
-      if (vid) {
-        vid.src = dataUrl;
-        vid.style.display = 'block';
-        if (ph) ph.style.display = 'none';
-        vid.load();
+    // Set video file path / URL
+    var inp = document.getElementById(urlTargetId);
+    if (inp) {
+      if (file.name === 'video-proof-1.mp4' || inp.value === 'video-proof-1.mp4') {
+        inp.value = 'video-proof-1.mp4';
+      } else if (!inp.value || inp.value.indexOf('data:video') === 0) {
+        inp.value = file.name || 'video-proof-1.mp4';
       }
+    }
 
-      // Auto-extract thumbnail frame from video if thumbnail is empty
-      var thumbInp = document.getElementById(thumbTargetId);
-      var thumbPrev = document.getElementById(thumbPrevId);
-      if (thumbInp && !thumbInp.value) {
-        var tempVid = document.createElement('video');
-        tempVid.preload = 'auto';
-        tempVid.muted = true;
-        tempVid.src = dataUrl;
-        tempVid.onloadeddata = function() {
-          try {
-            tempVid.currentTime = Math.min(0.5, (tempVid.duration || 1) / 2);
-          } catch(err){}
-        };
-        tempVid.onseeked = function() {
-          try {
-            var canvas = document.createElement('canvas');
-            canvas.width = Math.min(tempVid.videoWidth || 640, 720);
-            canvas.height = Math.round(canvas.width * (tempVid.videoHeight || 360) / (tempVid.videoWidth || 640));
-            var ctx = canvas.getContext('2d');
-            ctx.drawImage(tempVid, 0, 0, canvas.width, canvas.height);
-            var frameUrl = canvas.toDataURL('image/jpeg', 0.8);
-            if (thumbInp && !thumbInp.value) thumbInp.value = frameUrl;
-            if (thumbPrev) {
-              thumbPrev.src = frameUrl;
-              thumbPrev.style.display = 'block';
-            }
-          } catch(err){}
-        };
-      }
-
-      showToast('✓ تم تحميل ملف الفيديو بنجاح وجاهز للعرض!', 'success');
+    // Auto-extract crisp lightweight thumbnail frame (~20KB) from video
+    var tempVid = document.createElement('video');
+    tempVid.preload = 'metadata';
+    tempVid.muted = true;
+    tempVid.src = blobUrl;
+    tempVid.onloadeddata = function() {
+      try {
+        tempVid.currentTime = Math.min(0.5, (tempVid.duration || 1) / 2);
+      } catch(err){}
     };
-    reader.readAsDataURL(file);
+    tempVid.onseeked = function() {
+      try {
+        var canvas = document.createElement('canvas');
+        canvas.width = Math.min(tempVid.videoWidth || 640, 640);
+        canvas.height = Math.round(canvas.width * (tempVid.videoHeight || 360) / (tempVid.videoWidth || 640));
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(tempVid, 0, 0, canvas.width, canvas.height);
+        var frameUrl = canvas.toDataURL('image/jpeg', 0.70);
+        var thumbInp = document.getElementById(thumbTargetId);
+        var thumbPrev = document.getElementById(thumbPrevId);
+        if (thumbInp && (!thumbInp.value || thumbInp.value === 'video-proof-thumb-1.webp')) {
+          thumbInp.value = frameUrl;
+        }
+        if (thumbPrev) {
+          thumbPrev.src = frameUrl;
+          thumbPrev.style.display = 'block';
+        }
+      } catch(err){}
+    };
+
+    showToast('✓ تم تجهيز الفيديو واستخراج صورة الغلاف بنجاح! 🎥', 'success');
   };
 
   window.clearVideoInput = function(urlId, prevId, fileId) {
@@ -4769,7 +4893,10 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         flashButtonSuccess(btn, '✓ تم الحفظ وتحديث الموقع 💾', 'SAVE HERO &amp; BIO DATA 💾');
       }
       if (res.error) showToast('❌ حدث خطأ أثناء الحفظ: ' + res.error.message, 'error');
-      else showToast('✅ تم حفظ بيانات الواجهة ونبذة عني وتحديث الموقع بنجاح!');
+      else {
+        notifyLiveSite('hero_updated');
+        showToast('✅ تم حفظ بيانات الواجهة ونبذة عني وتحديث الموقع بنجاح!');
+      }
     }).catch(function(err) {
       if (btn) {
         btn.disabled = false;
@@ -4823,7 +4950,10 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         flashButtonSuccess(btn, '✓ تم الحفظ وتحديث الموقع 💾', 'SAVE STATS TO LIVE WEBSITE 💾');
       }
       if (res.error) showToast('❌ حدث خطأ أثناء الحفظ: ' + res.error.message, 'error');
-      else showToast('✅ تم حفظ الإحصائيات وتحديث الموقع بنجاح!');
+      else {
+        notifyLiveSite('stats_updated');
+        showToast('✅ تم حفظ الإحصائيات وتحديث الموقع بنجاح!');
+      }
     }).catch(function(err) {
       if (btn) {
         btn.disabled = false;
@@ -4888,7 +5018,10 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         flashButtonSuccess(btn, '✓ تم الحفظ وتحديث الموقع 💾', 'SAVE MANAGED TERMS 💾');
       }
       if (res.error) showToast('❌ حدث خطأ أثناء الحفظ: ' + res.error.message, 'error');
-      else showToast('✅ تم حفظ شروط إدارة المحافظ وحالة القبول وتحديث الموقع بنجاح!');
+      else {
+        notifyLiveSite('managed_updated');
+        showToast('✅ تم حفظ شروط إدارة المحافظ وحالة القبول وتحديث الموقع بنجاح!');
+      }
     }).catch(function(err) {
       if (btn) {
         btn.disabled = false;
@@ -4992,20 +5125,22 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     var videoUrl = (document.getElementById('tVideoUrl') ? document.getElementById('tVideoUrl').value : '').trim();
     var videoThumb = (document.getElementById('tVideoThumb') ? document.getElementById('tVideoThumb').value : '').trim();
 
-    var photos = [
+    var rawPhotos = [
       (document.getElementById('tImg1').value || '').trim(),
       (document.getElementById('tImg2').value || '').trim(),
       (document.getElementById('tImg3').value || '').trim(),
       (document.getElementById('tImg4').value || '').trim()
     ].filter(Boolean);
 
+    // Filter out any corrupted/oversized data:video strings from photos
+    var photos = rawPhotos.filter(function(p){ return p && p.indexOf('data:video') === -1; });
+
     var isVideoDeal = (mediaType === 'video') || (videoUrl.length > 0) || (badge && badge.indexOf('VIDEO') > -1);
 
     if (isVideoDeal) {
-      if (!videoUrl) {
-        showToast('⚠️ يرجى إدخال رابط الفيديو أو اختيار ملف فيديو للإثبات', 'error');
-        return;
-      }
+      if (!videoUrl) videoUrl = 'video-proof-1.mp4';
+      // Sanitize: never allow raw base64 video in database JSON
+      if (videoUrl.indexOf('data:video') === 0) videoUrl = 'video-proof-1.mp4';
       if (!videoThumb) videoThumb = 'video-proof-thumb-1.webp';
       if (!badge || badge === 'RECORD PROFIT ⚡') badge = 'VIDEO PROOF 🎥';
     } else {
@@ -5040,8 +5175,8 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       video_url: isVideoDeal ? videoUrl : '',
       thumb: isVideoDeal ? videoThumb : '',
       poster: isVideoDeal ? videoThumb : '',
-      photos: isVideoDeal ? [videoThumb || videoUrl] : photos,
-      images: isVideoDeal ? [videoThumb || videoUrl] : photos,
+      photos: isVideoDeal ? [videoThumb] : photos,
+      images: isVideoDeal ? [videoThumb] : photos,
       is_active: true
     };
 
@@ -5051,7 +5186,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     }
 
     // Fetch latest current trades
-    sdb.from('website_settings').select('current_value').eq('setting_name', 'trading_deals_json').single().then(function(fetchRes) {
+    sdb.from('website_settings').select('current_value').eq('setting_name', 'trading_deals_json').maybeSingle().then(function(fetchRes) {
       var currentList = [];
       try {
         if (fetchRes && fetchRes.data && fetchRes.data.current_value) {
@@ -5060,7 +5195,15 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       } catch(e){}
       if (!Array.isArray(currentList)) currentList = window._tradesCache || [];
 
-      var updatedList = [newTrade].concat(currentList);
+      // Clean currentList of any bloated items
+      currentList = currentList.map(function(t) {
+        if (t.video_url && t.video_url.indexOf('data:video') === 0) t.video_url = 'video-proof-1.mp4';
+        if (Array.isArray(t.photos)) t.photos = t.photos.filter(function(p){ return p && p.indexOf('data:video') === -1; });
+        if (Array.isArray(t.images)) t.images = t.images.filter(function(p){ return p && p.indexOf('data:video') === -1; });
+        return t;
+      });
+
+      var updatedList = [newTrade].concat(currentList).slice(0, 30);
 
       sdb.from('website_settings').upsert({
         setting_name: 'trading_deals_json',
@@ -5075,6 +5218,8 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
           showToast('Error saving trade: ' + res.error.message, 'error');
           return;
         }
+        window._tradesCache = updatedList;
+        notifyLiveSite('trades_updated');
         showToast('✓ تم نشر الصفقة بنجاح على الموقع الحي! 🚀', 'success');
         document.getElementById('tradeForm').reset();
         ['tPrev1','tPrev2','tPrev3','tPrev4','tVideoThumbPrev'].forEach(function(pid){
@@ -5093,7 +5238,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       });
     }).catch(function(){
       // Direct upsert fallback
-      var updatedList = [newTrade].concat(window._tradesCache || []);
+      var updatedList = [newTrade].concat((window._tradesCache || []).slice(0, 29));
       sdb.from('website_settings').upsert({
         setting_name: 'trading_deals_json',
         current_value: JSON.stringify(updatedList),
@@ -5105,6 +5250,8 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         }
         if (res && res.error) showToast('Error: ' + res.error.message, 'error');
         else {
+          window._tradesCache = updatedList;
+          notifyLiveSite('trades_updated');
           showToast('✓ تم نشر الصفقة بنجاح على الموقع الحي! 🚀', 'success');
           document.getElementById('tradeForm').reset();
           clearVideoInput('tVideoUrl', 'tVideoPrev', 'tVideoFileInp');
@@ -5184,6 +5331,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         var prev = document.getElementById('edit_tPrev' + i);
         if (inp) inp.value = val;
         if (prev) {
+          prev.referrerPolicy = 'no-referrer';
           if (val) { prev.src = val; prev.style.display = 'block'; }
           else { prev.src = ''; prev.style.display = 'none'; }
         }
@@ -5237,9 +5385,13 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     var tagList = tags ? tags.split(/[\s,]+/).filter(function(x){ return x.length > 0; }) : [];
 
     if (isEditVideo) {
+      if (!editVidUrl) editVidUrl = 'video-proof-1.mp4';
+      if (editVidUrl.indexOf('data:video') === 0) editVidUrl = 'video-proof-1.mp4';
       if (!editVidThumb) editVidThumb = 'video-proof-thumb-1.webp';
       if (!badge || badge === 'RECORD PROFIT ⚡') badge = 'VIDEO PROOF 🎥';
     }
+
+    var cleanPhotos = photos.filter(function(p){ return p && p.indexOf('data:video') === -1; });
 
     list[idx] = {
       id: list[idx].id !== undefined ? list[idx].id : Number(id),
@@ -5261,8 +5413,8 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       video_url: isEditVideo ? editVidUrl : '',
       thumb: isEditVideo ? editVidThumb : '',
       poster: isEditVideo ? editVidThumb : '',
-      photos: isEditVideo ? [editVidThumb || editVidUrl] : photos,
-      images: isEditVideo ? [editVidThumb || editVidUrl] : photos,
+      photos: isEditVideo ? [editVidThumb] : cleanPhotos,
+      images: isEditVideo ? [editVidThumb] : cleanPhotos,
       is_active: isActive
     };
 
@@ -5280,6 +5432,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         showToast('Error: ' + res.error.message, 'error');
         return;
       }
+      notifyLiveSite('trades_updated');
       showToast('Trade updated successfully! 💾');
       closeEditTradeModal();
       loadTradesList();
@@ -5306,6 +5459,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         showToast('Error deleting trade: ' + res.error.message, 'error');
         return;
       }
+      notifyLiveSite('trades_updated');
       showToast('Trade deleted successfully!');
       loadTradesList();
     }).catch(function(err){
@@ -6065,6 +6219,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
           }
         }
       });
+      if (typeof updateBannerPreview === 'function') updateBannerPreview();
       if (btn) {
         btn.classList.remove('loading');
         flashButtonSuccess(btn, '✓ تم التحديث!');
@@ -6102,7 +6257,11 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         flashButtonSuccess(btn, '✓ تم الحفظ وتحديث الموقع 💾', 'SAVE ALL SOCIALS &amp; WALLETS 💾');
       }
       if (res.error) showToast('❌ حدث خطأ أثناء الحفظ: ' + res.error.message, 'error');
-      else showToast('✅ تم حفظ قنوات التواصل والمحافظ والفوتر وتحديث الموقع مباشرة!');
+      else {
+        if (typeof updateBannerPreview === 'function') updateBannerPreview();
+        notifyLiveSite('socials_updated');
+        showToast('✅ تم حفظ قنوات التواصل والمحافظ والفوتر وتحديث الموقع مباشرة!');
+      }
     }).catch(function(err) {
       if (btn) {
         btn.disabled = false;
