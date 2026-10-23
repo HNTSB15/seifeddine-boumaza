@@ -197,8 +197,8 @@ CREATE TABLE public.payout_records (
     binance_time TEXT DEFAULT '',
     speed TEXT DEFAULT '1m 42s',
     speed_ar TEXT DEFAULT 'دقيقة و 42 ثانية',
-    exness_img TEXT DEFAULT '',
-    binance_img TEXT DEFAULT '',
+    exness_img TEXT DEFAULT '', -- Primary withdrawal proof receipt (Image 1)
+    binance_img TEXT DEFAULT '', -- Binance receipt or JSON array of multiple extra proofs (Images 2, 3, 4+)
     is_verified BOOLEAN DEFAULT true,
     is_active BOOLEAN DEFAULT true,
     display_order INT DEFAULT 0

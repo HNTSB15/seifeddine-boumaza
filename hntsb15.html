@@ -1788,6 +1788,15 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
                       <img id="tPrev4" class="file-preview" alt="Preview 4">
                     </div>
                   </div>
+
+                  <!-- Dynamic Extra Photos Container -->
+                  <div id="extraTradePhotosContainer"></div>
+
+                  <div style="margin-top:10px">
+                    <button type="button" class="btn-secondary" onclick="addTradePhotoSlot()" style="width:100%;padding:10px 14px;border:1px dashed var(--gold);color:var(--gold);display:flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;font-weight:600;font-size:12px;background:rgba(242,193,78,0.04);cursor:pointer">
+                      <span>➕ إضافة صورة أخرى (Add Another Photo)</span>
+                    </button>
+                  </div>
                 </div>
 
                 <!-- SECTION B: VIDEO PROOF CONTAINER -->
@@ -1965,24 +1974,39 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
 
               <div class="form-grid">
                 <div class="form-group">
-                  <label>Exness Screenshot Proof</label>
+                  <label>Exness Screenshot Proof (إثبات سحب Exness الرئيسي)</label>
                   <input type="text" id="pExnessImg" placeholder="proofs/payout-1-exness.png or Image URL">
-                  <div class="file-drop-zone" onclick="document.getElementById('exnessFileInp').click()">
-                    <span>📷 Pick Photo from Device / Camera</span>
-                    <input type="file" id="exnessFileInp" accept="image/*" onchange="handleImagePick(this, 'pExnessImg', 'exnessPrev')">
+                  <div style="display:flex;gap:6px;margin-top:6px">
+                    <div class="file-drop-zone" onclick="document.getElementById('exnessFileInp').click()" style="flex:1">
+                      <span>📷 Pick Photo from Device / Camera</span>
+                      <input type="file" id="exnessFileInp" accept="image/*" onchange="handleImagePick(this, 'pExnessImg', 'exnessPrev')">
+                    </div>
+                    <button type="button" class="btn-cancel" onclick="clearPhotoInput('pExnessImg','exnessPrev','exnessFileInp')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
                   </div>
                   <img id="exnessPrev" class="file-preview" alt="Exness Proof Preview">
                 </div>
 
                 <div class="form-group">
-                  <label>Binance Credit Screenshot <span>(Optional)</span></label>
+                  <label>Binance Credit Screenshot <span>(إشعار استلام بينانس / اختياري)</span></label>
                   <input type="text" id="pBinanceImg" placeholder="proofs/payout-1-binance.png or Image URL">
-                  <div class="file-drop-zone" onclick="document.getElementById('binanceFileInp').click()">
-                    <span>📷 Pick Photo from Device / Camera</span>
-                    <input type="file" id="binanceFileInp" accept="image/*" onchange="handleImagePick(this, 'pBinanceImg', 'binancePrev')">
+                  <div style="display:flex;gap:6px;margin-top:6px">
+                    <div class="file-drop-zone" onclick="document.getElementById('binanceFileInp').click()" style="flex:1">
+                      <span>📷 Pick Photo from Device / Camera</span>
+                      <input type="file" id="binanceFileInp" accept="image/*" onchange="handleImagePick(this, 'pBinanceImg', 'binancePrev')">
+                    </div>
+                    <button type="button" class="btn-cancel" onclick="clearPhotoInput('pBinanceImg','binancePrev','binanceFileInp')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
                   </div>
                   <img id="binancePrev" class="file-preview" alt="Binance Proof Preview">
                 </div>
+              </div>
+
+              <!-- Dynamic Extra Payout Proofs Container -->
+              <div id="extraPayoutPhotosContainer"></div>
+
+              <div style="margin-top:10px;margin-bottom:12px">
+                <button type="button" class="btn-secondary" onclick="addPayoutPhotoSlot()" style="width:100%;padding:10px 14px;border:1px dashed var(--neon);color:var(--neon);display:flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;font-weight:600;font-size:12px;background:rgba(0,240,255,0.03);cursor:pointer">
+                  <span>➕ إضافة إثبات سحب إضافي (Add Another Proof Screenshot)</span>
+                </button>
               </div>
 
               <button type="submit" id="btnSavePayout" class="btn-primary" style="margin-top:10px">
@@ -2887,23 +2911,38 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
 
       <div class="form-grid">
         <div class="form-group">
-          <label>Exness Screenshot</label>
+          <label>Exness Screenshot Proof (إثبات سحب Exness الرئيسي)</label>
           <input type="text" id="edit_pExnessImg" placeholder="proofs/... or image URL">
-          <div class="file-drop-zone" onclick="document.getElementById('edit_exnessFileInp').click()">
-            <span>📷 Change Photo</span>
-            <input type="file" id="edit_exnessFileInp" accept="image/*" onchange="handleImagePick(this, 'edit_pExnessImg', 'edit_exnessPrev')">
+          <div style="display:flex;gap:6px;margin-top:6px">
+            <div class="file-drop-zone" onclick="document.getElementById('edit_exnessFileInp').click()" style="flex:1">
+              <span>📷 Change Photo</span>
+              <input type="file" id="edit_exnessFileInp" accept="image/*" onchange="handleImagePick(this, 'edit_pExnessImg', 'edit_exnessPrev')">
+            </div>
+            <button type="button" class="btn-cancel" onclick="clearPhotoInput('edit_pExnessImg','edit_exnessPrev','edit_exnessFileInp')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
           </div>
           <img id="edit_exnessPrev" class="file-preview" alt="Exness Proof Preview">
         </div>
         <div class="form-group">
-          <label>Binance Screenshot</label>
+          <label>Binance Screenshot <span>(إشعار استلام بينانس / اختياري)</span></label>
           <input type="text" id="edit_pBinanceImg" placeholder="proofs/... or image URL">
-          <div class="file-drop-zone" onclick="document.getElementById('edit_binanceFileInp').click()">
-            <span>📷 Change Photo</span>
-            <input type="file" id="edit_binanceFileInp" accept="image/*" onchange="handleImagePick(this, 'edit_pBinanceImg', 'edit_binancePrev')">
+          <div style="display:flex;gap:6px;margin-top:6px">
+            <div class="file-drop-zone" onclick="document.getElementById('edit_binanceFileInp').click()" style="flex:1">
+              <span>📷 Change Photo</span>
+              <input type="file" id="edit_binanceFileInp" accept="image/*" onchange="handleImagePick(this, 'edit_pBinanceImg', 'edit_binancePrev')">
+            </div>
+            <button type="button" class="btn-cancel" onclick="clearPhotoInput('edit_pBinanceImg','edit_binancePrev','edit_binanceFileInp')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>
           </div>
           <img id="edit_binancePrev" class="file-preview" alt="Binance Proof Preview">
         </div>
+      </div>
+
+      <!-- Dynamic Extra Payout Proofs Container (Edit Modal) -->
+      <div id="edit_extraPayoutPhotosContainer"></div>
+
+      <div style="margin-top:10px;margin-bottom:12px">
+        <button type="button" class="btn-secondary" onclick="addEditPayoutPhotoSlot()" style="width:100%;padding:10px 14px;border:1px dashed var(--neon);color:var(--neon);display:flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;font-weight:600;font-size:12px;background:rgba(0,240,255,0.03);cursor:pointer">
+          <span>➕ إضافة إثبات سحب إضافي (Add Another Proof Screenshot)</span>
+        </button>
       </div>
 
       <div class="form-group full">
@@ -3286,6 +3325,15 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
             </div>
             <img id="edit_tPrev4" class="file-preview" alt="Preview 4">
           </div>
+        </div>
+
+        <!-- Dynamic Extra Photos Container (Edit Modal) -->
+        <div id="edit_extraTradePhotosContainer"></div>
+
+        <div style="margin-top:10px">
+          <button type="button" class="btn-secondary" onclick="addEditTradePhotoSlot()" style="width:100%;padding:10px 14px;border:1px dashed var(--gold);color:var(--gold);display:flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;font-weight:600;font-size:12px;background:rgba(242,193,78,0.04);cursor:pointer">
+            <span>➕ إضافة صورة أخرى (Add Another Photo)</span>
+          </button>
         </div>
       </div>
 
@@ -4262,6 +4310,169 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
   };
 
   // --------------------------------------------------------------------------
+  // DYNAMIC MULTI-PHOTO SLOTS HANDLERS (Trades & Payouts)
+  // --------------------------------------------------------------------------
+  window.removeDynamicSlot = function(id) {
+    var el = document.getElementById(id);
+    if (el) el.remove();
+  };
+
+  var _tradePhotoSlotCount = 4;
+  window.addTradePhotoSlot = function(initialUrl) {
+    _tradePhotoSlotCount++;
+    var num = _tradePhotoSlotCount;
+    var container = document.getElementById('extraTradePhotosContainer');
+    if (!container) return;
+    var slotId = 'trade_slot_' + num;
+    var textId = 'tImgExtra_' + num;
+    var fileId = 'tFileExtra_' + num;
+    var prevId = 'tPrevExtra_' + num;
+
+    var div = document.createElement('div');
+    div.id = slotId;
+    div.className = 'form-group extra-photo-slot';
+    div.style.cssText = 'background:rgba(242,193,78,0.03);border:1px solid rgba(242,193,78,0.22);border-radius:8px;padding:12px;margin-top:10px;position:relative;';
+    div.innerHTML =
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
+        '<label style="margin:0;font-size:12px;color:var(--gold);font-weight:700">📸 Screenshot ' + num + ' (لقطة شاشة إضافية)</label>' +
+        '<button type="button" class="btn-cancel" onclick="removeDynamicSlot(\'' + slotId + '\')" style="padding:2px 10px;font-size:11px;color:var(--red);border-color:rgba(255,75,75,0.3)" title="حذف هذا الحقل">🗑️ حذف</button>' +
+      '</div>' +
+      '<input type="text" id="' + textId + '" class="trade-extra-img-input" placeholder="Image URL or pick photo" value="' + (initialUrl ? initialUrl.replace(/"/g, '&quot;') : '') + '">' +
+      '<div style="display:flex;gap:6px;margin-top:6px">' +
+        '<div class="file-drop-zone" onclick="document.getElementById(\'' + fileId + '\').click()" style="flex:1">' +
+          '<span>📷 Pick Photo ' + num + '</span>' +
+          '<input type="file" id="' + fileId + '" accept="image/*" onchange="handleImagePick(this, \'' + textId + '\', \'' + prevId + '\')">' +
+        '</div>' +
+        '<button type="button" class="btn-cancel" onclick="clearPhotoInput(\'' + textId + '\',\'' + prevId + '\',\'' + fileId + '\')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>' +
+      '</div>' +
+      '<img id="' + prevId + '" class="file-preview" alt="Preview ' + num + '" style="' + (initialUrl ? 'display:block;' : 'display:none;') + '" src="' + (initialUrl || '') + '">';
+    container.appendChild(div);
+  };
+
+  var _editTradePhotoSlotCount = 4;
+  window.addEditTradePhotoSlot = function(initialUrl) {
+    _editTradePhotoSlotCount++;
+    var num = _editTradePhotoSlotCount;
+    var container = document.getElementById('edit_extraTradePhotosContainer');
+    if (!container) return;
+    var slotId = 'edit_trade_slot_' + num;
+    var textId = 'edit_tImgExtra_' + num;
+    var fileId = 'edit_tFileExtra_' + num;
+    var prevId = 'edit_tPrevExtra_' + num;
+
+    var div = document.createElement('div');
+    div.id = slotId;
+    div.className = 'form-group extra-photo-slot';
+    div.style.cssText = 'background:rgba(242,193,78,0.03);border:1px solid rgba(242,193,78,0.22);border-radius:8px;padding:12px;margin-top:10px;position:relative;';
+    div.innerHTML =
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
+        '<label style="margin:0;font-size:12px;color:var(--gold);font-weight:700">📸 Screenshot ' + num + ' (لقطة شاشة إضافية)</label>' +
+        '<button type="button" class="btn-cancel" onclick="removeDynamicSlot(\'' + slotId + '\')" style="padding:2px 10px;font-size:11px;color:var(--red);border-color:rgba(255,75,75,0.3)" title="حذف هذا الحقل">🗑️ حذف</button>' +
+      '</div>' +
+      '<input type="text" id="' + textId + '" class="edit-trade-extra-img-input" placeholder="Image URL or pick photo" value="' + (initialUrl ? initialUrl.replace(/"/g, '&quot;') : '') + '">' +
+      '<div style="display:flex;gap:6px;margin-top:6px">' +
+        '<div class="file-drop-zone" onclick="document.getElementById(\'' + fileId + '\').click()" style="flex:1">' +
+          '<span>📷 Change Photo ' + num + '</span>' +
+          '<input type="file" id="' + fileId + '" accept="image/*" onchange="handleImagePick(this, \'' + textId + '\', \'' + prevId + '\')">' +
+        '</div>' +
+        '<button type="button" class="btn-cancel" onclick="clearPhotoInput(\'' + textId + '\',\'' + prevId + '\',\'' + fileId + '\')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>' +
+      '</div>' +
+      '<img id="' + prevId + '" class="file-preview" alt="Preview ' + num + '" style="' + (initialUrl ? 'display:block;' : 'display:none;') + '" src="' + (initialUrl || '') + '">';
+    container.appendChild(div);
+  };
+
+  var _payoutPhotoSlotCount = 2;
+  window.addPayoutPhotoSlot = function(initialUrl) {
+    _payoutPhotoSlotCount++;
+    var num = _payoutPhotoSlotCount;
+    var container = document.getElementById('extraPayoutPhotosContainer');
+    if (!container) return;
+    var slotId = 'payout_slot_' + num;
+    var textId = 'pImgExtra_' + num;
+    var fileId = 'pFileExtra_' + num;
+    var prevId = 'pPrevExtra_' + num;
+
+    var div = document.createElement('div');
+    div.id = slotId;
+    div.className = 'form-group extra-photo-slot';
+    div.style.cssText = 'background:rgba(0,240,255,0.03);border:1px solid rgba(0,240,255,0.2);border-radius:8px;padding:12px;margin-top:10px;position:relative;';
+    div.innerHTML =
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
+        '<label style="margin:0;font-size:12px;color:var(--neon);font-weight:700">🔍 Proof Screenshot ' + num + ' (إثبات سحب إضافي #' + num + ')</label>' +
+        '<button type="button" class="btn-cancel" onclick="removeDynamicSlot(\'' + slotId + '\')" style="padding:2px 10px;font-size:11px;color:var(--red);border-color:rgba(255,75,75,0.3)" title="حذف هذا الإثبات">🗑️ حذف</button>' +
+      '</div>' +
+      '<input type="text" id="' + textId + '" class="payout-extra-img-input" placeholder="proofs/... or Image URL" value="' + (initialUrl ? initialUrl.replace(/"/g, '&quot;') : '') + '">' +
+      '<div style="display:flex;gap:6px;margin-top:6px">' +
+        '<div class="file-drop-zone" onclick="document.getElementById(\'' + fileId + '\').click()" style="flex:1">' +
+          '<span>📷 Pick Proof ' + num + '</span>' +
+          '<input type="file" id="' + fileId + '" accept="image/*" onchange="handleImagePick(this, \'' + textId + '\', \'' + prevId + '\')">' +
+        '</div>' +
+        '<button type="button" class="btn-cancel" onclick="clearPhotoInput(\'' + textId + '\',\'' + prevId + '\',\'' + fileId + '\')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>' +
+      '</div>' +
+      '<img id="' + prevId + '" class="file-preview" alt="Proof Preview ' + num + '" style="' + (initialUrl ? 'display:block;' : 'display:none;') + '" src="' + (initialUrl || '') + '">';
+    container.appendChild(div);
+  };
+
+  var _editPayoutPhotoSlotCount = 2;
+  window.addEditPayoutPhotoSlot = function(initialUrl) {
+    _editPayoutPhotoSlotCount++;
+    var num = _editPayoutPhotoSlotCount;
+    var container = document.getElementById('edit_extraPayoutPhotosContainer');
+    if (!container) return;
+    var slotId = 'edit_payout_slot_' + num;
+    var textId = 'edit_pImgExtra_' + num;
+    var fileId = 'edit_pFileExtra_' + num;
+    var prevId = 'edit_pPrevExtra_' + num;
+
+    var div = document.createElement('div');
+    div.id = slotId;
+    div.className = 'form-group extra-photo-slot';
+    div.style.cssText = 'background:rgba(0,240,255,0.03);border:1px solid rgba(0,240,255,0.2);border-radius:8px;padding:12px;margin-top:10px;position:relative;';
+    div.innerHTML =
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
+        '<label style="margin:0;font-size:12px;color:var(--neon);font-weight:700">🔍 Proof Screenshot ' + num + ' (إثبات سحب إضافي #' + num + ')</label>' +
+        '<button type="button" class="btn-cancel" onclick="removeDynamicSlot(\'' + slotId + '\')" style="padding:2px 10px;font-size:11px;color:var(--red);border-color:rgba(255,75,75,0.3)" title="حذف هذا الإثبات">🗑️ حذف</button>' +
+      '</div>' +
+      '<input type="text" id="' + textId + '" class="edit-payout-extra-img-input" placeholder="proofs/... or Image URL" value="' + (initialUrl ? initialUrl.replace(/"/g, '&quot;') : '') + '">' +
+      '<div style="display:flex;gap:6px;margin-top:6px">' +
+        '<div class="file-drop-zone" onclick="document.getElementById(\'' + fileId + '\').click()" style="flex:1">' +
+          '<span>📷 Change Proof ' + num + '</span>' +
+          '<input type="file" id="' + fileId + '" accept="image/*" onchange="handleImagePick(this, \'' + textId + '\', \'' + prevId + '\')">' +
+        '</div>' +
+        '<button type="button" class="btn-cancel" onclick="clearPhotoInput(\'' + textId + '\',\'' + prevId + '\',\'' + fileId + '\')" style="padding:0 12px;font-size:11px" title="Clear">✕</button>' +
+      '</div>' +
+      '<img id="' + prevId + '" class="file-preview" alt="Proof Preview ' + num + '" style="' + (initialUrl ? 'display:block;' : 'display:none;') + '" src="' + (initialUrl || '') + '">';
+    container.appendChild(div);
+  };
+
+  window.getPayoutImages = function(p) {
+    if (!p) return [];
+    var list = [];
+    var ex = (p.exness_img || p.exnessImg || '').trim();
+    var bin = (p.binance_img || p.binanceImg || '').trim();
+
+    if (ex) {
+      if (ex.startsWith('[') && ex.endsWith(']')) {
+        try { list = list.concat(JSON.parse(ex)); } catch(e) { list.push(ex); }
+      } else {
+        list.push(ex);
+      }
+    }
+
+    if (bin) {
+      if (bin.startsWith('[') && bin.endsWith(']')) {
+        try { list = list.concat(JSON.parse(bin)); } catch(e) { list.push(bin); }
+      } else if (bin.indexOf(',') !== -1 && !bin.startsWith('data:')) {
+        bin.split(',').forEach(function(s){ if(s.trim()) list.push(s.trim()); });
+      } else {
+        list.push(bin);
+      }
+    }
+
+    return list.filter(function(u){ return typeof u === 'string' && u.trim().length > 0; });
+  };
+
+  // --------------------------------------------------------------------------
   // TRADE MEDIA TYPE SWITCHER & VIDEO PROOF HANDLERS
   // --------------------------------------------------------------------------
   window.switchTradeMediaType = function(type) {
@@ -4791,7 +5002,11 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
             }
           }
 
-          // Fill photo inputs and previews
+          // Fill photo inputs and previews (supporting unlimited photos)
+          var extraTradesCont = document.getElementById('extraTradePhotosContainer');
+          if (extraTradesCont) extraTradesCont.innerHTML = '';
+          _tradePhotoSlotCount = 4;
+
           for (var i = 1; i <= 4; i++) {
             var photoUrl = photos[i - 1] || '';
             var inp = document.getElementById('tImg' + i);
@@ -4806,6 +5021,9 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
                 prev.style.display = 'none';
               }
             }
+          }
+          for (var k = 4; k < photos.length; k++) {
+            if (window.addTradePhotoSlot) window.addTradePhotoSlot(photos[k]);
           }
 
           showToast('✅ تم جلب بيانات التغريدة و (' + photos.length + ') صور بنجاح!', 'success');
@@ -5170,6 +5388,12 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       (document.getElementById('tImg4').value || '').trim()
     ].filter(Boolean);
 
+    var extraInps = document.querySelectorAll('#extraTradePhotosContainer .trade-extra-img-input');
+    extraInps.forEach(function(inp) {
+      var val = (inp.value || '').trim();
+      if (val) rawPhotos.push(val);
+    });
+
     // Filter out any corrupted/oversized data:video strings from photos
     var photos = rawPhotos.filter(function(p){ return p && p.indexOf('data:video') === -1; });
 
@@ -5264,6 +5488,9 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         notifyLiveSite('trades_updated');
         showToast('✓ تم نشر الصفقة بنجاح على الموقع الحي! 🚀', 'success');
         document.getElementById('tradeForm').reset();
+        var extraCont = document.getElementById('extraTradePhotosContainer');
+        if (extraCont) extraCont.innerHTML = '';
+        _tradePhotoSlotCount = 4;
         ['tPrev1','tPrev2','tPrev3','tPrev4','tVideoThumbPrev'].forEach(function(pid){
           var el = document.getElementById(pid);
           if (el) { el.src = ''; el.style.display = 'none'; }
@@ -5366,6 +5593,10 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       }
     } else {
       switchEditTradeMediaType('photos');
+      var extraEditTradeCont = document.getElementById('edit_extraTradePhotosContainer');
+      if (extraEditTradeCont) extraEditTradeCont.innerHTML = '';
+      _editTradePhotoSlotCount = 4;
+
       var pList = t.images || t.photos || (t.photo ? [t.photo] : []);
       for (var i = 1; i <= 4; i++) {
         var val = pList[i - 1] || '';
@@ -5377,6 +5608,9 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
           if (val) { prev.src = val; prev.style.display = 'block'; }
           else { prev.src = ''; prev.style.display = 'none'; }
         }
+      }
+      for (var k = 4; k < pList.length; k++) {
+        if (window.addEditTradePhotoSlot) window.addEditTradePhotoSlot(pList[k]);
       }
     }
 
@@ -5423,6 +5657,12 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       (document.getElementById('edit_tImg3').value || '').trim(),
       (document.getElementById('edit_tImg4').value || '').trim()
     ].filter(Boolean);
+
+    var extraEditTradeInps = document.querySelectorAll('#edit_extraTradePhotosContainer .edit-trade-extra-img-input');
+    extraEditTradeInps.forEach(function(inp) {
+      var val = (inp.value || '').trim();
+      if (val) photos.push(val);
+    });
 
     var tagList = tags ? tags.split(/[\s,]+/).filter(function(x){ return x.length > 0; }) : [];
 
@@ -5575,19 +5815,34 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     document.getElementById('edit_pSpeed').value = p.speed || '1m 30s';
     document.getElementById('edit_pSpeedAr').value = p.speed_ar || p.speed || 'دقيقة و 30 ثانية';
     document.getElementById('edit_pType').value = p.type || 'double';
-    document.getElementById('edit_pExnessImg').value = p.exness_img || '';
-    document.getElementById('edit_pBinanceImg').value = p.binance_img || '';
     document.getElementById('edit_pActive').value = (p.is_active === false) ? 'false' : 'true';
+
+    // Clear dynamic extra slots in edit modal
+    var extraCont = document.getElementById('edit_extraPayoutPhotosContainer');
+    if (extraCont) extraCont.innerHTML = '';
+    _editPayoutPhotoSlotCount = 2;
+
+    var allImgs = window.getPayoutImages ? window.getPayoutImages(p) : [];
+    var exImgVal = allImgs[0] || p.exness_img || '';
+    var binImgVal = allImgs[1] || (allImgs.length === 1 ? '' : p.binance_img) || '';
+
+    document.getElementById('edit_pExnessImg').value = exImgVal;
+    document.getElementById('edit_pBinanceImg').value = binImgVal;
+
+    // Dynamically spawn slots for proof 3, 4, 5...
+    for (var k = 2; k < allImgs.length; k++) {
+      if (window.addEditPayoutPhotoSlot) window.addEditPayoutPhotoSlot(allImgs[k]);
+    }
 
     var exPrev = document.getElementById('edit_exnessPrev');
     if (exPrev) {
-      if (p.exness_img) { exPrev.src = p.exness_img; exPrev.style.display = 'block'; }
+      if (exImgVal) { exPrev.src = exImgVal; exPrev.style.display = 'block'; }
       else { exPrev.src = ''; exPrev.style.display = 'none'; }
     }
 
     var binPrev = document.getElementById('edit_binancePrev');
     if (binPrev) {
-      if (p.binance_img) { binPrev.src = p.binance_img; binPrev.style.display = 'block'; }
+      if (binImgVal) { binPrev.src = binImgVal; binPrev.style.display = 'block'; }
       else { binPrev.src = ''; binPrev.style.display = 'none'; }
     }
 
@@ -5604,6 +5859,27 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     var btn = document.getElementById('btnSavePayout');
     if (btn) btn.disabled = true;
 
+    // Collect all proof images (slots 1, 2, and extra slots)
+    var allPayoutImgs = [];
+    var exVal = (document.getElementById('pExnessImg').value || '').trim();
+    var binVal = (document.getElementById('pBinanceImg').value || '').trim();
+    if (exVal) allPayoutImgs.push(exVal);
+    if (binVal) allPayoutImgs.push(binVal);
+
+    var extraInps = document.querySelectorAll('#extraPayoutPhotosContainer .payout-extra-img-input');
+    extraInps.forEach(function(inp) {
+      var val = (inp.value || '').trim();
+      if (val) allPayoutImgs.push(val);
+    });
+
+    var finalExness = allPayoutImgs[0] || 'proofs/payout-1-exness.png';
+    var finalBinance = '';
+    if (allPayoutImgs.length === 2) {
+      finalBinance = allPayoutImgs[1];
+    } else if (allPayoutImgs.length > 2) {
+      finalBinance = JSON.stringify(allPayoutImgs.slice(1));
+    }
+
     var payload = {
       amount: document.getElementById('pAmount').value.trim(),
       date: document.getElementById('pDate').value.trim(),
@@ -5613,8 +5889,8 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       type: document.getElementById('pType').value,
       speed: document.getElementById('pSpeed').value.trim() || '1m 30s',
       speed_ar: document.getElementById('pSpeed').value.trim() || '1m 30s',
-      exness_img: document.getElementById('pExnessImg').value.trim() || 'proofs/payout-1-exness.png',
-      binance_img: document.getElementById('pBinanceImg').value.trim() || 'proofs/payout-1-binance.png',
+      exness_img: finalExness,
+      binance_img: finalBinance,
       is_active: true,
       created_at: new Date().toISOString()
     };
@@ -5625,6 +5901,9 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       else {
         showToast('✓ Payout published to website!');
         document.getElementById('payoutForm').reset();
+        var extraCont = document.getElementById('extraPayoutPhotosContainer');
+        if (extraCont) extraCont.innerHTML = '';
+        _payoutPhotoSlotCount = 2;
         document.getElementById('exnessPrev').style.display = 'none';
         document.getElementById('binancePrev').style.display = 'none';
         loadPayoutsList();
@@ -5641,6 +5920,27 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
     var id = document.getElementById('edit_payout_id').value;
     if (!id) return;
 
+    // Collect all proof images in edit modal
+    var allEditPayoutImgs = [];
+    var exEditVal = (document.getElementById('edit_pExnessImg').value || '').trim();
+    var binEditVal = (document.getElementById('edit_pBinanceImg').value || '').trim();
+    if (exEditVal) allEditPayoutImgs.push(exEditVal);
+    if (binEditVal) allEditPayoutImgs.push(binEditVal);
+
+    var extraEditInps = document.querySelectorAll('#edit_extraPayoutPhotosContainer .edit-payout-extra-img-input');
+    extraEditInps.forEach(function(inp) {
+      var val = (inp.value || '').trim();
+      if (val) allEditPayoutImgs.push(val);
+    });
+
+    var finalEditExness = allEditPayoutImgs[0] || '';
+    var finalEditBinance = '';
+    if (allEditPayoutImgs.length === 2) {
+      finalEditBinance = allEditPayoutImgs[1];
+    } else if (allEditPayoutImgs.length > 2) {
+      finalEditBinance = JSON.stringify(allEditPayoutImgs.slice(1));
+    }
+
     var payload = {
       amount: document.getElementById('edit_pAmount').value.trim(),
       date: document.getElementById('edit_pDate').value.trim(),
@@ -5650,8 +5950,8 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
       type: document.getElementById('edit_pType').value,
       speed: document.getElementById('edit_pSpeed').value.trim(),
       speed_ar: document.getElementById('edit_pSpeedAr').value.trim(),
-      exness_img: document.getElementById('edit_pExnessImg').value.trim(),
-      binance_img: document.getElementById('edit_pBinanceImg').value.trim(),
+      exness_img: finalEditExness,
+      binance_img: finalEditBinance,
       is_active: document.getElementById('edit_pActive').value === 'true'
     };
 

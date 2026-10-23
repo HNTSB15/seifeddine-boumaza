@@ -1030,6 +1030,34 @@ html[dir="rtl"] .cvx-stream-arrow svg{transform:rotate(180deg)}
 html[dir="rtl"] .cvx-gallery-item .cvx-zoom-hint{right:auto;left:8px}
 .cvx-gallery-item:hover .cvx-zoom-hint{opacity:1;transform:translateY(0)}
 
+/* Multi-photo +N More overlay on 4th tile */
+.cvx-gallery-item.has-more-overlay{position:relative;cursor:pointer}
+.cvx-more-photos-overlay{position:absolute;inset:0;background:rgba(5,9,20,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;z-index:2;transition:background .25s ease;cursor:pointer}
+.cvx-gallery-item:hover .cvx-more-photos-overlay{background:rgba(5,9,20,.68)}
+.cvx-more-photos-overlay .cvx-more-count{font-size:28px;font-weight:900;font-family:'Space Grotesk',sans-serif;color:var(--neon);text-shadow:0 0 16px rgba(0,255,156,.8);letter-spacing:-.5px;line-height:1}
+.cvx-more-photos-overlay .cvx-more-text{font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#fff;font-family:'JetBrains Mono',monospace;background:rgba(0,255,156,.15);border:1px solid rgba(0,255,156,.35);padding:2px 7px;border-radius:10px}
+
+/* Show All Photos button under trade gallery */
+.cvx-gallery-more-bar{margin:-6px 0 12px;text-align:center}
+.cvx-show-more-photos-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:rgba(18,214,255,.08);border:1px solid rgba(18,214,255,.3);color:var(--neon2,#12d6ff);padding:6px 14px;border-radius:20px;font-size:11.5px;font-family:'JetBrains Mono',monospace;font-weight:600;cursor:pointer;transition:all .22s ease}
+.cvx-show-more-photos-btn:hover{background:rgba(18,214,255,.18);border-color:var(--neon2,#12d6ff);color:#fff;transform:translateY(-1px);box-shadow:0 4px 14px rgba(18,214,255,.25)}
+.cvx-show-more-photos-btn .hint-arrow{font-size:12px;transition:transform .2s ease}
+.cvx-show-more-photos-btn:hover .hint-arrow{transform:translate(2px,-2px)}
+
+/* Payout card proof thumbnail preview bar */
+.payout-card-thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0 6px;width:100%}
+.payout-thumb-item{position:relative;height:52px;border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:#000;cursor:pointer;transition:all .2s ease}
+.payout-thumb-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s ease}
+.payout-thumb-item:hover{border-color:var(--neon);box-shadow:0 0 10px rgba(0,255,156,.4)}
+.payout-thumb-item:hover img{transform:scale(1.08)}
+.payout-thumb-item.has-more .payout-thumb-more{position:absolute;inset:0;background:rgba(5,9,20,.78);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--neon);font-family:'Space Grotesk',sans-serif}
+
+/* Light mode overrides */
+body.theme-light .cvx-more-photos-overlay{background:rgba(241,245,249,.85)}
+body.theme-light .cvx-more-photos-overlay .cvx-more-text{color:#0f172a;background:rgba(0,153,92,.1);border-color:rgba(0,153,92,.3)}
+body.theme-light .cvx-show-more-photos-btn{background:#e2e8f0;border-color:#cbd5e1;color:#0b1424}
+body.theme-light .payout-thumb-item{border-color:#cbd5e1;background:#e2e8f0}
+
 .cvx-slide-foot{padding:10px 18px;border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,.15);font-size:12px}
 .cvx-slide-split{color:var(--muted);font-family:'JetBrains Mono',monospace}
 .cvx-slide-link{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--neon);text-decoration:none;display:inline-flex;align-items:center;gap:4px;font-weight:600;transition:color .18s}
@@ -8940,15 +8968,38 @@ body.theme-light .cvx-tv-text {
               '</div>' +
             '</div>';
           } else if (imgs.length > 0) {
-            var gridClass = 'grid-' + Math.min(Math.max(imgs.length, 1), 4);
+            var isAr = (document.documentElement.getAttribute('lang') === 'ar');
+            var maxVisible = 4;
+            var visibleImgs = imgs.slice(0, maxVisible);
+            var hasMore = imgs.length > maxVisible;
+            var moreCount = imgs.length - 3;
+
+            var gridClass = 'grid-' + Math.min(Math.max(visibleImgs.length, 1), 4);
             galleryHtml = '<div class="cvx-gallery-grid ' + gridClass + '">';
-            imgs.forEach(function(imgSrc, imgIdx) {
-              galleryHtml += '<div class="cvx-gallery-item" onclick="if(window.cvxOpenLightbox) window.cvxOpenLightbox(' + idx + ', ' + imgIdx + ');">' +
+            visibleImgs.forEach(function(imgSrc, imgIdx) {
+              var isLastWithMore = hasMore && (imgIdx === 3);
+              galleryHtml += '<div class="cvx-gallery-item' + (isLastWithMore ? ' has-more-overlay' : '') + '" onclick="if(window.cvxOpenLightbox) window.cvxOpenLightbox(' + idx + ', ' + imgIdx + ');">' +
                 '<img src="' + imgSrc + '" alt="Trade Proof ' + (imgIdx + 1) + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=\'trade-proof-16k-2.jpg\'">' +
-                '<span class="cvx-zoom-hint">🔍 Zoom</span>' +
+                (isLastWithMore ?
+                  ('<div class="cvx-more-photos-overlay">' +
+                    '<span class="cvx-more-count">+' + moreCount + '</span>' +
+                    '<span class="cvx-more-text">' + (isAr ? 'صور إضافية' : 'More Photos') + '</span>' +
+                  '</div>') :
+                  '<span class="cvx-zoom-hint">🔍 Zoom</span>'
+                ) +
               '</div>';
             });
             galleryHtml += '</div>';
+
+            if (hasMore) {
+              galleryHtml += '<div class="cvx-gallery-more-bar">' +
+                '<button type="button" class="cvx-show-more-photos-btn" onclick="if(window.cvxOpenLightbox) window.cvxOpenLightbox(' + idx + ', 0);">' +
+                  '<span class="icon">🖼️</span> ' +
+                  '<span>' + (isAr ? ('عرض جميع لقطات الشاشة (' + imgs.length + ' صور)') : ('View All ' + imgs.length + ' Trade Screenshots')) + '</span>' +
+                  '<span class="hint-arrow">↗</span>' +
+                '</button>' +
+              '</div>';
+            }
           }
 
           var tagsHtml = '';
@@ -9685,6 +9736,43 @@ body.theme-light .cvx-tv-text {
     window.renderPayouts(currentPayoutFilter);
   };
 
+  window._curPayoutProofGallery = [];
+
+  window.openPayoutProofInLightbox = function(pIdx) {
+    if (!window._curPayoutProofGallery || !window._curPayoutProofGallery.length) return;
+    var galleries = window.cvxGalleries || [];
+    var tempIdx = galleries.length;
+    galleries[tempIdx] = window._curPayoutProofGallery;
+    window.cvxGalleries = galleries;
+    if (window.cvxOpenLightbox) {
+      window.cvxOpenLightbox(tempIdx, pIdx || 0);
+    }
+  };
+
+  window.toggleModalExtraProofs = function(totalCount) {
+    var btn = document.getElementById('btnToggleAllPayoutProofs');
+    var isAr = (document.documentElement.getAttribute('lang') === 'ar');
+    var hiddenPanes = document.querySelectorAll('.payout-multi-grid .payout-proof-pane');
+    var isCurrentlyExpanded = btn && btn.classList.contains('expanded');
+
+    if (!isCurrentlyExpanded) {
+      hiddenPanes.forEach(function(pane){ pane.style.display = 'flex'; });
+      if (btn) {
+        btn.classList.add('expanded');
+        btn.innerHTML = '<span class="more-icon">↑</span> <span class="more-txt">' + (isAr ? 'عرض أقل' : 'Show Less') + '</span>';
+      }
+    } else {
+      hiddenPanes.forEach(function(pane, pIndex){
+        if (pIndex >= 4) pane.style.display = 'none';
+      });
+      if (btn) {
+        btn.classList.remove('expanded');
+        var remaining = totalCount - 4;
+        btn.innerHTML = '<span class="more-icon">↓</span> <span class="more-txt">' + (isAr ? ('عرض باقي الإثباتات المعتمدة (+' + remaining + ')') : ('Show Remaining Verified Proofs (+' + remaining + ')')) + '</span>';
+      }
+    }
+  };
+
   window.openPayoutProof = function(idx) {
     var item = cvxPayoutsData[idx];
     if (!item) return;
@@ -9694,62 +9782,118 @@ body.theme-light .cvx-tv-text {
     var content = document.getElementById('payoutModalContent');
     if (!modal || !content) return;
 
-    var isDouble = (item.type === 'double');
     var speedText = isAr ? item.speedAr : item.speed;
+    var allProofImgs = window.getPayoutImages ? window.getPayoutImages(item) : [];
+    if (!allProofImgs.length) {
+      if (item.exnessImg) allProofImgs.push(item.exnessImg);
+      if (item.binanceImg) allProofImgs.push(item.binanceImg);
+    }
+
+    // Build temporary gallery for the full-screen lightbox
+    window._curPayoutProofGallery = allProofImgs.map(function(src, pIdx) {
+      var title = (pIdx === 0 ? (isAr ? 'إشعار سحب Exness الرسمي' : 'Exness Withdrawal Receipt') :
+                  (pIdx === 1 ? (isAr ? 'إيميل استلام Binance المعتمد' : 'Binance Credit Confirmation') :
+                  (isAr ? ('وثيقة إثبات معتمدة #' + (pIdx + 1)) : ('Official Audit Proof #' + (pIdx + 1)))));
+      return {
+        src: src,
+        cap: title + ' · Invoice #' + (item.invoice || '') + ' (' + item.amount + ')'
+      };
+    });
+
     var html = '';
 
-    if (isDouble) {
-      html = '<div class="payout-proof-comparison">' +
-        '<div class="payout-proof-pane">' +
+    if (allProofImgs.length <= 2) {
+      var isDouble = (item.type === 'double') || allProofImgs.length === 2;
+      if (isDouble && allProofImgs.length >= 2) {
+        html = '<div class="payout-proof-comparison">' +
+          '<div class="payout-proof-pane">' +
+            '<div class="payout-pane-header exness-head">' +
+              '<span>1. ' + (isAr ? 'إشعار سحب Exness الرسمي' : 'Exness Official Withdrawal Receipt') + '</span>' +
+              '<span class="mono">Invoice #' + item.invoice + '</span>' +
+            '</div>' +
+            '<div class="payout-proof-img-wrap" onclick="openPayoutProofInLightbox(0)" style="cursor:zoom-in" title="' + (isAr ? 'انقر لتكبير الصورة بدقة كاملة' : 'Click to inspect in full resolution') + '">' +
+              '<img src="' + allProofImgs[0] + '" alt="Exness Payout Proof" loading="lazy" />' +
+              '<span class="cvx-zoom-hint" style="opacity:1;bottom:8px;right:8px;position:absolute">🔍 Zoom</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="payout-proof-pane">' +
+            '<div class="payout-pane-header">' +
+              '<span>2. ' + (isAr ? 'إيميل استلام Binance الموثق' : 'Binance Official Credit Email') + '</span>' +
+              '<span class="mono">' + (isAr ? ('استلام في ' + speedText) : ('Received in ' + speedText)) + '</span>' +
+            '</div>' +
+            '<div class="payout-proof-img-wrap" onclick="openPayoutProofInLightbox(1)" style="cursor:zoom-in" title="' + (isAr ? 'انقر لتكبير الصورة بدقة كاملة' : 'Click to inspect in full resolution') + '">' +
+              '<img src="' + allProofImgs[1] + '" alt="Binance Email Receipt" loading="lazy" />' +
+              '<span class="cvx-zoom-hint" style="opacity:1;bottom:8px;right:8px;position:absolute">🔍 Zoom</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      } else {
+        html = '<div class="payout-proof-pane" style="max-width:540px;margin:0 auto;width:100%">' +
           '<div class="payout-pane-header exness-head">' +
-            '<span>1. ' + (isAr ? 'إشعار سحب Exness الرسمي' : 'Exness Official Withdrawal Receipt') + '</span>' +
+            '<span>' + (isAr ? 'إشعار سحب Exness المعتمد من السيرفر' : 'Exness Official Server Withdrawal Confirmation') + '</span>' +
             '<span class="mono">Invoice #' + item.invoice + '</span>' +
           '</div>' +
-          '<div class="payout-proof-img-wrap">' +
-            '<img src="' + item.exnessImg + '" alt="Exness Payout Proof" loading="lazy" />' +
+          '<div class="payout-proof-img-wrap" onclick="openPayoutProofInLightbox(0)" style="cursor:zoom-in" title="' + (isAr ? 'انقر لتكبير الصورة' : 'Click to inspect') + '">' +
+            '<img src="' + allProofImgs[0] + '" alt="Exness Payout Proof" loading="lazy" />' +
+            '<span class="cvx-zoom-hint" style="opacity:1;bottom:8px;right:8px;position:absolute">🔍 Zoom</span>' +
           '</div>' +
-        '</div>' +
-        '<div class="payout-proof-pane">' +
-          '<div class="payout-pane-header">' +
-            '<span>2. ' + (isAr ? 'إيميل استلام Binance الموثق' : 'Binance Official Credit Email') + '</span>' +
-            '<span class="mono">' + (isAr ? ('استلام في ' + speedText) : ('Received in ' + speedText)) + '</span>' +
-          '</div>' +
-          '<div class="payout-proof-img-wrap">' +
-            '<img src="' + item.binanceImg + '" alt="Binance Email Receipt" loading="lazy" />' +
-          '</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="payout-match-banner">' +
-        '<span class="payout-match-icon">⚡</span>' +
-        '<div>' +
-          '<b>' + (isAr ? 'تطابق كامل 100% وموثق:' : '100% Verified Match:') + '</b> ' +
-          (isAr ?
-            ('تمت معالجة وإرسال مبلغ <b>' + item.amount + '</b> من حساب Exness (<b>' + item.account + '</b>) ووصل إلى BinancePay في ' + speedText + ' (Order ID: <b>' + item.binanceOrder + '</b>).') :
-            ('Exness successfully processed and sent <b>' + item.amount + '</b> from account <b>' + item.account + '</b>, credited to BinancePay in ' + speedText + ' (Order ID: <b>' + item.binanceOrder + '</b>).')
-          ) +
-        '</div>' +
-      '</div>';
+        '</div>';
+      }
     } else {
-      html = '<div class="payout-proof-pane" style="max-width:540px;margin:0 auto;width:100%">' +
-        '<div class="payout-pane-header exness-head">' +
-          '<span>' + (isAr ? 'إشعار سحب Exness المعتمد من السيرفر' : 'Exness Official Server Withdrawal Confirmation') + '</span>' +
-          '<span class="mono">Invoice #' + item.invoice + '</span>' +
-        '</div>' +
-        '<div class="payout-proof-img-wrap">' +
-          '<img src="' + item.exnessImg + '" alt="Exness Payout Proof" loading="lazy" />' +
-        '</div>' +
-      '</div>' +
-      '<div class="payout-match-banner" style="max-width:540px;margin:0 auto;width:100%">' +
-        '<span class="payout-match-icon">✓</span>' +
-        '<div>' +
-          '<b>' + (isAr ? 'سحب مؤكد من سيرفر Exness الحقيقي:' : 'Confirmed Real Exness Server Payout:') + '</b> ' +
-          (isAr ?
-            ('تم إرسال مبلغ <b>' + item.amount + '</b> بنجاح من حساب التداول <b>' + item.account + '</b> إلى BinancePay.') :
-            ('Successfully processed and sent <b>' + item.amount + '</b> from trading account <b>' + item.account + '</b> to BinancePay.')
-          ) +
-        '</div>' +
+      // 3 or more proof images: responsive multi-pane grid
+      var maxVisibleModal = 4;
+      var showExpandModal = allProofImgs.length > maxVisibleModal;
+
+      html = '<div class="payout-multi-proof-header" style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">' +
+        '<span style="font-weight:700;color:var(--neon);font-size:13px">📑 ' + (isAr ? ('إثباتات المعاملة المعتمدة (' + allProofImgs.length + ' وثائق موثقة)') : ('Audited Transaction Proofs (' + allProofImgs.length + ' Documents)')) + '</span>' +
+        '<button type="button" class="btn-cancel" onclick="openPayoutProofInLightbox(0)" style="padding:4px 12px;font-size:11.5px;color:var(--neon);border:1px solid rgba(0,240,255,0.4);border-radius:6px;cursor:pointer;background:rgba(0,240,255,0.06)">' +
+          '🔍 ' + (isAr ? 'عرض في المعرض الكامل' : 'Open Fullscreen Gallery') +
+        '</button>' +
       '</div>';
+
+      html += '<div class="payout-proof-comparison payout-multi-grid">';
+      allProofImgs.forEach(function(pSrc, pIdx) {
+        var isHidden = showExpandModal && (pIdx >= maxVisibleModal);
+        var title = (pIdx === 0 ? (isAr ? '1. إشعار سحب Exness الرسمي' : '1. Exness Official Withdrawal Receipt') :
+                    (pIdx === 1 ? (isAr ? '2. إيميل استلام Binance الموثق' : '2. Binance Official Credit Email') :
+                    (isAr ? ((pIdx + 1) + '. إثبات المعاملة الإضافي #' + (pIdx + 1)) : ((pIdx + 1) + '. Official Verification Proof #' + (pIdx + 1)))));
+        var subInfo = (pIdx === 0 ? ('Invoice #' + item.invoice) : (pIdx === 1 ? (isAr ? ('استلام في ' + speedText) : ('Credit in ' + speedText)) : (isAr ? 'توثيق معتمد' : 'Audited Proof')));
+
+        html += '<div class="payout-proof-pane payout-proof-item-' + pIdx + '"' + (isHidden ? ' style="display:none;"' : '') + '>' +
+          '<div class="payout-pane-header' + (pIdx === 0 ? ' exness-head' : '') + '">' +
+            '<span>' + title + '</span>' +
+            '<span class="mono">' + subInfo + '</span>' +
+          '</div>' +
+          '<div class="payout-proof-img-wrap" onclick="openPayoutProofInLightbox(' + pIdx + ')" style="cursor:zoom-in" title="' + (isAr ? 'انقر لتكبير الصورة بدقة كاملة' : 'Click to inspect in full resolution') + '">' +
+            '<img src="' + pSrc + '" alt="Proof ' + (pIdx + 1) + '" loading="lazy" />' +
+            '<span class="cvx-zoom-hint" style="opacity:1;bottom:8px;right:8px;position:absolute">🔍 Zoom</span>' +
+          '</div>' +
+        '</div>';
+      });
+      html += '</div>';
+
+      if (showExpandModal) {
+        var remainingProofs = allProofImgs.length - maxVisibleModal;
+        html += '<div class="payout-modal-expand-wrap" style="text-align:center;margin-top:14px">' +
+          '<button type="button" id="btnToggleAllPayoutProofs" class="payouts-more-btn" onclick="toggleModalExtraProofs(' + allProofImgs.length + ')">' +
+            '<span class="more-icon">↓</span> ' +
+            '<span class="more-txt">' + (isAr ? ('عرض باقي الإثباتات المعتمدة (+' + remainingProofs + ')') : ('Show Remaining Verified Proofs (+' + remainingProofs + ')')) + '</span>' +
+          '</button>' +
+        '</div>';
+      }
     }
+
+    // Match verification banner
+    html += '<div class="payout-match-banner" style="margin-top:16px">' +
+      '<span class="payout-match-icon">⚡</span>' +
+      '<div>' +
+        '<b>' + (isAr ? 'تطابق كامل 100% وموثق:' : '100% Verified Match:') + '</b> ' +
+        (isAr ?
+          ('تمت معالجة وإرسال مبلغ <b>' + item.amount + '</b> من حساب Exness (<b>' + item.account + '</b>) ووصل إلى BinancePay في ' + speedText + (item.binanceOrder ? (' (Order ID: <b>' + item.binanceOrder + '</b>)') : '') + '.') :
+          ('Exness successfully processed and sent <b>' + item.amount + '</b> from account <b>' + item.account + '</b>, credited to BinancePay in ' + speedText + (item.binanceOrder ? (' (Order ID: <b>' + item.binanceOrder + '</b>)') : '') + '.')
+        ) +
+      '</div>' +
+    '</div>';
 
     content.innerHTML = html;
     modal.classList.add('active');
@@ -9778,6 +9922,7 @@ body.theme-light .cvx-tv-text {
         var list = (res && res.data && res.data.length) ? res.data : [];
         if (!list.length) return;
         var dynamicPayouts = list.map(function(p) {
+          var allPImgs = window.getPayoutImages ? window.getPayoutImages(p) : [];
           return {
             id: p.id,
             type: p.type || 'double',
@@ -9790,8 +9935,9 @@ body.theme-light .cvx-tv-text {
             binanceTime: p.binance_time || '',
             speed: p.speed || '~1-2 Min',
             speedAr: p.speed_ar || 'فوري',
-            exnessImg: p.exness_img || '',
-            binanceImg: p.binance_img || ''
+            exnessImg: allPImgs[0] || p.exness_img || '',
+            binanceImg: allPImgs[1] || p.binance_img || '',
+            images: allPImgs
           };
         });
         var seenInvoices = {};
