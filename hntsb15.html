@@ -2515,7 +2515,7 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
                 </div>
                 <div class="form-group">
                   <label>Telegram Direct Channel / Chat Link</label>
-                  <input type="text" id="set_telegram_channel" placeholder="https://t.me/HNTSB15">
+                  <input type="text" id="set_telegram_channel" placeholder="https://t.me/saifeddineboumaza">
                 </div>
               </div>
 
@@ -6576,6 +6576,8 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
         if (el) {
           if (s.setting_name === 'announcement_banner_active') {
             el.value = (s.current_value === 'true' || s.current_value === true) ? 'true' : 'false';
+          } else if (s.setting_name === 'telegram_channel' && (!s.current_value || s.current_value === 'https://t.me/HNTSB15')) {
+            el.value = 'https://t.me/saifeddineboumaza';
           } else {
             el.value = s.current_value || '';
           }

@@ -33,11 +33,14 @@ CREATE TABLE public.website_settings (
 ALTER TABLE public.website_settings ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Allow public read website_settings" ON public.website_settings;
+CREATE POLICY "Allow public read website_settings"
+ON public.website_settings FOR SELECT TO anon, authenticated
+USING (true);
+
 DROP POLICY IF EXISTS "Allow authenticated manage website_settings" ON public.website_settings;
-DROP POLICY IF EXISTS "Allow full access website_settings" ON public.website_settings;
-CREATE POLICY "Allow full access website_settings"
-ON public.website_settings FOR ALL TO anon, authenticated
-USING (true) WITH CHECK (true);
+CREATE POLICY "Allow authenticated manage website_settings"
+ON public.website_settings FOR ALL TO authenticated
+USING (true);
 
 -- البيانات الأولية لموقعك (يمكنك تعديل أي رقم أو نص منها مباشرة في Supabase):
 INSERT INTO public.website_settings (setting_name, current_value, description_ar, category)
@@ -57,11 +60,11 @@ VALUES
     
     -- قنوات التواصل والروابط الرسمية:
     ('telegram_username', '@HNTSB15', 'معرف حساب تيليجرام الرسمي', 'روابط التواصل'),
-    ('telegram_channel', 'https://t.me/HNTSB15', 'رابط قناة تيليجرام الرسمية أو الشات المباشر', 'روابط التواصل'),
+    ('telegram_channel', 'https://t.me/saifeddineboumaza', 'رابط قناة تيليجرام الرسمية أو الشات المباشر', 'روابط التواصل'),
     ('whatsapp_number', '+213697114385', 'رقم الواتساب مع الرمز الدولي للشات المباشر', 'روابط التواصل'),
     ('support_email', 'saifeddine.jskyst15@gmail.com', 'البريد الإلكتروني الرسمي للاستفسارات', 'روابط التواصل'),
     ('instagram_profile', 'https://www.instagram.com/oo._.saifeddine._.oo/', 'رابط حساب انستغرام الرسمي', 'روابط التواصل'),
-    ('x_profile', 'https://x.com/HNTSB15', 'رابط حساب منصة X (تويتر) الرسمي', 'روابط التواصل'),
+    ('x_profile', 'https://x.com/seifeddin06', 'رابط حساب منصة X (تويتر) الرسمي', 'روابط التواصل'),
     
     -- محافظ الإيداع والدفع بالعملات الرقمية:
     ('bep20_deposit_wallet', '0x41f8a3a3a841cb3305bf1ebabe4ede7169a55bce', 'عنوان محفظة USDT (BEP20 - Binance Smart Chain)', 'المحافظ الرقمية'),
@@ -69,29 +72,7 @@ VALUES
     
     -- شريط الإعلانات الترويجي أعلى الموقع:
     ('announcement_banner_text', '', 'نص الشريط الإعلاني في أعلى الموقع (اتركه فارغاً لإخفائه)', 'شريط الإعلانات'),
-    ('announcement_banner_active', 'false', 'تفعيل (true) أو إيقاف (false) الشريط الإعلاني', 'شريط الإعلانات'),
-
-    -- نبذة عني والاستراتيجية (About Me & Bio Paragraphs):
-    ('about_p1', 'I''m <b>Saifeddine Boumaza</b> — a professional trading manager with specialized expertise in forex and cryptocurrency markets. I provide structured account management with transparent reporting, disciplined risk management, and strategic execution across active financial markets.', 'الفقرة الأولى في قسم About Me', 'نبذة عني'),
-    ('about_p2', 'With over <b>5+ years</b> of hands-on experience across technical analysis, fundamental macro factors, chart patterns, and behavioral trading psychology, I help investors navigate volatility while aggressively defending downside risk through position sizing, strict stop-loss rules, and drawdown control.', 'الفقرة الثانية في قسم About Me', 'نبذة عني'),
-    ('about_p3', 'I develop proprietary trading systems and provide real-time <b>VIP Trading Signals</b> for Gold (XAUUSD), major forex pairs (EUR/USD, GBP/USD), US indices (US30, Nasdaq), and high-liquidity crypto futures (BTC, ETH). In addition, I build custom <b>MT4 & MT5 indicators</b> on Windows for traders demanding automated alert precision.', 'الفقرة الثالثة في قسم About Me', 'نبذة عني'),
-
-    -- شروط إدارة الحسابات ونسبة الأرباح:
-    ('managed_min_capital', '$1,000+ USD ($100 for live trial)', 'الحد الأدنى لرأس مال إدارة الحسابات', 'إدارة المحافظ'),
-    ('managed_profit_split', '50% / 50% Profit Share', 'نسبة تقاسم الأرباح الشهرية', 'إدارة المحافظ'),
-    ('managed_drawdown_limit', '< 8.5% Maximum Drawdown', 'أقصى نسبة هبوط مسموح بها', 'إدارة المحافظ'),
-    ('managed_supported_brokers', 'Exness, IC Markets, XM, Pepperstone', 'شركات الوساطة والبروكرز المدعومة', 'إدارة المحافظ'),
-
-    -- خدمات التوصيات والمنصات:
-    ('signals_vip_schedule', '2 - 5 High-Probability Trades Daily', 'جدول وتفاصيل توصيات VIP اليومية', 'توصيات VIP'),
-    ('newsx_platform_link', '#newsx', 'رابط منصة NewsX AI المباشر', 'المنصات والأدوات'),
-    ('tradingview_profile', 'https://www.tradingview.com/u/HNTSB15/', 'رابط حساب TradingView الرسمي', 'روابط التواصل'),
-    ('youtube_channel', '', 'رابط قناة اليوتيوب الرسمية', 'روابط التواصل'),
-    ('binance_pay_id', '441672878', 'معرف Binance Pay ID', 'المحافظ الرقمية'),
-    ('footer_copyright', '© Saifeddine Boumaza - Forex & Crypto Trading Manager - All rights reserved', 'نص حقوق الملكية في الفوتر', 'الواجهة الرئيسية'),
-    ('admin_security_pin', '1973', 'الرمز السري للدخول إلى لوحة التحكم (PIN)', 'الأمان وحماية الحساب'),
-    ('trading_deals_json', '[]', 'قائمة الصفقات ونتائج التداول المنشورة في الموقع', 'الصفقات والنتائج'),
-    ('faq_items_json', '[]', 'قائمة الأسئلة الشائعة والأجوبة في الموقع', 'الأسئلة الشائعة')
+    ('announcement_banner_active', 'false', 'تفعيل (true) أو إيقاف (false) الشريط الإعلاني', 'شريط الإعلانات')
 ON CONFLICT (setting_name) DO UPDATE SET
     current_value = EXCLUDED.current_value,
     description_ar = EXCLUDED.description_ar,
@@ -105,7 +86,7 @@ ON CONFLICT (setting_name) DO UPDATE SET
 -- ------------------------------------------------------------------------------
 CREATE TABLE public.website_prices (
     item_key TEXT PRIMARY KEY,
-    item_name TEXT DEFAULT '',
+    item_name TEXT NOT NULL,
     current_price NUMERIC NOT NULL,
     old_price NUMERIC DEFAULT 0,
     discount_tag TEXT DEFAULT '',
@@ -118,11 +99,14 @@ CREATE TABLE public.website_prices (
 ALTER TABLE public.website_prices ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Allow public read website_prices" ON public.website_prices;
+CREATE POLICY "Allow public read website_prices"
+ON public.website_prices FOR SELECT TO anon, authenticated
+USING (true);
+
 DROP POLICY IF EXISTS "Allow authenticated manage website_prices" ON public.website_prices;
-DROP POLICY IF EXISTS "Allow full access website_prices" ON public.website_prices;
-CREATE POLICY "Allow full access website_prices"
-ON public.website_prices FOR ALL TO anon, authenticated
-USING (true) WITH CHECK (true);
+CREATE POLICY "Allow authenticated manage website_prices"
+ON public.website_prices FOR ALL TO authenticated
+USING (true);
 
 INSERT INTO public.website_prices (item_key, item_name, current_price, old_price, discount_tag, duration, simple_guide, is_active)
 VALUES
@@ -163,12 +147,19 @@ CREATE TABLE public.client_reviews (
 ALTER TABLE public.client_reviews ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Allow public insert client_reviews" ON public.client_reviews;
+CREATE POLICY "Allow public insert client_reviews"
+ON public.client_reviews FOR INSERT TO anon, authenticated
+WITH CHECK (true);
+
 DROP POLICY IF EXISTS "Allow public read client_reviews" ON public.client_reviews;
+CREATE POLICY "Allow public read client_reviews"
+ON public.client_reviews FOR SELECT TO anon, authenticated
+USING (is_active = true);
+
 DROP POLICY IF EXISTS "Allow authenticated manage client_reviews" ON public.client_reviews;
-DROP POLICY IF EXISTS "Allow full access client_reviews" ON public.client_reviews;
-CREATE POLICY "Allow full access client_reviews"
-ON public.client_reviews FOR ALL TO anon, authenticated
-USING (true) WITH CHECK (true);
+CREATE POLICY "Allow authenticated manage client_reviews"
+ON public.client_reviews FOR ALL TO authenticated
+USING (true);
 
 INSERT INTO public.client_reviews (client_name, client_country, rating, service_type, review_text, review_text_en, profit_stat, is_verified, is_active)
 VALUES
@@ -197,8 +188,8 @@ CREATE TABLE public.payout_records (
     binance_time TEXT DEFAULT '',
     speed TEXT DEFAULT '1m 42s',
     speed_ar TEXT DEFAULT 'دقيقة و 42 ثانية',
-    exness_img TEXT DEFAULT '', -- Primary withdrawal proof receipt (Image 1)
-    binance_img TEXT DEFAULT '', -- Binance receipt or JSON array of multiple extra proofs (Images 2, 3, 4+)
+    exness_img TEXT DEFAULT '',
+    binance_img TEXT DEFAULT '',
     is_verified BOOLEAN DEFAULT true,
     is_active BOOLEAN DEFAULT true,
     display_order INT DEFAULT 0
@@ -207,11 +198,14 @@ CREATE TABLE public.payout_records (
 ALTER TABLE public.payout_records ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Allow public read payout_records" ON public.payout_records;
+CREATE POLICY "Allow public read payout_records"
+ON public.payout_records FOR SELECT TO anon, authenticated
+USING (is_active = true);
+
 DROP POLICY IF EXISTS "Allow authenticated manage payout_records" ON public.payout_records;
-DROP POLICY IF EXISTS "Allow full access payout_records" ON public.payout_records;
-CREATE POLICY "Allow full access payout_records"
-ON public.payout_records FOR ALL TO anon, authenticated
-USING (true) WITH CHECK (true);
+CREATE POLICY "Allow authenticated manage payout_records"
+ON public.payout_records FOR ALL TO authenticated
+USING (true);
 
 INSERT INTO public.payout_records (type, amount, date, date_ar, account, invoice, binance_order, binance_time, speed, speed_ar, exness_img, binance_img, is_verified, is_active, display_order)
 VALUES
@@ -251,12 +245,19 @@ CREATE TABLE public.client_messages (
 ALTER TABLE public.client_messages ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Allow public insert to client_messages" ON public.client_messages;
+CREATE POLICY "Allow public insert to client_messages"
+ON public.client_messages FOR INSERT TO anon, authenticated
+WITH CHECK (true);
+
 DROP POLICY IF EXISTS "Allow authenticated read client_messages" ON public.client_messages;
+CREATE POLICY "Allow authenticated read client_messages"
+ON public.client_messages FOR SELECT TO authenticated
+USING (true);
+
 DROP POLICY IF EXISTS "Allow authenticated manage client_messages" ON public.client_messages;
-DROP POLICY IF EXISTS "Allow full access client_messages" ON public.client_messages;
-CREATE POLICY "Allow full access client_messages"
-ON public.client_messages FOR ALL TO anon, authenticated
-USING (true) WITH CHECK (true);
+CREATE POLICY "Allow authenticated manage client_messages"
+ON public.client_messages FOR ALL TO authenticated
+USING (true);
 
 
 -- ------------------------------------------------------------------------------
@@ -289,16 +290,28 @@ CREATE TABLE public.website_visitors (
 ALTER TABLE public.website_visitors ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Allow public insert to website_visitors" ON public.website_visitors;
+CREATE POLICY "Allow public insert to website_visitors"
+ON public.website_visitors FOR INSERT TO anon, authenticated
+WITH CHECK (true);
+
 DROP POLICY IF EXISTS "Allow public update to website_visitors" ON public.website_visitors;
+CREATE POLICY "Allow public update to website_visitors"
+ON public.website_visitors FOR UPDATE TO anon, authenticated
+USING (true);
+
 DROP POLICY IF EXISTS "Allow authenticated read website_visitors" ON public.website_visitors;
+CREATE POLICY "Allow authenticated read website_visitors"
+ON public.website_visitors FOR SELECT TO authenticated
+USING (true);
+
 DROP POLICY IF EXISTS "Allow authenticated manage website_visitors" ON public.website_visitors;
-DROP POLICY IF EXISTS "Allow full access website_visitors" ON public.website_visitors;
-CREATE POLICY "Allow full access website_visitors"
-ON public.website_visitors FOR ALL TO anon, authenticated
-USING (true) WITH CHECK (true);
+CREATE POLICY "Allow authenticated manage website_visitors"
+ON public.website_visitors FOR ALL TO authenticated
+USING (true);
 
 -- ==============================================================================
 -- 🚀 تم الانتهاء بنجاح! 
 -- انسخ هذا الكود بالكامل وضعه في Supabase SQL Editor ثم اضغط Run.
 -- كل الجداول جاهزة الآن وتعمل بدون الحاجة لكتابة أو تعديل أي ID يدوياً!
 -- ==============================================================================
+
