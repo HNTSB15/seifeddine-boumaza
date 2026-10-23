@@ -9451,6 +9451,49 @@ body.theme-light .cvx-tv-text {
   //    أضف دائماً أي إثبات سحب جديد في بداية هذه المصفوفة (في الأعلى عند Index 0)
   //    بحيث يظهر تلقائياً كأول سحب معتمد في الموقع وفي قائمة الـ Top 6!
   // ==========================================================================
+  // Helper to extract clean proof image array for any payout (single, double, or multi-proof)
+  window.getPayoutImages = function(item) {
+    if (!item) return [];
+    var list = [];
+    var rawImgs = item.images || item.photos || [];
+    if (Array.isArray(rawImgs) && rawImgs.length > 0) {
+      rawImgs.forEach(function(s) {
+        if (typeof s === 'string' && s.trim()) list.push(s.trim());
+      });
+    }
+    var ex = (item.exness_img || item.exnessImg || '').trim();
+    var bin = (item.binance_img || item.binanceImg || '').trim();
+
+    if (ex) {
+      if (ex.startsWith('[') && ex.endsWith(']')) {
+        try {
+          var arr = JSON.parse(ex);
+          if (Array.isArray(arr)) list = list.concat(arr);
+        } catch(e) { list.push(ex); }
+      } else if (list.indexOf(ex) === -1) {
+        list.push(ex);
+      }
+    }
+
+    if (bin) {
+      if (bin.startsWith('[') && bin.endsWith(']')) {
+        try {
+          var arr = JSON.parse(bin);
+          if (Array.isArray(arr)) list = list.concat(arr);
+        } catch(e) { list.push(bin); }
+      } else if (bin.indexOf(',') !== -1 && !bin.startsWith('data:')) {
+        bin.split(',').forEach(function(s) {
+          var cl = s.trim();
+          if (cl && list.indexOf(cl) === -1) list.push(cl);
+        });
+      } else if (list.indexOf(bin) === -1) {
+        list.push(bin);
+      }
+    }
+
+    return list.filter(function(u){ return typeof u === 'string' && u.trim().length > 0; });
+  };
+
   var cvxPayoutsData = [
     {
       id: 1,
@@ -9634,12 +9677,17 @@ body.theme-light .cvx-tv-text {
       }
     });
 
-    // Ensure the 6 email-verified cashout proofs (type === 'double') ALWAYS come first at the top
+    // Ensure email-verified cashout proofs (type === 'double') come first, sorted by newest ID first
     if (filter === 'all') {
       filtered.sort(function(a, b) {
         var aDouble = (a.item.type === 'double' || Boolean(a.item.binanceImg)) ? 1 : 0;
         var bDouble = (b.item.type === 'double' || Boolean(b.item.binanceImg)) ? 1 : 0;
-        return bDouble - aDouble; // Double verified with email proof first
+        if (bDouble !== aDouble) return bDouble - aDouble;
+        return (Number(b.item.id || 0) - Number(a.item.id || 0));
+      });
+    } else {
+      filtered.sort(function(a, b) {
+        return (Number(b.item.id || 0) - Number(a.item.id || 0));
       });
     }
 
@@ -9667,6 +9715,11 @@ body.theme-light .cvx-tv-text {
           '<span>' + (isAr ? 'سجل Exness المعتمد (معالجة وإرسال فوري)' : 'Exness Direct Ledger (Processed &amp; Sent)') + '</span>' +
         '</div>');
 
+      var pProofCount = (item.images && item.images.length) ? item.images.length : (window.getPayoutImages ? window.getPayoutImages(item).length : (isDouble ? 2 : 1));
+      var btnActionLabel = (pProofCount > 2) ?
+        (isAr ? ('فحص إثبات المعاملة (' + pProofCount + ' وثائق)') : ('View Audit Proof (' + pProofCount + ' Docs)')) :
+        (isAr ? 'فحص إثبات المعاملة' : 'View Audit Proof');
+
       html += '<div class="' + badgeClass + '">' +
         '<div class="payout-card-top">' +
           '<span class="payout-badge-sent"><span class="dot-pulse"></span> ' + (isAr ? 'تم السحب والتحويل' : 'SENT &amp; CREDITED') + '</span>' +
@@ -9692,7 +9745,7 @@ body.theme-light .cvx-tv-text {
         '</div>' +
         doubleTagHtml +
         '<button type="button" class="payout-btn-action" onclick="openPayoutProof(' + idx + ')">' +
-          '<span>🔍</span> ' + (isAr ? 'فحص إثبات المعاملة' : 'View Audit Proof') +
+          '<span>🔍</span> ' + btnActionLabel +
         '</button>' +
       '</div>';
     });
@@ -9736,10 +9789,9 @@ body.theme-light .cvx-tv-text {
 
   window.openPayoutProofInLightbox = function(pIdx) {
     if (!window._curPayoutProofGallery || !window._curPayoutProofGallery.length) return;
-    var galleries = window.cvxGalleries || [];
-    var tempIdx = galleries.length;
-    galleries[tempIdx] = window._curPayoutProofGallery;
-    window.cvxGalleries = galleries;
+    if (!window.cvxGalleries) window.cvxGalleries = [];
+    var tempIdx = 9999;
+    window.cvxGalleries[tempIdx] = window._curPayoutProofGallery;
     if (window.cvxOpenLightbox) {
       window.cvxOpenLightbox(tempIdx, pIdx || 0);
     }
@@ -9808,7 +9860,7 @@ body.theme-light .cvx-tv-text {
               '<span class="mono">Invoice #' + item.invoice + '</span>' +
             '</div>' +
             '<div class="payout-proof-img-wrap" onclick="openPayoutProofInLightbox(0)" style="cursor:zoom-in" title="' + (isAr ? 'انقر لتكبير الصورة بدقة كاملة' : 'Click to inspect in full resolution') + '">' +
-              '<img src="' + allProofImgs[0] + '" alt="Exness Payout Proof" loading="lazy" />' +
+              '<img src="' + allProofImgs[0] + '" alt="Exness Payout Proof" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=\'proofs/payout-1-exness.png\'" />' +
               '<span class="cvx-zoom-hint" style="opacity:1;bottom:8px;right:8px;position:absolute">🔍 Zoom</span>' +
             '</div>' +
           '</div>' +
@@ -9818,7 +9870,7 @@ body.theme-light .cvx-tv-text {
               '<span class="mono">' + (isAr ? ('استلام في ' + speedText) : ('Received in ' + speedText)) + '</span>' +
             '</div>' +
             '<div class="payout-proof-img-wrap" onclick="openPayoutProofInLightbox(1)" style="cursor:zoom-in" title="' + (isAr ? 'انقر لتكبير الصورة بدقة كاملة' : 'Click to inspect in full resolution') + '">' +
-              '<img src="' + allProofImgs[1] + '" alt="Binance Email Receipt" loading="lazy" />' +
+              '<img src="' + allProofImgs[1] + '" alt="Binance Email Receipt" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=\'proofs/payout-1-binance.png\'" />' +
               '<span class="cvx-zoom-hint" style="opacity:1;bottom:8px;right:8px;position:absolute">🔍 Zoom</span>' +
             '</div>' +
           '</div>' +
@@ -9830,7 +9882,7 @@ body.theme-light .cvx-tv-text {
             '<span class="mono">Invoice #' + item.invoice + '</span>' +
           '</div>' +
           '<div class="payout-proof-img-wrap" onclick="openPayoutProofInLightbox(0)" style="cursor:zoom-in" title="' + (isAr ? 'انقر لتكبير الصورة' : 'Click to inspect') + '">' +
-            '<img src="' + allProofImgs[0] + '" alt="Exness Payout Proof" loading="lazy" />' +
+            '<img src="' + allProofImgs[0] + '" alt="Exness Payout Proof" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=\'proofs/payout-1-exness.png\'" />' +
             '<span class="cvx-zoom-hint" style="opacity:1;bottom:8px;right:8px;position:absolute">🔍 Zoom</span>' +
           '</div>' +
         '</div>';
@@ -9861,7 +9913,7 @@ body.theme-light .cvx-tv-text {
             '<span class="mono">' + subInfo + '</span>' +
           '</div>' +
           '<div class="payout-proof-img-wrap" onclick="openPayoutProofInLightbox(' + pIdx + ')" style="cursor:zoom-in" title="' + (isAr ? 'انقر لتكبير الصورة بدقة كاملة' : 'Click to inspect in full resolution') + '">' +
-            '<img src="' + pSrc + '" alt="Proof ' + (pIdx + 1) + '" loading="lazy" />' +
+            '<img src="' + pSrc + '" alt="Proof ' + (pIdx + 1) + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=\'proofs/payout-1-exness.png\'" />' +
             '<span class="cvx-zoom-hint" style="opacity:1;bottom:8px;right:8px;position:absolute">🔍 Zoom</span>' +
           '</div>' +
         '</div>';
@@ -9904,6 +9956,8 @@ body.theme-light .cvx-tv-text {
 
   window.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
+      var lb = document.getElementById('cvxLightbox');
+      if (lb && lb.classList.contains('active')) return;
       window.closePayoutProof();
     }
   });
@@ -9940,11 +9994,12 @@ body.theme-light .cvx-tv-text {
         dynamicPayouts.forEach(function(p) { if (p.invoice) seenInvoices[p.invoice] = true; });
         var remaining = cvxPayoutsData.filter(function(p) { return !p.invoice || !seenInvoices[p.invoice]; });
         cvxPayoutsData = dynamicPayouts.concat(remaining);
-        // Sort cvxPayoutsData so email-verified payouts (type === 'double') always lead the array
+        // Sort cvxPayoutsData so email-verified payouts (type === 'double') always lead the array, newest ID first
         cvxPayoutsData.sort(function(a, b) {
           var aD = (a.type === 'double' || Boolean(a.binanceImg)) ? 1 : 0;
           var bD = (b.type === 'double' || Boolean(b.binanceImg)) ? 1 : 0;
-          return bD - aD;
+          if (bD !== aD) return bD - aD;
+          return (Number(b.id || 0) - Number(a.id || 0));
         });
         if (typeof window.renderPayouts === 'function') {
           window.renderPayouts();
@@ -13909,7 +13964,12 @@ body.theme-light .cvx-tv-text {
     var lb = document.getElementById('cvxLightbox');
     if(lb) {
       lb.classList.remove('active');
-      document.body.style.overflow = '';
+      var pModal = document.getElementById('payoutModal');
+      if (pModal && pModal.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
       var img = document.getElementById('cvxLbImg');
       if(img) img.src = '';
       var vid = document.getElementById('cvxLbVideo');

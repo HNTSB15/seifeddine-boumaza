@@ -4448,23 +4448,38 @@ select option { background: #0d1524; color: #fff; padding: 6px 10px; }
   window.getPayoutImages = function(p) {
     if (!p) return [];
     var list = [];
+    var rawImgs = p.images || p.photos || [];
+    if (Array.isArray(rawImgs) && rawImgs.length > 0) {
+      rawImgs.forEach(function(s) {
+        if (typeof s === 'string' && s.trim()) list.push(s.trim());
+      });
+    }
     var ex = (p.exness_img || p.exnessImg || '').trim();
     var bin = (p.binance_img || p.binanceImg || '').trim();
 
     if (ex) {
       if (ex.startsWith('[') && ex.endsWith(']')) {
-        try { list = list.concat(JSON.parse(ex)); } catch(e) { list.push(ex); }
-      } else {
+        try {
+          var arr = JSON.parse(ex);
+          if (Array.isArray(arr)) list = list.concat(arr);
+        } catch(e) { list.push(ex); }
+      } else if (list.indexOf(ex) === -1) {
         list.push(ex);
       }
     }
 
     if (bin) {
       if (bin.startsWith('[') && bin.endsWith(']')) {
-        try { list = list.concat(JSON.parse(bin)); } catch(e) { list.push(bin); }
+        try {
+          var arr = JSON.parse(bin);
+          if (Array.isArray(arr)) list = list.concat(arr);
+        } catch(e) { list.push(bin); }
       } else if (bin.indexOf(',') !== -1 && !bin.startsWith('data:')) {
-        bin.split(',').forEach(function(s){ if(s.trim()) list.push(s.trim()); });
-      } else {
+        bin.split(',').forEach(function(s){
+          var cl = s.trim();
+          if (cl && list.indexOf(cl) === -1) list.push(cl);
+        });
+      } else if (list.indexOf(bin) === -1) {
         list.push(bin);
       }
     }
