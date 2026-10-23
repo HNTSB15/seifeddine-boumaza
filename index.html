@@ -9369,22 +9369,19 @@ body.theme-light .cvx-tv-text {
 
   // Load Live Settings with Instant Local Cache Hydration & Live Supabase Fetch
   function loadLiveSettings() {
-    // 1. Instant 0ms hydration from cache on page open/refresh (with corruption guard)
+    var CACHE_KEY = 'hntsb_live_settings_cache_v6';
+
+    // 1. Instant 0ms hydration from cache on page open/refresh
     try {
-      var cached = localStorage.getItem('hntsb_live_settings_cache_v5') || localStorage.getItem('hntsb_live_settings_cache');
+      // Proactively clear legacy bloated cache keys to prevent QuotaExceededError on iOS Safari
+      localStorage.removeItem('hntsb_live_settings_cache');
+      localStorage.removeItem('hntsb_live_settings_cache_v5');
+
+      var cached = localStorage.getItem(CACHE_KEY);
       if (cached) {
         var parsed = JSON.parse(cached);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          var isCorrupted = false;
-          var dealsS = parsed.find(function(s){ return (s.setting_name || s.key) === 'trading_deals_json'; });
-          if (dealsS && dealsS.current_value && (dealsS.current_value.indexOf('"deposit":"Deposit: "') > -1 || dealsS.current_value.indexOf('"profit":"+,') > -1)) {
-            isCorrupted = true;
-            localStorage.removeItem('hntsb_live_settings_cache');
-            localStorage.removeItem('hntsb_live_settings_cache_v5');
-          }
-          if (!isCorrupted) {
-            applyLiveSettingsList(parsed);
-          }
+          applyLiveSettingsList(parsed);
         }
       }
     } catch(e){}
@@ -9395,8 +9392,7 @@ body.theme-light .cvx-tv-text {
       var list = (res && res.data && res.data.length) ? res.data : [];
       if (!list.length) return;
       try {
-        localStorage.setItem('hntsb_live_settings_cache_v5', JSON.stringify(list));
-        localStorage.setItem('hntsb_live_settings_cache', JSON.stringify(list));
+        localStorage.setItem(CACHE_KEY, JSON.stringify(list));
       } catch(e){}
       applyLiveSettingsList(list);
     }).catch(function(){});
@@ -13662,12 +13658,15 @@ body.theme-light .cvx-tv-text {
   })();
 
   // Results Feed Carousel Controller
-  var cvxGalleries = [
-    // Default Static Galleries (Fallback)
-    [
-      { src: 'video-proof-1.mp4', cap: 'Live Video Proof: Managing New Account ($68 ➡️ +$6,300 Profit on Gold)' }
-    ]
-  ];
+  if (!window.cvxGalleries || !window.cvxGalleries.length) {
+    window.cvxGalleries = [
+      // Default Static Galleries (Fallback)
+      [
+        { src: 'video-proof-1.mp4', cap: 'Live Video Proof: Managing New Account ($68 ➡️ +$6,300 Profit on Gold)' }
+      ]
+    ];
+  }
+  var cvxGalleries = window.cvxGalleries;
 
   window.cvxInitCarousel = function(){
     var stream = document.getElementById('cvxXStream');
@@ -13788,7 +13787,7 @@ body.theme-light .cvx-tv-text {
     var nextBtn = document.getElementById('cvxLbNext');
     if(!lb) return;
 
-    var galleries = window.cvxGalleries || cvxGalleries;
+    var galleries = (window.cvxGalleries && window.cvxGalleries.length) ? window.cvxGalleries : cvxGalleries;
     var post = galleries ? galleries[curPost] : null;
     if(!post || !post.length) return;
     if(curImg < 0) curImg = 0;
@@ -13890,7 +13889,7 @@ body.theme-light .cvx-tv-text {
   };
 
   window.cvxLbStep = function(dir) {
-    var galleries = window.cvxGalleries || cvxGalleries;
+    var galleries = (window.cvxGalleries && window.cvxGalleries.length) ? window.cvxGalleries : cvxGalleries;
     var post = galleries ? galleries[curPost] : null;
     if(!post || post.length <= 1) return;
     var newIdx = curImg + dir;
