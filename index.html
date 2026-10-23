@@ -6219,6 +6219,187 @@ body.theme-light .payouts-more-btn.active {
   color: #64748b;
 }
 
+/* Telegram Channel Exclusive Banner */
+.cvx-telegram-channel-banner {
+  margin-top: 42px;
+  background: linear-gradient(135deg, rgba(14, 28, 48, 0.95), rgba(7, 13, 24, 0.98));
+  border: 1px solid rgba(41, 182, 246, 0.35);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(41, 182, 246, 0.15);
+  border-radius: 20px;
+  padding: 32px 36px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.cvx-telegram-channel-banner:hover {
+  transform: translateY(-2px);
+  border-color: rgba(41, 182, 246, 0.6);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.7), 0 0 45px rgba(41, 182, 246, 0.25);
+}
+.cvx-telegram-channel-banner::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(41, 182, 246, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  border-radius: 50%;
+}
+.cvx-tg-banner-content {
+  flex: 1;
+  max-width: 680px;
+  z-index: 2;
+}
+.cvx-tg-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #29b6f6;
+  margin-bottom: 12px;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.cvx-tg-kicker .pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #29b6f6;
+  box-shadow: 0 0 10px #29b6f6;
+  animation: tgPulse 1.8s infinite;
+}
+@keyframes tgPulse {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 16px #29b6f6; }
+  100% { transform: scale(0.9); opacity: 0.8; }
+}
+.cvx-tg-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.3;
+  margin: 0 0 10px 0;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.cvx-tg-title .tg-highlight {
+  background: linear-gradient(135deg, #29b6f6, #00f0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.cvx-tg-desc {
+  font-size: 14.5px;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin: 0 0 18px 0;
+}
+.cvx-tg-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.cvx-tg-feature-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 12px;
+  color: #e2e8f0;
+  font-weight: 600;
+}
+.cvx-tg-feature-pill span.icon {
+  font-size: 13px;
+}
+.cvx-tg-banner-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+  flex-shrink: 0;
+}
+.cvx-tg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 28px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #229ed9 0%, #1e88e5 100%);
+  color: #fff !important;
+  font-size: 15.5px;
+  font-weight: 800;
+  font-family: 'Space Grotesk', sans-serif;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(34, 158, 217, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+.cvx-tg-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #2bb2f0 0%, #2196f3 100%);
+  box-shadow: 0 12px 32px rgba(34, 158, 217, 0.6), 0 0 25px rgba(34, 158, 217, 0.5);
+  color: #fff !important;
+}
+.cvx-tg-btn svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+.cvx-tg-channel-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: #64748b;
+  letter-spacing: 0.5px;
+}
+body.theme-light .cvx-telegram-channel-banner {
+  background: linear-gradient(135deg, #f0f9ff, #ffffff);
+  border-color: #bae6fd;
+  box-shadow: 0 10px 30px rgba(34, 158, 217, 0.12);
+}
+body.theme-light .cvx-tg-title {
+  color: #0f172a;
+}
+body.theme-light .cvx-tg-desc {
+  color: #475569;
+}
+body.theme-light .cvx-tg-feature-pill {
+  background: #e0f2fe;
+  border-color: #bae6fd;
+  color: #0369a1;
+}
+@media (max-width: 860px) {
+  .cvx-telegram-channel-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 26px 20px;
+    gap: 22px;
+  }
+  .cvx-tg-kicker {
+    justify-content: center;
+  }
+  .cvx-tg-features {
+    justify-content: center;
+  }
+  .cvx-tg-banner-action {
+    width: 100%;
+  }
+  .cvx-tg-btn {
+    width: 100%;
+  }
+}
+
 /* Responsive */
 @media(max-width: 980px) {
   .payouts-trust-bar {
@@ -7657,6 +7838,45 @@ body.theme-light .cvx-tv-text {
 
   <!-- Sleek Load More Button Container -->
   <div class="payouts-more-wrap" id="payoutsMoreWrap" style="display:none"></div>
+
+  <!-- ==========================================================================
+       📢 EXCLUSIVE TELEGRAM CHANNEL VIP BANNER (Social Proof Conversion Trigger)
+       ========================================================================== -->
+  <div class="cvx-telegram-channel-banner">
+    <div class="cvx-tg-banner-content">
+      <div class="cvx-tg-kicker">
+        <span class="pulse-dot"></span>
+        <span id="tgBannerKicker">// EXCLUSIVE BROADCAST CHANNEL 📡</span>
+      </div>
+      <h3 class="cvx-tg-title" id="tgBannerTitle">
+        Join the Official <span class="tg-highlight">Telegram Channel</span>
+      </h3>
+      <p class="cvx-tg-desc" id="tgBannerDesc">
+        Get daily institutional Gold (XAUUSD) setups, real-time economic news analysis, and verified account management updates directly from Saifeddine Boumaza.
+      </p>
+      <div class="cvx-tg-features">
+        <div class="cvx-tg-feature-pill">
+          <span class="icon">⚡</span>
+          <span id="tgPill1">Daily Gold Analysis</span>
+        </div>
+        <div class="cvx-tg-feature-pill">
+          <span class="icon">📊</span>
+          <span id="tgPill2">Live MT5 Execution Proofs</span>
+        </div>
+        <div class="cvx-tg-feature-pill">
+          <span class="icon">🎯</span>
+          <span id="tgPill3">Key Liquidity Levels</span>
+        </div>
+      </div>
+    </div>
+    <div class="cvx-tg-banner-action">
+      <a href="https://t.me/saifeddineboumaza" target="_blank" rel="noopener" class="cvx-tg-btn" id="tgBannerBtn">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .37z"/></svg>
+        <span id="tgBannerBtnText">Join Telegram Channel ↗</span>
+      </a>
+      <span class="cvx-tg-channel-tag">@saifeddineboumaza</span>
+    </div>
+  </div>
 </div>
 </section>
 
@@ -11883,6 +12103,13 @@ body.theme-light .cvx-tv-text {
         'payout_filter_double': '⚡ توثيق مزدوج (Exness + إيميل بينانس) (6)',
         'payout_filter_ledger': '💼 سجل Exness المباشر (4)',
         'payout_modal_title': 'التدقيق المالي الرسمي لسحب الأرباح',
+        'tg_banner_kicker': '// القناة الرسمية المعتمدة على تلغرام 📡',
+        'tg_banner_title': 'انضم إلى <span class="tg-highlight">قناة التلغرام الرسمية</span>',
+        'tg_banner_desc': 'تابع تحليلات الذهب اليومية (XAUUSD)، قراءات السيولة اللحظية، وتحديثات صفقات إدارة الحسابات المباشرة مجاناً مع سيف الدين بوعكاز.',
+        'tg_pill_1': 'تحليلات يومية على الذهب',
+        'tg_pill_2': 'إثباتات مباشرة من الميتاتريدر',
+        'tg_pill_3': 'مستويات سيولة دقيقة',
+        'tg_banner_btn': 'انضم إلى القناة مجاناً ↗',
 
         // Experience Section
         'exp_sec_kick': '// المسيرة والخبرة',
@@ -12305,6 +12532,13 @@ body.theme-light .cvx-tv-text {
         'payout_filter_double': '⚡ Double-Verified (Exness + Binance Email) (6)',
         'payout_filter_ledger': '💼 Exness Direct Ledger (4)',
         'payout_modal_title': 'Official Broker Payout Audit',
+        'tg_banner_kicker': '// EXCLUSIVE BROADCAST CHANNEL 📡',
+        'tg_banner_title': 'Join the Official <span class="tg-highlight">Telegram Channel</span>',
+        'tg_banner_desc': 'Get daily institutional Gold (XAUUSD) setups, real-time economic news analysis, and verified account management updates directly from Saifeddine Boumaza.',
+        'tg_pill_1': 'Daily Gold Analysis',
+        'tg_pill_2': 'Live MT5 Execution Proofs',
+        'tg_pill_3': 'Key Liquidity Levels',
+        'tg_banner_btn': 'Join Telegram Channel ↗',
 
         // Experience Section
         'exp_sec_kick': '// timeline',
@@ -12964,6 +13198,22 @@ body.theme-light .cvx-tv-text {
       if (pFLedger && t['payout_filter_ledger']) pFLedger.textContent = t['payout_filter_ledger'];
       var pMTitle = document.getElementById('payoutModalTitleTxt');
       if (pMTitle && t['payout_modal_title']) pMTitle.textContent = t['payout_modal_title'];
+
+      // Telegram Channel Banner translations
+      var tgKicker = document.getElementById('tgBannerKicker');
+      if (tgKicker && t['tg_banner_kicker']) tgKicker.textContent = t['tg_banner_kicker'];
+      var tgTitle = document.getElementById('tgBannerTitle');
+      if (tgTitle && t['tg_banner_title']) tgTitle.innerHTML = t['tg_banner_title'];
+      var tgDesc = document.getElementById('tgBannerDesc');
+      if (tgDesc && t['tg_banner_desc']) tgDesc.textContent = t['tg_banner_desc'];
+      var tgP1 = document.getElementById('tgPill1');
+      if (tgP1 && t['tg_pill_1']) tgP1.textContent = t['tg_pill_1'];
+      var tgP2 = document.getElementById('tgPill2');
+      if (tgP2 && t['tg_pill_2']) tgP2.textContent = t['tg_pill_2'];
+      var tgP3 = document.getElementById('tgPill3');
+      if (tgP3 && t['tg_pill_3']) tgP3.textContent = t['tg_pill_3'];
+      var tgBtn = document.getElementById('tgBannerBtnText');
+      if (tgBtn && t['tg_banner_btn']) tgBtn.textContent = t['tg_banner_btn'];
 
       if (typeof window.renderPayouts === 'function') {
         var activePFilter = document.querySelector('.payout-filter-btn.active');
